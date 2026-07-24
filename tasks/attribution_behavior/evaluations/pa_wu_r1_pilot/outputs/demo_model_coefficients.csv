@@ -1,0 +1,121 @@
+construct,term,estimate,standard_error,statistic,p_value,ci95_low,ci95_high,data_status
+IN,Intercept,3.794271,0.19623,19.335826,0.0,3.409667,4.178875,synthetic_demo
+IN,"C(condition_id, Treatment(reference=""C0""))[T.C1]",0.203125,0.211778,0.959143,0.337487,-0.211952,0.618202,synthetic_demo
+IN,"C(condition_id, Treatment(reference=""C0""))[T.C2]",0.453125,0.211778,2.139626,0.032385,0.038048,0.868202,synthetic_demo
+IN,"C(condition_id, Treatment(reference=""C0""))[T.C3]",0.6875,0.211778,3.246329,0.001169,0.272423,1.102577,synthetic_demo
+IN,"C(condition_id, Treatment(reference=""C0""))[T.C4]",0.46875,0.211778,2.213406,0.02687,0.053673,0.883827,synthetic_demo
+IN,"C(condition_id, Treatment(reference=""C0""))[T.C5]",0.765625,0.211778,3.615231,0.0003,0.350548,1.180702,synthetic_demo
+IN,"C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.359375,0.203606,1.76505,0.077555,-0.039686,0.758436,synthetic_demo
+IN,"C(direction_version, Treatment(reference=""A""))[T.B]",-0.057292,0.08967,-0.638918,0.522876,-0.233041,0.118458,synthetic_demo
+IN,C(scenario_id)[T.s2_customer_issue],-0.145833,0.17934,-0.813168,0.416122,-0.497333,0.205666,synthetic_demo
+IN,C(scenario_id)[T.s3_study_plan],0.125,0.17934,0.697001,0.485802,-0.226499,0.476499,synthetic_demo
+IN,C(scenario_id)[T.s4_routing],-0.09375,0.17934,-0.522751,0.601148,-0.445249,0.257749,synthetic_demo
+IN,C(scenario_id)[T.s5_task_allocation],-0.197917,0.17934,-1.103585,0.269773,-0.549416,0.153583,synthetic_demo
+IN,C(scenario_id)[T.s6_content_recommendation],-0.291667,0.17934,-1.626337,0.103878,-0.643166,0.059833,synthetic_demo
+IN,C(scenario_id)[T.s7_game_strategy],0.28125,0.17934,1.568253,0.116822,-0.070249,0.632749,synthetic_demo
+IN,C(scenario_id)[T.s8_energy_plan],-0.052083,0.17934,-0.290417,0.771497,-0.403583,0.299416,synthetic_demo
+IN,"C(condition_id, Treatment(reference=""C0""))[T.C1]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.046875,0.287943,-0.162793,0.870682,-0.611232,0.517482,synthetic_demo
+IN,"C(condition_id, Treatment(reference=""C0""))[T.C2]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.109375,0.287943,0.37985,0.704057,-0.454982,0.673732,synthetic_demo
+IN,"C(condition_id, Treatment(reference=""C0""))[T.C3]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.046875,0.287943,-0.162793,0.870682,-0.611232,0.517482,synthetic_demo
+IN,"C(condition_id, Treatment(reference=""C0""))[T.C4]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.140625,0.287943,0.488379,0.625282,-0.423732,0.704982,synthetic_demo
+IN,"C(condition_id, Treatment(reference=""C0""))[T.C5]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.03125,0.287943,-0.108529,0.913576,-0.595607,0.533107,synthetic_demo
+GO,Intercept,4.109375,0.210227,19.547295,0.0,3.697337,4.521413,synthetic_demo
+GO,"C(condition_id, Treatment(reference=""C0""))[T.C1]",0.125,0.222444,0.561938,0.574158,-0.310983,0.560983,synthetic_demo
+GO,"C(condition_id, Treatment(reference=""C0""))[T.C2]",0.515625,0.222444,2.317996,0.02045,0.079642,0.951608,synthetic_demo
+GO,"C(condition_id, Treatment(reference=""C0""))[T.C3]",0.4375,0.222444,1.966784,0.049208,0.001517,0.873483,synthetic_demo
+GO,"C(condition_id, Treatment(reference=""C0""))[T.C4]",0.578125,0.222444,2.598965,0.009351,0.142142,1.014108,synthetic_demo
+GO,"C(condition_id, Treatment(reference=""C0""))[T.C5]",0.6875,0.222444,3.090661,0.001997,0.251517,1.123483,synthetic_demo
+GO,"C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.640625,0.201491,3.179423,0.001476,0.24571,1.03554,synthetic_demo
+GO,"C(direction_version, Treatment(reference=""A""))[T.B]",0.005208,0.098628,0.052808,0.957885,-0.188098,0.198515,synthetic_demo
+GO,C(scenario_id)[T.s2_customer_issue],0.041667,0.197255,0.211232,0.832706,-0.344946,0.428279,synthetic_demo
+GO,C(scenario_id)[T.s3_study_plan],-0.208333,0.197255,-1.056162,0.290894,-0.594946,0.178279,synthetic_demo
+GO,C(scenario_id)[T.s4_routing],-0.46875,0.197255,-2.376365,0.017484,-0.855363,-0.082137,synthetic_demo
+GO,C(scenario_id)[T.s5_task_allocation],-0.041667,0.197255,-0.211232,0.832706,-0.428279,0.344946,synthetic_demo
+GO,C(scenario_id)[T.s6_content_recommendation],-0.510417,0.197255,-2.587597,0.009665,-0.897029,-0.123804,synthetic_demo
+GO,C(scenario_id)[T.s7_game_strategy],0.0,0.197255,0.0,1.0,-0.386613,0.386613,synthetic_demo
+GO,C(scenario_id)[T.s8_energy_plan],-0.208333,0.197255,-1.056162,0.290894,-0.594946,0.178279,synthetic_demo
+GO,"C(condition_id, Treatment(reference=""C0""))[T.C1]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.546875,0.284951,-1.919188,0.054961,-1.105369,0.011619,synthetic_demo
+GO,"C(condition_id, Treatment(reference=""C0""))[T.C2]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.328125,0.284951,-1.151513,0.249521,-0.886619,0.230369,synthetic_demo
+GO,"C(condition_id, Treatment(reference=""C0""))[T.C3]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.515625,0.284951,-1.80952,0.07037,-1.074119,0.042869,synthetic_demo
+GO,"C(condition_id, Treatment(reference=""C0""))[T.C4]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.109375,0.284951,-0.383838,0.701099,-0.667869,0.449119,synthetic_demo
+GO,"C(condition_id, Treatment(reference=""C0""))[T.C5]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.125,0.284951,0.438672,0.6609,-0.433494,0.683494,synthetic_demo
+MSI,Intercept,2.96875,0.2019,14.704044,0.0,2.573033,3.364467,synthetic_demo
+MSI,"C(condition_id, Treatment(reference=""C0""))[T.C1]",0.645833,0.221171,2.920068,0.0035,0.212347,1.07932,synthetic_demo
+MSI,"C(condition_id, Treatment(reference=""C0""))[T.C2]",0.8125,0.221171,3.673634,0.000239,0.379014,1.245986,synthetic_demo
+MSI,"C(condition_id, Treatment(reference=""C0""))[T.C3]",1.052083,0.221171,4.756886,2e-06,0.618597,1.48557,synthetic_demo
+MSI,"C(condition_id, Treatment(reference=""C0""))[T.C4]",1.135417,0.221171,5.133669,0.0,0.70193,1.568903,synthetic_demo
+MSI,"C(condition_id, Treatment(reference=""C0""))[T.C5]",1.114583,0.221171,5.039473,0.0,0.681097,1.54807,synthetic_demo
+MSI,"C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.270833,0.221171,1.224545,0.220747,-0.162653,0.70432,synthetic_demo
+MSI,"C(direction_version, Treatment(reference=""A""))[T.B]",-0.024306,0.090293,-0.269187,0.787786,-0.201276,0.152665,synthetic_demo
+MSI,C(scenario_id)[T.s2_customer_issue],0.180556,0.180585,0.999837,0.31739,-0.173385,0.534496,synthetic_demo
+MSI,C(scenario_id)[T.s3_study_plan],-0.395833,0.180585,-2.19195,0.028383,-0.749774,-0.041893,synthetic_demo
+MSI,C(scenario_id)[T.s4_routing],-0.451389,0.180585,-2.499592,0.012434,-0.805329,-0.097449,synthetic_demo
+MSI,C(scenario_id)[T.s5_task_allocation],-0.6875,0.180585,-3.80707,0.000141,-1.04144,-0.33356,synthetic_demo
+MSI,C(scenario_id)[T.s6_content_recommendation],-0.5625,0.180585,-3.114876,0.00184,-0.91644,-0.20856,synthetic_demo
+MSI,C(scenario_id)[T.s7_game_strategy],-0.4375,0.180585,-2.422681,0.015406,-0.79144,-0.08356,synthetic_demo
+MSI,C(scenario_id)[T.s8_energy_plan],-0.381944,0.180585,-2.115039,0.034427,-0.735885,-0.028004,synthetic_demo
+MSI,"C(condition_id, Treatment(reference=""C0""))[T.C1]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.260417,0.312782,-0.832581,0.405081,-0.873459,0.352626,synthetic_demo
+MSI,"C(condition_id, Treatment(reference=""C0""))[T.C2]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.333333,0.312782,-1.065703,0.286558,-0.946376,0.279709,synthetic_demo
+MSI,"C(condition_id, Treatment(reference=""C0""))[T.C3]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.0625,0.312782,-0.199819,0.841622,-0.675542,0.550542,synthetic_demo
+MSI,"C(condition_id, Treatment(reference=""C0""))[T.C4]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.364583,0.312782,-1.165613,0.243771,-0.977626,0.248459,synthetic_demo
+MSI,"C(condition_id, Treatment(reference=""C0""))[T.C5]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.270833,0.312782,-0.865884,0.386554,-0.883876,0.342209,synthetic_demo
+IC,Intercept,4.127083,0.198708,20.769575,0.0,3.737623,4.516544,synthetic_demo
+IC,"C(condition_id, Treatment(reference=""C0""))[T.C1]",0.0375,0.217674,0.172276,0.86322,-0.389133,0.464133,synthetic_demo
+IC,"C(condition_id, Treatment(reference=""C0""))[T.C2]",0.4,0.217674,1.837612,0.06612,-0.026633,0.826633,synthetic_demo
+IC,"C(condition_id, Treatment(reference=""C0""))[T.C3]",0.65,0.217674,2.986119,0.002825,0.223367,1.076633,synthetic_demo
+IC,"C(condition_id, Treatment(reference=""C0""))[T.C4]",0.85,0.217674,3.904925,9.4e-05,0.423367,1.276633,synthetic_demo
+IC,"C(condition_id, Treatment(reference=""C0""))[T.C5]",1.025,0.217674,4.70888,2e-06,0.598367,1.451633,synthetic_demo
+IC,"C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.1875,0.217674,0.86138,0.389029,-0.239133,0.614133,synthetic_demo
+IC,"C(direction_version, Treatment(reference=""A""))[T.B]",0.089583,0.088865,1.008084,0.313414,-0.084589,0.263755,synthetic_demo
+IC,C(scenario_id)[T.s2_customer_issue],-0.566667,0.17773,-3.188358,0.001431,-0.915011,-0.218322,synthetic_demo
+IC,C(scenario_id)[T.s3_study_plan],-0.366667,0.17773,-2.063055,0.039107,-0.715011,-0.018322,synthetic_demo
+IC,C(scenario_id)[T.s4_routing],-0.1,0.17773,-0.562651,0.573672,-0.448344,0.248344,synthetic_demo
+IC,C(scenario_id)[T.s5_task_allocation],-0.808333,0.17773,-4.548099,5e-06,-1.156678,-0.459989,synthetic_demo
+IC,C(scenario_id)[T.s6_content_recommendation],-0.05,0.17773,-0.281326,0.778461,-0.398344,0.298344,synthetic_demo
+IC,C(scenario_id)[T.s7_game_strategy],-0.608333,0.17773,-3.422796,0.00062,-0.956678,-0.259989,synthetic_demo
+IC,C(scenario_id)[T.s8_energy_plan],-0.175,0.17773,-0.98464,0.324801,-0.523344,0.173344,synthetic_demo
+IC,"C(condition_id, Treatment(reference=""C0""))[T.C1]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.475,0.307837,1.543023,0.122825,-0.12835,1.07835,synthetic_demo
+IC,"C(condition_id, Treatment(reference=""C0""))[T.C2]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.0625,0.307837,0.203029,0.839112,-0.54085,0.66585,synthetic_demo
+IC,"C(condition_id, Treatment(reference=""C0""))[T.C3]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.2375,0.307837,0.771511,0.440404,-0.36585,0.84085,synthetic_demo
+IC,"C(condition_id, Treatment(reference=""C0""))[T.C4]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.2,0.307837,-0.649694,0.51589,-0.80335,0.40335,synthetic_demo
+IC,"C(condition_id, Treatment(reference=""C0""))[T.C5]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.0125,0.307837,0.040606,0.96761,-0.59085,0.61585,synthetic_demo
+PA5,Intercept,2.808333,0.224533,12.507468,0.0,2.368258,3.248409,synthetic_demo
+PA5,"C(condition_id, Treatment(reference=""C0""))[T.C1]",0.15,0.236737,0.633614,0.526332,-0.313996,0.613996,synthetic_demo
+PA5,"C(condition_id, Treatment(reference=""C0""))[T.C2]",0.6,0.236737,2.534458,0.011262,0.136004,1.063996,synthetic_demo
+PA5,"C(condition_id, Treatment(reference=""C0""))[T.C3]",0.5625,0.236737,2.376054,0.017499,0.098504,1.026496,synthetic_demo
+PA5,"C(condition_id, Treatment(reference=""C0""))[T.C4]",0.6,0.236737,2.534458,0.011262,0.136004,1.063996,synthetic_demo
+PA5,"C(condition_id, Treatment(reference=""C0""))[T.C5]",1.475,0.236737,6.230542,0.0,1.011004,1.938996,synthetic_demo
+PA5,"C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.1375,0.211922,0.648824,0.516452,-0.277859,0.552859,synthetic_demo
+PA5,"C(direction_version, Treatment(reference=""A""))[T.B]",-0.05,0.105813,-0.472533,0.636546,-0.257389,0.157389,synthetic_demo
+PA5,C(scenario_id)[T.s2_customer_issue],0.25,0.211625,1.181333,0.23747,-0.164778,0.664778,synthetic_demo
+PA5,C(scenario_id)[T.s3_study_plan],-0.041667,0.211625,-0.196889,0.843915,-0.456445,0.373111,synthetic_demo
+PA5,C(scenario_id)[T.s4_routing],0.008333,0.211625,0.039378,0.968589,-0.406445,0.423111,synthetic_demo
+PA5,C(scenario_id)[T.s5_task_allocation],0.183333,0.211625,0.866311,0.38632,-0.231445,0.598111,synthetic_demo
+PA5,C(scenario_id)[T.s6_content_recommendation],-0.133333,0.211625,-0.630044,0.528666,-0.548111,0.281445,synthetic_demo
+PA5,C(scenario_id)[T.s7_game_strategy],-0.175,0.211625,-0.826933,0.408275,-0.589778,0.239778,synthetic_demo
+PA5,C(scenario_id)[T.s8_energy_plan],0.341667,0.211625,1.614488,0.106422,-0.073111,0.756445,synthetic_demo
+PA5,"C(condition_id, Treatment(reference=""C0""))[T.C1]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.1375,0.299703,0.458788,0.646387,-0.449907,0.724907,synthetic_demo
+PA5,"C(condition_id, Treatment(reference=""C0""))[T.C2]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.0,0.299703,-0.0,1.0,-0.587407,0.587407,synthetic_demo
+PA5,"C(condition_id, Treatment(reference=""C0""))[T.C3]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.2875,0.299703,0.959283,0.337416,-0.299907,0.874907,synthetic_demo
+PA5,"C(condition_id, Treatment(reference=""C0""))[T.C4]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.275,0.299703,0.917575,0.358841,-0.312407,0.862407,synthetic_demo
+PA5,"C(condition_id, Treatment(reference=""C0""))[T.C5]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.6,0.299703,-2.001983,0.045287,-1.187407,-0.012593,synthetic_demo
+PA8,Intercept,2.903646,0.180325,16.102273,0.0,2.550215,3.257077,synthetic_demo
+PA8,"C(condition_id, Treatment(reference=""C0""))[T.C1]",0.132813,0.187549,0.708147,0.478854,-0.234778,0.500403,synthetic_demo
+PA8,"C(condition_id, Treatment(reference=""C0""))[T.C2]",0.5625,0.187549,2.99921,0.002707,0.19491,0.93009,synthetic_demo
+PA8,"C(condition_id, Treatment(reference=""C0""))[T.C3]",0.65625,0.187549,3.499078,0.000467,0.28866,1.02384,synthetic_demo
+PA8,"C(condition_id, Treatment(reference=""C0""))[T.C4]",0.734375,0.187549,3.915635,9e-05,0.366785,1.101965,synthetic_demo
+PA8,"C(condition_id, Treatment(reference=""C0""))[T.C5]",1.320313,0.187549,7.039812,0.0,0.952722,1.687903,synthetic_demo
+PA8,"C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.234375,0.159875,1.465985,0.142652,-0.078975,0.547725,synthetic_demo
+PA8,"C(direction_version, Treatment(reference=""A""))[T.B]",-0.057292,0.0864,-0.663101,0.507266,-0.226632,0.112049,synthetic_demo
+PA8,C(scenario_id)[T.s2_customer_issue],-0.078125,0.172799,-0.452114,0.651187,-0.416805,0.260555,synthetic_demo
+PA8,C(scenario_id)[T.s3_study_plan],-0.125,0.172799,-0.723383,0.469445,-0.46368,0.21368,synthetic_demo
+PA8,C(scenario_id)[T.s4_routing],-0.265625,0.172799,-1.537188,0.124247,-0.604305,0.073055,synthetic_demo
+PA8,C(scenario_id)[T.s5_task_allocation],-0.130208,0.172799,-0.753524,0.451135,-0.468889,0.208472,synthetic_demo
+PA8,C(scenario_id)[T.s6_content_recommendation],-0.270833,0.172799,-1.567329,0.117038,-0.609514,0.067847,synthetic_demo
+PA8,C(scenario_id)[T.s7_game_strategy],-0.151042,0.172799,-0.874087,0.382071,-0.489722,0.187639,synthetic_demo
+PA8,C(scenario_id)[T.s8_energy_plan],0.208333,0.172799,1.205638,0.227957,-0.130347,0.547014,synthetic_demo
+PA8,"C(condition_id, Treatment(reference=""C0""))[T.C1]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.21875,0.226098,0.967501,0.333294,-0.224394,0.661894,synthetic_demo
+PA8,"C(condition_id, Treatment(reference=""C0""))[T.C2]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.148437,0.226098,0.656518,0.511491,-0.294707,0.591582,synthetic_demo
+PA8,"C(condition_id, Treatment(reference=""C0""))[T.C3]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.078125,0.226098,0.345536,0.729692,-0.365019,0.521269,synthetic_demo
+PA8,"C(condition_id, Treatment(reference=""C0""))[T.C4]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",0.09375,0.226098,0.414643,0.678403,-0.349394,0.536894,synthetic_demo
+PA8,"C(condition_id, Treatment(reference=""C0""))[T.C5]:C(judge_model_id, Treatment(reference=""deepseek-v4-pro""))[T.gpt-5.6-terra]",-0.445313,0.226098,-1.969555,0.048889,-0.888457,-0.002168,synthetic_demo

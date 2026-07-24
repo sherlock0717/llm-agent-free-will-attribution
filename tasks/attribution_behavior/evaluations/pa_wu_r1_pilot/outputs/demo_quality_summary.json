@@ -1,0 +1,78 @@
+{
+  "data_status": "synthetic_demo",
+  "n_materials": 96,
+  "n_responses": 192,
+  "n_judge_models": 2,
+  "n_repeats": 1,
+  "item_rows": 5184,
+  "item_valid_rate": 1.0,
+  "construct_rows": 1152,
+  "construct_scored_rate": 1.0,
+  "parse_status_counts": {
+    "parsed": 192
+  },
+  "validation_status_counts": {
+    "valid": 192
+  },
+  "failure_codes": {},
+  "balance": {
+    "per_condition": {
+      "C0": 16,
+      "C1": 16,
+      "C2": 16,
+      "C3": 16,
+      "C4": 16,
+      "C5": 16
+    },
+    "per_identity": {
+      "machine": 96
+    },
+    "per_scenario": {
+      "s1_scheduling": 12,
+      "s2_customer_issue": 12,
+      "s3_study_plan": 12,
+      "s4_routing": 12,
+      "s5_task_allocation": 12,
+      "s6_content_recommendation": 12,
+      "s7_game_strategy": 12,
+      "s8_energy_plan": 12
+    },
+    "per_direction": {
+      "A": 48,
+      "B": 48
+    }
+  },
+  "scenario_heterogeneity": {
+    "GO": {
+      "scenario_mean_min": 4.1979,
+      "scenario_mean_max": 4.75,
+      "scenario_mean_range": 0.5521
+    },
+    "IC": {
+      "scenario_mean_min": 4.0,
+      "scenario_mean_max": 4.8083,
+      "scenario_mean_range": 0.8083
+    },
+    "IN": {
+      "scenario_mean_min": 4.0938,
+      "scenario_mean_max": 4.6667,
+      "scenario_mean_range": 0.5729
+    },
+    "MSI": {
+      "scenario_mean_min": 3.0903,
+      "scenario_mean_max": 3.9583,
+      "scenario_mean_range": 0.8681
+    },
+    "PA5": {
+      "scenario_mean_min": 3.25,
+      "scenario_mean_max": 3.7667,
+      "scenario_mean_range": 0.5167
+    },
+    "PA8": {
+      "scenario_mean_min": 3.2969,
+      "scenario_mean_max": 3.776,
+      "scenario_mean_range": 0.4792
+    }
+  },
+  "note": "Synthetic demonstration data. Not real model results; no model ranking."
+}

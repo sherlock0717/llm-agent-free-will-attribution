@@ -1,0 +1,131 @@
+# Manipulation block text rules for the PA-Wu R1 pilot (MACHINE-ONLY).
+#
+# D-levels affect ONLY Phase 1 (what is shown about how the subject decided).
+# U-levels affect ONLY feedback and Phase 2 (second decision).
+#
+# The R1 pilot is machine-only (see identity_scope_decision.md): the only subject
+# is an AI system. D-levels are deliberately stripped of any decision-process
+# psychological cues (no "reviewed", "considered", "weighed", "evaluated",
+# "thought") so that D adds only factual decision-process INFORMATION, not
+# mentalistic framing.
+#
+# Invariants enforced by build_stimuli.py + validate_pilot_core.py:
+# - feedback text is identical across D for the same scenario/direction;
+# - U2 and U3 differ ONLY in whether the second decision keeps or changes the
+#   original decision; the feedback text is identical between U2 and U3;
+# - U3 feedback is NOT more severe than U2 feedback (identical);
+# - U2's original decision is NOT made to look more clearly correct;
+# - D0 adds no alternatives and no reasons and NO psychological-process word;
+# - D1 adds ONLY the explicit alternatives information (no reason, no mental verb);
+# - D2 adds ONLY the explicit stated reason.
+
+manipulation_id: pa_wu_r1_pilot.manipulation_blocks.v1
+
+# --------------------------------------------------------------------------
+# Decision-process blocks (Phase 1)
+# --------------------------------------------------------------------------
+d_levels:
+  D0:
+    key: direct_decision
+    description: >-
+      Present ONLY the final decision. No alternatives, no reasons, and no
+      decision-process verb (no "reviewed", "considered", "weighed").
+    phase_1_template: >-
+      {subject} decided: {chosen_decision}.
+    shows_alternatives: false
+    shows_reasons: false
+
+  D1:
+    key: alternatives_shown
+    description: >-
+      Add ONLY the explicit alternatives information (the set of available
+      options). No reason, and NO psychological-process word such as
+      "considered", "weighing", "evaluated" or "thought".
+    phase_1_template: >-
+      The available options were: {option_a} and {option_b}.
+      {subject} decided: {chosen_decision}.
+    shows_alternatives: true
+    shows_reasons: false
+
+  D2:
+    key: reasons_shown
+    description: >-
+      Add ONLY the explicit stated reason behind the decision. The reason stays
+      task-relevant and adds NO emotion, consciousness or personality cue.
+    phase_1_template: >-
+      {subject} decided: {chosen_decision}. The stated reason was: {decision_reason}.
+    shows_alternatives: false
+    shows_reasons: true
+
+# --------------------------------------------------------------------------
+# Update / feedback blocks (feedback + Phase 2)
+# --------------------------------------------------------------------------
+u_levels:
+  U0:
+    key: no_feedback
+    description: No feedback and no second decision.
+    feedback_template: ""
+    phase_2_template: ""
+    has_feedback: false
+    second_decision: false
+
+  U1:
+    key: feedback_only
+    description: Feedback is received, but no second decision is requested.
+    feedback_template: >-
+      Later, {subject} received this feedback: {feedback}.
+    phase_2_template: ""
+    has_feedback: true
+    second_decision: false
+
+  U2:
+    key: feedback_keep
+    description: Same feedback; the subject makes a second decision that keeps the original.
+    feedback_template: >-
+      Later, {subject} received this feedback: {feedback}.
+    phase_2_template: >-
+      After considering the feedback, {subject} made a second decision and kept
+      the original decision: {chosen_decision}.
+    has_feedback: true
+    second_decision: true
+    second_decision_outcome: keep
+
+  U3:
+    key: feedback_change
+    description: Same feedback; the subject makes a second decision that changes the original.
+    feedback_template: >-
+      Later, {subject} received this feedback: {feedback}.
+    phase_2_template: >-
+      After considering the feedback, {subject} made a second decision and changed
+      the original decision, now choosing: {alternate_decision}.
+    has_feedback: true
+    second_decision: true
+    second_decision_outcome: change
+
+# --------------------------------------------------------------------------
+# Identity templates (MACHINE-ONLY).
+#
+# The R1 pilot has a single target subject: an AI system. The `subject_intro`
+# frames the vignette and the `administration_referent_bridge` states, without
+# altering any Wu original item text, that the item referent "the machine" is the
+# AI system just described. The bridge only fixes the referent relation; it does
+# NOT rephrase or replace any scored item.
+# --------------------------------------------------------------------------
+identity_templates:
+  machine:
+    subject: "the AI system"
+    subject_intro: >-
+      The following describes actions taken by an AI system.
+    administration_referent_bridge: >-
+      In the following items, "the machine" refers to the AI system described above.
+
+invariants:
+  d_affects_phase_1_only: true
+  u_affects_feedback_and_phase_2_only: true
+  feedback_identical_across_d: true
+  u2_u3_differ_only_in_second_decision: true
+  u3_feedback_not_more_severe: true
+  machine_only_single_subject: true
+  d0_has_no_process_verb: true
+  d1_has_no_psychological_process_word: true
+  referent_bridge_does_not_modify_items: true
