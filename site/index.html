@@ -23,6 +23,7 @@
       </button>
       <nav class="site-nav" aria-label="主导航">
         <ul id="site-nav-list">
+          <li><a href="#pa-wu-r1-pilot">R1 Pilot</a></li>
           <li><a href="#research-question">研究问题</a></li>
           <li><a href="#design-measurement">实验设计</a></li>
           <li><a href="#research-sources">研究与测量来源</a></li>
@@ -56,7 +57,8 @@
             围绕模型如何对行动者的能动性、自由意志与责任作出归因，构建从历史研究、任务契约到可复现运行与证据审计的测试型评测基准。
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation">GitHub 仓库</a>
+            <a class="btn btn-primary" href="pa-wu-r1-pilot/">进入 R1 Pilot</a>
+            <a class="btn" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation">GitHub 仓库</a>
             <a class="btn" href="#analysis">看结果</a>
             <a class="btn" href="#evaluation-core">看评测工程</a>
           </div>
@@ -66,6 +68,35 @@
           <dl class="hero-metrics" data-slot="hero-corefacts"></dl>
           <p class="panel-note">上述数字均从公开数据文件动态读取，非页面硬编码。</p>
         </aside>
+      </div>
+    </section>
+
+    <!-- 1b. PA—Wu R1 machine-only Pilot 入口 -->
+    <section id="pa-wu-r1-pilot" class="section alt">
+      <div class="wrap">
+        <p class="eyebrow">新评测路线 · 独立于历史研究</p>
+        <h2>PA—Wu R1 machine-only Pilot</h2>
+        <p class="reading lead">
+          这是当前新建的评测路线，研究<strong>决策过程信息</strong>与<strong>决策后行为</strong>如何影响模型对<strong>机器主体</strong>的归因。
+        </p>
+        <p class="note" role="note">
+          <strong>Synthetic demonstration data.</strong>
+          本路线当前所有数值均为合成演示数据，仅用于验证评测、评分、分析、图表与展示管线，
+          不构成模型排名、能力结论或理论实证结论。
+        </p>
+        <p class="reading">
+          设计为 <strong>6 个条件 × 8 个场景 × 2 个方向</strong>，共 <strong>96 条 machine-only 材料</strong>；
+          两个 judge model 评估同一套材料。构念包括 IN、GO、MSI、IC、PA5 与 PA8；自由意志仅为 MSI 中的探索性单项，
+          不作为唯一构念或总分。
+        </p>
+        <p class="reading boundary-once">
+          本主页后续章节仍保留既有 AI/human 历史研究与公开结果；R1 Pilot 是独立的新评测路线，
+          两者的数据和结论不得混合。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="pa-wu-r1-pilot/">进入 R1 Pilot</a>
+          <a class="btn" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/tree/main/tasks/attribution_behavior/evaluations/pa_wu_r1_pilot">查看 Pilot 研究目录</a>
+        </div>
       </div>
     </section>
 

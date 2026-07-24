@@ -1,6 +1,11 @@
 name: Deploy GitHub Pages
 
-# Publishes the static showcase in site/ to GitHub Pages.
+# Publishes the combined static showcase to GitHub Pages.
+# - main showcase source: site/;
+# - R1 Pilot source: docs/pa-wu-r1-pilot/;
+# - both are assembled into a temporary _site/ directory during CI
+#   (site/ at the root, the pilot under /pa-wu-r1-pilot/);
+# - _site/ is a throwaway deploy directory and is NEVER committed to the repo;
 # - deploys only on push to main or manual dispatch;
 # - uses the GitHub Actions Pages path (no Jekyll build);
 # - contains no API key and runs no real provider request.
@@ -22,7 +27,7 @@ concurrency:
 
 jobs:
   deploy:
-    name: Deploy site/ to GitHub Pages
+    name: Assemble site/ + docs/pa-wu-r1-pilot and deploy to GitHub Pages
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -36,10 +41,17 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Assemble Pages artifact
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp -R site/. _site/
+          cp -R docs/pa-wu-r1-pilot _site/pa-wu-r1-pilot
+
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment

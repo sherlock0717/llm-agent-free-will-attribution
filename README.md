@@ -2,9 +2,34 @@
 
 这个项目研究一个具体问题：**决策过程的写法和行动者身份，会怎样改变语言模型对能动性、选择自主性与责任的判断？**
 
-- 在线页面：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/
+- 项目总览：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/
+- PA—Wu R1 machine-only Pilot：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/pa-wu-r1-pilot/
 - 研究说明：[`docs/STUDY_CARD.md`](docs/STUDY_CARD.md)
 - 研究与测量来源：[`docs/research_and_measurement_sources.md`](docs/research_and_measurement_sources.md)
+
+## 当前两层研究内容
+
+本仓库当前并行保留两条相互独立的研究路线，它们的数据与结论**不得混合**。
+
+### 既有历史研究
+
+- 六种过程表述；
+- AI 与 human 身份比较；
+- 历史单模型结果；
+- 当前主页继续保留这些结果和复现链；
+- 这些结果不与 R1 Synthetic Demo 混合。
+
+### PA—Wu R1 Pilot
+
+- machine-only；
+- 六条件（C0–C5）；
+- 八场景；
+- A/B 两个方向；
+- 96 条材料；
+- 两个 co-primary judge models；
+- PA 与 Wu 构念评分（IN、GO、MSI、IC、PA5、PA8）；
+- 当前全部结果为 synthetic_demo；
+- 只验证评测、评分、分析、图表和展示管线。
 
 ## 研究任务
 
@@ -19,7 +44,9 @@
 
 分析单位是**模型对一份材料给出的评分响应**。这些数据用于观察模型的归因判断如何随文本线索变化。
 
-## 当前观察
+## 既有历史研究观察
+
+> 以下结果属于**既有历史 AI/human 研究路线**，与 PA—Wu R1 machine-only Pilot 的 Synthetic Demo 无关，不应混为同一当前设计。
 
 现有公开结果支持三项较稳妥的描述：
 
