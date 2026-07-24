@@ -25,6 +25,19 @@ JS = SITE / "assets" / "js" / "site.js"
 DATA = SITE / "data"
 FIGURES = SITE / "assets" / "figures"
 
+# Relative links that are NOT served from site/ directly, but assembled into the
+# deployed Pages tree by .github/workflows/pages.yml:
+#   site/                 -> _site/
+#   docs/pa-wu-r1-pilot/  -> _site/pa-wu-r1-pilot/
+# For these routes the test verifies the real assembled source exists (the
+# pilot's index.html), rather than requiring a copy inside site/. This is an
+# explicit per-route mapping, not a wildcard exemption.
+DEPLOYED_ROUTE_SOURCES = {
+    "pa-wu-r1-pilot/": (
+        REPO_ROOT / "docs" / "pa-wu-r1-pilot" / "index.html"
+    ),
+}
+
 HTML = INDEX.read_text(encoding="utf-8")
 JS_SRC = JS.read_text(encoding="utf-8")
 CSS_SRC = CSS.read_text(encoding="utf-8")
@@ -195,8 +208,12 @@ def test_all_local_hrefs_resolve():
             continue
         if href.startswith("#"):
             assert href[1:] in ids, "missing anchor target: " + href
-        else:
-            assert (SITE / href).exists(), "broken local href: " + href
+            continue
+        if href in DEPLOYED_ROUTE_SOURCES:
+            # assembled-at-deploy route: verify the real source file exists.
+            assert DEPLOYED_ROUTE_SOURCES[href].is_file(), href
+            continue
+        assert (SITE / href).exists(), "broken local href: " + href
 
 
 def test_nav_anchors_are_valid_sections():

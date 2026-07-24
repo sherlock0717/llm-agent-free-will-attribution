@@ -4,13 +4,46 @@
 
 页面以研究问题和当前结果为主，详细的运行状态、来源记录和复现说明通过仓库文档提供。
 
+## 页面结构与部署组装
+
+- `site/` 是**主展示页**（历史 AI/human 研究路线）。
+- `docs/pa-wu-r1-pilot/` 是**独立的 R1 Pilot 展示页**（machine-only 新路线）。
+- Pages workflow（`.github/workflows/pages.yml`）在部署时把两者组装到临时目录 `_site/`：`site/` 放在根目录，Pilot 放到 `_site/pa-wu-r1-pilot/`。
+- Pilot 最终公开位置为 `/pa-wu-r1-pilot/`：
+  https://sherlock0717.github.io/llm-attribution-behavior-evaluation/pa-wu-r1-pilot/
+- `_site/` 只是临时部署目录，不提交仓库；也不会把第二份 Pilot 页面复制进 `site/`。
+
 ## 本地预览
+
+只启动 `site/` 时**不会**自动包含 Pilot 页面：
 
 ```bash
 python -m http.server 8000 --directory site
 ```
 
-然后打开 http://localhost:8000/ 。
+要预览完整 Pages 结果（含 `/pa-wu-r1-pilot/`），需先组装临时目录再启动服务器。
+
+Linux / macOS：
+
+```bash
+rm -rf _site
+mkdir -p _site
+cp -R site/. _site/
+cp -R docs/pa-wu-r1-pilot _site/pa-wu-r1-pilot
+python -m http.server 8000 --directory _site
+```
+
+PowerShell：
+
+```powershell
+Remove-Item -Recurse -Force _site -ErrorAction SilentlyContinue
+New-Item -ItemType Directory _site | Out-Null
+Copy-Item site\* _site -Recurse
+Copy-Item docs\pa-wu-r1-pilot _site\pa-wu-r1-pilot -Recurse
+python -m http.server 8000 --directory _site
+```
+
+然后打开 http://localhost:8000/ ，Pilot 位于 http://localhost:8000/pa-wu-r1-pilot/ 。
 
 页面通过 `fetch` 读取本地 JSON，因此需要使用静态服务器访问。附加 `?diagnostics=1` 后，页面会把渲染完成状态和文档宽度等诊断信息写入 HTML 属性，供自动测试读取。
 
