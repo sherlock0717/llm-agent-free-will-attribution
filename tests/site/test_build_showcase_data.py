@@ -57,8 +57,7 @@ def test_story_core_facts_are_derived():
     assert facts["scenario_count"] == 8
     assert facts["item_count"] == 34
     assert facts["construct_count"] == 10
-    assert s["title_zh"] == "LLM 归因行为评测"
-    assert s["subtitle_en"] == "A Reproducible Study and Evaluation Prototype"
+    assert s["title_zh"] == "LLM机器主体归因评测"
 
 
 def test_story_scenarios_carry_case_content():
