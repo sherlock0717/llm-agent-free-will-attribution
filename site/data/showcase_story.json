@@ -41,6 +41,56 @@
       "value": "已完成"
     }
   ],
+  "current_study": {
+    "core_facts": [
+      {
+        "key": "condition_count",
+        "label": "实验条件",
+        "value": 6
+      },
+      {
+        "key": "scenario_count",
+        "label": "场景",
+        "value": 8
+      },
+      {
+        "key": "direction_count",
+        "label": "决策方向",
+        "value": 2
+      },
+      {
+        "key": "material_count",
+        "label": "材料总数",
+        "value": 96
+      },
+      {
+        "key": "judge_model_config_count",
+        "label": "评判模型配置",
+        "value": 2
+      },
+      {
+        "key": "responses_per_repeat",
+        "label": "每次完整运行响应",
+        "value": 192
+      },
+      {
+        "key": "data_status",
+        "label": "数据状态",
+        "value": "合成流程演示"
+      },
+      {
+        "key": "target_subject",
+        "label": "目标主体",
+        "value": "仅机器主体"
+      }
+    ],
+    "positioning_zh": "当前主研究考察决策过程信息与决策后行为如何改变大语言模型对机器主体的归因判断。",
+    "showcase_page": "pa-wu-r1-pilot/",
+    "sources_doc": "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md",
+    "study_card": "docs/CURRENT_STUDY_CARD.md",
+    "subtitle_zh": "PA—Wu R1仅机器主体研究",
+    "title_zh": "LLM机器主体归因评测"
+  },
   "domains": [
     "人际关系",
     "服从与自主",
@@ -49,8 +99,9 @@
     "道德冲突",
     "风险决策"
   ],
-  "generated_at": "2026-07-15T03:44:55+00:00",
-  "positioning_zh": "围绕模型如何对行动者的能动性、自由意志与责任作出归因，构建从历史研究、任务契约到可复现运行与证据审计的测试型评测基准。",
+  "generated_at": "2026-07-27T09:02:40+00:00",
+  "legacy_positioning_zh": "早期探索性研究考察行动者身份与决策过程表述如何影响模型对能动性、自由意志与责任的归因，作为该历史路线的方法反思保留。",
+  "legacy_title_zh": "早期探索性研究",
   "research_sources": {
     "detail_docs": [
       {
@@ -62,7 +113,7 @@
         "path": "docs/scale_source_mapping.md"
       }
     ],
-    "intro": "题项池以既有理论和量表构念为基础，再根据具体决策情境改写为归因评分。不同来源在项目中的作用并不相同：有些提供构念框架，有些提供量表维度，操纵检验则由本研究根据实验材料自行编写。",
+    "intro": "早期题项池以既有理论和量表构念为基础，再根据具体决策情境改写为归因评分。不同来源在该历史路线中的作用并不相同：有些提供构念框架，有些提供量表维度，操纵检验则由该历史路线根据实验材料自行编写。",
     "references": [
       {
         "doi": "10.1126/science.1134475",
@@ -137,7 +188,7 @@
             "url": "https://doi.org/10.1080/00223891.2010.528483"
           }
         ],
-        "role": "当前项目将一般信念构念改写为对具体决策者的情境化归因。",
+        "role": "该历史路线将一般信念构念改写为对具体决策者的情境化归因。",
         "usage": "参考量表构念，情境化改写"
       },
       {
@@ -194,7 +245,7 @@
         "usage": "本研究自编"
       }
     ],
-    "usage_note": "当前题项池基于既有理论与量表构念进行情境化改写，并非对原量表的完整直接使用；原研究的信度、效度和因素结构不能直接继承。"
+    "usage_note": "早期题项池基于既有理论与量表构念进行情境化改写，并非对原量表的完整直接使用；原研究的信度、效度和因素结构不能直接继承。"
   },
   "result_takeaways": [
     "把决策过程讲得更完整（从只报结论到给出理由、反思与修正），模型对决策者的能动性评分总体升高，这是最稳定的差异。",
@@ -277,6 +328,5 @@
       "option_b": "简短说明团队成员也完成了关键部分。"
     }
   ],
-  "subtitle_en": "A Reproducible Study and Evaluation Prototype",
-  "title_zh": "LLM 归因行为评测"
+  "title_zh": "LLM机器主体归因评测"
 }

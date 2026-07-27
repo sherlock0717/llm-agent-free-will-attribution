@@ -2,10 +2,12 @@
 
 本项目当前以PA—Wu R1为主研究，考察决策过程线索与决策后行为如何影响大语言模型对人工智能决策系统的独立性、目标导向性、心理状态和影响能力等属性的归因判断。
 
-- 当前研究展示页：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/pa-wu-r1-pilot/
 - 当前研究说明：[`docs/CURRENT_STUDY_CARD.md`](docs/CURRENT_STUDY_CARD.md)
-- 研究与测量来源：[`docs/research_and_measurement_sources.md`](docs/research_and_measurement_sources.md)
-- 早期探索性研究归档：[`docs/STUDY_CARD.md`](docs/STUDY_CARD.md)、项目总览首页 https://sherlock0717.github.io/llm-attribution-behavior-evaluation/
+- 当前研究与测量来源：[`docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md`](docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md)
+- 当前研究展示页：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/pa-wu-r1-pilot/
+- 早期研究来源归档：[`docs/research_and_measurement_sources.md`](docs/research_and_measurement_sources.md)
+- 早期题项来源映射：[`docs/scale_source_mapping.md`](docs/scale_source_mapping.md)
+- 早期研究说明：[`docs/STUDY_CARD.md`](docs/STUDY_CARD.md)
 
 ## 当前主研究
 
@@ -118,11 +120,17 @@ tests/                      单元、集成和站点测试
 
 ## 文档入口
 
+当前研究：
+
 - 当前研究说明：[`docs/CURRENT_STUDY_CARD.md`](docs/CURRENT_STUDY_CARD.md)
+- 当前研究与测量来源：[`docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md`](docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md)
 - 当前研究展示页：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/pa-wu-r1-pilot/
-- 研究与测量来源：[`docs/research_and_measurement_sources.md`](docs/research_and_measurement_sources.md)
-- 题项来源映射：[`docs/scale_source_mapping.md`](docs/scale_source_mapping.md)
-- 早期探索性研究归档说明：[`docs/STUDY_CARD.md`](docs/STUDY_CARD.md)
+
+早期探索性研究归档：
+
+- 早期研究说明：[`docs/STUDY_CARD.md`](docs/STUDY_CARD.md)
+- 早期研究来源归档：[`docs/research_and_measurement_sources.md`](docs/research_and_measurement_sources.md)
+- 早期题项来源映射：[`docs/scale_source_mapping.md`](docs/scale_source_mapping.md)
 - 早期研究设计：[`docs/research_design_blueprint.md`](docs/research_design_blueprint.md)
 - 项目总览首页（含早期归档）：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/
 

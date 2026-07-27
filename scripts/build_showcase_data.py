@@ -390,6 +390,51 @@ def _research_sources() -> dict:
     }
 
 
+_R1_DIR = "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot"
+
+
+def _current_study() -> dict:
+    """Current PA-Wu R1 hero facts, sourced (not hardcoded) from the R1 pilot
+    showcase_data.json and study_protocol.yaml. Fails loudly if a value is
+    missing so the current hero can never silently drift from the R1 assets."""
+    showcase = json.loads(bsd._read_text(f"{_R1_DIR}/outputs/showcase_data.json"))
+    protocol = yaml.safe_load(bsd._read_text(f"{_R1_DIR}/study_protocol.yaml"))
+    design = protocol["design"]
+    quality = showcase["quality_summary"]
+
+    conditions = len(design["material_factors"]["condition"])
+    scenarios = int(design["material_factors"]["scenario"])
+    directions = len(design["material_factors"]["direction_version"])
+    materials = int(design["material_count"])
+    responses = int(design["responses_per_repeat"])
+    judge_models = len(showcase["judge_models"])
+    if int(quality["n_materials"]) != materials:
+        raise BuildError("R1 material_count mismatch between protocol and showcase_data")
+    if int(quality["n_responses"]) != responses:
+        raise BuildError("R1 responses_per_repeat mismatch between protocol and showcase_data")
+
+    core_facts = [
+        {"key": "condition_count", "value": conditions, "label": "实验条件"},
+        {"key": "scenario_count", "value": scenarios, "label": "场景"},
+        {"key": "direction_count", "value": directions, "label": "决策方向"},
+        {"key": "material_count", "value": materials, "label": "材料总数"},
+        {"key": "judge_model_config_count", "value": judge_models, "label": "评判模型配置"},
+        {"key": "responses_per_repeat", "value": responses, "label": "每次完整运行响应"},
+        {"key": "data_status", "value": "合成流程演示", "label": "数据状态"},
+        {"key": "target_subject", "value": "仅机器主体", "label": "目标主体"},
+    ]
+    return {
+        "title_zh": "LLM机器主体归因评测",
+        "subtitle_zh": "PA—Wu R1仅机器主体研究",
+        "positioning_zh": (
+            "当前主研究考察决策过程信息与决策后行为如何改变大语言模型对机器主体的归因判断。"),
+        "core_facts": core_facts,
+        "sources_doc": "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md",
+        "study_card": "docs/CURRENT_STUDY_CARD.md",
+        "showcase_page": "pa-wu-r1-pilot/",
+    }
+
+
 def build_showcase_story() -> dict:
     rows = bsd._read_csv("outputs/scale_scores.csv")
     records = len(rows)
@@ -419,11 +464,14 @@ def build_showcase_story() -> dict:
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "title_zh": "LLM 归因行为评测",
-        "subtitle_en": "A Reproducible Study and Evaluation Prototype",
-        "positioning_zh": (
-            "围绕模型如何对行动者的能动性、自由意志与责任作出归因，"
-            "构建从历史研究、任务契约到可复现运行与证据审计的测试型评测基准。"),
+        # current PA-Wu R1 hero facts (drive the front page)
+        "current_study": _current_study(),
+        # legacy AI/human route facts (archive only; never the current hero)
+        "title_zh": "LLM机器主体归因评测",
+        "legacy_title_zh": "早期探索性研究",
+        "legacy_positioning_zh": (
+            "早期探索性研究考察行动者身份与决策过程表述如何影响模型对能动性、"
+            "自由意志与责任的归因，作为该历史路线的方法反思保留。"),
         "core_facts": core_facts,
         "scenarios": _scenario_cards(set(scenarios)),
         "domains": domains,

@@ -725,3 +725,121 @@ def test_repository_url_targets_current_slug_and_main():
     assert '"llm-attribution-behavior-evaluation"' in JS_SRC
     assert '"main"' in JS_SRC
     assert OLD_SLUG not in JS_SRC
+
+
+# --- PR A follow-up: dynamic data + current-research positioning -----------
+
+PILOT_SHOWCASE = json.loads(
+    (REPO_ROOT / "tasks" / "attribution_behavior" / "evaluations"
+     / "pa_wu_r1_pilot" / "outputs" / "showcase_data.json").read_text(encoding="utf-8"))
+
+
+def test_hero_uses_current_study_object():
+    # renderHero must read the current PA-Wu R1 study object, not the legacy
+    # story.core_facts, and fail loudly if it is missing.
+    hero = JS_SRC.split("function renderHero(", 1)[1].split("\n}", 1)[0]
+    assert "story.current_study" in hero
+    assert "core_facts" in hero
+    # it must NOT fall back to the legacy top-level core_facts for the hero
+    assert "story.core_facts" not in hero
+
+
+def test_showcase_story_has_current_study_core_facts():
+    cs = STORY.get("current_study")
+    assert cs, "showcase_story.json missing current_study"
+    facts = {f["label"]: f["value"] for f in cs["core_facts"]}
+    assert facts["实验条件"] == 6
+    assert facts["场景"] == 8
+    assert facts["决策方向"] == 2
+    assert facts["材料总数"] == 96
+    assert facts["评判模型配置"] == 2
+    assert facts["每次完整运行响应"] == 192
+    assert facts["数据状态"] == "合成流程演示"
+    assert facts["目标主体"] == "仅机器主体"
+
+
+def test_current_study_facts_exclude_legacy_metrics():
+    cs = STORY["current_study"]
+    labels = {f["label"] for f in cs["core_facts"]}
+    values = {str(f["value"]) for f in cs["core_facts"]}
+    for bad_label in ["行动者身份", "历史记录", "测量题项", "测量构念",
+                      "可复现 mock 运行", "真实接口离线准备"]:
+        assert bad_label not in labels, bad_label
+    for bad_value in ["360", "34", "10", "2"]:
+        # 2 is legitimately used (directions / judge models); only guard the
+        # legacy-only counts 360/34/10 as values.
+        if bad_value in {"360", "34", "10"}:
+            assert bad_value not in values, bad_value
+
+
+def test_current_study_facts_match_pilot_showcase():
+    cs = STORY["current_study"]
+    facts = {f["label"]: f["value"] for f in cs["core_facts"]}
+    q = PILOT_SHOWCASE["quality_summary"]
+    assert facts["材料总数"] == q["n_materials"] == 96
+    assert facts["每次完整运行响应"] == q["n_responses"] == 192
+
+
+def test_current_study_points_to_current_sources_doc():
+    cs = STORY["current_study"]
+    assert cs["sources_doc"] == "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md"
+
+
+def test_current_constructs_section_links_current_sources_doc():
+    sec = HTML.split('id="current-constructs-sources"', 1)[1].split("</section>", 1)[0]
+    assert "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md" in sec
+    # the current constructs section must NOT present the legacy sources doc as R1's
+    assert "research_and_measurement_sources.md" not in sec.replace(
+        "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md", "")
+    assert "未声称内容效度" in sec
+
+
+def test_current_sources_doc_exists_and_lists_real_assets():
+    doc = (REPO_ROOT / "docs" / "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md").read_text(encoding="utf-8")
+    assert doc.startswith("# 当前研究与测量来源：PA—Wu R1")
+    for path in [
+        "pa_wu_r1_pilot/study_protocol.yaml",
+        "pa_wu_r1_pilot/scoring_spec.yaml",
+        "pa_wu_p0/",
+    ]:
+        assert path in doc, path
+    for real in ["Wu & Shen 2026", "PA 2024"]:
+        assert real in doc, real
+
+
+def test_legacy_sources_docs_carry_archive_banner():
+    src = (REPO_ROOT / "docs" / "research_and_measurement_sources.md").read_text(encoding="utf-8")
+    assert src.startswith("# 早期探索性研究的研究与测量来源")
+    assert "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md" in src
+    mapping = (REPO_ROOT / "docs" / "scale_source_mapping.md").read_text(encoding="utf-8")
+    assert mapping.startswith("# 早期题项与理论来源映射")
+    assert "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md" in mapping
+
+
+def test_showcase_story_legacy_wording_is_archive():
+    blob = json.dumps(STORY, ensure_ascii=False)
+    for bad in ["当前项目", "当前题项池", "本项目当前"]:
+        assert bad not in blob, bad
+    assert ("早期" in blob) or ("历史路线" in blob)
+
+
+def test_current_methods_links_r1_assets_and_not_archive():
+    sec = HTML.split('id="current-methods"', 1)[1].split("</section>", 1)[0]
+    for asset in ["CURRENT_STUDY_CARD.md", "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md",
+                  "study_protocol.yaml", "analysis_plan.md", "scoring_spec.yaml",
+                  "render_report.py", "pa-wu-r1-pilot/"]:
+        assert asset in sec, asset
+    for bad in ["复现入口见下方早期探索性研究归档",
+                "当前研究方法记录在历史归档对应区域"]:
+        assert bad not in sec, bad
+
+
+def test_legacy_history_data_files_still_present():
+    for path in [
+        "site/data/historical_results.json",
+        "site/data/showcase_story.json",
+        "docs/STUDY_CARD.md",
+        "docs/research_and_measurement_sources.md",
+        "docs/scale_source_mapping.md",
+    ]:
+        assert (REPO_ROOT / path).is_file(), path
