@@ -843,3 +843,134 @@ def test_legacy_history_data_files_still_present():
         "docs/scale_source_mapping.md",
     ]:
         assert (REPO_ROOT / path).is_file(), path
+
+
+# --- PR A final hardening: sourced status, license boundary, timestamp hygiene
+
+
+def _load_build_showcase_data():
+    """Import scripts/build_showcase_data.py with its sibling deps on sys.path."""
+    import sys
+
+    for sub in ("scripts", "src"):
+        p = str(REPO_ROOT / sub)
+        if p not in sys.path:
+            sys.path.insert(0, p)
+    spec = importlib.util.spec_from_file_location(
+        "build_showcase_data", REPO_ROOT / "scripts" / "build_showcase_data.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+CURRENT_SOURCES_DOC = (
+    REPO_ROOT / "docs" / "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md"
+).read_text(encoding="utf-8")
+
+TIMESTAMP_ONLY_JSON = [
+    "analysis_results.json",
+    "engineering_status.json",
+    "evaluation_summary.json",
+    "evidence_matrix.json",
+    "measurement_summary.json",
+    "reproducibility_summary.json",
+    "site_summary.json",
+]
+
+
+def test_current_study_uses_controlled_status_vocabularies():
+    # (1) data_status / target_subject display text comes from the controlled
+    # maps, never hardcoded prose inside _current_study.
+    bsd_show = _load_build_showcase_data()
+    assert bsd_show.DATA_STATUS_ZH["synthetic_demo"] == "合成流程演示"
+    assert bsd_show.TARGET_SUBJECT_ZH["machine"] == "仅机器主体"
+    src = (REPO_ROOT / "scripts" / "build_showcase_data.py").read_text(encoding="utf-8")
+    body = src.split("def _current_study(", 1)[1].split("\ndef ", 1)[0]
+    # the display strings must be looked up, not written as literals in the facts
+    assert '"value": data_status_zh' in body
+    assert '"value": target_subject_zh' in body
+    assert '"合成流程演示"' not in body.split("core_facts", 1)[1]
+    assert '"仅机器主体"' not in body.split("core_facts", 1)[1]
+
+
+def test_current_study_cross_checks_status_and_judges():
+    # (2) _current_study reads both R1 source files and agrees on the three
+    # status/config values (data_status, target_subject, judge models).
+    bsd_show = _load_build_showcase_data()
+    cs = bsd_show._current_study()
+    facts = {f["key"]: f["value"] for f in cs["core_facts"]}
+    assert facts["data_status"] == "合成流程演示"
+    assert facts["target_subject"] == "仅机器主体"
+    assert facts["judge_model_config_count"] == 2
+
+
+def test_current_study_data_status_agrees_with_sources():
+    # (3) the R1 protocol and showcase agree on data_status = synthetic_demo.
+    proto = (REPO_ROOT / "tasks" / "attribution_behavior" / "evaluations"
+             / "pa_wu_r1_pilot" / "study_protocol.yaml").read_text(encoding="utf-8")
+    assert "data_status_of_package: synthetic_demo" in proto
+    assert PILOT_SHOWCASE["data_status"] == "synthetic_demo"
+
+
+def test_current_study_target_subject_agrees_with_sources():
+    # (4) both R1 sources declare a machine-only target subject.
+    proto = (REPO_ROOT / "tasks" / "attribution_behavior" / "evaluations"
+             / "pa_wu_r1_pilot" / "study_protocol.yaml").read_text(encoding="utf-8")
+    assert "target_subject: machine" in proto
+    assert PILOT_SHOWCASE["target_subject"] == "machine"
+
+
+def test_current_study_judge_models_configured_consistently():
+    # (5) the two configured judge models match across both R1 sources, with no
+    # duplicates, and are exactly deepseek-v4-pro + gpt-5.6-terra.
+    ids = [row["id"] for row in PILOT_SHOWCASE["judge_models"]]
+    assert ids == ["deepseek-v4-pro", "gpt-5.6-terra"]
+    assert len(set(ids)) == len(ids)
+
+
+def test_current_sources_doc_has_full_literature_and_license_section():
+    # (6) the sources doc now carries a full literature + license-status section.
+    assert "## 完整文献与许可状态" in CURRENT_SOURCES_DOC
+    assert "10.1145/3640011" in CURRENT_SOURCES_DOC
+    assert "10.1093/jcmc/zmag009" in CURRENT_SOURCES_DOC
+
+
+def test_current_sources_doc_records_three_pa_license_facts_separately():
+    # (7) the three PA license facts are recorded separately, not collapsed.
+    doc = CURRENT_SOURCES_DOC
+    assert "PA13 题项文本" in doc and "CC BY 4.0" in doc
+    assert "作者公开页面" in doc
+    assert "本身未单独声明网页内容许可" in doc
+
+
+def test_current_sources_doc_marks_pa_subscores_not_short_forms():
+    # (8) PA5/PA8 are official PA13 sub-scores; R1 uses derived scores, and they
+    # are explicitly not independent validated short forms.
+    doc = CURRENT_SOURCES_DOC
+    assert "PA13 的官方子集" in doc or "官方子分数" in doc
+    assert "不等同于独立短表施测" in doc or "不构成独立验证短表" in doc
+
+
+def test_current_sources_doc_uses_full_repo_paths_and_translation_wording():
+    # (9) evidence paths are full repository paths; translation wording is fixed.
+    doc = CURRENT_SOURCES_DOC
+    assert ("tasks/attribution_behavior/measurement_candidates/pa_wu_p0/"
+            "items_wu_shen_2026.yaml") in doc
+    assert "当前评分链未新增最终中文题项翻译" in doc
+    assert "施测使用英文刺激材料与英文题项" in doc
+
+
+def test_timestamp_only_json_match_main_except_generated_at():
+    # (10) the seven engineering JSONs differ from origin/main only by their
+    # generated_at timestamp; no other content drifts in on this PR.
+    import subprocess
+
+    for name in TIMESTAMP_ONLY_JSON:
+        rel = f"site/data/{name}"
+        main_blob = subprocess.check_output(
+            ["git", "show", f"origin/main:{rel}"], cwd=REPO_ROOT)
+        main_obj = json.loads(main_blob.decode("utf-8"))
+        cur_obj = json.loads((DATA / name).read_text(encoding="utf-8"))
+        main_obj.pop("generated_at", None)
+        cur_obj.pop("generated_at", None)
+        assert main_obj == cur_obj, name

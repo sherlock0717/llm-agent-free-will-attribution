@@ -392,11 +392,31 @@ def _research_sources() -> dict:
 
 _R1_DIR = "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot"
 
+# Controlled vocabularies for the R1 hero status fields. The English keys are the
+# machine-readable source-of-truth values that MUST appear identically in both
+# the R1 study_protocol.yaml and the R1 showcase_data.json; the Chinese values
+# are the display labels. Membership is enforced (unknown values fail loudly) so
+# the hero can never show a status the pipeline has not declared, and the display
+# text is never hardcoded — it is always looked up from these maps.
+DATA_STATUS_ZH = {"synthetic_demo": "合成流程演示"}
+TARGET_SUBJECT_ZH = {"machine": "仅机器主体"}
+
 
 def _current_study() -> dict:
     """Current PA-Wu R1 hero facts, sourced (not hardcoded) from the R1 pilot
     showcase_data.json and study_protocol.yaml. Fails loudly if a value is
-    missing so the current hero can never silently drift from the R1 assets."""
+    missing so the current hero can never silently drift from the R1 assets.
+
+    Besides the count facts, three status/config values are cross-checked between
+    the two R1 source files and mapped to display text through controlled
+    vocabularies (never hardcoded prose):
+      * data_status  -- showcase_data.data_status vs protocol.data_status_of_package
+      * target_subject -- showcase_data.target_subject vs
+        protocol.identity_scope.target_subject
+      * judge model configuration -- protocol.design.judge_models vs the ids in
+        showcase_data.judge_models (no duplicates, same set/order)
+    Any mismatch, unknown status value or judge-model disagreement raises
+    BuildError."""
     showcase = json.loads(bsd._read_text(f"{_R1_DIR}/outputs/showcase_data.json"))
     protocol = yaml.safe_load(bsd._read_text(f"{_R1_DIR}/study_protocol.yaml"))
     design = protocol["design"]
@@ -407,11 +427,45 @@ def _current_study() -> dict:
     directions = len(design["material_factors"]["direction_version"])
     materials = int(design["material_count"])
     responses = int(design["responses_per_repeat"])
-    judge_models = len(showcase["judge_models"])
     if int(quality["n_materials"]) != materials:
         raise BuildError("R1 material_count mismatch between protocol and showcase_data")
     if int(quality["n_responses"]) != responses:
         raise BuildError("R1 responses_per_repeat mismatch between protocol and showcase_data")
+
+    # --- data_status: agree across sources, and be a known status value -------
+    data_status = showcase["data_status"]
+    if data_status != protocol["data_status_of_package"]:
+        raise BuildError(
+            "R1 data_status mismatch between showcase_data "
+            f"('{data_status}') and protocol "
+            f"('{protocol['data_status_of_package']}')")
+    data_status_zh = DATA_STATUS_ZH.get(data_status)
+    if data_status_zh is None:
+        raise BuildError(f"R1 unknown data_status '{data_status}'")
+
+    # --- target_subject: agree across sources, and be a known subject value ---
+    target_subject = showcase["target_subject"]
+    protocol_subject = protocol["identity_scope"]["target_subject"]
+    if target_subject != protocol_subject:
+        raise BuildError(
+            "R1 target_subject mismatch between showcase_data "
+            f"('{target_subject}') and protocol ('{protocol_subject}')")
+    target_subject_zh = TARGET_SUBJECT_ZH.get(target_subject)
+    if target_subject_zh is None:
+        raise BuildError(f"R1 unknown target_subject '{target_subject}'")
+
+    # --- judge models: same configured set across both sources, no dupes ------
+    protocol_judges = [str(m) for m in design["judge_models"]]
+    showcase_judges = [row["id"] for row in showcase["judge_models"]]
+    if len(set(protocol_judges)) != len(protocol_judges):
+        raise BuildError(f"R1 protocol judge_models contain duplicates: {protocol_judges}")
+    if len(set(showcase_judges)) != len(showcase_judges):
+        raise BuildError(f"R1 showcase judge_models contain duplicate ids: {showcase_judges}")
+    if protocol_judges != showcase_judges:
+        raise BuildError(
+            "R1 judge model configuration mismatch between protocol "
+            f"({protocol_judges}) and showcase_data ({showcase_judges})")
+    judge_models = len(showcase_judges)
 
     core_facts = [
         {"key": "condition_count", "value": conditions, "label": "实验条件"},
@@ -420,8 +474,8 @@ def _current_study() -> dict:
         {"key": "material_count", "value": materials, "label": "材料总数"},
         {"key": "judge_model_config_count", "value": judge_models, "label": "评判模型配置"},
         {"key": "responses_per_repeat", "value": responses, "label": "每次完整运行响应"},
-        {"key": "data_status", "value": "合成流程演示", "label": "数据状态"},
-        {"key": "target_subject", "value": "仅机器主体", "label": "目标主体"},
+        {"key": "data_status", "value": data_status_zh, "label": "数据状态"},
+        {"key": "target_subject", "value": target_subject_zh, "label": "目标主体"},
     ]
     return {
         "title_zh": "LLM机器主体归因评测",
