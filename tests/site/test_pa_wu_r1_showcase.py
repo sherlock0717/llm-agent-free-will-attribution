@@ -263,3 +263,59 @@ def test_no_external_cdn_assets():
         assert not href.startswith(("http://", "https://", "//")), href
     assert "@import" not in CSS
     assert "http" not in CSS
+
+
+# --- 7. PR B: analysis-presentation redesign (#s7 / #s8 / #s9) --------------
+
+def test_s7_title_is_analysis_framework():
+    s7 = HTML.split('id="s7"', 1)[1].split("</section>", 1)[0]
+    assert "分析框架与结果呈现方式" in s7
+
+
+def test_condition_profile_chart_present():
+    assert 'id="conditionProfileChart"' in HTML
+    # native inline SVG, no external chart library
+    assert "<svg" in HTML
+    for lib in ["echarts", "chart.js", "chartjs", "d3.", "react", "vue"]:
+        assert lib not in HTML.lower()
+        assert lib not in JS.lower()
+
+
+def test_construct_selector_drives_chart_update():
+    # the #s7 selector handler must refresh the SVG chart, not only the table
+    assert "renderConditionProfile" in JS
+    view = JS.split("function renderConstructView(", 1)[1].split("\n}", 1)[0]
+    assert "renderConditionProfile(" in view
+
+
+def test_synthetic_pipeline_appendix_collapsed_by_default():
+    assert 'id="syntheticPipelineAppendix"' in HTML
+    appx = re.search(r'<details id="syntheticPipelineAppendix"[^>]*>', HTML)
+    assert appx, "appendix details tag missing"
+    # a <details> without the `open` attribute is collapsed by default
+    assert "open" not in appx.group(0)
+
+
+def test_s8_main_area_has_no_pvalue_table():
+    # the P1—P6 main area shows comparison cards; the p-value / CI table lives
+    # only inside the collapsed technical appendix.
+    s8 = HTML.split('id="s8"', 1)[1].split("</section>", 1)[0]
+    main = s8.split('id="syntheticPipelineAppendix"', 1)[0]
+    assert 'id="contrastCards"' in main
+    assert 'id="contrastTable"' not in main
+    assert "Holm校正p值" not in main
+
+
+def test_s9_main_area_has_no_model_mean_ranking():
+    s9 = HTML.split('id="s9"', 1)[1].split("</section>", 1)[0]
+    assert 'id="judgeConfigCards"' in s9
+    assert 'id="judgeDiffTable"' not in s9
+    assert "不用于模型能力排名" in s9
+
+
+def test_s9_states_empirical_performance_unevaluated():
+    # #s9 model cards render an explicit "实证表现 / 未评估" configuration status
+    assert "实证表现" in JS
+    assert "renderJudgeConfig" in JS
+    config = JS.split("function renderJudgeConfig(", 1)[1].split("\n}", 1)[0]
+    assert "未评估" in config
