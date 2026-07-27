@@ -65,7 +65,13 @@ function repoPathURL(path, kind) {
 function renderHero(story) {
   const dl = requireSlot("hero-corefacts");
   dl.textContent = "";
-  (story.core_facts || []).forEach((f) => {
+  // The front-page hero shows the CURRENT PA-Wu R1 study facts, not the legacy
+  // AI/human route's core_facts. current_study is generated from the R1 assets.
+  const current = story.current_study;
+  if (!current || !Array.isArray(current.core_facts) || current.core_facts.length === 0) {
+    throw new Error("当前研究核心事实缺失：showcase_story.json 未提供 current_study.core_facts");
+  }
+  current.core_facts.forEach((f) => {
     const wrap = el("div", { className: "metric" });
     wrap.appendChild(el("dt", { text: f.label }));
     wrap.appendChild(el("dd", { text: String(f.value) }));

@@ -414,9 +414,11 @@ def build_showcase_data(figs: list[Path]) -> None:
         },
         "judge_models": [
             {"id": "deepseek-v4-pro", "provider": "deepseek",
-             "role": "co-primary judge model (illustrative id)"},
+             "role": "co-primary judge model (configuration selected; empirical "
+             "performance not evaluated)"},
             {"id": "gpt-5.6-terra", "provider": "openai",
-             "role": "co-primary judge model (illustrative id)"},
+             "role": "co-primary judge model (configuration selected; empirical "
+             "performance not evaluated)"},
         ],
         "scenarios": sorted(quality["balance"]["per_scenario"].keys()),
         "scenario_materials": scenario_materials,

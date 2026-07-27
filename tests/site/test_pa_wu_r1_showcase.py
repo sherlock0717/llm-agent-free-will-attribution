@@ -243,6 +243,19 @@ def test_english_source_material_preserved_in_js():
     assert '"the machine" refers to the AI system described above.' in JS
 
 
+def test_pilot_page_has_no_illustrative_id():
+    assert "illustrative id" not in HTML
+    assert "illustrative id" not in JS
+    assert "illustrative id" not in DATA.read_text(encoding="utf-8")
+
+
+def test_pilot_page_states_configuration_and_unevaluated_status():
+    blob = HTML + JS
+    assert "配置已确定" in blob or "配置" in HTML
+    assert "实证表现未评估" in blob
+    assert ("不代表其实际评分行为" in blob) or ("不代表该模型的实际评分行为" in blob)
+
+
 def test_no_external_cdn_assets():
     for src in re.findall(r'src="([^"]+)"', HTML):
         assert not src.startswith(("http://", "https://", "//")), src

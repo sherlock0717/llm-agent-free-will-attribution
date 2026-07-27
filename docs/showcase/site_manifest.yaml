@@ -97,8 +97,8 @@ experimental_design:
 # 自编操纵检验没有外部量表来源。页面、docs/research_and_measurement_sources.md 与
 # docs/scale_source_mapping.md 使用同一套核验文献。DOI 必须为合法的 10.xxxx/ 形式。
 research_sources:
-  intro_zh: "题项池以既有理论和量表构念为基础，再根据具体决策情境改写为归因评分。不同来源在项目中的作用并不相同：有些提供构念框架，有些提供量表维度，操纵检验则由本研究根据实验材料自行编写。"
-  usage_note_zh: "当前题项池基于既有理论与量表构念进行情境化改写，并非对原量表的完整直接使用；原研究的信度、效度和因素结构不能直接继承。"
+  intro_zh: "早期题项池以既有理论和量表构念为基础，再根据具体决策情境改写为归因评分。不同来源在该历史路线中的作用并不相同：有些提供构念框架，有些提供量表维度，操纵检验则由该历史路线根据实验材料自行编写。"
+  usage_note_zh: "早期题项池基于既有理论与量表构念进行情境化改写，并非对原量表的完整直接使用；原研究的信度、效度和因素结构不能直接继承。"
   detail_docs:
     - path: "docs/research_and_measurement_sources.md"
       note_zh: "研究与测量来源（完整文献与题项映射）"
@@ -119,7 +119,7 @@ research_sources:
       label_zh: "自由意志信念与归因"
       citation_short: "FWI（Nadelhoffer 等，2014）／ FAD-Plus（Paulhus 与 Carey，2011）"
       constructs_zh: ["自由意志", "替代可能性", "行动意向", "决定论信念", "责任"]
-      role_zh: "当前项目将一般信念构念改写为对具体决策者的情境化归因。"
+      role_zh: "该历史路线将一般信念构念改写为对具体决策者的情境化归因。"
       usage_zh: "参考量表构念，情境化改写"
       references:
         - full: "Nadelhoffer, T., Shepard, J., Nahmias, E., Sripada, C. S., & Ross, L. T. (2014). The free will inventory: Measuring beliefs about agency and responsibility. Consciousness and Cognition, 25, 27–41. https://doi.org/10.1016/j.concog.2014.01.006"

@@ -295,8 +295,8 @@ function renderJudges() {
     host.appendChild(el("article", { class: "card" },
       el("h3", {}, model.id),
       el("p", {}, `提供方：${model.provider}`),
-      el("p", { class: "small" }, "角色：共同主要评判模型；对同一套96条材料进行评分。"),
-      el("p", { class: "small warn-text" }, "当前展示为合成演示数据，不代表该模型的真实输出。")
+      el("p", { class: "small" }, "角色：共同主要评判模型（配置已确定）；后续完整运行时将对同一套96条材料独立评分。"),
+      el("p", { class: "small warn-text" }, "当前展示为合成流程演示数据，不代表该模型的实际评分行为，实证表现未评估。")
     ));
   });
 }

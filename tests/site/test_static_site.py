@@ -65,15 +65,17 @@ SELECTED_FIGURES = [
     "mean_subjective_process_completeness.png",
 ]
 
-MAIN_TITLE = "LLM 归因行为评测"
-SUBTITLE = "A Reproducible Study and Evaluation Prototype"
+MAIN_TITLE = "LLM机器主体归因评测"
+SUBTITLE = "PA—Wu R1仅机器主体研究"
 NEW_SLUG = "llm-attribution-behavior-evaluation"
 OLD_SLUG = "llm-agent-free-will-attribution"
 
-# The public README title. The README and the current showcase page may use
-# different titles for now; page-title unification is handled separately, so
-# MAIN_TITLE / SUBTITLE above are intentionally left unchanged.
-README_TITLE = "LLM 行动者归因评测"
+# The public README title is now unified to the current machine-only research.
+README_TITLE = "LLM机器主体归因评测"
+
+# nav entries that must NOT sit in the first-level navigation any more (they
+# belong to the legacy archive and moved under 方法与复现 / 历史归档).
+FORBIDDEN_TOP_NAV = ["模拟运行验证", "真实模型接入", "评测核心"]
 
 
 # --- files / structure -----------------------------------------------------
@@ -105,19 +107,23 @@ def test_index_contains_all_sections():
 # --- (14) frozen public naming ---------------------------------------------
 
 def test_main_title_exact():
-    assert re.search(r"<h1>\s*LLM 归因行为评测\s*</h1>", HTML)
+    assert re.search(r"<h1>\s*LLM机器主体归因评测\s*</h1>", HTML)
 
 
 def test_subtitle_exact():
-    assert '<p class="subtitle">A Reproducible Study and Evaluation Prototype</p>' in HTML
+    assert '<p class="subtitle">PA—Wu R1仅机器主体研究</p>' in HTML
 
 
 def test_html_title_correct():
-    assert "<title>LLM 归因行为评测｜A Reproducible Study and Evaluation Prototype</title>" in HTML
+    assert "<title>LLM机器主体归因评测｜PA—Wu R1研究</title>" in HTML
 
 
-def test_positioning_uses_test_evaluation_benchmark():
-    assert "测试型评测基准" in HTML
+def test_positioning_is_current_machine_only_research():
+    # the page now leads with the current PA-Wu R1 machine-only research
+    assert "PA—Wu R1" in HTML
+    assert "机器主体" in HTML
+    # and no longer positions itself as a test-evaluation benchmark up front
+    assert "测试型评测基准" not in HTML
 
 
 # --- (14) no version numbers / old names -----------------------------------
@@ -209,9 +215,10 @@ def test_all_local_hrefs_resolve():
         if href.startswith("#"):
             assert href[1:] in ids, "missing anchor target: " + href
             continue
-        if href in DEPLOYED_ROUTE_SOURCES:
-            # assembled-at-deploy route: verify the real source file exists.
-            assert DEPLOYED_ROUTE_SOURCES[href].is_file(), href
+        # deployed-at-assembly route (optionally with a #fragment into that page)
+        route = href.split("#", 1)[0]
+        if route in DEPLOYED_ROUTE_SOURCES:
+            assert DEPLOYED_ROUTE_SOURCES[route].is_file(), href
             continue
         assert (SITE / href).exists(), "broken local href: " + href
 
@@ -220,6 +227,53 @@ def test_nav_anchors_are_valid_sections():
     nav = HTML.split('id="site-nav-list"', 1)[1].split("</nav>", 1)[0]
     for href in re.findall(r'href="#([^"]+)"', nav):
         assert f'id="{href}"' in HTML, href
+
+
+def test_top_nav_excludes_legacy_engineering_entries():
+    nav = HTML.split('id="site-nav-list"', 1)[1].split("</nav>", 1)[0]
+    for bad in FORBIDDEN_TOP_NAV:
+        assert bad not in nav, bad
+
+
+def test_top_nav_leads_with_current_research():
+    nav = HTML.split('id="site-nav-list"', 1)[1].split("</nav>", 1)[0]
+    labels = re.findall(r'<a href="#[^"]+">([^<]+)</a>', nav)
+    assert labels and labels[0] == "当前研究"
+    assert "历史归档" in labels
+
+
+def test_current_study_card_exists_and_is_current():
+    card = (REPO_ROOT / "docs" / "CURRENT_STUDY_CARD.md").read_text(encoding="utf-8")
+    assert card.startswith("# 当前研究：PA—Wu R1机器主体归因评测")
+    assert "仅机器主体" in card
+    # no unsupported validity claims
+    for bad in ["专家确认", "专家验证", "内容效度成立"]:
+        assert bad not in card, bad
+
+
+def test_legacy_study_card_marked_as_archive():
+    card = (REPO_ROOT / "docs" / "STUDY_CARD.md").read_text(encoding="utf-8")
+    assert card.startswith("# 早期探索性研究归档说明")
+    assert "不代表当前主研究设计" in card
+    assert "CURRENT_STUDY_CARD.md" in card
+
+
+def test_site_has_legacy_archive_boundary():
+    assert 'id="legacy-archive"' in HTML
+    assert "早期探索性研究归档" in HTML
+    # legacy section headings carry an 早期/历史 qualifier
+    assert "早期研究问题" in HTML
+
+
+def test_legacy_research_files_still_present():
+    # nothing historical is deleted
+    for path in [
+        "docs/STUDY_CARD.md",
+        "docs/research_and_measurement_sources.md",
+        "site/data/showcase_story.json",
+        "site/data/historical_results.json",
+    ]:
+        assert (REPO_ROOT / path).is_file(), path
 
 
 # --- (14) chart slots / JS wiring ------------------------------------------
@@ -487,57 +541,52 @@ def test_page_has_no_evidence_boundary_section_still():
     assert "证据与来源边界" not in HTML
 
 
-def test_readme_uses_current_title_and_research_question():
-    # README opens with its current title and states the research question and
-    # the attribution dimensions it studies (no verbatim full-sentence match).
+def test_readme_uses_current_machine_only_title_and_question():
+    # README now opens with the current machine-only research, not free will
+    # or an AI/human comparison as the core.
     assert README_SRC.startswith(f"# {README_TITLE}\n")
-    assert "决策过程的写法和行动者身份" in README_SRC
-    assert "语言模型对能动性、选择自主性与责任的判断" in README_SRC
+    assert "以PA—Wu R1为主研究" in README_SRC
+    assert "人工智能决策系统" in README_SRC
+    # the first research definition must not lead with free will / AI-human core
+    first = README_SRC.split("## ", 1)[0]
+    assert "自由意志" not in first
+    assert "AI 与 human 身份比较" not in first
 
 
-def test_readme_defines_model_response_as_analysis_unit():
-    # The analysis unit is a model response, not a human participant, and the
-    # results are framed as a single-model sensitivity test, not a mature claim.
-    assert "分析单位是**模型对一份材料给出的评分响应**" in README_SRC
-    assert "这些结果来自单一模型和当前材料" in README_SRC
-    assert "模型归因敏感性测试" in README_SRC
+def test_readme_separates_current_and_legacy():
+    assert "## 当前主研究" in README_SRC
+    assert "## 早期探索性研究归档" in README_SRC
+    # the legacy AI/human route is explicitly not part of R1 and not merged
+    assert "不属于当前 R1 设计" in README_SRC
+    assert "不与当前 R1 结果合并" in README_SRC
 
 
-def test_readme_links_current_public_documents_and_commands():
-    # Source, method and reproduction entry points stay linked; the former
-    # standalone "研究与测量来源" section is no longer required.
+def test_readme_links_current_and_legacy_documents():
     for path in [
+        "docs/CURRENT_STUDY_CARD.md",
         "docs/STUDY_CARD.md",
-        "docs/research_design_blueprint.md",
         "docs/research_and_measurement_sources.md",
         "docs/scale_source_mapping.md",
     ]:
         assert path in README_SRC, path
 
-    assert "uv sync --frozen" in README_SRC
-    assert "uv run pytest -q" in README_SRC
-    assert "python -m freewill_attribution.cli run" in README_SRC
+
+def test_readme_free_will_is_downgraded():
+    # free will is only an exploratory MSI item, never title/sole construct/total
+    assert "自由意志只对应 MSI 中的一个探索性题项" in README_SRC
 
 
 def test_readme_avoids_outdated_or_unsupported_public_claims():
-    # Only clearly unsupported public claims and dropped section headings are
-    # forbidden; ordinary "current results" wording and the word 评测 are fine.
     for bad in [
         "A Reproducible Study and Evaluation Prototype",
         "可复现的测试型评测基准原型",
         "测试型评测基准",
-        "## 历史数据与主要结果",
-        "## 模拟运行验证",
-        "## 从单一任务到通用评测",
         "真人专家审核",
         "专家内容效度验证",
         "专家评审通过",
         "多模型真实运行已经完成",
     ]:
         assert bad not in README_SRC, bad
-
-    assert "只作为关联性诊断" in README_SRC
-    assert "而不是关于人类心理或 AI 主体性的结论" in README_SRC
 
 
 def test_source_cards_count_and_order_stable():
@@ -676,3 +725,226 @@ def test_repository_url_targets_current_slug_and_main():
     assert '"llm-attribution-behavior-evaluation"' in JS_SRC
     assert '"main"' in JS_SRC
     assert OLD_SLUG not in JS_SRC
+
+
+# --- PR A follow-up: dynamic data + current-research positioning -----------
+
+PILOT_SHOWCASE = json.loads(
+    (REPO_ROOT / "tasks" / "attribution_behavior" / "evaluations"
+     / "pa_wu_r1_pilot" / "outputs" / "showcase_data.json").read_text(encoding="utf-8"))
+
+
+def test_hero_uses_current_study_object():
+    # renderHero must read the current PA-Wu R1 study object, not the legacy
+    # story.core_facts, and fail loudly if it is missing.
+    hero = JS_SRC.split("function renderHero(", 1)[1].split("\n}", 1)[0]
+    assert "story.current_study" in hero
+    assert "core_facts" in hero
+    # it must NOT fall back to the legacy top-level core_facts for the hero
+    assert "story.core_facts" not in hero
+
+
+def test_showcase_story_has_current_study_core_facts():
+    cs = STORY.get("current_study")
+    assert cs, "showcase_story.json missing current_study"
+    facts = {f["label"]: f["value"] for f in cs["core_facts"]}
+    assert facts["实验条件"] == 6
+    assert facts["场景"] == 8
+    assert facts["决策方向"] == 2
+    assert facts["材料总数"] == 96
+    assert facts["评判模型配置"] == 2
+    assert facts["每次完整运行响应"] == 192
+    assert facts["数据状态"] == "合成流程演示"
+    assert facts["目标主体"] == "仅机器主体"
+
+
+def test_current_study_facts_exclude_legacy_metrics():
+    cs = STORY["current_study"]
+    labels = {f["label"] for f in cs["core_facts"]}
+    values = {str(f["value"]) for f in cs["core_facts"]}
+    for bad_label in ["行动者身份", "历史记录", "测量题项", "测量构念",
+                      "可复现 mock 运行", "真实接口离线准备"]:
+        assert bad_label not in labels, bad_label
+    for bad_value in ["360", "34", "10", "2"]:
+        # 2 is legitimately used (directions / judge models); only guard the
+        # legacy-only counts 360/34/10 as values.
+        if bad_value in {"360", "34", "10"}:
+            assert bad_value not in values, bad_value
+
+
+def test_current_study_facts_match_pilot_showcase():
+    cs = STORY["current_study"]
+    facts = {f["label"]: f["value"] for f in cs["core_facts"]}
+    q = PILOT_SHOWCASE["quality_summary"]
+    assert facts["材料总数"] == q["n_materials"] == 96
+    assert facts["每次完整运行响应"] == q["n_responses"] == 192
+
+
+def test_current_study_points_to_current_sources_doc():
+    cs = STORY["current_study"]
+    assert cs["sources_doc"] == "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md"
+
+
+def test_current_constructs_section_links_current_sources_doc():
+    sec = HTML.split('id="current-constructs-sources"', 1)[1].split("</section>", 1)[0]
+    assert "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md" in sec
+    # the current constructs section must NOT present the legacy sources doc as R1's
+    assert "research_and_measurement_sources.md" not in sec.replace(
+        "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md", "")
+    assert "未声称内容效度" in sec
+
+
+def test_current_sources_doc_exists_and_lists_real_assets():
+    doc = (REPO_ROOT / "docs" / "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md").read_text(encoding="utf-8")
+    assert doc.startswith("# 当前研究与测量来源：PA—Wu R1")
+    for path in [
+        "pa_wu_r1_pilot/study_protocol.yaml",
+        "pa_wu_r1_pilot/scoring_spec.yaml",
+        "pa_wu_p0/",
+    ]:
+        assert path in doc, path
+    for real in ["Wu & Shen 2026", "PA 2024"]:
+        assert real in doc, real
+
+
+def test_legacy_sources_docs_carry_archive_banner():
+    src = (REPO_ROOT / "docs" / "research_and_measurement_sources.md").read_text(encoding="utf-8")
+    assert src.startswith("# 早期探索性研究的研究与测量来源")
+    assert "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md" in src
+    mapping = (REPO_ROOT / "docs" / "scale_source_mapping.md").read_text(encoding="utf-8")
+    assert mapping.startswith("# 早期题项与理论来源映射")
+    assert "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md" in mapping
+
+
+def test_showcase_story_legacy_wording_is_archive():
+    blob = json.dumps(STORY, ensure_ascii=False)
+    for bad in ["当前项目", "当前题项池", "本项目当前"]:
+        assert bad not in blob, bad
+    assert ("早期" in blob) or ("历史路线" in blob)
+
+
+def test_current_methods_links_r1_assets_and_not_archive():
+    sec = HTML.split('id="current-methods"', 1)[1].split("</section>", 1)[0]
+    for asset in ["CURRENT_STUDY_CARD.md", "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md",
+                  "study_protocol.yaml", "analysis_plan.md", "scoring_spec.yaml",
+                  "render_report.py", "pa-wu-r1-pilot/"]:
+        assert asset in sec, asset
+    for bad in ["复现入口见下方早期探索性研究归档",
+                "当前研究方法记录在历史归档对应区域"]:
+        assert bad not in sec, bad
+
+
+def test_legacy_history_data_files_still_present():
+    for path in [
+        "site/data/historical_results.json",
+        "site/data/showcase_story.json",
+        "docs/STUDY_CARD.md",
+        "docs/research_and_measurement_sources.md",
+        "docs/scale_source_mapping.md",
+    ]:
+        assert (REPO_ROOT / path).is_file(), path
+
+
+# --- PR A final hardening: sourced status, license boundary, timestamp hygiene
+
+
+def _load_build_showcase_data():
+    """Import scripts/build_showcase_data.py with its sibling deps on sys.path."""
+    import sys
+
+    for sub in ("scripts", "src"):
+        p = str(REPO_ROOT / sub)
+        if p not in sys.path:
+            sys.path.insert(0, p)
+    spec = importlib.util.spec_from_file_location(
+        "build_showcase_data", REPO_ROOT / "scripts" / "build_showcase_data.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+CURRENT_SOURCES_DOC = (
+    REPO_ROOT / "docs" / "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md"
+).read_text(encoding="utf-8")
+
+
+def test_current_study_uses_controlled_status_vocabularies():
+    # (1) data_status / target_subject display text comes from the controlled
+    # maps, never hardcoded prose inside _current_study.
+    bsd_show = _load_build_showcase_data()
+    assert bsd_show.DATA_STATUS_ZH["synthetic_demo"] == "合成流程演示"
+    assert bsd_show.TARGET_SUBJECT_ZH["machine"] == "仅机器主体"
+    src = (REPO_ROOT / "scripts" / "build_showcase_data.py").read_text(encoding="utf-8")
+    body = src.split("def _current_study(", 1)[1].split("\ndef ", 1)[0]
+    # the display strings must be looked up, not written as literals in the facts
+    assert '"value": data_status_zh' in body
+    assert '"value": target_subject_zh' in body
+    assert '"合成流程演示"' not in body.split("core_facts", 1)[1]
+    assert '"仅机器主体"' not in body.split("core_facts", 1)[1]
+
+
+def test_current_study_cross_checks_status_and_judges():
+    # (2) _current_study reads both R1 source files and agrees on the three
+    # status/config values (data_status, target_subject, judge models).
+    bsd_show = _load_build_showcase_data()
+    cs = bsd_show._current_study()
+    facts = {f["key"]: f["value"] for f in cs["core_facts"]}
+    assert facts["data_status"] == "合成流程演示"
+    assert facts["target_subject"] == "仅机器主体"
+    assert facts["judge_model_config_count"] == 2
+
+
+def test_current_study_data_status_agrees_with_sources():
+    # (3) the R1 protocol and showcase agree on data_status = synthetic_demo.
+    proto = (REPO_ROOT / "tasks" / "attribution_behavior" / "evaluations"
+             / "pa_wu_r1_pilot" / "study_protocol.yaml").read_text(encoding="utf-8")
+    assert "data_status_of_package: synthetic_demo" in proto
+    assert PILOT_SHOWCASE["data_status"] == "synthetic_demo"
+
+
+def test_current_study_target_subject_agrees_with_sources():
+    # (4) both R1 sources declare a machine-only target subject.
+    proto = (REPO_ROOT / "tasks" / "attribution_behavior" / "evaluations"
+             / "pa_wu_r1_pilot" / "study_protocol.yaml").read_text(encoding="utf-8")
+    assert "target_subject: machine" in proto
+    assert PILOT_SHOWCASE["target_subject"] == "machine"
+
+
+def test_current_study_judge_models_configured_consistently():
+    # (5) the two configured judge models match across both R1 sources, with no
+    # duplicates, and are exactly deepseek-v4-pro + gpt-5.6-terra.
+    ids = [row["id"] for row in PILOT_SHOWCASE["judge_models"]]
+    assert ids == ["deepseek-v4-pro", "gpt-5.6-terra"]
+    assert len(set(ids)) == len(ids)
+
+
+def test_current_sources_doc_has_full_literature_and_license_section():
+    # (6) the sources doc now carries a full literature + license-status section.
+    assert "## 完整文献与许可状态" in CURRENT_SOURCES_DOC
+    assert "10.1145/3640011" in CURRENT_SOURCES_DOC
+    assert "10.1093/jcmc/zmag009" in CURRENT_SOURCES_DOC
+
+
+def test_current_sources_doc_records_three_pa_license_facts_separately():
+    # (7) the three PA license facts are recorded separately, not collapsed.
+    doc = CURRENT_SOURCES_DOC
+    assert "PA13 题项文本" in doc and "CC BY 4.0" in doc
+    assert "作者公开页面" in doc
+    assert "本身未单独声明网页内容许可" in doc
+
+
+def test_current_sources_doc_marks_pa_subscores_not_short_forms():
+    # (8) PA5/PA8 are official PA13 sub-scores; R1 uses derived scores, and they
+    # are explicitly not independent validated short forms.
+    doc = CURRENT_SOURCES_DOC
+    assert "PA13 的官方子集" in doc or "官方子分数" in doc
+    assert "不等同于独立短表施测" in doc or "不构成独立验证短表" in doc
+
+
+def test_current_sources_doc_uses_full_repo_paths_and_translation_wording():
+    # (9) evidence paths are full repository paths; translation wording is fixed.
+    doc = CURRENT_SOURCES_DOC
+    assert ("tasks/attribution_behavior/measurement_candidates/pa_wu_p0/"
+            "items_wu_shen_2026.yaml") in doc
+    assert "当前评分链未新增最终中文题项翻译" in doc
+    assert "施测使用英文刺激材料与英文题项" in doc
