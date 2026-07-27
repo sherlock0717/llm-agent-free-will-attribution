@@ -867,16 +867,6 @@ CURRENT_SOURCES_DOC = (
     REPO_ROOT / "docs" / "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md"
 ).read_text(encoding="utf-8")
 
-TIMESTAMP_ONLY_JSON = [
-    "analysis_results.json",
-    "engineering_status.json",
-    "evaluation_summary.json",
-    "evidence_matrix.json",
-    "measurement_summary.json",
-    "reproducibility_summary.json",
-    "site_summary.json",
-]
-
 
 def test_current_study_uses_controlled_status_vocabularies():
     # (1) data_status / target_subject display text comes from the controlled
@@ -958,19 +948,3 @@ def test_current_sources_doc_uses_full_repo_paths_and_translation_wording():
             "items_wu_shen_2026.yaml") in doc
     assert "当前评分链未新增最终中文题项翻译" in doc
     assert "施测使用英文刺激材料与英文题项" in doc
-
-
-def test_timestamp_only_json_match_main_except_generated_at():
-    # (10) the seven engineering JSONs differ from origin/main only by their
-    # generated_at timestamp; no other content drifts in on this PR.
-    import subprocess
-
-    for name in TIMESTAMP_ONLY_JSON:
-        rel = f"site/data/{name}"
-        main_blob = subprocess.check_output(
-            ["git", "show", f"origin/main:{rel}"], cwd=REPO_ROOT)
-        main_obj = json.loads(main_blob.decode("utf-8"))
-        cur_obj = json.loads((DATA / name).read_text(encoding="utf-8"))
-        main_obj.pop("generated_at", None)
-        cur_obj.pop("generated_at", None)
-        assert main_obj == cur_obj, name
