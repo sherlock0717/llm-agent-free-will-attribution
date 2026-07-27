@@ -19,6 +19,15 @@ APP = PAGE / "app.js"
 STYLES = PAGE / "styles.css"
 DATA = PAGE / "data" / "showcase_data.json"
 FIG_DIR = PAGE / "assets" / "figures"
+OUTPUT_FIG_DIR = (
+    REPO_ROOT
+    / "tasks"
+    / "attribution_behavior"
+    / "evaluations"
+    / "pa_wu_r1_pilot"
+    / "outputs"
+    / "figures"
+)
 
 FIGURES = [
     "fig1_condition_construct_means.png",
@@ -42,7 +51,17 @@ def test_required_files_exist():
     assert STYLES.is_file()
     assert DATA.is_file()
     for fig in FIGURES:
-        assert (FIG_DIR / fig).is_file(), fig
+        assert (FIG_DIR / fig).is_file(), fig          # deployed (docs) figure
+        assert (OUTPUT_FIG_DIR / fig).is_file(), fig    # generated (outputs) figure
+
+
+def test_deployed_figures_match_generated_outputs():
+    # keep the analysis product (outputs/figures) and the published product
+    # (docs/.../assets/figures) byte-identical so they never diverge again.
+    for fig in FIGURES:
+        deployed = (FIG_DIR / fig).read_bytes()
+        generated = (OUTPUT_FIG_DIR / fig).read_bytes()
+        assert deployed == generated, fig
 
 
 # --- 2. page contract -------------------------------------------------------
