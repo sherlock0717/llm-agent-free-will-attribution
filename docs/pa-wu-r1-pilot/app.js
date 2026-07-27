@@ -230,14 +230,12 @@ function renderScenarioBrowser() {
     conditionSelect.appendChild(el("option", { value: condition }, `${condition}｜${CONDITION_META[condition].title}`));
   });
 
+  const DIRECTION_LABELS = { A: "方向A｜场景方案一", B: "方向B｜场景方案二" };
   const rebuildDirections = () => {
-    const scenarioId = scenarioSelect.value;
-    const materials = DATA.scenario_materials[scenarioId] || [];
     directionSelect.innerHTML = "";
     ["A", "B"].forEach((direction) => {
-      const sample = materials.find((item) => item.condition_id === "C0" && item.direction_version === direction);
-      const decision = sample ? extractDecision(sample.complete_stimulus_text) : "";
-      directionSelect.appendChild(el("option", { value: direction }, `方向${direction}${decision ? `｜${decision}` : ""}`));
+      // 默认下拉只显示纯中文方案标签；具体英文决定仅在展开的英文原始材料中呈现。
+      directionSelect.appendChild(el("option", { value: direction }, DIRECTION_LABELS[direction]));
     });
   };
 
@@ -262,13 +260,6 @@ function renderScenarioBrowser() {
   directionSelect.addEventListener("change", update);
   rebuildDirections();
   update();
-}
-
-function extractDecision(text) {
-  const match = text.match(/decided:\s*([^.]*)\./i);
-  if (!match) return "";
-  const decision = match[1].trim();
-  return decision.length > 52 ? `${decision.slice(0, 49)}…` : decision;
 }
 
 function renderStim(material, scenarioId = null) {

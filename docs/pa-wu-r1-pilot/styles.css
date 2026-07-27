@@ -261,3 +261,17 @@ footer.site .wrap { padding-top: 22px; padding-bottom: 22px; }
   .coverage-matrix { min-width: 720px; }
   .quick-guide { padding: 14px 16px; }
 }
+
+@media (max-width: 390px) {
+  /* narrow phones: keep every control stacked in a single column and
+     make sure wide tables / the coverage matrix stay horizontally scrollable */
+  .wrap { padding-left: 12px; padding-right: 12px; }
+  section { padding: 16px 12px; }
+  section h2 { font-size: 19px; }
+  .controls, .browser-controls, .contrast-controls { grid-template-columns: 1fr; }
+  .controls label { width: 100%; }
+  select, .toggle-group { width: 100%; min-width: 0; }
+  .figure { padding: 8px; }
+  .figure img { width: 100%; height: auto; }
+  .table-scroll { -webkit-overflow-scrolling: touch; }
+}

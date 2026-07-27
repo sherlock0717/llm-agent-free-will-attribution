@@ -1,11 +1,16 @@
-# PA—Wu R1 Showcase Plan (future web presentation)
+# PA—Wu R1 Showcase (static interactive site)
 
-This plan sketches a future presentation site. **No full web app is built in this
-stage.** It maps each planned section to content the project already produces and
-notes which demo figures can be reused directly.
+A static, interactive showcase page **already exists** at `docs/pa-wu-r1-pilot/`
+and is published via **GitHub Pages** at
+`https://sherlock0717.github.io/llm-attribution-behavior-evaluation/pa-wu-r1-pilot/`.
+The current design has **96 materials** (6 conditions × 8 scenarios × 2 directions ×
+1 machine identity); each repeat produces **192 model–material responses** (2 judge
+models × 96 materials). Five figures are shown on the page. All current numbers are
+**synthetic_demo**. The page does **not** rank models and does **not** compare AI
+vs. human subjects. This document maps each page section to its content source.
 
-> Every reused figure is labeled **Synthetic demonstration data** and must never
-> be presented as a real model result, capability claim or ranking.
+> Every figure is labeled **合成演示数据 / Synthetic demonstration data** and must
+> never be presented as a real model result, capability claim or ranking.
 
 | # | Section | Content source | Reusable output |
 |---|---------|----------------|-----------------|
@@ -14,7 +19,7 @@ notes which demo figures can be reused directly.
 | 3 | Construct framework | `study_protocol.yaml` (IN/GO/MSI/IC + PA5/PA8) | — |
 | 4 | Experimental design | `condition_matrix.csv`, `manipulation_blocks.yaml` | — |
 | 5 | Six-condition interaction view | `analysis_plan.md` (C* model) | `figures/fig1_condition_construct_means.png` |
-| 6 | 192-material coverage | `stimuli.jsonl`, `validate_pilot_core.py` balance | `outputs/demo_descriptives.csv` |
+| 6 | 96-material coverage (192 responses per repeat) | `stimuli.jsonl`, `validate_pilot_core.py` balance | `outputs/demo_descriptives.csv` |
 | 7 | Two-model evaluation method | `study_protocol.yaml` (judge_models) | `figures/fig3_model_profiles.png` |
 | 8 | Results overview | `analyze_pilot.py` outputs | `figures/fig1_condition_construct_means.png` |
 | 9 | Construct differences | scored construct tables | `figures/fig3_model_profiles.png` |
@@ -35,8 +40,11 @@ notes which demo figures can be reused directly.
 - `outputs/demo_descriptives.csv`, `outputs/demo_contrasts.csv` — tables
 - `reports/demo_report.md` — narrative scaffold
 
-## Not in this stage
+## Current status
 
-- No interactive web front end.
-- No real-model data; all showcase numbers remain synthetic until a real,
-  authorized run is executed.
+- An interactive static front end already exists at `docs/pa-wu-r1-pilot/`
+  (`index.html` + `styles.css` + `app.js` + `data/showcase_data.json` + five
+  figures under `assets/figures/`), served by GitHub Pages.
+- The page shows five figures and reads `data/showcase_data.json`.
+- All showcase numbers remain **synthetic_demo** until a real, authorized run is
+  executed; the page ranks no model and shows no AI/human comparison.
