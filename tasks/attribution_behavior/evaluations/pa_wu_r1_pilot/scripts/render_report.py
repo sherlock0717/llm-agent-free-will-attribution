@@ -22,6 +22,40 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import pandas as pd  # noqa: E402
+from matplotlib import font_manager  # noqa: E402
+
+
+def _configure_chinese_font() -> str:
+    """Select an installed CJK font for figure text. No font file is bundled or
+    committed. If none is available we stop rather than emit tofu/garbled text."""
+    preferred = [
+        "Microsoft YaHei", "SimHei", "Noto Sans CJK SC", "Noto Sans CJK",
+        "Source Han Sans SC", "Microsoft JhengHei", "SimSun",
+    ]
+    installed = {f.name for f in font_manager.fontManager.ttflist}
+    chosen = next((name for name in preferred if name in installed), None)
+    if chosen is None:
+        raise SystemExit(
+            "No installed CJK font found (tried: " + ", ".join(preferred) + "). "
+            "Refusing to render garbled figures. Install a Chinese font first."
+        )
+    plt.rcParams["font.sans-serif"] = [chosen] + list(plt.rcParams.get("font.sans-serif", []))
+    plt.rcParams["axes.unicode_minus"] = False
+    return chosen
+
+
+# Chinese display labels for figures (display text only; ids/data unchanged).
+SCENARIO_LABELS_ZH = {
+    "s1_scheduling": "会议排期",
+    "s2_customer_issue": "客户问题处理",
+    "s3_study_plan": "学习计划",
+    "s4_routing": "路线与物流",
+    "s5_task_allocation": "团队任务分配",
+    "s6_content_recommendation": "内容推荐",
+    "s7_game_strategy": "游戏策略",
+    "s8_energy_plan": "节能方案",
+}
+SYNTH_ZH = "合成演示数据"
 
 PKG_DIR = Path(__file__).resolve().parent.parent
 CONSTRUCT_SCORES = PKG_DIR / "outputs" / "demo_construct_scores.csv"
@@ -59,10 +93,10 @@ def fig1_condition_construct(df: pd.DataFrame) -> Path:
     for construct in PRIMARY:
         sub = m[m["construct"] == construct].set_index("condition_id").reindex(CONDITIONS)
         ax.plot(CONDITIONS, sub["construct_score"].values, marker="o", label=construct)
-    ax.set_xlabel("Condition (C0..C5)")
-    ax.set_ylabel("Mean construct score (native scale)")
-    ax.set_title(f"Condition x primary construct means (machine subject)\n[{SYNTH}]")
-    ax.legend(title="Construct")
+    ax.set_xlabel("实验条件（C0—C5）")
+    ax.set_ylabel("构念平均得分（原量尺）")
+    ax.set_title(f"不同实验条件下的主要构念均值\n[{SYNTH_ZH}]")
+    ax.legend(title="构念")
     fig.tight_layout()
     out = FIG_DIR / "fig1_condition_construct_means.png"
     fig.savefig(out, dpi=120)
@@ -86,8 +120,8 @@ def fig2_model_adjusted_forest(mcons: pd.DataFrame) -> Path:
     ax.axvline(0.0, color="black", linewidth=0.8, linestyle="--")
     ax.set_yticks(list(y))
     ax.set_yticklabels(labels, fontsize=7)
-    ax.set_xlabel("Model-adjusted marginal contrast (native scale)")
-    ax.set_title(f"Model-adjusted estimated-marginal contrasts P1..P6\n[{SYNTH}]")
+    ax.set_xlabel("模型调整后的边际差异（原量尺）")
+    ax.set_title(f"模型调整后的预设对比 P1—P6\n[{SYNTH_ZH}]")
     fig.tight_layout()
     out = FIG_DIR / "fig2_model_adjusted_contrasts.png"
     fig.savefig(out, dpi=120)
@@ -102,10 +136,10 @@ def fig3_model_profiles(df: pd.DataFrame) -> Path:
     for model in MODELS:
         sub = m[m["judge_model_id"] == model].set_index("construct").reindex(constructs)
         ax.plot(constructs, sub["construct_score"].values, marker="s", label=model)
-    ax.set_xlabel("Construct")
-    ax.set_ylabel("Mean construct score (native scale)")
-    ax.set_title(f"Judge-model construct profiles\n[{SYNTH}] (not a ranking)")
-    ax.legend(title="judge_model_id")
+    ax.set_xlabel("构念")
+    ax.set_ylabel("构念平均得分（原量尺）")
+    ax.set_title(f"两个评判模型的构念评分轮廓\n[{SYNTH_ZH}]（不用于模型排名）")
+    ax.legend(title="评判模型")
     fig.tight_layout()
     out = FIG_DIR / "fig3_model_profiles.png"
     fig.savefig(out, dpi=120)
@@ -122,9 +156,9 @@ def fig4_scenario_heatmap(df: pd.DataFrame) -> Path:
     ax.set_xticks(range(len(pivot.columns)))
     ax.set_xticklabels(pivot.columns)
     ax.set_yticks(range(len(pivot.index)))
-    ax.set_yticklabels(pivot.index)
-    ax.set_title(f"Scenario x construct mean heatmap\n[{SYNTH}]")
-    fig.colorbar(im, ax=ax, label="Mean score (native scale)")
+    ax.set_yticklabels([SCENARIO_LABELS_ZH.get(sid, sid) for sid in pivot.index])
+    ax.set_title(f"场景与构念的平均得分热力图\n[{SYNTH_ZH}]")
+    fig.colorbar(im, ax=ax, label="平均得分（原量尺）")
     fig.tight_layout()
     out = FIG_DIR / "fig4_scenario_construct_heatmap.png"
     fig.savefig(out, dpi=120)
@@ -147,8 +181,8 @@ def fig5_contrast_forest(contrasts: pd.DataFrame) -> Path:
     ax.axvline(0.0, color="black", linewidth=0.8, linestyle="--")
     ax.set_yticks(list(y))
     ax.set_yticklabels(labels, fontsize=7)
-    ax.set_xlabel("Raw descriptive contrast difference (native scale)")
-    ax.set_title(f"Raw descriptive planned contrasts P1..P6 (primary)\n[{SYNTH}]")
+    ax.set_xlabel("直接均值差（原量尺）")
+    ax.set_title(f"直接描述性预设对比 P1—P6\n[{SYNTH_ZH}]")
     fig.tight_layout()
     out = FIG_DIR / "fig5_contrast_forest.png"
     fig.savefig(out, dpi=120)
@@ -447,6 +481,8 @@ def _sync_docs(figs: list[Path]) -> None:
 
 def main() -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
+    font = _configure_chinese_font()
+    print(f"using CJK font: {font}")
     df = pd.read_csv(CONSTRUCT_SCORES)
     contrasts = pd.read_csv(CONTRASTS)
     mcons = pd.read_csv(MODEL_CONTRASTS)
