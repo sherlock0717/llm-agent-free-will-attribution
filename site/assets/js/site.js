@@ -87,8 +87,8 @@ function renderResearchProgram(story) {
   }
   const studyA = program.studies.study_a;
   const studyB = program.studies.study_b;
-  setSlot("program-question", program.research_question_zh
-    + "。项目研究模型面对给定材料时产生的归因反应，不判断 AI 或任何行动者是否真实拥有相应心理属性。");
+  setSlot("program-question",
+    "本项目比较不同身份标签、决策过程和反馈行为材料，观察语言模型如何形成对行动者能动性、心理状态、选择自主性、影响能力与责任的判断。");
   setSlot("study-a-title", studyA.title_zh);
   setSlot("study-a-role", studyA.role_zh);
   setSlot("study-a-status", studyA.evidence_status_zh);

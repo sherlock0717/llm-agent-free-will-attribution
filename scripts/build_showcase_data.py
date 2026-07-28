@@ -479,12 +479,12 @@ def _study_b() -> dict:
         "study_id": "machine_decision_process_attribution",
         "title_zh": "机器主体决策过程归因评测",
         "role_zh": "机器主体测量深化",
-        "evidence_status_zh": "合成管线",
+        "evidence_status_zh": "流程演示已完成",
         "design_summary_zh": f"{conditions}条件 × {scenarios}场景 × {directions}方向，{materials}条材料",
         "core_facts": core_facts,
         "sources_doc": "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md",
         "study_card": "docs/CURRENT_STUDY_CARD.md",
-        "showcase_page": "pa-wu-r1-pilot/",
+        "showcase_page": "machine-decision-process-attribution/",
     }
 
 
@@ -504,14 +504,14 @@ def build_showcase_story() -> dict:
          "label": "过程 × 身份"},
         {"key": "scenario_count", "value": len(scenarios), "label": "情境"},
         {"key": "model_output_count", "value": records, "label": "已有模型输出"},
-        {"key": "model_configuration", "value": "单模型历史运行", "label": "模型配置"},
-        {"key": "measurement_status", "value": "成熟度有限", "label": "测量状态"},
+        {"key": "model_configuration", "value": "单模型既有运行", "label": "模型配置"},
+        {"key": "measurement_status", "value": "仍在完善", "label": "测量状态"},
     ]
     study_a = {
         "study_id": "identity_process_attribution_baseline",
         "title_zh": "身份与决策过程归因基线",
         "role_zh": "探索性基线",
-        "evidence_status_zh": "探索性证据",
+        "evidence_status_zh": "已有探索性输出",
         "design_summary_zh": (
             f"{len(process_conditions)}类决策过程 × {len(identity_labels)}种身份标签"),
         "core_facts": study_a_facts,
@@ -542,7 +542,7 @@ def build_showcase_story() -> dict:
         },
         "future_route": {
             "title_zh": future_routes[0],
-            "status_zh": "尚未运行",
+            "status_zh": "待展开",
         },
     }
 
@@ -596,7 +596,7 @@ def build_measurement_summary() -> dict:
         "scoring_note": "每个构念的分数为其题项的均值（事实操纵检验计 0–2，其余题项计 1–7）。",
         "reliability_note": (
             "Cronbach α 为合成（模型模拟）数据上的内部一致性指标，"
-            "不等于效度，也不构成人类被试的信效度证据。"),
+            "用于反映题项响应的一致性；效度与人类被试信效度证据留待后续验证。"),
         "responsibility_total": RESPONSIBILITY_TOTAL_META,
         "constructs": constructs,
     }

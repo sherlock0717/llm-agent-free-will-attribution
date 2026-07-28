@@ -45,11 +45,11 @@
     <section id="overview" class="hero">
       <div class="wrap hero-grid">
         <div class="hero-lead">
-          <p class="eyebrow">llm_actor_attribution_program</p>
+          <p class="eyebrow">行动者归因 · 决策过程 · 身份与反馈</p>
           <h1>LLM行动者归因评测</h1>
           <p class="subtitle">身份标签、决策过程与反馈行为如何影响语言模型对行动者的归因判断</p>
           <p class="hero-intro" data-slot="program-question">
-            项目研究模型面对给定材料时产生的归因反应，不判断 AI 或任何行动者是否真实拥有相应心理属性。
+            本项目比较不同身份标签、决策过程和反馈行为材料，观察语言模型如何形成对行动者能动性、心理状态、选择自主性、影响能力与责任的判断。
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#studies">查看两项研究</a>
@@ -69,7 +69,7 @@
     <section id="research-program" class="section alt">
       <div class="wrap">
         <p class="eyebrow">研究计划地图</p>
-        <h2>一个总体问题，两项独立研究，一套共享方法</h2>
+        <h2>项目由两项研究组成</h2>
         <div class="program-map" aria-label="研究计划地图">
           <div class="map-node map-question"><span>项目问题</span><strong>行动者归因如何形成</strong></div>
           <span class="map-arrow">→</span>
@@ -78,9 +78,9 @@
             <div class="map-node"><span>研究B</span><strong>深化机器主体测量</strong></div>
           </div>
           <span class="map-arrow">→</span>
-          <div class="map-node"><span>研究C候选</span><strong>跨主体平行验证</strong></div>
+          <div class="map-node"><span>下一步研究</span><strong>跨主体平行验证</strong></div>
         </div>
-        <p class="reading">研究A与研究B并列服务于总体研究问题；它们共享方法基础设施，但材料、题项、数据与结论各自独立。</p>
+        <p class="reading">研究A建立身份与决策过程归因的探索性基线；研究B进一步拆分机器主体的决策信息、反馈和后续行为。两项研究共享材料记录、评分和分析工具。</p>
       </div>
     </section>
 
@@ -96,7 +96,7 @@
             <h3 data-slot="study-a-title">身份与决策过程归因基线</h3>
             <p data-slot="study-a-design">研究A设计信息由数据文件加载</p>
             <dl class="study-facts" data-slot="study-a-facts"></dl>
-            <p class="card-boundary">有单模型历史输出；测量成熟度有限。已有图表、分析与可核查链继续保留，不与研究B统计合并。</p>
+            <p class="card-boundary">研究A交叉 6 类过程与 2 类身份，已有单模型输出，提供过程和身份归因的探索性基线。测量来源、运行溯源和跨主体可比性列为后续完善项。研究A的数据和分析按本研究设计单独呈现。</p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="#research-a-detail">进入研究A结果</a>
               <a class="btn" href="#reproducibility">查看研究A复现</a>
@@ -105,14 +105,14 @@
           <article class="study-card study-b">
             <div class="study-card-head">
               <p class="eyebrow">研究B · <span data-slot="study-b-role">机器主体测量深化</span></p>
-              <span class="status-tag synthetic" data-slot="study-b-status">合成管线</span>
+              <span class="status-tag synthetic" data-slot="study-b-status">流程演示已完成</span>
             </div>
             <h3 data-slot="study-b-title">机器主体决策过程归因评测</h3>
             <p data-slot="study-b-design">研究B设计信息由数据文件加载</p>
             <dl class="study-facts" data-slot="study-b-facts"></dl>
-            <p class="card-boundary"><strong>synthetic demo：</strong>双评判模型计划已配置，尚无真实实证结果；合成数据只验证管线，不支持效应或模型差异结论。</p>
+            <p class="card-boundary">研究B聚焦机器主体，使用 6 个条件、8 个场景和 2 个方向构建 96 条材料。当前页面展示材料、评分、分析和可视化管线；真实双模型运行列为下一步。</p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="pa-wu-r1-pilot/">机器主体决策过程归因评测</a>
+              <a class="btn btn-primary" href="machine-decision-process-attribution/">机器主体决策过程归因评测</a>
               <a class="btn" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/tree/main/tasks/attribution_behavior/evaluations/pa_wu_r1_pilot">查看研究目录</a>
             </div>
           </article>
@@ -122,14 +122,14 @@
 
     <section id="logic-evolution" class="section alt">
       <div class="wrap">
-        <h2>从研究A到研究B的逻辑演进</h2>
-        <ol class="logic-flow" aria-label="研究逻辑演进">
-          <li><span>1</span><strong>探索基线</strong><small>探索身份和过程归因</small></li>
+        <h2>从研究A到研究B</h2>
+        <ol class="logic-flow" aria-label="研究演进">
+          <li><span>1</span><strong>探索基线</strong><small>观察身份和过程描述如何影响归因</small></li>
           <li><span>2</span><strong>识别测量缺口</strong><small>题项来源、构念交叉、文本长度与主体可比性</small></li>
-          <li><span>3</span><strong>机器主体测量深化</strong><small>构念与反馈后行为的独立测量路线</small></li>
-          <li><span>4</span><strong>跨主体平行验证</strong><small>为独立题项和可比性研究准备基础</small></li>
+          <li><span>3</span><strong>机器主体测量深化</strong><small>拆分决策信息、反馈和第二次决定</small></li>
+          <li><span>4</span><strong>跨主体平行验证</strong><small>在独立人类题项和可比性检验后展开</small></li>
         </ol>
-        <p class="reading">这是一条由问题与测量缺口推动的逻辑演进，不是时间优先级；研究B不是对研究A的简单替代。</p>
+        <p class="reading">研究A先观察身份与过程描述如何影响归因。分析过程中出现了题项来源、构念交叉、文本长度和主体可比性问题。研究B据此聚焦机器主体，并进一步拆分决定信息、反馈和第二次决定。跨主体研究将在独立人类题项和可比性检验完成后展开。</p>
       </div>
     </section>
 
@@ -140,17 +140,16 @@
           <table class="evidence-table">
             <thead><tr><th>维度</th><th>研究A</th><th>研究B</th></tr></thead>
             <tbody>
-              <tr><th>研究功能</th><td>探索性基线与测量问题识别</td><td>机器主体测量深化</td></tr>
+              <tr><th>研究任务</th><td>探索性基线与测量问题识别</td><td>机器主体测量深化</td></tr>
               <tr><th>设计</th><td data-slot="study-a-design">研究A设计信息由数据文件加载</td><td data-slot="study-b-design">研究B设计信息由数据文件加载</td></tr>
-              <tr><th>数据状态</th><td><span class="status-tag evidence">探索性证据</span> 有模型输出</td><td><span class="status-tag synthetic">合成管线</span> 无真实结果</td></tr>
-              <tr><th>模型配置</th><td>单模型既有运行</td><td>双评判模型计划</td></tr>
-              <tr><th>测量状态</th><td><span class="status-tag pending">待验证</span> 构念交叉与可比性有限</td><td><span class="status-tag pending">待验证</span> 按原量尺评分</td></tr>
-              <tr><th>可支持内容</th><td>该材料下的描述性比较与关联性诊断</td><td>材料—评分—分析—展示管线贯通</td></tr>
-              <tr><th>主要局限</th><td>单模型、运行溯源与测量成熟度有限</td><td>合成数据不能支持效应或模型差异结论</td></tr>
+              <tr><th>已有数据</th><td><span class="status-tag evidence">已有探索性输出</span> 单模型输出</td><td><span class="status-tag synthetic">流程演示已完成</span> 材料与合成流程演示</td></tr>
+              <tr><th>当前可回答</th><td>研究A材料下的描述性比较与关联性诊断</td><td>材料、评分、分析和展示链是否按协议运行</td></tr>
+              <tr><th>测量状态</th><td><span class="status-tag pending">仍在完善</span> 题项来源与主体可比性</td><td><span class="status-tag pending">待验证</span> 内容效度、构念效度与可比性</td></tr>
+              <tr><th>下一步</th><td>跨模型稳健性、测量验证、运行溯源补全</td><td>执行双评判模型运行并更新实证结果</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="reading boundary-once">方法成熟度不等于证据完成度。两项研究的数据和结论不能合并。</p>
+        <p class="reading boundary-once">研究A和研究B分别使用自己的材料、题项和分析结果。项目总览将两项研究放在同一研究计划中展示，同时保留各自证据来源。模型差异将作为评判模型敏感性分析报告。</p>
       </div>
     </section>
 
@@ -161,15 +160,15 @@
         <ol class="method-chain" aria-label="共享方法链">
           <li>材料</li><li>题项来源</li><li>评分</li><li>模型调用</li><li>质量检查</li><li>分析</li><li>展示</li><li>复现</li>
         </ol>
-        <p class="reading">共享基础设施用于一致追踪证据，不表示两项研究具有相同设计、相同量尺或可合并结果。</p>
+        <p class="reading">共享方法层统一记录材料、题项、评分、模型调用、质量检查、分析和页面输出。研究A与研究B分别调用这些工具，并保存各自的数据契约和分析结果。</p>
       </div>
     </section>
 
     <section id="future-route" class="section">
       <div class="wrap">
         <div class="route-card">
-          <div><p class="eyebrow">研究C候选 · <span class="status-tag not-run" data-slot="future-route-status">尚未运行</span></p><h2 data-slot="future-route-title">跨主体平行测量与可比性研究</h2></div>
-          <p>需要独立开发并记录人类题项，不能把机器题项直接改写后进行比较；跨主体效应比较前还需要专门的测量可比性研究。</p>
+          <div><p class="eyebrow">下一步研究 · <span class="status-tag not-run" data-slot="future-route-status">待展开</span></p><h2 data-slot="future-route-title">跨主体平行测量与可比性研究</h2></div>
+          <p>下一步将独立建设人类主体题项，记录其来源和适用范围，并检验机器与人类两套测量之间的可比性。在这些准备完成后，项目再开展平行的跨主体比较。</p>
         </div>
       </div>
     </section>
@@ -178,7 +177,7 @@
       <div class="wrap">
         <p class="eyebrow">研究A详细结果与复现区域</p>
         <h2>身份与决策过程归因基线</h2>
-        <p class="reading lead note" role="note">以下内容、图表和分析均属于研究A。它们保留已有模型输出的核查链，不作为研究B证据，也不与研究B进行统计合并。</p>
+        <p class="reading lead note" role="note">以下内容、图表和分析均属于研究A，保留已有模型输出的核查链，按本研究设计单独呈现。</p>
       </div>
     </section>
 
@@ -329,7 +328,7 @@
         <div class="condition-profile" data-slot="condition-profile" aria-label="六条件核心构念均值剖面"></div>
         <p class="reading annotation">
           能动性和主观过程完整性随过程信息增加而整体上升，其中能动性的变化最稳定。
-          自由意志与责任相关评分的变化相对有限，说明不同归因维度并不会同步移动。
+          自由意志与责任相关评分的变化相对有限，显示不同归因维度各自变化。
         </p>
 
         <h3>既有分析图表</h3>
@@ -343,7 +342,7 @@
         <div class="identity-effect" data-slot="identity-effect" aria-label="身份标签效应"></div>
         <p class="reading annotation">
           身份标签对自由意志、责任与体验评分的影响较明显，对感知智能和操纵检验的影响较弱。
-          模型对「AI」与「人类」标签的反应并不是统一的整体偏移。
+          模型对「AI」与「人类」标签的反应因维度而异。
         </p>
 
         <h3>文本长度能否解释变化</h3>
@@ -456,7 +455,7 @@
       <div class="wrap">
         <h2>研究A边界</h2>
         <p class="reading">
-          研究A的解释限于单模型输出与其材料、题项和设计；它不能与研究B统计合并，也不证明行动者真实具有相应心理属性。共享基础设施可继续支持固定任务、数据和计分版本，并通过统一接口接入不同模型；
+          研究A的解释适用于其单模型输出与对应的材料、题项和设计，按本研究单独保存。共享基础设施可继续支持固定任务、数据和计分版本，并通过统一接口接入不同模型；
           随后加入跨情境扰动、重复运行和失败类型统计，检验模型在不同提示与运行条件下的一致性、敏感性和稳健性；
           在此基础上引入人工校准、标准化任务卡和统一报告格式，逐步形成可复用的归因行为 benchmark。
         </p>
@@ -481,7 +480,7 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <p class="footer-title">LLM行动者归因评测</p>
+      <p class="footer-title">LLM行动者归因评测 · 研究A与研究B · 数据和文档可追溯</p>
       <p class="fineprint"><a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation">github.com/sherlock0717/llm-attribution-behavior-evaluation</a></p>
     </div>
   </footer>

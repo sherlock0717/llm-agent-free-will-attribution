@@ -18,12 +18,12 @@
     {
       "key": "model_configuration",
       "label": "模型配置",
-      "value": "单模型历史运行"
+      "value": "单模型既有运行"
     },
     {
       "key": "measurement_status",
       "label": "测量状态",
-      "value": "成熟度有限"
+      "value": "仍在完善"
     }
   ],
   "domains": [
@@ -59,7 +59,7 @@
       }
     ],
     "future_route": {
-      "status_zh": "尚未运行",
+      "status_zh": "待展开",
       "title_zh": "跨主体平行测量与可比性研究"
     },
     "program_id": "llm_actor_attribution_program",
@@ -94,16 +94,16 @@
           {
             "key": "model_configuration",
             "label": "模型配置",
-            "value": "单模型历史运行"
+            "value": "单模型既有运行"
           },
           {
             "key": "measurement_status",
             "label": "测量状态",
-            "value": "成熟度有限"
+            "value": "仍在完善"
           }
         ],
         "design_summary_zh": "6类决策过程 × 2种身份标签",
-        "evidence_status_zh": "探索性证据",
+        "evidence_status_zh": "已有探索性输出",
         "role_zh": "探索性基线",
         "sources_doc": "docs/research_and_measurement_sources.md",
         "study_card": "docs/STUDY_CARD.md",
@@ -154,9 +154,9 @@
           }
         ],
         "design_summary_zh": "6条件 × 8场景 × 2方向，96条材料",
-        "evidence_status_zh": "合成管线",
+        "evidence_status_zh": "流程演示已完成",
         "role_zh": "机器主体测量深化",
-        "showcase_page": "pa-wu-r1-pilot/",
+        "showcase_page": "machine-decision-process-attribution/",
         "sources_doc": "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md",
         "study_card": "docs/CURRENT_STUDY_CARD.md",
         "study_id": "machine_decision_process_attribution",

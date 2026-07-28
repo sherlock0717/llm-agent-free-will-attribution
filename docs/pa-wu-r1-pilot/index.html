@@ -3,32 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="PA—Wu R1 机器主体归因评测的中文合成演示页面。" />
-  <title>PA—Wu R1 机器主体归因评测｜合成演示</title>
+  <meta name="description" content="研究决策信息、反馈与后续行为如何影响语言模型对机器主体的归因判断。" />
+  <title>研究B｜机器主体决策过程归因评测</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site">
     <div class="wrap hero">
+      <p class="back-link"><a href="../">← 返回LLM行动者归因评测总览</a></p>
       <div>
-        <p class="eyebrow">机器主体 · 六条件设计 · 双评判模型</p>
-        <h1>PA—Wu R1 机器主体归因评测</h1>
+        <p class="eyebrow">研究B · 机器主体 · 决策信息与反馈行为</p>
+        <h1>机器主体决策过程归因评测</h1>
         <p class="sub">研究决策过程信息与决策后行为，如何影响大语言模型对机器主体的归因判断。</p>
       </div>
       <div class="synth-banner" id="synthBanner" role="note">
-        <strong>合成演示数据。</strong> 本页所有数字与图表仅用于验证材料、评分、分析和展示流程，
-        <strong>不代表真实模型结果，不用于能力判断或模型排名。</strong>
+        <strong>流程演示状态。</strong> 当前页面展示流程演示数据，用于呈现 96 条材料如何进入评分、分析和图表流程。真实双模型运行完成后，页面将在同一框架下更新结果。
       </div>
       <div class="quick-guide" aria-labelledby="guideTitle">
         <h2 id="guideTitle">如何使用本页</h2>
         <ol>
-          <li>先在“设计与覆盖”了解 96 条材料如何组成。</li>
-          <li>在“材料浏览器”选择场景、条件和方向，查看模型实际接收的英文材料。</li>
-          <li>在“合成演示结果”选择构念，并切换直接均值差与模型调整后差异。</li>
-          <li>图表可点击放大；每张图下方都附有中文读图说明。</li>
+          <li>查看研究问题和构念。</li>
+          <li>理解决策信息与反馈行为的六个条件。</li>
+          <li>浏览 96 条材料。</li>
+          <li>查看分析计划。</li>
+          <li>在流程演示区查看页面输出结构。</li>
         </ol>
       </div>
-      <div id="loadStatus" class="load-status" role="status" aria-live="polite">正在加载合成演示数据……</div>
+      <div id="loadStatus" class="load-status" role="status" aria-live="polite">正在加载流程演示数据……</div>
     </div>
   </header>
 
@@ -37,7 +38,7 @@
       <a href="#s1">研究概览</a>
       <a href="#s3">设计与覆盖</a>
       <a href="#s5">材料浏览器</a>
-      <a href="#s7">合成演示结果</a>
+      <a href="#s7">分析与流程演示</a>
       <a href="#s12">方法与复现</a>
     </div>
   </nav>
@@ -48,7 +49,7 @@
         <span class="section-index">01</span>
         <div>
           <h2>研究概览</h2>
-          <p class="lead">这一评测具体研究什么，以及哪些结论不能从当前页面得出。</p>
+          <p class="lead">这一评测研究什么，以及当前流程演示页面呈现哪些内容。</p>
         </div>
       </div>
       <p id="researchQuestion" class="reading"></p>
@@ -329,7 +330,7 @@
 
   <footer class="site">
     <div class="wrap">
-      PA—Wu R1 机器主体归因评测 · 合成演示数据 · 不进行模型排名 · 不进行AI与人类主体比较
+      研究B · 机器主体决策过程归因评测 · 流程演示数据
     </div>
   </footer>
 

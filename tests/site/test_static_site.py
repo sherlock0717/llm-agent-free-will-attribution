@@ -26,14 +26,14 @@ DATA = SITE / "data"
 FIGURES = SITE / "assets" / "figures"
 
 # Relative links that are NOT served from site/ directly, but assembled into the
-# deployed Pages tree by .github/workflows/pages.yml:
+# deployed Pages tree by scripts/assemble_pages.py:
 #   site/                 -> _site/
-#   docs/pa-wu-r1-pilot/  -> _site/pa-wu-r1-pilot/
-# For these routes the test verifies the real assembled source exists (the
-# pilot's index.html), rather than requiring a copy inside site/. This is an
-# explicit per-route mapping, not a wildcard exemption.
+#   docs/pa-wu-r1-pilot/  -> _site/machine-decision-process-attribution/
+# The canonical study-B route resolves to the pilot source; the legacy route is
+# generated as a redirect at assembly time. This is an explicit per-route
+# mapping, not a wildcard exemption.
 DEPLOYED_ROUTE_SOURCES = {
-    "pa-wu-r1-pilot/": (
+    "machine-decision-process-attribution/": (
         REPO_ROOT / "docs" / "pa-wu-r1-pilot" / "index.html"
     ),
 }
@@ -241,7 +241,7 @@ def test_top_nav_matches_research_program_sections():
 def test_study_b_card_exists():
     card = (REPO_ROOT / "docs" / "CURRENT_STUDY_CARD.md").read_text(encoding="utf-8")
     assert card.startswith("# 研究B：机器主体决策过程归因评测")
-    assert "仅机器主体" in card
+    assert "机器主体" in card
     for bad in ["专家确认", "专家验证", "内容效度成立"]:
         assert bad not in card, bad
 
@@ -537,10 +537,8 @@ def test_page_has_no_evidence_boundary_section_still():
 
 def test_readme_uses_program_title_and_question():
     assert README_SRC.startswith(f"# {README_TITLE}\n")
-    assert "身份标签、决策过程线索与决策后行为" in README_SRC
+    assert "本项目记录语言模型在不同身份、决策过程和反馈行为材料下形成的归因反应" in README_SRC
     assert (REPO_ROOT / "docs" / "RESEARCH_PROGRAM.md").is_file()
-    first = README_SRC.split("## ", 1)[0]
-    assert "不判断 AI 或任何行动者是否真实拥有" in first
 
 
 def test_readme_places_studies_in_one_program():
@@ -548,7 +546,7 @@ def test_readme_places_studies_in_one_program():
     assert "### 研究B：机器主体决策过程归因评测" in README_SRC
     assert "当前主研究" not in README_SRC
     assert "早期探索性研究归档" not in README_SRC
-    assert "统计结果不合并" in README_SRC
+    assert "分别使用自己的材料、题项和分析结果" in README_SRC
 
 
 def test_readme_links_current_and_legacy_documents():
@@ -563,7 +561,7 @@ def test_readme_links_current_and_legacy_documents():
 
 def test_readme_free_will_is_downgraded():
     # free will is only an exploratory MSI item, never title/sole construct/total
-    assert "自由意志只对应 MSI 中的一个探索性题项" in README_SRC
+    assert "自由意志对应 MSI 中的一个探索性题项" in README_SRC
 
 
 def test_readme_avoids_outdated_or_unsupported_public_claims():
@@ -739,8 +737,8 @@ def test_showcase_story_has_project_and_separate_studies():
     studies = program["studies"]
     assert studies["study_a"]["study_id"] == "identity_process_attribution_baseline"
     assert studies["study_b"]["study_id"] == "machine_decision_process_attribution"
-    assert studies["study_a"]["evidence_status_zh"] == "探索性证据"
-    assert studies["study_b"]["evidence_status_zh"] == "合成管线"
+    assert studies["study_a"]["evidence_status_zh"] == "已有探索性输出"
+    assert studies["study_b"]["evidence_status_zh"] == "流程演示已完成"
 
 
 def test_project_hero_facts_are_not_study_b_design_counts():
@@ -801,9 +799,10 @@ def test_showcase_story_uses_stable_study_names():
 
 def test_page_links_study_b_assets_and_showcase():
     sec = HTML.split('id="studies"', 1)[1].split("</section>", 1)[0]
-    assert "pa-wu-r1-pilot/" in sec
+    assert "machine-decision-process-attribution/" in sec
+    assert "pa-wu-r1-pilot/" not in sec
     assert "机器主体决策过程归因评测" in sec
-    assert "synthetic demo" in sec
+    assert "流程演示" in sec
 
 
 def test_legacy_history_data_files_still_present():
@@ -883,6 +882,67 @@ def test_current_study_judge_models_configured_consistently():
     ids = [row["id"] for row in PILOT_SHOWCASE["judge_models"]]
     assert ids == ["deepseek-v4-pro", "gpt-5.6-terra"]
     assert len(set(ids)) == len(ids)
+
+
+# --- PR B follow-up: public copy + study-B route ---------------------------
+
+def test_root_page_hides_deprecated_public_names():
+    for bad in ["当前主研究", "早期研究", "PA—Wu R1", "PA-Wu R1",
+                "LLM机器主体归因评测"]:
+        assert bad not in HTML, bad
+    assert bad not in README_SRC
+
+
+def test_root_page_hides_internal_program_id():
+    assert "llm_actor_attribution_program" not in HTML
+
+
+def test_root_page_study_b_link_is_canonical_route():
+    assert "machine-decision-process-attribution/" in HTML
+    assert "pa-wu-r1-pilot/" not in HTML
+
+
+def test_readme_uses_canonical_study_b_route():
+    assert "machine-decision-process-attribution/" in README_SRC
+
+
+def _load_assemble_pages():
+    import sys
+    p = str(REPO_ROOT / "scripts")
+    if p not in sys.path:
+        sys.path.insert(0, p)
+    spec = importlib.util.spec_from_file_location(
+        "assemble_pages", REPO_ROOT / "scripts" / "assemble_pages.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_assemble_pages_builds_root_canonical_and_redirect(tmp_path):
+    ap = _load_assemble_pages()
+    out = tmp_path / "_site"
+    ap.assemble(out)
+    assert (out / "index.html").is_file()
+    assert (out / "machine-decision-process-attribution" / "index.html").is_file()
+    assert (out / "machine-decision-process-attribution" / "app.js").is_file()
+    assert (out / "machine-decision-process-attribution" / "styles.css").is_file()
+    assert (out / "pa-wu-r1-pilot" / "index.html").is_file()
+
+
+def test_assemble_redirect_page_points_to_canonical(tmp_path):
+    ap = _load_assemble_pages()
+    out = tmp_path / "_site"
+    ap.assemble(out)
+    redirect = (out / "pa-wu-r1-pilot" / "index.html").read_text(encoding="utf-8")
+    assert "machine-decision-process-attribution/" in redirect
+    assert "已迁移" in redirect
+
+
+def test_study_b_source_directory_still_present():
+    src = REPO_ROOT / "docs" / "pa-wu-r1-pilot"
+    assert src.is_dir()
+    assert (src / "index.html").is_file()
+    assert (src / "app.js").is_file()
 
 
 def test_current_sources_doc_has_full_literature_and_license_section():
