@@ -200,7 +200,7 @@ def fig1_condition_construct(df: pd.DataFrame) -> Path:
     fig.suptitle(f"六个实验条件下的主要构念均值\n[{SYNTH_ZH}｜各面板使用自身原量尺]",
                  fontsize=13)
     fig.text(0.5, 0.01,
-             "不同面板的纵轴量尺可能不同，不比较跨构念绝对高度。",
+             "每个面板按对应构念的原量尺呈现；跨构念阅读时分别参照各自坐标。",
              ha="center", fontsize=9, color="#5d6b7d")
     fig.tight_layout(rect=(0, 0.04, 1, 0.93))
     out = FIG_DIR / "fig1_condition_construct_means.png"
@@ -258,7 +258,7 @@ def fig2_model_adjusted_forest(mcons: pd.DataFrame) -> Path:
         data,
         xlabel="模型调整后差值（该构念原量尺）",
         suptitle=f"模型调整后的预设对比\n[{SYNTH_ZH}｜按构念分面]",
-        note="仅在同一构念内部读取方向、幅度与不确定性。",
+        note="方向、幅度与不确定性在各构念面板内读取。",
         out_name="fig2_model_adjusted_contrasts.png")
 
 
@@ -291,7 +291,7 @@ def fig3_model_profiles(df: pd.DataFrame) -> Path:
     ]
     fig.legend(handles=handles, title="评判模型配置",
                loc="lower center", ncol=2, fontsize=9)
-    fig.suptitle(f"两个评判模型配置的构念均值\n[{SYNTH_ZH}｜描述性展示，不用于排名]",
+    fig.suptitle(f"两个评判模型配置的构念均值\n[{SYNTH_ZH}｜描述性展示]",
                  fontsize=13)
     fig.tight_layout(rect=(0, 0.07, 1, 0.92))
     out = FIG_DIR / "fig3_model_profiles.png"
@@ -331,7 +331,7 @@ def fig4_scenario_heatmap(df: pd.DataFrame) -> Path:
     cbar = fig.colorbar(im, ax=ax)
     cbar.set_label("量尺内位置（0—1，仅展示）")
     fig.text(0.5, 0.01,
-             "每列根据该构念理论量尺转换为0—1；该转换不进入正式统计推断。",
+             "0—1转换服务于同图展示，正式统计继续使用各构念原量尺。",
              ha="center", fontsize=9, color="#5d6b7d")
     fig.tight_layout(rect=(0, 0.04, 1, 1))
     out = FIG_DIR / "fig4_scenario_construct_heatmap.png"
@@ -352,13 +352,14 @@ def fig5_contrast_forest(contrasts: pd.DataFrame) -> Path:
         data,
         xlabel="直接均值差（该构念原量尺）",
         suptitle=f"直接描述性预设对比\n[{SYNTH_ZH}｜按构念分面]",
-        note="不同构念之间不比较绝对差值大小。",
+        note="各构念差值在对应原量尺内读取。",
         out_name="fig5_contrast_forest.png")
 
 
 def _synth_banner() -> str:
-    return f"> **{SYNTH}.** Not real model results; no model capability, no model " \
-           "ranking, no empirical theory support."
+    return ("> **Workflow demonstration data.** These deterministic synthetic values "
+            "exercise the material, scoring, analysis, and visualization pipeline. "
+            "Empirical interpretation begins after the authorized dual-model run.")
 
 
 def render_report(figs: list[Path]) -> None:
@@ -369,12 +370,12 @@ def render_report(figs: list[Path]) -> None:
     cmean = desc.groupby(["construct", "condition_id"])["mean"].mean().reset_index()
 
     L: list[str] = []
-    L.append("# PA—Wu R1 Pilot — Demo Report (machine-only)")
+    L.append("# Study B — Machine Decision-Process Attribution — Flow Demonstration Report")
     L.append("")
     L.append(_synth_banner())
     L.append("")
-    L.append("> **Target subject: machine-only.** The R1 pilot studies attribution to "
-             "an AI system only. There is **no** ai/human comparison "
+    L.append("> **Study scope.** The pilot holds the target subject fixed as a machine. "
+             "Cross-subject measurement is planned as a separate research route "
              "(see `identity_scope_decision.md`).")
     L.append("")
 
@@ -389,15 +390,17 @@ def render_report(figs: list[Path]) -> None:
     L.append("## 2. Construct framework")
     L.append("Primary: IN (Perceptual Independence, 1–7), GO (Goal Orientation, 1–7), "
              "MSI (Mental-State Inference, 1–5), IC (Influential Capacity, 1–7). "
-             "Supplementary: PA5, PA8 (Perceived Agency, 1–5). No cross-scale total. "
-             "The four primary Wu & Shen 2026 constructs use machine-specific original items.")
+             "Supplementary: PA5, PA8 (Perceived Agency, 1–5). Each construct is "
+             "reported on its native scale. The four primary Wu & Shen 2026 "
+             "constructs use machine-specific original items.")
     L.append("")
     # 3
     L.append("## 3. Six-condition design")
     L.append("C0 D0-U0; C1 D1-U0; C2 D2-U0; C3 D2-U1; C4 D2-U2; C5 D2-U3. "
              "D0 adds no process cue; D1 adds only explicit alternatives information; "
-             "D2 adds only the explicit stated reason. Six-level condition factor; the "
-             "pilot does NOT estimate a full D×U interaction.")
+             "D2 adds only the explicit stated reason. The pilot estimates differences "
+             "among six selected D/U combinations. A future factorial design will "
+             "estimate the full D×U interaction.")
     L.append("")
     # 4
     L.append("## 4. Material coverage")
@@ -410,11 +413,11 @@ def render_report(figs: list[Path]) -> None:
              f"{quality['n_judge_models']} judge models (each model scores the same 96 materials).")
     L.append("")
     # 5
-    L.append("## 5. Synthetic-data note")
+    L.append("## 5. Workflow-demonstration data note")
     L.append(_synth_banner())
     L.append("Demo responses are deterministic (fixed seed) with a few baked-in condition "
-             "differences purely to exercise scoring/analysis/figures. They imitate no "
-             "real DeepSeek or GPT behavior.")
+             "differences that exercise scoring, analysis, and figures. The authorized "
+             "dual-model run supplies the empirical values in the same structure.")
     L.append("")
     # 6
     L.append("## 6. Descriptive results — condition × primary construct means")
@@ -445,9 +448,13 @@ def render_report(figs: list[Path]) -> None:
                  f"{r.optimizer_attempts} |")
     L.append("")
     # captured warnings
-    warns = [(r.construct, r.captured_warnings) for r in mfit.itertuples() if str(r.captured_warnings)]
+    warns = []
+    for row in mfit.itertuples():
+        warning = row.captured_warnings
+        if pd.notna(warning) and str(warning).strip():
+            warns.append((row.construct, str(warning).strip()))
     if warns:
-        L.append("Captured convergence/Hessian warnings (not discarded):")
+        L.append("Captured convergence/Hessian warnings, kept in the fit summary:")
         for c, w in warns:
             L.append(f"- **{c}**: {w}")
         L.append("")
@@ -469,7 +476,10 @@ def render_report(figs: list[Path]) -> None:
                  f"{p} | {ph} | {r.raw_descriptive_contrast:+.3f} |")
     L.append("")
     # 9
-    L.append("## 9. Judge-model differences (descriptive, synthetic; NOT a ranking)")
+    L.append("## 9. Judge-model sensitivity view")
+    L.append("")
+    L.append("Both judge models score the same 96 materials; the two profiles below feed "
+             "the sensitivity check on judge-model choice.")
     L.append("")
     mm = desc.groupby(["construct", "judge_model_id"])["mean"].mean().reset_index()
     L.append("| construct | deepseek-v4-pro | gpt-5.6-terra |")
@@ -490,11 +500,11 @@ def render_report(figs: list[Path]) -> None:
                  f"{h['scenario_mean_range']} |")
     L.append("")
     # figures
-    L.append("### Figures (synthetic)")
+    L.append("### Figures (workflow demonstration)")
     L.append("")
-    L.append("- Figures 1, 2, 3 and 5 are **faceted per construct** and each panel uses "
-             "that construct's own **native scale**; cross-construct absolute heights / "
-             "differences are not comparable.")
+    L.append("- Figures 1, 2, 3 and 5 are **faceted per construct**, and each panel uses "
+             "that construct's own **native scale**; read heights and differences within "
+             "a construct's own coordinates.")
     L.append("- Figure 4 maps each column to a **0–1 within-scale position using the "
              "theoretical scale bounds** (display only), not sample min/max.")
     L.append("- Formal inference always uses the native scales.")
@@ -503,14 +513,18 @@ def render_report(figs: list[Path]) -> None:
         L.append(f"- `{f.relative_to(PKG_DIR).as_posix()}`")
     L.append("")
     # 11
-    L.append("## 11. Interpretation boundaries")
-    L.append("- **Machine-only**: attribution to an AI system; no ai/human comparison.")
-    L.append("- Native-scale inference is primary; 0–1 standardization is display-only.")
-    L.append("- No missing-value imputation; a construct requires all its items valid.")
-    L.append("- Free-will item (`wu_ms3`) is exploratory; never a construct or total.")
-    L.append("- Pilot uses a six-level condition factor; no full D×U causal interaction.")
-    L.append("- No model ranking; no capability claim; no empirical theory support.")
-    L.append("- Demo significance/effect values are pipeline checks, not findings.")
+    L.append("## 11. Evidence scope")
+    L.append("- **Machine target fixed**: the pilot studies attribution to a machine subject.")
+    L.append("- **Native-scale inference**: each construct is analyzed on its own scale; "
+             "the 0–1 standardization is display-only.")
+    L.append("- **Complete-item scoring**: a construct score requires all its items valid, "
+             "and the scoring chain keeps the original missing state.")
+    L.append("- **Exploratory free-will item**: `wu_ms3` is recorded as one MSI item.")
+    L.append("- **Six selected D/U combinations**: the pilot compares these six; the full "
+             "D×U interaction is a future factorial extension.")
+    L.append("- **Workflow-demonstration values**: current numbers are pipeline checks.")
+    L.append("- **Future authorized dual-model run**: supplies the empirical results in "
+             "the same material, scoring, and analysis structure.")
     L.append("")
     # 12
     L.append("## 12. Real-data replacement procedure")

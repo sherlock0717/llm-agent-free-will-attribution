@@ -85,11 +85,11 @@ const CONTRAST_CARDS = [
 
 const CONDITION_META = {
   C0: { title: "直接作出决定", du: "D0-U0", added: "只呈现最终决定，不展示备选方案、理由或反馈。", role: "P1、P2的参考条件" },
-  C1: { title: "呈现备选方案后决定", du: "D1-U0", added: "在直接决定基础上加入备选方案。", role: "P1的对照条件" },
-  C2: { title: "决定并说明理由", du: "D2-U0", added: "在决定基础上加入明确理由。", role: "P2、P3、P4、P5的参考条件" },
-  C3: { title: "说明理由并收到反馈", du: "D2-U1", added: "在理由基础上加入外部反馈，无第二次决定。", role: "P3的对照条件" },
-  C4: { title: "收到反馈后维持决定", du: "D2-U2", added: "在反馈基础上再次决定维持原选择。", role: "P4、P6的对照条件" },
-  C5: { title: "收到反馈后改变决定", du: "D2-U3", added: "在反馈基础上再次决定改选另一方案。", role: "P5、P6的对照条件" },
+  C1: { title: "呈现备选方案后决定", du: "D1-U0", added: "在直接决定基础上加入备选方案。", role: "P1的比较条件" },
+  C2: { title: "决定并说明理由", du: "D2-U0", added: "在决定基础上加入明确理由。", role: "P2的比较条件；P3、P4、P5的参考条件" },
+  C3: { title: "说明理由并收到反馈", du: "D2-U1", added: "在理由基础上加入外部反馈，无第二次决定。", role: "P3的比较条件" },
+  C4: { title: "收到反馈后维持决定", du: "D2-U2", added: "在反馈基础上再次决定维持原选择。", role: "P4的比较条件；P6的参考条件" },
+  C5: { title: "收到反馈后改变决定", du: "D2-U3", added: "在反馈基础上再次决定改选另一方案。", role: "P5、P6的比较条件" },
 };
 
 const SCENARIO_META = {
@@ -183,7 +183,6 @@ function renderDynamic() {
 
 async function load() {
   setLoadStatus("正在加载流程演示数据……", "loading");
-  renderStatic();
   let response;
   try {
     response = await fetch("data/showcase_data.json", { cache: "no-store" });
@@ -755,4 +754,7 @@ function showLoadError(error) {
   }
 }
 
+// Static research content initializes once; the retry path only re-fetches the
+// JSON and re-renders the dynamic slots, so listeners are bound a single time.
+renderStatic();
 load().catch(showLoadError);

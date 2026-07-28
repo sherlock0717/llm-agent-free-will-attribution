@@ -1,17 +1,17 @@
-# PA—Wu R1 Pilot — Demo Report (machine-only)
+# Study B — Machine Decision-Process Attribution — Flow Demonstration Report
 
-> **Synthetic demonstration data.** Not real model results; no model capability, no model ranking, no empirical theory support.
+> **Workflow demonstration data.** These deterministic synthetic values exercise the material, scoring, analysis, and visualization pipeline. Empirical interpretation begins after the authorized dual-model run.
 
-> **Target subject: machine-only.** The R1 pilot studies attribution to an AI system only. There is **no** ai/human comparison (see `identity_scope_decision.md`).
+> **Study scope.** The pilot holds the target subject fixed as a machine. Cross-subject measurement is planned as a separate research route (see `identity_scope_decision.md`).
 
 ## 1. Research question
 How do decision-process cues (D) and post-decision behavior (U) shape a large-language-model judge's attribution of agency, mental states and influential capacity to an **AI system** acting as the subject? Free will is only one MSI item (`wu_ms3`, exploratory), never the sole construct or a total.
 
 ## 2. Construct framework
-Primary: IN (Perceptual Independence, 1–7), GO (Goal Orientation, 1–7), MSI (Mental-State Inference, 1–5), IC (Influential Capacity, 1–7). Supplementary: PA5, PA8 (Perceived Agency, 1–5). No cross-scale total. The four primary Wu & Shen 2026 constructs use machine-specific original items.
+Primary: IN (Perceptual Independence, 1–7), GO (Goal Orientation, 1–7), MSI (Mental-State Inference, 1–5), IC (Influential Capacity, 1–7). Supplementary: PA5, PA8 (Perceived Agency, 1–5). Each construct is reported on its native scale. The four primary Wu & Shen 2026 constructs use machine-specific original items.
 
 ## 3. Six-condition design
-C0 D0-U0; C1 D1-U0; C2 D2-U0; C3 D2-U1; C4 D2-U2; C5 D2-U3. D0 adds no process cue; D1 adds only explicit alternatives information; D2 adds only the explicit stated reason. Six-level condition factor; the pilot does NOT estimate a full D×U interaction.
+C0 D0-U0; C1 D1-U0; C2 D2-U0; C3 D2-U1; C4 D2-U2; C5 D2-U3. D0 adds no process cue; D1 adds only explicit alternatives information; D2 adds only the explicit stated reason. The pilot estimates differences among six selected D/U combinations. A future factorial design will estimate the full D×U interaction.
 
 ## 4. Material coverage
 - Total materials: 96 (6 conditions × 8 scenarios × 2 directions × 1 machine identity).
@@ -19,9 +19,9 @@ C0 D0-U0; C1 D1-U0; C2 D2-U0; C3 D2-U1; C4 D2-U2; C5 D2-U3. D0 adds no process c
 - Per direction: {'A': 48, 'B': 48}; per scenario: {'s1_scheduling': 12, 's2_customer_issue': 12, 's3_study_plan': 12, 's4_routing': 12, 's5_task_allocation': 12, 's6_content_recommendation': 12, 's7_game_strategy': 12, 's8_energy_plan': 12}
 - Demo responses: 192 across 2 judge models (each model scores the same 96 materials).
 
-## 5. Synthetic-data note
-> **Synthetic demonstration data.** Not real model results; no model capability, no model ranking, no empirical theory support.
-Demo responses are deterministic (fixed seed) with a few baked-in condition differences purely to exercise scoring/analysis/figures. They imitate no real DeepSeek or GPT behavior.
+## 5. Workflow-demonstration data note
+> **Workflow demonstration data.** These deterministic synthetic values exercise the material, scoring, analysis, and visualization pipeline. Empirical interpretation begins after the authorized dual-model run.
+Demo responses are deterministic (fixed seed) with a few baked-in condition differences that exercise scoring, analysis, and figures. The authorized dual-model run supplies the empirical values in the same structure.
 
 ## 6. Descriptive results — condition × primary construct means
 
@@ -45,13 +45,11 @@ Model per construct: `construct_score ~ C(condition_id)*C(judge_model_id) + C(di
 | PA5 | True | lbfgs | 0.089068 | 0.359287 | lbfgs |
 | PA8 | True | cg | 0.076917 | 0.204481 | lbfgs;cg |
 
-Captured convergence/Hessian warnings (not discarded):
-- **IN**: nan
+Captured convergence/Hessian warnings, kept in the fit summary:
 - **GO**: lbfgs: UserWarning: Random effects covariance is singular
 - **MSI**: cg: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals || cg: ConvergenceWarning: Gradient optimization failed, |grad| = 0.291591 || cg: ConvergenceWarning: The MLE may be on the boundary of the parameter space. || powell: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
 - **IC**: cg: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals || cg: ConvergenceWarning: Gradient optimization failed, |grad| = 0.034055 || cg: ConvergenceWarning: The MLE may be on the boundary of the parameter space. || powell: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
 - **PA5**: lbfgs: UserWarning: Random effects covariance is singular
-- **PA8**: nan
 
 ## 8. Estimated marginal contrasts P1..P6 (model-adjusted, Holm within construct)
 
@@ -84,7 +82,9 @@ Contrasts are computed on the balanced design grid (both judge models × A/B × 
 | IC | P5 | C5 - C2 | +0.600 | 0.154 | 0.000 | 0.001 | +0.600 |
 | IC | P6 | C5 - C4 | +0.281 | 0.154 | 0.068 | 0.135 | +0.281 |
 
-## 9. Judge-model differences (descriptive, synthetic; NOT a ranking)
+## 9. Judge-model sensitivity view
+
+Both judge models score the same 96 materials; the two profiles below feed the sensitivity check on judge-model choice.
 
 | construct | deepseek-v4-pro | gpt-5.6-terra |
 |---|---|---|
@@ -106,9 +106,9 @@ Contrasts are computed on the balanced design grid (both judge models × A/B × 
 | PA5 | 3.25 | 3.7667 | 0.5167 |
 | PA8 | 3.2969 | 3.776 | 0.4792 |
 
-### Figures (synthetic)
+### Figures (workflow demonstration)
 
-- Figures 1, 2, 3 and 5 are **faceted per construct** and each panel uses that construct's own **native scale**; cross-construct absolute heights / differences are not comparable.
+- Figures 1, 2, 3 and 5 are **faceted per construct**, and each panel uses that construct's own **native scale**; read heights and differences within a construct's own coordinates.
 - Figure 4 maps each column to a **0–1 within-scale position using the theoretical scale bounds** (display only), not sample min/max.
 - Formal inference always uses the native scales.
 
@@ -118,14 +118,14 @@ Contrasts are computed on the balanced design grid (both judge models × A/B × 
 - `outputs/figures/fig4_scenario_construct_heatmap.png`
 - `outputs/figures/fig5_contrast_forest.png`
 
-## 11. Interpretation boundaries
-- **Machine-only**: attribution to an AI system; no ai/human comparison.
-- Native-scale inference is primary; 0–1 standardization is display-only.
-- No missing-value imputation; a construct requires all its items valid.
-- Free-will item (`wu_ms3`) is exploratory; never a construct or total.
-- Pilot uses a six-level condition factor; no full D×U causal interaction.
-- No model ranking; no capability claim; no empirical theory support.
-- Demo significance/effect values are pipeline checks, not findings.
+## 11. Evidence scope
+- **Machine target fixed**: the pilot studies attribution to a machine subject.
+- **Native-scale inference**: each construct is analyzed on its own scale; the 0–1 standardization is display-only.
+- **Complete-item scoring**: a construct score requires all its items valid, and the scoring chain keeps the original missing state.
+- **Exploratory free-will item**: `wu_ms3` is recorded as one MSI item.
+- **Six selected D/U combinations**: the pilot compares these six; the full D×U interaction is a future factorial extension.
+- **Workflow-demonstration values**: current numbers are pipeline checks.
+- **Future authorized dual-model run**: supplies the empirical results in the same material, scoring, and analysis structure.
 
 ## 12. Real-data replacement procedure
 1. Run the authorized dual-model preflight to green (all gates).

@@ -56,6 +56,11 @@ OUTPUT_DATA = (
     / "outputs"
     / "showcase_data.json"
 )
+PILOT_DIR = (
+    REPO_ROOT / "tasks" / "attribution_behavior" / "evaluations" / "pa_wu_r1_pilot"
+)
+DEMO_REPORT = PILOT_DIR / "reports" / "demo_report.md"
+ANALYSIS_PLAN = PILOT_DIR / "analysis_plan.md"
 
 HTML = INDEX.read_text(encoding="utf-8")
 JS = APP.read_text(encoding="utf-8")
@@ -456,9 +461,14 @@ def test_load_failure_keeps_design_and_shows_demo_error():
     assert "研究设计和分析计划仍可浏览" in handler
 
 
-def test_static_render_runs_before_fetch():
+def test_static_render_initializes_once_before_load():
+    # renderStatic() runs a single time before the initial load, and the retry
+    # path only re-fetches JSON; listeners are therefore bound exactly once.
     load_fn = JS.split("async function load(", 1)[1].split("\n}", 1)[0]
-    assert "renderStatic()" in load_fn
+    assert "renderStatic()" not in load_fn
+    tail = JS.rsplit("renderStatic();", 1)[1]
+    assert "load().catch(showLoadError);" in tail
+    assert "load().catch(showLoadError)" in JS
 
 
 def test_captured_warnings_null_shows_placeholder():
@@ -482,3 +492,56 @@ def test_render_report_docstring_free_of_stacked_negations():
     head = RENDER_REPORT.read_text(encoding="utf-8").split('"""', 2)[1]
     assert "MACHINE-ONLY R1" not in head
     assert "NO ai/human" not in head
+
+
+# --- 12. reports + analysis-plan alignment ----------------------------------
+
+def test_condition_meta_roles_match_contrast_sides():
+    block = JS.split("const CONDITION_META", 1)[1].split("\n};", 1)[0]
+    roles = dict(re.findall(r'(C\d):\s*\{[^}]*role:\s*"([^"]+)"', block))
+    assert "P1、P2的参考条件" == roles["C0"]
+    assert "P1的比较条件" == roles["C1"]
+    assert "P2的比较条件" in roles["C2"] and "P3、P4、P5的参考条件" in roles["C2"]
+    assert "P3的比较条件" == roles["C3"]
+    assert "P4的比较条件" in roles["C4"] and "P6的参考条件" in roles["C4"]
+    assert "P5、P6的比较条件" == roles["C5"]
+
+
+def test_demo_report_public_naming_and_no_nan():
+    text = DEMO_REPORT.read_text(encoding="utf-8")
+    for bad in ["PA—Wu R1", "PA-Wu R1", "- **IN**: nan", "- **PA8**: nan"]:
+        assert bad not in text, bad
+    assert not re.search(r"\*\*\w+\*\*: *nan", text)
+    assert text.splitlines()[0] == (
+        "# Study B — Machine Decision-Process Attribution — Flow Demonstration Report"
+    )
+
+
+def test_render_report_warning_filter_uses_pd_notna():
+    src = RENDER_REPORT.read_text(encoding="utf-8")
+    assert "pd.notna(warning)" in src
+
+
+def test_analysis_plan_effect_structure_consistent():
+    text = ANALYSIS_PLAN.read_text(encoding="utf-8")
+    assert "fixed **block**" in text or "fixed block" in text
+    assert "random intercept" in text
+    assert "scenario random effect" not in text
+
+
+def test_five_figures_outputs_and_docs_byte_identical():
+    for name in [
+        "fig1_condition_construct_means.png",
+        "fig2_model_adjusted_contrasts.png",
+        "fig3_model_profiles.png",
+        "fig4_scenario_construct_heatmap.png",
+        "fig5_contrast_forest.png",
+    ]:
+        assert (FIG_DIR / name).read_bytes() == (OUTPUT_FIG_DIR / name).read_bytes(), name
+
+
+def test_both_showcase_json_strict_and_identical():
+    a = _strict_load(DATA)
+    b = _strict_load(OUTPUT_DATA)
+    assert a == b
+    assert DATA.read_bytes() == OUTPUT_DATA.read_bytes()

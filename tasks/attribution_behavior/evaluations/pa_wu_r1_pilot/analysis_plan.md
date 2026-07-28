@@ -1,8 +1,9 @@
-# PA—Wu R1 Pilot Analysis Plan
+# Study B — Machine Decision-Process Attribution — Analysis Plan
 
-> All numbers produced by this pipeline are **synthetic demonstration data**.
-> This plan describes how *real* data would be analyzed; the demo run only
-> validates that the analysis and figures execute end-to-end.
+> All numbers produced by this pipeline are **workflow-demonstration data**.
+> This plan describes how the empirical data will be analyzed; the demonstration
+> run validates that the analysis and figures execute end-to-end.
+> Internal IDs and repository paths are retained for compatibility.
 
 ## Pilot C* vs. future full B*
 
@@ -44,8 +45,8 @@ random intercept: material_id
   within-material pairing (the two model scores of a material share a material
   offset).
 - The 8 scenarios are **pre-selected fixed blocks**, entered as fixed effects. We
-  deliberately do **not** estimate a scenario random effect from only 8 groups;
-  with so few groups a random-effect variance is poorly identified.
+  deliberately keep scenario_id as a fixed block rather than a random grouping
+  factor, since with only 8 groups a random-effect variance is poorly identified.
 - The primary construct-score model does **not** add an item random effect. An
   **item-level sensitivity analysis** may add one.
 - When repeated runs exist, `repeat_index` is used as a **stability** factor
@@ -163,7 +164,7 @@ of observed cell means — side by side with the model-adjusted estimate. The
 
 - If no optimizer converges for a construct, record `converged = false`, the
   failure reason, and the optimizer(s) tried.
-- Do **not** auto-drop the scenario random effect.
+- Do **not** auto-drop the material_id random intercept.
 - Do **not** fabricate estimates; downstream contrasts for that construct report
   only the raw descriptive contrast, with `model_adjusted_contrast` left null.
 
@@ -203,6 +204,7 @@ of observed cell means — side by side with the model-adjusted estimate. The
 - **Descriptive** statistics (means, SDs, raw contrasts) summarize the observed
   cells directly and make no distributional assumption.
 - **Model inference** (mixed-model coefficients, model-adjusted contrasts, CIs,
-  p-values) relies on the mixed-model assumptions and the scenario random effect.
+  p-values) relies on the mixed-model assumptions and the material_id random
+  intercept, with scenario_id entered as a fixed block.
 - The two are reported side by side; where they diverge, the divergence itself is
   reported rather than silently preferring one.
