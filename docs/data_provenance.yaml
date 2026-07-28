@@ -1,0 +1,64 @@
+schema_version: 1
+public_vocabulary:
+  respondent_mode:
+    llm_simulated_questionnaire: LLM 模拟问卷响应
+    judge_model: 评判模型评分
+  generation_source:
+    live_api: API 模型生成
+    deterministic_mock: 确定性工程验证
+    synthetic_demo: 流程演示生成
+  data_role:
+    exploratory_baseline: 探索性基线
+    engineering_validation: 工程验证
+    workflow_demonstration: 流程演示
+    formal_evaluation: 正式评测运行
+
+research_a:
+  public_label: DeepSeek API 模型模拟问卷响应
+  respondent_mode: llm_simulated_questionnaire
+  generation_source: live_api
+  data_role: exploratory_baseline
+  provider: DeepSeek API
+  record_count: 360
+  description_zh: >-
+    单一模型配置按问卷模拟 Prompt 生成的记录，用于描述该配置在研究A材料中的归因反应。
+  public_assets:
+    - site/data/site_summary.json
+    - site/data/showcase_story.json
+    - site/data/measurement_summary.json
+    - site/data/analysis_results.json
+    - site/data/historical_results.json
+
+research_a_mock:
+  public_label: 确定性工程验证数据
+  respondent_mode: llm_simulated_questionnaire
+  generation_source: deterministic_mock
+  data_role: engineering_validation
+  description_zh: >-
+    用于检查任务配置、响应解析、题项计分、产物清单和运行目录契约。
+
+research_b_demo:
+  public_label: 流程演示数据
+  respondent_mode: judge_model
+  generation_source: synthetic_demo
+  data_role: workflow_demonstration
+  target_subject: machine
+  description_zh: >-
+    用于呈现机器主体材料、构念评分、预设对比、场景检查和页面图表链。
+  public_assets:
+    - docs/pa-wu-r1-pilot/data/showcase_data.json
+
+research_b_formal:
+  public_label: 双评判模型运行数据
+  respondent_mode: judge_model
+  generation_source: live_api
+  data_role: formal_evaluation
+  target_subject: machine
+  description_zh: >-
+    两个评判模型对同一套九十六条机器主体材料进行独立评分，沿用研究B的评分与分析协议。
+
+compatibility_fields:
+  synthetic:
+    status: retained
+    note_zh: >-
+      旧字段同时覆盖“模拟问卷角色”和“程序生成响应”两个概念。新资产使用 respondent_mode、generation_source 与 data_role 分开记录。
