@@ -229,20 +229,20 @@
           <h3 class="appendix-subhead">合成流程静态图</h3>
           <div class="figure-grid">
             <figure class="figure">
-              <img src="assets/figures/fig1_condition_construct_means.png" data-fig="fig1_condition_construct_means.png" loading="lazy" decoding="async" alt="不同实验条件下各构念的合成平均得分" />
-              <figcaption><strong>怎么看：</strong> 横轴为C0—C5六个条件，纵轴为各构念在自身原量尺上的平均得分；变化只表示合成演示数据中的条件差异。</figcaption>
+              <img src="assets/figures/fig1_condition_construct_means.png" data-fig="fig1_condition_construct_means.png" loading="lazy" decoding="async" alt="按构念分面的六条件均值图，每个面板使用该构念自身原量尺" />
+              <figcaption><strong>怎么看：</strong> 每个面板对应一个构念，纵轴使用该构念自身原量尺。只比较同一构念在C0—C5之间的变化，不比较不同面板的绝对高度。</figcaption>
             </figure>
             <figure class="figure">
-              <img src="assets/figures/fig2_model_adjusted_contrasts.png" data-fig="fig2_model_adjusted_contrasts.png" loading="lazy" decoding="async" alt="模型调整后的P1至P6预设对比" />
-              <figcaption><strong>怎么看：</strong> 点估计表示两个条件的模型调整后差异，区间跨过0时不应把方向解释为稳定差异。</figcaption>
+              <img src="assets/figures/fig2_model_adjusted_contrasts.png" data-fig="fig2_model_adjusted_contrasts.png" loading="lazy" decoding="async" alt="按构念分面的模型调整后P1至P6对比森林图" />
+              <figcaption><strong>怎么看：</strong> 每个面板对应一个构念，点和区间表示该构念原量尺上的模型调整后对比。零线只表示差值方向，不表示好坏。</figcaption>
             </figure>
             <figure class="figure">
-              <img src="assets/figures/fig5_contrast_forest.png" data-fig="fig5_contrast_forest.png" loading="lazy" decoding="async" alt="P1至P6预设对比森林图" />
-              <figcaption><strong>怎么看：</strong> 森林图把多个预设对比放在同一坐标中，便于比较方向、幅度和不确定性。</figcaption>
+              <img src="assets/figures/fig5_contrast_forest.png" data-fig="fig5_contrast_forest.png" loading="lazy" decoding="async" alt="按构念分面的直接均值差P1至P6森林图" />
+              <figcaption><strong>怎么看：</strong> 每个面板对应一个构念，展示原量尺上的直接均值差与区间。不同构念之间不比较绝对差值大小。</figcaption>
             </figure>
             <figure class="figure">
-              <img src="assets/figures/fig3_model_profiles.png" data-fig="fig3_model_profiles.png" loading="lazy" decoding="async" alt="两个评判模型的构念评分轮廓" />
-              <figcaption><strong>怎么看：</strong> 比较两个模型在六个构念上的合成平均得分；这里不判断哪个模型更正确或更强。</figcaption>
+              <img src="assets/figures/fig3_model_profiles.png" data-fig="fig3_model_profiles.png" loading="lazy" decoding="async" alt="按构念分面的两个评判模型配置合成均值小多图" />
+              <figcaption><strong>怎么看：</strong> 每个面板分别显示两个评判模型配置在一个构念上的合成均值。该图只描述对评判模型配置的敏感性，不进行能力排名。</figcaption>
             </figure>
           </div>
         </div>
@@ -271,8 +271,8 @@
       </div>
       <div class="table-scroll"><table id="scenHetTable"></table></div>
       <figure class="figure">
-        <img src="assets/figures/fig4_scenario_construct_heatmap.png" data-fig="fig4_scenario_construct_heatmap.png" loading="lazy" decoding="async" alt="八个场景与六个构念的合成均值热力图" />
-        <figcaption><strong>怎么看：</strong> 每个格子表示一个场景在一个构念上的合成平均得分，用于识别场景异质性。</figcaption>
+        <img src="assets/figures/fig4_scenario_construct_heatmap.png" data-fig="fig4_scenario_construct_heatmap.png" loading="lazy" decoding="async" alt="场景与构念的量尺内位置热力图，各列按理论量尺转换为0到1" />
+        <figcaption><strong>怎么看：</strong> 各构念按自身理论量尺转换为0—1的量尺内位置。该转换只用于热力图展示，正式统计仍使用原量尺。</figcaption>
       </figure>
     </section>
 

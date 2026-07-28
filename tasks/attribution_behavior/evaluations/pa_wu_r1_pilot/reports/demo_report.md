@@ -108,6 +108,10 @@ Contrasts are computed on the balanced design grid (both judge models × A/B × 
 
 ### Figures (synthetic)
 
+- Figures 1, 2, 3 and 5 are **faceted per construct** and each panel uses that construct's own **native scale**; cross-construct absolute heights / differences are not comparable.
+- Figure 4 maps each column to a **0–1 within-scale position using the theoretical scale bounds** (display only), not sample min/max.
+- Formal inference always uses the native scales.
+
 - `outputs/figures/fig1_condition_construct_means.png`
 - `outputs/figures/fig2_model_adjusted_contrasts.png`
 - `outputs/figures/fig3_model_profiles.png`

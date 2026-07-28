@@ -334,3 +334,32 @@ def test_contrast_card_diffs_match_analysis_plan():
         "P5": "C5−C2",
         "P6": "C5−C4",
     }, found
+
+
+# --- PR C: scale-safe figures (render_report.py) ---------------------------
+
+RENDER_REPORT = (
+    REPO_ROOT
+    / "tasks"
+    / "attribution_behavior"
+    / "evaluations"
+    / "pa_wu_r1_pilot"
+    / "scripts"
+    / "render_report.py"
+)
+
+RENDER_REPORT_TEXT = RENDER_REPORT.read_text(encoding="utf-8")
+
+
+def test_render_report_defines_native_scale_bounds():
+    assert "NATIVE_SCALE_BOUNDS" in RENDER_REPORT_TEXT
+    for construct in ["IN", "GO", "MSI", "IC", "PA5", "PA8"]:
+        assert f'"{construct}"' in RENDER_REPORT_TEXT
+
+
+def test_heatmap_uses_theoretical_native_scale_position():
+    assert "NATIVE_SCALE_BOUNDS" in RENDER_REPORT_TEXT
+    assert "scale_min" in RENDER_REPORT_TEXT
+    assert "scale_max" in RENDER_REPORT_TEXT
+    assert "量尺内位置" in RENDER_REPORT_TEXT
+    assert "clip" in RENDER_REPORT_TEXT
