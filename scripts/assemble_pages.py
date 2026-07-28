@@ -1,16 +1,14 @@
 #!/usr/bin/env python
 """Assemble the combined static Pages artifact for local preview and CI deploy.
 
-The root project overview lives in ``site/``. Research B's standalone page source
-stays under ``docs/pa-wu-r1-pilot/`` for now, and is published at the canonical
-public route ``/machine-decision-process-attribution/``. The legacy
-``/pa-wu-r1-pilot/`` route is kept as a lightweight redirect for compatibility.
+Public routes:
 
-Local preview and CI deploy use the same assembled output, so the study-B page
-resolves identically in both places.
+- ``/``: research-program overview from ``site/``;
+- ``/identity-process-attribution-baseline/``: Research A;
+- ``/machine-decision-process-attribution/``: Research B;
+- ``/pa-wu-r1-pilot/``: lightweight compatibility redirect to Research B.
 
-Usage:
-    python scripts/assemble_pages.py --output _site
+Local preview and CI deploy use the same assembled output.
 """
 
 from __future__ import annotations
@@ -22,9 +20,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_DIR = ROOT / "site"
+STUDY_A_SOURCE = ROOT / "docs" / "identity-process-attribution-baseline"
 STUDY_B_SOURCE = ROOT / "docs" / "pa-wu-r1-pilot"
-CANONICAL_ROUTE = "machine-decision-process-attribution"
-LEGACY_ROUTE = "pa-wu-r1-pilot"
+STUDY_A_ROUTE = "identity-process-attribution-baseline"
+STUDY_B_ROUTE = "machine-decision-process-attribution"
+LEGACY_B_ROUTE = "pa-wu-r1-pilot"
 
 REDIRECT_HTML = """<!DOCTYPE html>
 <html lang="zh-CN">
@@ -42,9 +42,26 @@ REDIRECT_HTML = """<!DOCTYPE html>
 </html>
 """
 
+ROOT_JSON = [
+    "site_summary.json",
+    "showcase_story.json",
+    "measurement_summary.json",
+    "analysis_results.json",
+    "historical_results.json",
+    "engineering_status.json",
+    "evidence_matrix.json",
+    "reproducibility_summary.json",
+]
+ROOT_FIGURES = [
+    "mean_agency.png",
+    "mean_free_will_attribution.png",
+    "mean_subjective_process_completeness.png",
+]
+STUDY_B_FIGURES = [f"fig{i}.png" for i in range(1, 6)]
+
 
 class AssembleError(RuntimeError):
-    """Raised when a required source path is missing."""
+    """Raised when a required source or assembled asset is missing."""
 
 
 def _require_dir(path: Path) -> Path:
@@ -55,21 +72,18 @@ def _require_dir(path: Path) -> Path:
 
 def assemble(output: Path) -> None:
     _require_dir(SITE_DIR)
+    _require_dir(STUDY_A_SOURCE)
     _require_dir(STUDY_B_SOURCE)
 
     if output.exists():
         shutil.rmtree(output)
     output.mkdir(parents=True)
 
-    # Root project overview at the artifact root.
     shutil.copytree(SITE_DIR, output, dirs_exist_ok=True)
+    shutil.copytree(STUDY_A_SOURCE, output / STUDY_A_ROUTE)
+    shutil.copytree(STUDY_B_SOURCE, output / STUDY_B_ROUTE)
 
-    # Research B at the canonical public route.
-    canonical_dir = output / CANONICAL_ROUTE
-    shutil.copytree(STUDY_B_SOURCE, canonical_dir)
-
-    # Legacy route: lightweight redirect page only (no full copy).
-    legacy_dir = output / LEGACY_ROUTE
+    legacy_dir = output / LEGACY_B_ROUTE
     legacy_dir.mkdir(parents=True, exist_ok=True)
     (legacy_dir / "index.html").write_text(REDIRECT_HTML, encoding="utf-8")
 
@@ -79,22 +93,45 @@ def assemble(output: Path) -> None:
 def _verify(output: Path) -> None:
     required = [
         output / "index.html",
-        output / CANONICAL_ROUTE / "index.html",
-        output / CANONICAL_ROUTE / "app.js",
-        output / CANONICAL_ROUTE / "styles.css",
-        output / LEGACY_ROUTE / "index.html",
+        output / "assets" / "css" / "site.css",
+        output / "assets" / "js" / "site.js",
+        output / STUDY_A_ROUTE / "index.html",
+        output / STUDY_A_ROUTE / "app.js",
+        output / STUDY_A_ROUTE / "styles.css",
+        output / STUDY_B_ROUTE / "index.html",
+        output / STUDY_B_ROUTE / "app.js",
+        output / STUDY_B_ROUTE / "styles.css",
+        output / STUDY_B_ROUTE / "data" / "showcase_data.json",
+        output / LEGACY_B_ROUTE / "index.html",
     ]
+    required.extend(output / "data" / name for name in ROOT_JSON)
+    required.extend(output / "assets" / "figures" / name for name in ROOT_FIGURES)
+    required.extend(output / STUDY_B_ROUTE / "assets" / "figures" / name for name in STUDY_B_FIGURES)
+
     missing = [str(path) for path in required if not path.is_file()]
     if missing:
         raise AssembleError("assembled output missing: " + ", ".join(missing))
+
+    legacy_html = (output / LEGACY_B_ROUTE / "index.html").read_text(encoding="utf-8")
+    if f"../{STUDY_B_ROUTE}/" not in legacy_html:
+        raise AssembleError("legacy Research B route does not target the canonical route")
+
+    study_a_html = (output / STUDY_A_ROUTE / "index.html").read_text(encoding="utf-8")
+    if "身份与决策过程归因基线" not in study_a_html:
+        raise AssembleError("Research A page title missing from assembled output")
+
+    study_b_html = (output / STUDY_B_ROUTE / "index.html").read_text(encoding="utf-8")
+    if "机器主体决策过程归因评测" not in study_b_html:
+        raise AssembleError("Research B page title missing from assembled output")
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Assemble the combined Pages artifact.")
     parser.add_argument("--output", default="_site", help="Output directory (default: _site)")
     args = parser.parse_args(argv)
+    output_arg = Path(args.output)
+    output = (ROOT / output_arg).resolve() if not output_arg.is_absolute() else output_arg
 
-    output = (ROOT / args.output).resolve() if not Path(args.output).is_absolute() else Path(args.output)
     try:
         assemble(output)
     except AssembleError as exc:
@@ -102,9 +139,10 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     print(f"assembled Pages artifact at {output}")
-    print(f"  root overview:        {output / 'index.html'}")
-    print(f"  study B (canonical):  {output / CANONICAL_ROUTE / 'index.html'}")
-    print(f"  study B (legacy):     {output / LEGACY_ROUTE / 'index.html'} (redirect)")
+    print(f"  overview:             {output / 'index.html'}")
+    print(f"  Research A:           {output / STUDY_A_ROUTE / 'index.html'}")
+    print(f"  Research B:           {output / STUDY_B_ROUTE / 'index.html'}")
+    print(f"  Research B legacy:    {output / LEGACY_B_ROUTE / 'index.html'}")
     return 0
 
 
