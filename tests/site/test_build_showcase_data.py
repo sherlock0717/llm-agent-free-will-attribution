@@ -48,16 +48,24 @@ def test_measurement_summary_counts():
         assert 0.0 <= c["alpha"] <= 1.0
 
 
-def test_story_core_facts_are_derived():
-    s = bsc.build_showcase_story()
-    facts = {f["key"]: f["value"] for f in s["core_facts"]}
-    assert facts["historical_record_count"] == 360
-    assert facts["process_condition_count"] == 6
-    assert facts["identity_condition_count"] == 2
-    assert facts["scenario_count"] == 8
-    assert facts["item_count"] == 34
-    assert facts["construct_count"] == 10
-    assert s["title_zh"] == "LLM机器主体归因评测"
+def test_story_research_program_facts_are_derived():
+    story = bsc.build_showcase_story()
+    program = story["research_program"]
+    facts = {f["key"]: f["value"] for f in program["core_facts"]}
+    assert facts["study_count"] == 2
+    assert facts["clue_type_count"] == 3
+    assert facts["shared_chain"] == "材料—评分—分析—展示"
+    assert facts["future_route_count"] == 1
+    assert story["title_zh"] == "LLM行动者归因评测"
+
+    studies = program["studies"]
+    study_a = {f["key"]: f["value"] for f in studies["study_a"]["core_facts"]}
+    study_b = {f["key"]: f["value"] for f in studies["study_b"]["core_facts"]}
+    assert study_a["model_output_count"] == 360
+    assert study_a["process_identity_design"] == "6 × 2"
+    assert study_b["material_count"] == 96
+    assert study_b["responses_per_repeat"] == 192
+    assert studies["study_a"]["evidence_status_zh"] != studies["study_b"]["evidence_status_zh"]
 
 
 def test_story_scenarios_carry_case_content():

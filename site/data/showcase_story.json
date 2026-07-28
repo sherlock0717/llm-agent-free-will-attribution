@@ -1,19 +1,9 @@
 {
   "core_facts": [
     {
-      "key": "process_condition_count",
-      "label": "过程条件",
-      "value": 6
-    },
-    {
-      "key": "identity_condition_count",
-      "label": "行动者身份",
-      "value": 2
-    },
-    {
-      "key": "historical_record_count",
-      "label": "历史记录",
-      "value": 360
+      "key": "process_identity_design",
+      "label": "过程 × 身份",
+      "value": "6 × 2"
     },
     {
       "key": "scenario_count",
@@ -21,76 +11,21 @@
       "value": 8
     },
     {
-      "key": "item_count",
-      "label": "测量题项",
-      "value": 34
+      "key": "model_output_count",
+      "label": "已有模型输出",
+      "value": 360
     },
     {
-      "key": "construct_count",
-      "label": "测量构念",
-      "value": 10
+      "key": "model_configuration",
+      "label": "模型配置",
+      "value": "单模型历史运行"
     },
     {
-      "key": "mock_reproducible_run",
-      "label": "可复现 mock 运行",
-      "value": "已实现"
-    },
-    {
-      "key": "offline_provider_ready",
-      "label": "真实接口离线准备",
-      "value": "已完成"
+      "key": "measurement_status",
+      "label": "测量状态",
+      "value": "成熟度有限"
     }
   ],
-  "current_study": {
-    "core_facts": [
-      {
-        "key": "condition_count",
-        "label": "实验条件",
-        "value": 6
-      },
-      {
-        "key": "scenario_count",
-        "label": "场景",
-        "value": 8
-      },
-      {
-        "key": "direction_count",
-        "label": "决策方向",
-        "value": 2
-      },
-      {
-        "key": "material_count",
-        "label": "材料总数",
-        "value": 96
-      },
-      {
-        "key": "judge_model_config_count",
-        "label": "评判模型配置",
-        "value": 2
-      },
-      {
-        "key": "responses_per_repeat",
-        "label": "每次完整运行响应",
-        "value": 192
-      },
-      {
-        "key": "data_status",
-        "label": "数据状态",
-        "value": "合成流程演示"
-      },
-      {
-        "key": "target_subject",
-        "label": "目标主体",
-        "value": "仅机器主体"
-      }
-    ],
-    "positioning_zh": "当前主研究考察决策过程信息与决策后行为如何改变大语言模型对机器主体的归因判断。",
-    "showcase_page": "pa-wu-r1-pilot/",
-    "sources_doc": "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md",
-    "study_card": "docs/CURRENT_STUDY_CARD.md",
-    "subtitle_zh": "PA—Wu R1仅机器主体研究",
-    "title_zh": "LLM机器主体归因评测"
-  },
   "domains": [
     "人际关系",
     "服从与自主",
@@ -100,8 +35,137 @@
     "风险决策"
   ],
   "generated_at": "2026-07-27T09:58:15+00:00",
-  "legacy_positioning_zh": "早期探索性研究考察行动者身份与决策过程表述如何影响模型对能动性、自由意志与责任的归因，作为该历史路线的方法反思保留。",
-  "legacy_title_zh": "早期探索性研究",
+  "research_program": {
+    "core_facts": [
+      {
+        "key": "study_count",
+        "label": "相互独立的研究",
+        "value": 2
+      },
+      {
+        "key": "clue_type_count",
+        "label": "主要线索",
+        "value": 3
+      },
+      {
+        "key": "shared_chain",
+        "label": "共享方法链",
+        "value": "材料—评分—分析—展示"
+      },
+      {
+        "key": "future_route_count",
+        "label": "跨主体扩展路线",
+        "value": 1
+      }
+    ],
+    "future_route": {
+      "status_zh": "尚未运行",
+      "title_zh": "跨主体平行测量与可比性研究"
+    },
+    "program_id": "llm_actor_attribution_program",
+    "research_question_zh": "身份标签、决策过程与反馈行为如何影响语言模型对行动者的归因判断",
+    "shared_method_layer": {
+      "chain": [
+        "材料",
+        "评分",
+        "分析",
+        "展示"
+      ],
+      "title_zh": "归因评测方法与基础设施"
+    },
+    "studies": {
+      "study_a": {
+        "core_facts": [
+          {
+            "key": "process_identity_design",
+            "label": "过程 × 身份",
+            "value": "6 × 2"
+          },
+          {
+            "key": "scenario_count",
+            "label": "情境",
+            "value": 8
+          },
+          {
+            "key": "model_output_count",
+            "label": "已有模型输出",
+            "value": 360
+          },
+          {
+            "key": "model_configuration",
+            "label": "模型配置",
+            "value": "单模型历史运行"
+          },
+          {
+            "key": "measurement_status",
+            "label": "测量状态",
+            "value": "成熟度有限"
+          }
+        ],
+        "design_summary_zh": "6类决策过程 × 2种身份标签",
+        "evidence_status_zh": "探索性证据",
+        "role_zh": "探索性基线",
+        "sources_doc": "docs/research_and_measurement_sources.md",
+        "study_card": "docs/STUDY_CARD.md",
+        "study_id": "identity_process_attribution_baseline",
+        "title_zh": "身份与决策过程归因基线"
+      },
+      "study_b": {
+        "core_facts": [
+          {
+            "key": "condition_count",
+            "label": "实验条件",
+            "value": 6
+          },
+          {
+            "key": "scenario_count",
+            "label": "场景",
+            "value": 8
+          },
+          {
+            "key": "direction_count",
+            "label": "决策方向",
+            "value": 2
+          },
+          {
+            "key": "material_count",
+            "label": "材料总数",
+            "value": 96
+          },
+          {
+            "key": "judge_model_config_count",
+            "label": "评判模型计划",
+            "value": 2
+          },
+          {
+            "key": "responses_per_repeat",
+            "label": "每次完整运行响应",
+            "value": 192
+          },
+          {
+            "key": "data_status",
+            "label": "数据状态",
+            "value": "合成流程演示"
+          },
+          {
+            "key": "target_subject",
+            "label": "目标主体",
+            "value": "仅机器主体"
+          }
+        ],
+        "design_summary_zh": "6条件 × 8场景 × 2方向，96条材料",
+        "evidence_status_zh": "合成管线",
+        "role_zh": "机器主体测量深化",
+        "showcase_page": "pa-wu-r1-pilot/",
+        "sources_doc": "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md",
+        "study_card": "docs/CURRENT_STUDY_CARD.md",
+        "study_id": "machine_decision_process_attribution",
+        "title_zh": "机器主体决策过程归因评测"
+      }
+    },
+    "study_count": 2,
+    "title_zh": "LLM行动者归因评测"
+  },
   "research_sources": {
     "detail_docs": [
       {
@@ -113,7 +177,7 @@
         "path": "docs/scale_source_mapping.md"
       }
     ],
-    "intro": "早期题项池以既有理论和量表构念为基础，再根据具体决策情境改写为归因评分。不同来源在该历史路线中的作用并不相同：有些提供构念框架，有些提供量表维度，操纵检验则由该历史路线根据实验材料自行编写。",
+    "intro": "研究A题项池以既有理论和量表构念为基础，再根据具体决策情境改写为归因评分。不同来源在研究A中的作用并不相同：有些提供构念框架，有些提供量表维度，操纵检验则由研究A根据实验材料自行编写。",
     "references": [
       {
         "doi": "10.1126/science.1134475",
@@ -188,7 +252,7 @@
             "url": "https://doi.org/10.1080/00223891.2010.528483"
           }
         ],
-        "role": "该历史路线将一般信念构念改写为对具体决策者的情境化归因。",
+        "role": "研究A将一般信念构念改写为对具体决策者的情境化归因。",
         "usage": "参考量表构念，情境化改写"
       },
       {
@@ -245,7 +309,7 @@
         "usage": "本研究自编"
       }
     ],
-    "usage_note": "早期题项池基于既有理论与量表构念进行情境化改写，并非对原量表的完整直接使用；原研究的信度、效度和因素结构不能直接继承。"
+    "usage_note": "研究A题项池基于既有理论与量表构念进行情境化改写，并非对原量表的完整直接使用；原研究的信度、效度和因素结构不能直接继承。"
   },
   "result_takeaways": [
     "把决策过程讲得更完整（从只报结论到给出理由、反思与修正），模型对决策者的能动性评分总体升高，这是最稳定的差异。",
@@ -328,5 +392,5 @@
       "option_b": "简短说明团队成员也完成了关键部分。"
     }
   ],
-  "title_zh": "LLM机器主体归因评测"
+  "title_zh": "LLM行动者归因评测"
 }

@@ -1,6 +1,6 @@
-# 当前研究与测量来源：PA—Wu R1
+# 研究B的研究与测量来源
 
-本文件描述当前主研究 PA—Wu R1 的构念与测量来源。内容严格基于仓库现有 R1 资产，不复制受版权保护的题项原文，也不新增最终中文题项翻译。
+本文件描述研究B“机器主体决策过程归因评测”的构念与测量来源。研究B属于“LLM行动者归因评测”研究计划；内容严格基于仓库现有机器主体评测资产，不复制受版权保护的题项原文，也不新增最终中文题项翻译。
 
 ## 使用原则
 
@@ -77,4 +77,4 @@
 - P0 题项资产目录：`tasks/attribution_behavior/measurement_candidates/pa_wu_p0/`
   - `items_wu_shen_2026.yaml`、`items_pa_2024.yaml`、`forms.yaml`、`scoring.yaml`、`manifest.yaml`、`README.md`
 
-当前研究说明见 [`CURRENT_STUDY_CARD.md`](CURRENT_STUDY_CARD.md)。早期探索性研究路线的来源见 [`research_and_measurement_sources.md`](research_and_measurement_sources.md)（早期归档）。
+研究B说明见 [`CURRENT_STUDY_CARD.md`](CURRENT_STUDY_CARD.md)。研究A的来源见 [`research_and_measurement_sources.md`](research_and_measurement_sources.md)；两项研究的数据与结论不混合。
