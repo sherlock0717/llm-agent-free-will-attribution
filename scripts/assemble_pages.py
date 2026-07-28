@@ -57,7 +57,13 @@ ROOT_FIGURES = [
     "mean_free_will_attribution.png",
     "mean_subjective_process_completeness.png",
 ]
-STUDY_B_FIGURES = [f"fig{i}.png" for i in range(1, 6)]
+STUDY_B_FIGURES = [
+    "fig1_condition_construct_means.png",
+    "fig2_model_adjusted_contrasts.png",
+    "fig3_model_profiles.png",
+    "fig4_scenario_construct_heatmap.png",
+    "fig5_contrast_forest.png",
+]
 
 
 class AssembleError(RuntimeError):
