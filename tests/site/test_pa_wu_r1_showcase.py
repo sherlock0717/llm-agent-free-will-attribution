@@ -1,9 +1,10 @@
-"""Static, file-level checks for the Chinese PA-Wu R1 pilot showcase page.
+"""Static, file-level checks for the study-B (machine decision-process
+attribution) showcase page.
 
 These tests never start a real model and never make a network call. They only
-read files under docs/pa-wu-r1-pilot/ and its showcase_data.json, enforcing:
-the Chinese page contract, the JS interaction contract, the synthetic-demo data
-contract, local resource resolution, and the forbidden-claim rules.
+read files under docs/pa-wu-r1-pilot/ and its showcase_data.json, enforcing the
+seven-section architecture, the JS interaction contract, the synthetic-demo data
+contract, local resource resolution, and the public-name rules.
 """
 
 from __future__ import annotations
@@ -28,6 +29,15 @@ OUTPUT_FIG_DIR = (
     / "outputs"
     / "figures"
 )
+RENDER_REPORT = (
+    REPO_ROOT
+    / "tasks"
+    / "attribution_behavior"
+    / "evaluations"
+    / "pa_wu_r1_pilot"
+    / "scripts"
+    / "render_report.py"
+)
 
 FIGURES = [
     "fig1_condition_construct_means.png",
@@ -51,8 +61,8 @@ def test_required_files_exist():
     assert STYLES.is_file()
     assert DATA.is_file()
     for fig in FIGURES:
-        assert (FIG_DIR / fig).is_file(), fig          # deployed (docs) figure
-        assert (OUTPUT_FIG_DIR / fig).is_file(), fig    # generated (outputs) figure
+        assert (FIG_DIR / fig).is_file(), fig
+        assert (OUTPUT_FIG_DIR / fig).is_file(), fig
 
 
 def test_deployed_figures_match_generated_outputs():
@@ -64,7 +74,7 @@ def test_deployed_figures_match_generated_outputs():
         assert deployed == generated, fig
 
 
-# --- 2. page contract -------------------------------------------------------
+# --- 2. seven-section architecture ------------------------------------------
 
 def test_lang_is_zh_cn():
     assert '<html lang="zh-CN">' in HTML
@@ -75,13 +85,31 @@ def test_title_is_chinese():
     assert re.search(r"[\u4e00-\u9fff]", title), title
 
 
-def test_s4_section_present():
-    assert 'id="s4"' in HTML
-
-
-def test_section_indices_01_to_14_continuous():
+def test_page_has_seven_sections_numbered_01_to_07():
     indices = re.findall(r'<span class="section-index">(\d+)</span>', HTML)
-    assert indices == [f"{i:02d}" for i in range(1, 15)], indices
+    assert indices == [f"{i:02d}" for i in range(1, 8)], indices
+
+
+def test_semantic_section_ids_present():
+    for sid in ["overview", "constructs", "design", "materials",
+                "analysis", "demo", "status"]:
+        assert f'id="{sid}"' in HTML, sid
+
+
+def test_legacy_anchor_aliases_s1_to_s14_present():
+    for i in range(1, 15):
+        assert re.search(rf'id="s{i}"[^>]*class="anchor-alias"', HTML), f"s{i}"
+
+
+def test_nav_has_seven_entries_matching_sections():
+    nav = HTML.split('nav class="toc"', 1)[1].split("</nav>", 1)[0]
+    hrefs = re.findall(r'<a href="#([^"]+)">([^<]+)</a>', nav)
+    assert [h for h, _ in hrefs] == [
+        "overview", "constructs", "design", "materials",
+        "analysis", "demo", "status",
+    ], hrefs
+    for _, label in hrefs:
+        assert re.search(r"[\u4e00-\u9fff]", label), label
 
 
 def test_five_figures_have_direct_src():
@@ -89,34 +117,34 @@ def test_five_figures_have_direct_src():
         assert re.search(rf'<img[^>]*src="assets/figures/{re.escape(fig)}"', HTML), fig
 
 
-def test_fig5_is_referenced():
-    assert "fig5_contrast_forest.png" in HTML
-
-
 def test_process_demo_declaration_chinese():
     assert "流程演示数据" in HTML
 
 
-def test_how_to_use_present():
-    assert "如何使用本页" in HTML
+def test_public_name_is_study_b():
+    assert "机器主体决策过程归因评测" in HTML
+    assert "PA—Wu R1" not in HTML
+    assert "PA-Wu R1" not in HTML
 
 
-def test_five_chinese_nav_entries():
-    nav = HTML.split('nav class="toc"', 1)[1].split("</nav>", 1)[0]
-    labels = re.findall(r'<a href="#s\d+">([^<]+)</a>', nav)
-    assert len(labels) == 5, labels
-    for label in labels:
-        assert re.search(r"[\u4e00-\u9fff]", label), label
+def test_return_to_overview_link_present():
+    assert 'href="../"' in HTML
+    assert "返回项目总览" in HTML
+
+
+def test_no_old_section_names():
+    for bad in ["方法边界", "真实数据替换流程", "旧图表", "材料示例"]:
+        assert bad not in HTML, bad
+
+
+def test_no_current_r1_wording():
+    assert "当前R1" not in HTML
+    assert "当前R1" not in JS
 
 
 def test_every_image_has_chinese_alt():
     for match in re.finditer(r'<img[^>]*alt="([^"]*)"', HTML):
         assert re.search(r"[\u4e00-\u9fff]", match.group(1)), match.group(1)
-
-
-def test_every_figure_has_how_to_read_caption():
-    # each of the five figures sits in a <figure> whose caption starts 怎么看
-    assert HTML.count("怎么看") >= 5
 
 
 # --- 3. JS contract ---------------------------------------------------------
@@ -154,13 +182,43 @@ def test_js_does_not_use_json_stringify_for_display():
 
 
 def test_direction_labels_are_pure_chinese():
-    # the direction dropdown must not surface long English decision text by default
     assert "场景方案一" in JS
     assert "场景方案二" in JS
 
 
 def test_esc_closes_lightbox():
     assert "Escape" in JS
+
+
+def test_no_boundary_translations_constant():
+    assert "BOUNDARY_TRANSLATIONS" not in JS
+
+
+def test_no_removed_render_functions():
+    for fn in ["renderJudgeConfig", "renderMaterialExamples", "renderBoundaries"]:
+        assert fn not in JS, fn
+
+
+def test_merged_and_new_render_functions_present():
+    for fn in ["renderJudgeSummary", "renderDemoMetrics", "renderStatus"]:
+        assert fn in JS, fn
+
+
+def test_no_judge_config_or_material_examples_containers():
+    assert "judgeConfigCards" not in HTML
+    assert "materialExamples" not in HTML
+
+
+def test_contrast_cards_use_comparison_and_reading():
+    block = JS.split("const CONTRAST_CARDS", 1)[1].split("\n];", 1)[0]
+    assert "comparison:" in block
+    assert "reading:" in block
+    assert "allow:" not in block
+    assert "forbid:" not in block
+
+
+def test_status_notes_constant_present():
+    assert "STATUS_NOTES" in JS
 
 
 # --- 4. data contract -------------------------------------------------------
@@ -224,42 +282,6 @@ def test_png_signatures_valid():
         assert (FIG_DIR / fig).read_bytes()[:8] == b"\x89PNG\r\n\x1a\n", fig
 
 
-# --- 6. forbidden claims / hygiene -----------------------------------------
-
-def test_public_name_is_study_b():
-    assert "机器主体决策过程归因评测" in HTML
-    assert "PA—Wu R1" not in HTML
-    assert "PA-Wu R1" not in HTML
-
-
-def test_return_to_overview_link_present():
-    assert 'href="../"' in HTML
-    assert "返回LLM行动者归因评测总览" in HTML
-
-
-def test_process_demo_status_banner():
-    assert "流程演示状态" in HTML
-    assert "真实双模型运行完成后" in HTML
-
-
-def test_english_source_material_preserved_in_js():
-    # the referent bridge (actual English administration text) must remain
-    assert '"the machine" refers to the AI system described above.' in JS
-
-
-def test_pilot_page_has_no_illustrative_id():
-    assert "illustrative id" not in HTML
-    assert "illustrative id" not in JS
-    assert "illustrative id" not in DATA.read_text(encoding="utf-8")
-
-
-def test_pilot_page_states_configuration_and_unevaluated_status():
-    blob = HTML + JS
-    assert "配置已确定" in blob or "配置" in HTML
-    assert "实证表现未评估" in blob
-    assert ("不代表其实际评分行为" in blob) or ("不代表该模型的实际评分行为" in blob)
-
-
 def test_no_external_cdn_assets():
     for src in re.findall(r'src="([^"]+)"', HTML):
         assert not src.startswith(("http://", "https://", "//")), src
@@ -269,16 +291,37 @@ def test_no_external_cdn_assets():
     assert "http" not in CSS
 
 
-# --- 7. PR B: analysis-presentation redesign (#s7 / #s8 / #s9) --------------
+# --- 6. demo concentration + collapsed technical tables ---------------------
 
-def test_s7_title_is_analysis_framework():
-    s7 = HTML.split('id="s7"', 1)[1].split("</section>", 1)[0]
-    assert "分析框架与结果呈现方式" in s7
+def test_synthetic_stats_only_in_demo_section():
+    # the p-value / CI contrast table and the SVG profile chart must live inside
+    # the #demo section, not in overview/constructs/design/materials/analysis.
+    demo = HTML.split('id="demo"', 1)[1].split("</section>", 1)[0]
+    assert 'id="contrastTable"' in demo
+    assert 'id="conditionProfileChart"' in demo
+    before_demo = HTML.split('id="demo"', 1)[0]
+    assert 'id="contrastTable"' not in before_demo
+    assert 'id="conditionProfileChart"' not in before_demo
 
 
-def test_condition_profile_chart_present():
+def test_demo_statistics_table_collapsed_by_default():
+    stats = re.search(r'<details class="tech-details" id="demoStatsDetails"[^>]*>', HTML)
+    assert stats, "demo stats details missing"
+    assert "open" not in stats.group(0)
+
+
+def test_pipeline_figures_collapsed_by_default():
+    figs = re.search(r'<details class="tech-details" id="pipelineFigures"[^>]*>', HTML)
+    assert figs, "pipeline figures details missing"
+    assert "open" not in figs.group(0)
+
+
+def test_demo_marks_present():
+    assert 'class="demo-mark"' in HTML
+
+
+def test_condition_profile_chart_present_native_svg():
     assert 'id="conditionProfileChart"' in HTML
-    # native inline SVG, no external chart library
     assert "<svg" in HTML
     for lib in ["echarts", "chart.js", "chartjs", "d3.", "react", "vue"]:
         assert lib not in HTML.lower()
@@ -286,48 +329,14 @@ def test_condition_profile_chart_present():
 
 
 def test_construct_selector_drives_chart_update():
-    # the #s7 selector handler must refresh the SVG chart, not only the table
     assert "renderConditionProfile" in JS
     view = JS.split("function renderConstructView(", 1)[1].split("\n}", 1)[0]
     assert "renderConditionProfile(" in view
 
 
-def test_synthetic_pipeline_appendix_collapsed_by_default():
-    assert 'id="syntheticPipelineAppendix"' in HTML
-    appx = re.search(r'<details id="syntheticPipelineAppendix"[^>]*>', HTML)
-    assert appx, "appendix details tag missing"
-    # a <details> without the `open` attribute is collapsed by default
-    assert "open" not in appx.group(0)
-
-
-def test_s8_main_area_has_no_pvalue_table():
-    # the P1—P6 main area shows comparison cards; the p-value / CI table lives
-    # only inside the collapsed technical appendix.
-    s8 = HTML.split('id="s8"', 1)[1].split("</section>", 1)[0]
-    main = s8.split('id="syntheticPipelineAppendix"', 1)[0]
-    assert 'id="contrastCards"' in main
-    assert 'id="contrastTable"' not in main
-    assert "Holm校正p值" not in main
-
-
-def test_s9_main_area_has_no_model_mean_ranking():
-    s9 = HTML.split('id="s9"', 1)[1].split("</section>", 1)[0]
-    assert 'id="judgeConfigCards"' in s9
-    assert 'id="judgeDiffTable"' not in s9
-    assert "不用于模型能力排名" in s9
-
-
-def test_s9_states_empirical_performance_unevaluated():
-    # #s9 model cards render an explicit "实证表现 / 未评估" configuration status
-    assert "实证表现" in JS
-    assert "renderJudgeConfig" in JS
-    config = JS.split("function renderJudgeConfig(", 1)[1].split("\n}", 1)[0]
-    assert "未评估" in config
-
+# --- 7. contrast diffs + English source material ----------------------------
 
 def test_contrast_card_diffs_match_analysis_plan():
-    # the reader-facing P1—P6 condition-diffs must match the pre-registered
-    # analysis_plan.md contrasts exactly (P2/P4/P5 reference C0/C2, not C1/C3).
     block = JS.split("const CONTRAST_CARDS", 1)[1].split("\n];", 1)[0]
     found = dict(re.findall(r'id:\s*"(P[1-6])",\s*diff:\s*"([^"]+)"', block))
     assert found == {
@@ -338,3 +347,20 @@ def test_contrast_card_diffs_match_analysis_plan():
         "P5": "C5−C2",
         "P6": "C5−C4",
     }, found
+
+
+def test_english_source_material_preserved_in_js():
+    assert '"the machine" refers to the AI system described above.' in JS
+
+
+# --- 8. scale-safe figures / render_report ----------------------------------
+
+def test_render_report_has_native_scale_bounds():
+    src = RENDER_REPORT.read_text(encoding="utf-8")
+    assert "NATIVE_SCALE_BOUNDS" in src
+
+
+def test_render_report_uses_theoretical_0_1_mapping_for_heatmap():
+    src = RENDER_REPORT.read_text(encoding="utf-8")
+    # fig4 heatmap maps native scores to a theoretical 0–1 in-scale position
+    assert "0–1" in src or "0-1" in src

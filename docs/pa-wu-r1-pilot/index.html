@@ -10,315 +10,438 @@
 <body>
   <header class="site">
     <div class="wrap hero">
-      <p class="back-link"><a href="../">← 返回LLM行动者归因评测总览</a></p>
-      <div>
-        <p class="eyebrow">研究B · 机器主体 · 决策信息与反馈行为</p>
+      <div class="hero-lead">
+        <p class="eyebrow">研究B · LLM行动者归因评测</p>
         <h1>机器主体决策过程归因评测</h1>
-        <p class="sub">研究决策过程信息与决策后行为，如何影响大语言模型对机器主体的归因判断。</p>
+        <p class="sub">决策信息、反馈和后续行为如何改变语言模型对机器主体的归因判断</p>
+        <p class="hero-intro">研究B从机器主体测量出发，进一步拆分直接决定、备选方案、理由、反馈以及第二次决定。它与研究A共同回答行动者归因如何形成，并分别保存材料和分析结果。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#design">查看实验设计</a>
+          <a class="btn" href="#materials">浏览材料</a>
+          <a class="btn" href="#analysis">查看分析计划</a>
+          <a class="btn" href="../">返回项目总览</a>
+        </div>
+        <p class="hero-status">页面当前展示流程演示数据；真实双模型运行是下一阶段。</p>
       </div>
-      <div class="synth-banner" id="synthBanner" role="note">
-        <strong>流程演示状态。</strong> 当前页面展示流程演示数据，用于呈现 96 条材料如何进入评分、分析和图表流程。真实双模型运行完成后，页面将在同一框架下更新结果。
-      </div>
-      <div class="quick-guide" aria-labelledby="guideTitle">
-        <h2 id="guideTitle">如何使用本页</h2>
-        <ol>
-          <li>查看研究问题和构念。</li>
-          <li>理解决策信息与反馈行为的六个条件。</li>
-          <li>浏览 96 条材料。</li>
-          <li>查看分析计划。</li>
-          <li>在流程演示区查看页面输出结构。</li>
-        </ol>
-      </div>
+      <aside class="hero-snapshot" aria-label="研究快照">
+        <h2 class="snapshot-title">研究快照</h2>
+        <dl class="snapshot-grid">
+          <div><dt>实验条件</dt><dd>6</dd></div>
+          <div><dt>场景</dt><dd>8</dd></div>
+          <div><dt>决策方向</dt><dd>2</dd></div>
+          <div><dt>材料</dt><dd>96</dd></div>
+          <div><dt>评判模型配置</dt><dd>2</dd></div>
+          <div class="snapshot-status"><dt>状态</dt><dd>流程演示已完成</dd></div>
+        </dl>
+      </aside>
       <div id="loadStatus" class="load-status" role="status" aria-live="polite">正在加载流程演示数据……</div>
     </div>
   </header>
 
   <nav class="toc" aria-label="页面导航">
     <div class="wrap">
-      <a href="#s1">研究概览</a>
-      <a href="#s3">设计与覆盖</a>
-      <a href="#s5">材料浏览器</a>
-      <a href="#s7">分析与流程演示</a>
-      <a href="#s12">方法与复现</a>
+      <a href="#overview">研究问题</a>
+      <a href="#constructs">构念</a>
+      <a href="#design">设计</a>
+      <a href="#materials">材料与评分</a>
+      <a href="#analysis">分析计划</a>
+      <a href="#demo">流程演示</a>
+      <a href="#status">状态与复现</a>
     </div>
   </nav>
 
-  <main class="wrap" id="app">
-    <section id="s1">
-      <div class="section-heading">
-        <span class="section-index">01</span>
-        <div>
-          <h2>研究概览</h2>
-          <p class="lead">这一评测研究什么，以及当前流程演示页面呈现哪些内容。</p>
+  <main id="app">
+    <!-- 01 研究位置与核心问题 -->
+    <section id="overview" class="study-section">
+      <span id="s1" class="anchor-alias" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="section-index">01</span>
+          <div>
+            <h2>研究位置与核心问题</h2>
+            <p class="lead">研究B从机器主体测量出发，观察决策过程线索如何影响归因评分。</p>
+          </div>
         </div>
-      </div>
-      <p id="researchQuestion" class="reading"></p>
-      <div class="grid cols-2">
-        <article class="card">
-          <h3>自由意志在本研究中的位置</h3>
-          <p id="freeWillRole"></p>
-        </article>
-        <article class="card">
-          <h3>目标主体范围</h3>
-          <p id="identityScope"></p>
-        </article>
+        <p id="researchQuestion" class="reading"></p>
+
+        <div class="flow-diagram" aria-label="研究问题流程图">
+          <div class="flow-col">
+            <h3>输入线索</h3>
+            <ul class="flow-list">
+              <li>决策信息</li>
+              <li>反馈</li>
+              <li>第二次决定</li>
+            </ul>
+          </div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-col flow-judge">
+            <h3>评判过程</h3>
+            <p>两个评判模型分别读取同一材料</p>
+          </div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-col">
+            <h3>归因输出</h3>
+            <ul class="flow-list">
+              <li>知觉独立性</li>
+              <li>目标导向性</li>
+              <li>心理状态推断</li>
+              <li>影响能力</li>
+              <li>感知能动性补充指标</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="s2">
-      <div class="section-heading">
-        <span class="section-index">02</span>
-        <div>
-          <h2>构念框架</h2>
-          <p class="lead">六个构念分别按原量尺计算，不合并为未经验证的跨量尺总分。</p>
+    <!-- 02 构念与测量来源 -->
+    <section id="constructs" class="study-section soft">
+      <span id="s2" class="anchor-alias" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="section-index">02</span>
+          <div>
+            <h2>构念与测量来源</h2>
+            <p class="lead">研究B使用四个主要构念和两个补充指标。每个构念保留来源量尺，并在分析中分别报告。</p>
+          </div>
+        </div>
+
+        <h3 class="group-label">四个主要构念 · Wu &amp; Shen 2026</h3>
+        <div class="construct-grid primary-constructs" id="primaryConstructCards"></div>
+        <p class="construct-note" id="freeWillNote">心理状态推断（MSI）包含一个自由意志探索性题项，该题项作为MSI的一部分单独记录。</p>
+
+        <h3 class="group-label">两个补充指标 · PA 2024</h3>
+        <div class="construct-grid supplementary-constructs" id="supplementaryConstructCards"></div>
+
+        <p class="scale-line">六个构念保留各自原量尺，结果按构念分别报告。</p>
+
+        <div class="entry-links">
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md">研究B的研究与测量来源</a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/CURRENT_STUDY_CARD.md">研究B说明</a>
         </div>
       </div>
-      <div class="grid cols-3" id="constructCards"></div>
     </section>
 
-    <section id="s3">
-      <div class="section-heading">
-        <span class="section-index">03</span>
-        <div>
-          <h2>六个实验条件</h2>
-          <p class="lead">C0—C5逐步增加备选方案、理由、反馈和第二次决定等信息。</p>
+    <!-- 03 决策信息与反馈行为设计 -->
+    <section id="design" class="study-section">
+      <span id="s3" class="anchor-alias" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="section-index">03</span>
+          <div>
+            <h2>决策信息与反馈行为设计</h2>
+            <p class="lead">材料由两个阶段组成：决定信息D控制展示了哪些决策过程，反馈后行为U控制反馈和第二次决定。</p>
+          </div>
         </div>
+
+        <div class="du-grid">
+          <div class="du-stage">
+            <h3>阶段一：决定信息 D</h3>
+            <ul class="du-list">
+              <li><span class="du-code">D0</span> 直接呈现决定</li>
+              <li><span class="du-code">D1</span> 呈现备选方案和决定</li>
+              <li><span class="du-code">D2</span> 呈现决定和明确理由</li>
+            </ul>
+          </div>
+          <div class="du-stage">
+            <h3>阶段二：反馈后行为 U</h3>
+            <ul class="du-list">
+              <li><span class="du-code">U0</span> 无反馈和第二次决定</li>
+              <li><span class="du-code">U1</span> 加入反馈</li>
+              <li><span class="du-code">U2</span> 反馈后维持决定</li>
+              <li><span class="du-code">U3</span> 反馈后改变决定</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="group-label">本Pilot选取的六个组合</h3>
+        <div class="condition-grid" id="conditionCards"></div>
+        <p class="reading design-note">本Pilot把六个组合视为一个六水平条件因子。完整D×U交互将在扩展设计中单独估计。</p>
       </div>
-      <div class="grid cols-3" id="conditionCards"></div>
     </section>
 
-    <section id="s4">
-      <div class="section-heading">
-        <span class="section-index">04</span>
-        <div>
-          <h2>材料覆盖与设计平衡</h2>
-          <p class="lead">6个条件 × 8个场景 × 2个方向 × 1类机器主体，共96条材料。</p>
+    <!-- 04 材料、评判模型与评分流程 -->
+    <section id="materials" class="study-section soft">
+      <span id="s4" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s5" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s6" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s11" class="anchor-alias" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="section-index">04</span>
+          <div>
+            <h2>材料、评判模型与评分流程</h2>
+            <p class="lead">材料如何生成，评判模型如何读取，以及评分如何进入分析。</p>
+          </div>
         </div>
-      </div>
-      <div class="metric-grid" id="coverageMetrics"></div>
-      <div class="coverage-layout">
-        <div>
-          <h3>8个场景 × 6个条件覆盖矩阵</h3>
-          <p class="small muted">每个格子包含2条材料，分别对应方向A与方向B。</p>
-          <div class="table-scroll coverage-scroll" id="coverageMatrix"></div>
+
+        <!-- 13.1 材料生成链 -->
+        <ol class="pipeline-flow" aria-label="材料生成与评分流程">
+          <li><strong>8</strong><span>场景</span></li>
+          <li class="op" aria-hidden="true">×</li>
+          <li><strong>6</strong><span>条件</span></li>
+          <li class="op" aria-hidden="true">×</li>
+          <li><strong>2</strong><span>方向</span></li>
+          <li class="op" aria-hidden="true">=</li>
+          <li class="result"><strong>96</strong><span>条材料</span></li>
+        </ol>
+        <ol class="pipeline-chain" aria-label="评分与分析链">
+          <li>96条材料</li>
+          <li>两个评判模型分别评分</li>
+          <li>题项响应</li>
+          <li>构念分数</li>
+          <li>预设对比与场景检查</li>
+        </ol>
+
+        <!-- 13.2 设计覆盖 -->
+        <h3 class="group-label">设计覆盖</h3>
+        <div class="core-metric-grid">
+          <div class="core-metric"><strong>6</strong><span>条件</span></div>
+          <div class="core-metric"><strong>8</strong><span>场景</span></div>
+          <div class="core-metric"><strong>2</strong><span>方向</span></div>
+          <div class="core-metric"><strong>96</strong><span>材料</span></div>
         </div>
-        <aside class="balance-panel" id="balancePanel"></aside>
+        <details class="tech-details" id="coverageDetails">
+          <summary>查看8个场景与6个条件的覆盖矩阵</summary>
+          <div class="details-body">
+            <p class="small muted">每个格子包含2条材料，分别对应方向A与方向B。</p>
+            <div class="table-scroll coverage-scroll" id="coverageMatrix"></div>
+            <aside class="balance-panel" id="balancePanel"></aside>
+          </div>
+        </details>
+
+        <!-- 13.3 材料浏览器 -->
+        <h3 class="group-label">材料浏览器</h3>
+        <div class="instruction-box">场景决定任务语境，条件决定呈现哪些决策过程信息，方向A/B代表该场景中的两种备选决定。</div>
+        <div class="controls browser-controls">
+          <label>场景
+            <select id="scenSelect"></select>
+          </label>
+          <label>实验条件
+            <select id="scenCondSelect"></select>
+          </label>
+          <label>决策方向
+            <select id="scenDirSelect"></select>
+          </label>
+        </div>
+        <div id="scenStim"></div>
+
+        <!-- 13.4 评判模型 -->
+        <h3 class="group-label">评判模型</h3>
+        <div class="judge-summary" id="judgeSummary"></div>
+        <p class="reading judge-plan-note">两个模型的评分模式将在后续运行中分别报告，并作为结果对评判模型选择的敏感性检查。</p>
       </div>
-      <a class="action-link" href="#s5">查看具体材料与操作方式 →</a>
     </section>
 
-    <section id="s5">
-      <div class="section-heading">
-        <span class="section-index">05</span>
-        <div>
-          <h2>材料浏览器</h2>
-          <p class="lead">选择场景、条件与方向，查看评判模型实际接收的英文原始材料。</p>
+    <!-- 05 分析计划与预设对比 -->
+    <section id="analysis" class="study-section">
+      <span id="s7" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s8" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s9" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s10" class="anchor-alias" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="section-index">05</span>
+          <div>
+            <h2>分析计划与预设对比</h2>
+            <p class="lead">分析计划回答三个问题，并用六个预设对比读取不同材料增量带来的评分变化。</p>
+          </div>
+        </div>
+
+        <!-- 14.1 三个分析问题 -->
+        <div class="question-grid">
+          <article class="q-card">
+            <h3>决定信息</h3>
+            <p>备选方案和明确理由是否改变归因评分。</p>
+          </article>
+          <article class="q-card">
+            <h3>反馈后行为</h3>
+            <p>反馈、维持决定和改变决定如何改变评分。</p>
+          </article>
+          <article class="q-card">
+            <h3>稳定性</h3>
+            <p>评分模式是否随构念、场景和评判模型配置变化。</p>
+          </article>
+        </div>
+
+        <!-- 14.2 P1—P6 cards -->
+        <h3 class="group-label">预设对比 P1—P6</h3>
+        <div class="contrast-grid" id="contrastCards"></div>
+
+        <!-- 14.3 analysis model -->
+        <details class="tech-details" id="analysisModelDetails">
+          <summary>查看统计模型与报告字段</summary>
+          <div class="details-body">
+            <pre class="model-formula">construct_score
+~
+condition
+*
+judge_model
++
+direction
++
+scenario</pre>
+            <ul class="field-list">
+              <li>material_id 随机截距</li>
+              <li>预设对比 P1—P6</li>
+              <li>estimate（估计值）</li>
+              <li>SE（标准误）</li>
+              <li>95% CI（置信区间）</li>
+              <li>p 值</li>
+              <li>Holm 校正 p 值</li>
+            </ul>
+            <p class="small muted">正式推断按构念原量尺分别完成。</p>
+          </div>
+        </details>
+
+        <!-- 14.4 stability checks -->
+        <h3 class="group-label">稳定性检查</h3>
+        <div class="stability-grid">
+          <article class="stability-card"><h3>场景敏感性</h3><p>比较不同任务语境下的评分模式。</p></article>
+          <article class="stability-card"><h3>评判模型敏感性</h3><p>比较两个评判模型配置的评分模式。</p></article>
+          <article class="stability-card"><h3>决策方向检查</h3><p>比较方向A与方向B之间的评分模式。</p></article>
         </div>
       </div>
-      <div class="instruction-box">
-        <strong>操作说明：</strong> 场景决定任务语境，条件决定呈现哪些决策过程信息，方向A/B代表该场景中的两种备选决定。
-      </div>
-      <div class="controls browser-controls">
-        <label>场景
-          <select id="scenSelect"></select>
-        </label>
-        <label>实验条件
-          <select id="scenCondSelect"></select>
-        </label>
-        <label>决策方向
-          <select id="scenDirSelect"></select>
-        </label>
-      </div>
-      <div id="scenStim"></div>
     </section>
 
-    <section id="s6">
-      <div class="section-heading">
-        <span class="section-index">06</span>
-        <div>
-          <h2>评判模型</h2>
-          <p class="lead">两个共同主要评判模型已被选定，后续完整运行时将对同一套96条材料独立评分；此处不进行模型排名。已确定的配置为 deepseek-v4-pro 与 gpt-5.6-terra，当前公开页面尚未展示真实运行结果，合成数据不代表其实际评分行为，实证表现未评估。</p>
+    <!-- 06 流程演示 -->
+    <section id="demo" class="study-section soft">
+      <span id="s13" class="anchor-alias" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="section-index">06</span>
+          <div>
+            <h2>流程演示</h2>
+            <p class="lead">本节展示评分、分析和图表输出的页面结构。当前数值来自流程演示数据，真实双模型运行完成后将在相同位置更新。</p>
+          </div>
         </div>
-      </div>
-      <div class="grid cols-2" id="judgeCards"></div>
-    </section>
 
-    <section id="s7">
-      <div class="section-heading">
-        <span class="section-index">07</span>
-        <div>
-          <h2>分析框架与结果呈现方式</h2>
-          <p class="lead" id="s7Intro">真实运行完成后，本节将按构念呈现六个条件下的评分变化。当前数值为合成流程演示，只用于确认页面、表格和分析输出能够生成，不用于解释效应方向、显著性或理论结论。</p>
+        <!-- 15.1 demo metrics -->
+        <div class="demo-metric-grid" id="demoMetrics"></div>
+
+        <!-- 15.2 single-construct result structure -->
+        <h3 class="group-label">单构念结果结构 <span class="demo-mark">流程演示</span></h3>
+        <div class="controls">
+          <label>选择构念
+            <select id="resConstructSelect"></select>
+          </label>
         </div>
-      </div>
-
-      <div class="grid cols-3 question-cards">
-        <article class="card question-card">
-          <h3>过程信息是否改变归因</h3>
-          <p>比较直接决定、备选方案和理由信息对归因评分的影响。</p>
-        </article>
-        <article class="card question-card">
-          <h3>反馈与后续行为是否改变归因</h3>
-          <p>比较收到反馈、维持决定和改变决定后的评分差异。</p>
-        </article>
-        <article class="card question-card">
-          <h3>不同构念是否呈现不同敏感性</h3>
-          <p>分别分析 IN、GO、MSI、IC、PA5 和 PA8，不合并为总分。</p>
-        </article>
-      </div>
-
-      <div class="controls">
-        <label>选择构念
-          <select id="resConstructSelect"></select>
-        </label>
-      </div>
-
-      <p id="constructExplain" class="instruction-box"></p>
-
-      <div class="profile-layout">
+        <p id="constructExplain" class="instruction-box"></p>
         <div class="profile-chart-wrap">
-          <svg id="conditionProfileChart" role="img" aria-label="单构念在六个条件下的合成平均得分折线图" preserveAspectRatio="xMidYMid meet"></svg>
+          <svg id="conditionProfileChart" role="img" aria-label="单构念在六个条件下的流程演示平均得分折线图" preserveAspectRatio="xMidYMid meet"></svg>
           <p class="chart-scale-note" id="chartScaleNote"></p>
         </div>
-        <aside class="synth-tag" aria-hidden="false">
-          <span class="pill-tag">数据状态：合成流程演示</span>
-          <p class="small muted">图中数值仅用于验证呈现方式，不解释其实际方向。</p>
-        </aside>
-      </div>
+        <div class="table-scroll"><table id="condResultTable"></table></div>
 
-      <p class="small muted aggregation-note">当前条件均值聚合了 2 个评判模型配置、8 个场景与 2 个决策方向；它不是某一具体模型、具体场景或具体方向的单独结果。</p>
+        <!-- 15.3 statistical output -->
+        <details class="tech-details" id="demoStatsDetails">
+          <summary>查看演示统计表</summary>
+          <div class="details-body">
+            <div class="controls contrast-controls">
+              <label>选择构念
+                <select id="contrastConstructSelect"></select>
+              </label>
+              <div class="toggle-group" id="contrastMode" aria-label="结果模式">
+                <button type="button" data-mode="raw">直接均值差</button>
+                <button type="button" data-mode="adjusted" class="active">模型调整后差异</button>
+              </div>
+            </div>
+            <p id="contrastHelp" class="instruction-box"></p>
+            <h4 class="details-subhead">条件均值完整表</h4>
+            <div class="table-scroll"><table id="appxCondTable"></table></div>
+            <h4 class="details-subhead">预设对比表</h4>
+            <div class="table-scroll"><table id="contrastTable"></table></div>
+          </div>
+        </details>
 
-      <div class="table-scroll"><table id="condResultTable"></table></div>
-    </section>
-
-    <section id="s8">
-      <div class="section-heading">
-        <span class="section-index">08</span>
-        <div>
-          <h2>预设对比与解释规则</h2>
-          <p class="lead">P1—P6用于回答不同材料增量分别带来什么评分变化。当前页面先展示比较逻辑，真实运行后再填入正式估计结果。</p>
-        </div>
-      </div>
-
-      <div class="grid cols-2 contrast-card-grid" id="contrastCards"></div>
-
-      <p class="instruction-box direction-boundary">对比值为正，只表示后一个条件评分更高；对比值为负，只表示后一个条件评分更低；两者均不表示“更好”或“更差”。</p>
-      <p class="small muted combo-boundary">P4和P5相对于C2，反映的是“反馈与后续决定行为”的组合条件差异；只有P6直接比较相同反馈背景下的改变与维持。</p>
-
-      <details id="syntheticPipelineAppendix" class="tech-appendix">
-        <summary>查看合成流程输出与旧图表</summary>
-        <div class="appendix-body">
-          <p class="instruction-box appendix-boundary">以下数值和图形只用于确认统计字段、表格与绘图代码能够生成。不得据此解释效应方向、显著性、模型差异或理论结论。</p>
-
-          <div class="controls contrast-controls">
-            <label>选择构念
-              <select id="contrastConstructSelect"></select>
-            </label>
-            <div class="toggle-group" id="contrastMode" aria-label="结果模式">
-              <button type="button" data-mode="raw">直接均值差</button>
-              <button type="button" data-mode="adjusted" class="active">模型调整后差异</button>
+        <!-- 15.4 static figures -->
+        <details class="tech-details" id="pipelineFigures">
+          <summary>查看流程演示图表</summary>
+          <div class="details-body">
+            <div class="figure-grid">
+              <figure class="figure">
+                <span class="demo-mark">流程演示</span>
+                <img src="assets/figures/fig1_condition_construct_means.png" data-fig="fig1_condition_construct_means.png" loading="lazy" decoding="async" alt="每个构念在六个条件下按原量尺显示的平均得分" />
+                <figcaption>每个面板对应一个构念，并使用该构念的原量尺。读取同一构念在C0—C5之间的变化。</figcaption>
+              </figure>
+              <figure class="figure">
+                <span class="demo-mark">流程演示</span>
+                <img src="assets/figures/fig2_model_adjusted_contrasts.png" data-fig="fig2_model_adjusted_contrasts.png" loading="lazy" decoding="async" alt="每个构念的模型调整后预设对比及区间" />
+                <figcaption>每个面板显示一个构念的模型调整后对比。点为估计值，横线为95%置信区间。</figcaption>
+              </figure>
+              <figure class="figure">
+                <span class="demo-mark">流程演示</span>
+                <img src="assets/figures/fig5_contrast_forest.png" data-fig="fig5_contrast_forest.png" loading="lazy" decoding="async" alt="每个构念的直接均值差森林图" />
+                <figcaption>每个面板显示一个构念的直接均值差和区间。</figcaption>
+              </figure>
+              <figure class="figure">
+                <span class="demo-mark">流程演示</span>
+                <img src="assets/figures/fig3_model_profiles.png" data-fig="fig3_model_profiles.png" loading="lazy" decoding="async" alt="两个评判模型配置在各构念上的流程演示均值" />
+                <figcaption>每个面板分别显示两个评判模型配置在一个构念上的流程演示均值。</figcaption>
+              </figure>
             </div>
           </div>
-          <p id="contrastHelp" class="instruction-box"></p>
+        </details>
 
-          <h3 class="appendix-subhead">条件均值完整表</h3>
-          <div class="table-scroll"><table id="appxCondTable"></table></div>
+        <!-- 15.5 scenario check -->
+        <h3 class="group-label">场景敏感性演示 <span class="demo-mark">流程演示</span></h3>
+        <p class="reading">该输出展示分析流程如何比较不同任务语境。</p>
+        <div class="table-scroll"><table id="scenHetTable"></table></div>
+        <figure class="figure">
+          <span class="demo-mark">流程演示</span>
+          <img src="assets/figures/fig4_scenario_construct_heatmap.png" data-fig="fig4_scenario_construct_heatmap.png" loading="lazy" decoding="async" alt="八个场景与六个构念的量尺内位置热力图" />
+          <figcaption>各构念依据理论量尺转换为0—1的量尺内位置，用于热力图展示。</figcaption>
+        </figure>
+      </div>
+    </section>
 
-          <h3 class="appendix-subhead">预设对比表</h3>
-          <div class="table-scroll"><table id="contrastTable"></table></div>
-
-          <h3 class="appendix-subhead">合成流程静态图</h3>
-          <div class="figure-grid">
-            <figure class="figure">
-              <img src="assets/figures/fig1_condition_construct_means.png" data-fig="fig1_condition_construct_means.png" loading="lazy" decoding="async" alt="不同实验条件下各构念的合成平均得分" />
-              <figcaption><strong>怎么看：</strong> 横轴为C0—C5六个条件，纵轴为各构念在自身原量尺上的平均得分；变化只表示合成演示数据中的条件差异。</figcaption>
-            </figure>
-            <figure class="figure">
-              <img src="assets/figures/fig2_model_adjusted_contrasts.png" data-fig="fig2_model_adjusted_contrasts.png" loading="lazy" decoding="async" alt="模型调整后的P1至P6预设对比" />
-              <figcaption><strong>怎么看：</strong> 点估计表示两个条件的模型调整后差异，区间跨过0时不应把方向解释为稳定差异。</figcaption>
-            </figure>
-            <figure class="figure">
-              <img src="assets/figures/fig5_contrast_forest.png" data-fig="fig5_contrast_forest.png" loading="lazy" decoding="async" alt="P1至P6预设对比森林图" />
-              <figcaption><strong>怎么看：</strong> 森林图把多个预设对比放在同一坐标中，便于比较方向、幅度和不确定性。</figcaption>
-            </figure>
-            <figure class="figure">
-              <img src="assets/figures/fig3_model_profiles.png" data-fig="fig3_model_profiles.png" loading="lazy" decoding="async" alt="两个评判模型的构念评分轮廓" />
-              <figcaption><strong>怎么看：</strong> 比较两个模型在六个构念上的合成平均得分；这里不判断哪个模型更正确或更强。</figcaption>
-            </figure>
+    <!-- 07 研究状态、复现与下一步 -->
+    <section id="status" class="study-section">
+      <span id="s12" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s14" class="anchor-alias" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="section-index">07</span>
+          <div>
+            <h2>研究状态、复现与下一步</h2>
+            <p class="lead">当前进展、现有证据范围以及复现入口。</p>
           </div>
         </div>
-      </details>
-    </section>
 
-    <section id="s9">
-      <div class="section-heading">
-        <span class="section-index">09</span>
-        <div>
-          <h2>评判模型配置与后续比较计划</h2>
-          <p class="lead">两个共同主要评判模型已选定，此处只呈现配置与后续比较计划，不进行模型排名。</p>
+        <!-- 16.1 timeline -->
+        <div class="timeline-grid">
+          <div class="timeline-col done">
+            <h3>已完成</h3>
+            <ol class="timeline-list">
+              <li>研究问题与构念范围</li>
+              <li>六条件与96条材料</li>
+              <li>评分规范</li>
+              <li>分析计划</li>
+              <li>流程演示</li>
+              <li>页面和复现链</li>
+            </ol>
+          </div>
+          <div class="timeline-col next">
+            <h3>下一步</h3>
+            <ol class="timeline-list">
+              <li>执行两个评判模型的正式运行</li>
+              <li>完成运行质量检查</li>
+              <li>按构念更新P1—P6结果</li>
+              <li>报告场景与评判模型敏感性</li>
+              <li>保存正式运行版本和数据快照</li>
+            </ol>
+          </div>
         </div>
-      </div>
-      <div class="grid cols-2" id="judgeConfigCards"></div>
-      <p class="instruction-box model-plan-note">完整运行时，两个评判模型将对同一套96条材料独立评分。后续将检查评分模式是否因评判模型而异。此类差异只用于评估结果对评判模型选择的敏感性，不用于模型能力排名。</p>
-    </section>
 
-    <section id="s10">
-      <div class="section-heading">
-        <span class="section-index">10</span>
-        <div>
-          <h2>场景差异</h2>
-          <p class="lead">不同任务语境下的平均得分可能不同，用于检查结果是否依赖具体场景。</p>
-        </div>
-      </div>
-      <div class="table-scroll"><table id="scenHetTable"></table></div>
-      <figure class="figure">
-        <img src="assets/figures/fig4_scenario_construct_heatmap.png" data-fig="fig4_scenario_construct_heatmap.png" loading="lazy" decoding="async" alt="八个场景与六个构念的合成均值热力图" />
-        <figcaption><strong>怎么看：</strong> 每个格子表示一个场景在一个构念上的合成平均得分，用于识别场景异质性。</figcaption>
-      </figure>
-    </section>
+        <!-- 16.2 evidence range -->
+        <h3 class="group-label">现有证据范围</h3>
+        <p class="reading">页面当前可验证材料、评分、分析和展示流程。效应方向、模型差异和理论解释将在正式运行结果完成后报告。</p>
+        <p class="reading">研究B采用机器主体专用题项。跨主体比较进入后续独立测量路线。</p>
+        <ul class="status-notes" id="statusNotes"></ul>
 
-    <section id="s11">
-      <div class="section-heading">
-        <span class="section-index">11</span>
-        <div>
-          <h2>材料示例</h2>
-          <p class="lead">按C0—C5各展示一条方向A材料；完整96条材料可在上方浏览器中查看。</p>
-        </div>
+        <!-- 16.3 reproduction + entries -->
+        <h3 class="group-label">复现与入口</h3>
+        <div class="entry-grid" id="entryGrid"></div>
       </div>
-      <div id="materialExamples"></div>
-    </section>
-
-    <section id="s12">
-      <div class="section-heading">
-        <span class="section-index">12</span>
-        <div>
-          <h2>方法边界</h2>
-          <p class="lead">这些限制决定了当前页面可以支持哪些解释，以及必须避免哪些过度结论。</p>
-        </div>
-      </div>
-      <ul id="boundaryList" class="boundary-list"></ul>
-    </section>
-
-    <section id="s13">
-      <div class="section-heading">
-        <span class="section-index">13</span>
-        <div>
-          <h2>真实数据替换流程</h2>
-          <p class="lead">真实授权运行完成后，沿用同一评分与分析链更新结果。</p>
-        </div>
-      </div>
-      <ol id="replacementList" class="replacement-list"></ol>
-    </section>
-
-    <section id="s14">
-      <div class="section-heading">
-        <span class="section-index">14</span>
-        <div>
-          <h2>数据与代码入口</h2>
-          <p class="lead">查看评测目录、输出文件与演示报告。</p>
-        </div>
-      </div>
-      <div class="card" id="githubCard"></div>
     </section>
   </main>
 
