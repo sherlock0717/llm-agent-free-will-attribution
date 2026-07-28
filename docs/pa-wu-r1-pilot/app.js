@@ -5,13 +5,87 @@ const CONDS = ["C0", "C1", "C2", "C3", "C4", "C5"];
 const ALL_CONSTRUCTS = ["IN", "GO", "MSI", "IC", "PA5", "PA8"];
 
 const CONSTRUCT_META = {
-  IN: { name: "知觉独立性", description: "判断机器主体是否被视为具有相对独立的知觉与判断。" },
-  GO: { name: "目标导向性", description: "判断机器主体的行为是否被视为围绕目标组织。" },
-  MSI: { name: "心理状态推断", description: "判断评判模型是否倾向于使用意图、信念等心理状态描述机器主体。" },
-  IC: { name: "影响能力", description: "判断机器主体是否被视为能够对人或环境产生影响。" },
-  PA5: { name: "感知能动性（5题版）", description: "PA 2024 的5题补充指标。" },
-  PA8: { name: "感知能动性（8题版）", description: "PA 2024 的8题补充指标。" },
+  IN: {
+    name: "知觉独立性",
+    option: "知觉独立性（IN）",
+    description: "评判模型是否把机器主体看作能够相对独立地形成决定。",
+  },
+  GO: {
+    name: "目标导向性",
+    option: "目标导向性（GO）",
+    description: "评判模型是否把机器主体看作具有目标导向的决策过程。",
+  },
+  MSI: {
+    name: "心理状态推断",
+    option: "心理状态推断（MSI）",
+    description: "评判模型是否向机器主体归因意识、思考、意图等心理状态。自由意志只是其中一个探索性题项。",
+  },
+  IC: {
+    name: "影响能力",
+    option: "影响能力（IC）",
+    description: "评判模型是否认为机器主体具有影响决定与结果的能力。",
+  },
+  PA5: {
+    name: "感知能动性补充指标",
+    option: "感知能动性补充指标（PA5）",
+    description: "PA 2024 感知能动性指标的五题官方成员子分数。",
+  },
+  PA8: {
+    name: "感知能动性补充指标",
+    option: "感知能动性补充指标（PA8）",
+    description: "PA 2024 感知能动性指标的八题官方成员子分数。",
+  },
 };
+
+// 主图条件标签：横轴用短标签 C0—C5，完整中文名称放在图例/表格。
+const CONDITION_SHORT = {
+  C0: "直接决定",
+  C1: "明确备选",
+  C2: "给出理由",
+  C3: "收到反馈",
+  C4: "维持决定",
+  C5: "改变决定",
+};
+
+// 面向读者的 P1—P6 比较逻辑（叙事层；不改动数据文件中的 contrast_id 与统计值）。
+const CONTRAST_CARDS = [
+  {
+    id: "P1", diff: "C1−C0", name: "加入明确备选方案",
+    question: "仅增加备选方案信息后，归因评分是否变化。",
+    allow: "评判模型是否对“存在可选方案”这一文本线索敏感。",
+    forbid: "机器主体真实拥有选择自由。",
+  },
+  {
+    id: "P2", diff: "C2−C0", name: "给出明确理由",
+    question: "与只呈现直接决定相比，呈现决定及明确理由后，归因评分是否变化。",
+    allow: "评判模型是否对“材料中呈现明确理由”这一条件差异敏感。",
+    forbid: "不得把该对比解释为“在备选方案基础上单独增加理由”的纯增量效应，也不得据此断言机器主体真实进行了人类式理性推理。",
+  },
+  {
+    id: "P3", diff: "C3−C2", name: "加入反馈信息",
+    question: "在已有决定和理由的基础上，仅增加反馈是否改变评分。",
+    allow: "评判模型是否对“主体收到反馈”这一线索敏感。",
+    forbid: "机器主体真实具有反思或学习能力。",
+  },
+  {
+    id: "P4", diff: "C4−C2", name: "反馈后维持决定",
+    question: "与只呈现决定及理由相比，加入反馈并明确维持原决定后，归因评分是否变化。",
+    allow: "评判模型是否对“反馈加维持决定”这一组合条件敏感。",
+    forbid: "不得把该对比解释为维持决定本身的纯效应，也不得断言维持决定必然代表更强能动性、更高自主性或更优决策。",
+  },
+  {
+    id: "P5", diff: "C5−C2", name: "反馈后改变决定",
+    question: "与只呈现决定及理由相比，加入反馈并明确改变原决定后，归因评分是否变化。",
+    allow: "评判模型是否对“反馈加改变决定”这一组合条件敏感。",
+    forbid: "不得把该对比解释为改变决定本身的纯效应，也不得断言改变决定必然代表更强反思、学习或自主能力。",
+  },
+  {
+    id: "P6", diff: "C5−C4", name: "改变与维持的比较",
+    question: "同样收到反馈后，改变决定与维持决定的评分是否不同。",
+    allow: "在相同的反馈与第二次决定结构下，评判模型对改变决定和维持决定的相对敏感性。",
+    forbid: "不得认为任一行为在规范意义上更正确、更理性或更自主。",
+  },
+];
 
 const CONDITION_META = {
   C0: { title: "直接作出决定", description: "只呈现最终决定，不展示备选方案、理由或反馈。" },
@@ -113,9 +187,11 @@ function render() {
   renderCoverage();
   renderScenarioBrowser();
   renderJudges();
-  renderConditionResults();
-  renderContrasts();
-  renderJudgeDiff();
+  renderConstructView();      // #s7: selector drives title + explain + scale + SVG + table
+  renderContrastCards();      // #s8: reader-facing P1—P6 comparison logic
+  renderContrasts();          // #s8 appendix: synthetic stats tables
+  renderAppendixConditionTable();
+  renderJudgeConfig();        // #s9: model configuration + comparison plan (no ranking)
   renderScenarioHet();
   renderMaterialExamples();
   renderBoundaries();
@@ -319,22 +395,184 @@ function tableFrom(headers, rows, numericColumns = []) {
   return table;
 }
 
-function renderConditionResults() {
+// Parse a native scale string like "1-7" into numeric [min, max].
+function scaleBounds(key) {
+  const raw = String(DATA.constructs.native_scales[key] || "1-7");
+  const parts = raw.split(/[-–—]/).map((piece) => Number(piece.trim()));
+  const min = Number.isFinite(parts[0]) ? parts[0] : 1;
+  const max = Number.isFinite(parts[1]) ? parts[1] : 7;
+  return [min, max];
+}
+
+// #s7 selector: one handler synchronises title, explanation, native-scale label,
+// the single-construct SVG chart and the condition-means table together.
+function renderConstructView() {
   const select = document.getElementById("resConstructSelect");
   select.innerHTML = "";
-  ALL_CONSTRUCTS.forEach((key) => select.appendChild(el("option", { value: key }, constructLabel(key))));
-  const rebuild = () => {
+  ALL_CONSTRUCTS.forEach((key) =>
+    select.appendChild(el("option", { value: key }, CONSTRUCT_META[key].option)));
+  select.value = "IN";
+
+  const update = () => {
     const key = select.value;
+    const meta = CONSTRUCT_META[key];
+    const scaleText = DATA.constructs.native_scales[key];
+    document.getElementById("constructExplain").textContent =
+      `${meta.name}（${key}）：${meta.description}`;
+    document.getElementById("chartScaleNote").textContent =
+      `纵轴按当前构念原量尺 ${scaleText} 显示；1—5 与 1—7 构念不共用同一坐标轴。`;
+    renderConditionProfile(key);
     const values = DATA.descriptive_results.condition_means[key] || {};
     const rows = CONDS.map((condition) => [
-      `${condition}｜${CONDITION_META[condition].title}`,
+      condition,
+      CONDITION_META[condition].title,
       fmt(values[condition]),
-      DATA.constructs.native_scales[key],
+      scaleText,
+      "合成流程演示",
     ]);
-    replaceTable("condResultTable", tableFrom(["实验条件", "合成平均得分", "原量尺"], rows, [1]));
+    replaceTable("condResultTable",
+      tableFrom(["条件ID", "条件名称", "合成均值", "原量尺", "数据状态"], rows, [2]));
   };
-  select.addEventListener("change", rebuild);
-  rebuild();
+
+  select.addEventListener("change", update);
+  update();
+}
+
+// Native inline SVG single-construct profile across C0—C5 (no external library).
+function renderConditionProfile(key) {
+  const svg = document.getElementById("conditionProfileChart");
+  if (!svg) return;
+  const NS = "http://www.w3.org/2000/svg";
+  const meta = CONSTRUCT_META[key];
+  const values = DATA.descriptive_results.condition_means[key] || {};
+  const [minScale, maxScale] = scaleBounds(key);
+
+  // viewBox coordinate space; width is fluid via CSS, height fixed by ratio.
+  const W = 720;
+  const H = 320;
+  const padL = 54;
+  const padR = 24;
+  const padT = 44;
+  const padB = 58;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("aria-label",
+    `${meta.name}（${key}）在C0至C5六个条件下的合成平均得分，原量尺 ${minScale}—${maxScale}`);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  const mk = (tag, attrs = {}, text = null) => {
+    const node = document.createElementNS(NS, tag);
+    Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
+    if (text != null) node.textContent = text;
+    return node;
+  };
+
+  // Title inside the SVG (changes with construct).
+  svg.appendChild(mk("text",
+    { x: padL, y: 24, class: "svg-title" },
+    `${meta.name}（${key}）｜原量尺 ${minScale}—${maxScale}`));
+
+  const x = (i) => padL + (plotW * i) / (CONDS.length - 1);
+  const y = (v) => padT + plotH - (plotH * (v - minScale)) / (maxScale - minScale);
+
+  // Axis frame + a few horizontal gridlines with scale ticks.
+  const ticks = 4;
+  for (let t = 0; t <= ticks; t += 1) {
+    const val = minScale + ((maxScale - minScale) * t) / ticks;
+    const gy = y(val);
+    svg.appendChild(mk("line",
+      { x1: padL, y1: gy, x2: W - padR, y2: gy, class: "svg-grid" }));
+    svg.appendChild(mk("text",
+      { x: padL - 8, y: gy + 4, class: "svg-tick", "text-anchor": "end" },
+      val.toFixed(0)));
+  }
+
+  // X labels (short) C0—C5.
+  CONDS.forEach((cond, i) => {
+    svg.appendChild(mk("text",
+      { x: x(i), y: H - padB + 20, class: "svg-xlabel", "text-anchor": "middle" }, cond));
+    svg.appendChild(mk("text",
+      { x: x(i), y: H - padB + 38, class: "svg-xsub", "text-anchor": "middle" },
+      CONDITION_SHORT[cond]));
+  });
+
+  // Connecting polyline + points with value labels.
+  const pts = CONDS
+    .map((cond, i) => {
+      const v = values[cond];
+      return v == null ? null : `${x(i)},${y(v)}`;
+    })
+    .filter(Boolean)
+    .join(" ");
+  svg.appendChild(mk("polyline", { points: pts, class: "svg-line" }));
+
+  CONDS.forEach((cond, i) => {
+    const v = values[cond];
+    if (v == null) return;
+    svg.appendChild(mk("circle", { cx: x(i), cy: y(v), r: 5, class: "svg-dot" }));
+    svg.appendChild(mk("text",
+      { x: x(i), y: y(v) - 12, class: "svg-value", "text-anchor": "middle" },
+      Number(v).toFixed(2)));
+  });
+}
+
+// #s8 appendix: full condition-means table (all constructs, raw synthetic values).
+function renderAppendixConditionTable() {
+  const host = document.getElementById("appxCondTable");
+  if (!host) return;
+  const rows = [];
+  ALL_CONSTRUCTS.forEach((key) => {
+    const values = DATA.descriptive_results.condition_means[key] || {};
+    CONDS.forEach((condition) => {
+      rows.push([
+        constructLabel(key),
+        `${condition}｜${CONDITION_META[condition].title}`,
+        fmt(values[condition]),
+        DATA.constructs.native_scales[key],
+      ]);
+    });
+  });
+  replaceTable("appxCondTable",
+    tableFrom(["构念", "实验条件", "合成均值", "原量尺"], rows, [2]));
+}
+
+// #s8 main area: six reader-facing contrast cards (no statistics).
+function renderContrastCards() {
+  const host = document.getElementById("contrastCards");
+  if (!host) return;
+  host.innerHTML = "";
+  CONTRAST_CARDS.forEach((card) => {
+    host.appendChild(el("article", { class: "card contrast-card" },
+      el("div", { class: "card-title-row" },
+        el("span", { class: "cond-pill" }, card.id),
+        el("h3", {}, card.name)
+      ),
+      el("p", { class: "small muted" }, `条件差：${card.diff}`),
+      el("p", {}, el("strong", {}, "研究问题："), card.question),
+      el("p", { class: "allow-line" }, el("strong", {}, "允许解释："), card.allow),
+      el("p", { class: "forbid-line" }, el("strong", {}, "禁止解释："), card.forbid)
+    ));
+  });
+}
+
+// #s9: two neutral model-configuration cards + comparison plan (no ranking).
+function renderJudgeConfig() {
+  const host = document.getElementById("judgeConfigCards");
+  if (!host) return;
+  host.innerHTML = "";
+  DATA.judge_models.forEach((model) => {
+    host.appendChild(el("article", { class: "card judge-config-card" },
+      el("h3", {}, model.id),
+      el("dl", { class: "config-list" },
+        el("div", {}, el("dt", {}, "角色"), el("dd", {}, "共同主要评判模型")),
+        el("div", {}, el("dt", {}, "供应方类别"), el("dd", {}, model.provider)),
+        el("div", {}, el("dt", {}, "当前状态"), el("dd", {}, "配置已确定")),
+        el("div", {}, el("dt", {}, "实证表现"), el("dd", { class: "status-neutral" }, "未评估"))
+      )
+    ));
+  });
 }
 
 function renderContrasts() {
@@ -393,20 +631,15 @@ function replaceTable(id, table) {
   document.getElementById(id).replaceWith(table);
 }
 
+// Neutral direction semantics: sign shows numeric direction only, never value
+// judgement. Uses direction-up / direction-down / direction-neutral.
 function colorCell(text) {
-  const className = text.startsWith("+") ? "pos" : text.startsWith("-") ? "neg" : "";
+  const className = text.startsWith("+")
+    ? "direction-up"
+    : text.startsWith("-")
+      ? "direction-down"
+      : "direction-neutral";
   return { node: el("span", { class: className }, text) };
-}
-
-function renderJudgeDiff() {
-  const means = DATA.descriptive_results.model_means;
-  const modelIds = DATA.judge_models.map((model) => model.id);
-  const rows = ALL_CONSTRUCTS.map((key) => [
-    constructLabel(key),
-    fmt((means[key] || {})[modelIds[0]]),
-    fmt((means[key] || {})[modelIds[1]]),
-  ]);
-  replaceTable("judgeDiffTable", tableFrom(["构念", modelIds[0], modelIds[1]], rows, [1, 2]));
 }
 
 function renderScenarioHet() {

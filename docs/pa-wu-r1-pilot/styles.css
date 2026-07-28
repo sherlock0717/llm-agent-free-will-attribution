@@ -215,8 +215,97 @@ tr:hover td { background: #f9fbfe; }
 .figure figcaption { margin-top: 10px; color: var(--muted); font-size: 13px; }
 .image-error { padding: 26px; text-align: center; color: var(--danger); background: #fff1f0; border-radius: 10px; }
 .error-panel { padding: 16px; color: var(--danger); background: #fff1f0; border-radius: 10px; }
-.pos { color: var(--good); font-weight: 700; }
-.neg { color: var(--accent-2); font-weight: 700; }
+/* Neutral direction semantics: numeric direction only, no value judgement.
+   Colours drawn from the existing neutral blue / purple / grey palette. */
+.direction-up { color: #1f66d1; font-weight: 700; }      /* neutral blue  */
+.direction-down { color: #6b57c7; font-weight: 700; }    /* neutral purple */
+.direction-neutral { color: var(--muted); font-weight: 700; }
+
+/* #s7 analysis-question cards */
+.question-cards { margin-bottom: 18px; }
+.question-card h3 { margin: 0 0 6px; font-size: 16px; }
+
+/* #s7 single-construct SVG profile */
+.profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 16px;
+  align-items: start;
+  margin: 8px 0 6px;
+}
+.profile-chart-wrap { min-width: 0; }
+#conditionProfileChart {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+#conditionProfileChart .svg-title { font-size: 15px; font-weight: 700; fill: var(--text); }
+#conditionProfileChart .svg-grid { stroke: #e6edf6; stroke-width: 1; }
+#conditionProfileChart .svg-tick { font-size: 12px; fill: var(--muted); }
+#conditionProfileChart .svg-xlabel { font-size: 13px; font-weight: 700; fill: var(--text); }
+#conditionProfileChart .svg-xsub { font-size: 11px; fill: var(--muted); }
+#conditionProfileChart .svg-line { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+#conditionProfileChart .svg-dot { fill: var(--accent); stroke: #fff; stroke-width: 1.5; }
+#conditionProfileChart .svg-value { font-size: 11px; fill: var(--text); }
+.chart-scale-note { margin: 8px 2px 0; font-size: 13px; color: var(--muted); }
+.synth-tag {
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: var(--panel-soft);
+}
+.synth-tag .pill-tag {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 13px;
+}
+.synth-tag p { margin: 10px 0 0; }
+.aggregation-note { margin: 10px 2px 14px; }
+
+/* #s8 contrast cards */
+.contrast-card-grid { margin-bottom: 16px; }
+.contrast-card h3 { margin: 0; font-size: 16px; }
+.contrast-card .allow-line strong { color: var(--accent); }
+.contrast-card .forbid-line strong { color: #6b57c7; }
+.direction-boundary { margin: 6px 0 20px; }
+
+/* #s8 technical appendix (collapsed by default) */
+.tech-appendix {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel-soft);
+  padding: 4px 16px;
+  margin-top: 6px;
+}
+.tech-appendix > summary {
+  cursor: pointer;
+  padding: 14px 4px;
+  font-weight: 700;
+  color: var(--text);
+  list-style: none;
+}
+.tech-appendix > summary::-webkit-details-marker { display: none; }
+.tech-appendix > summary::before { content: "▸ "; color: var(--muted); }
+.tech-appendix[open] > summary::before { content: "▾ "; }
+.appendix-body { padding: 4px 0 16px; }
+.appendix-boundary { margin-bottom: 16px; }
+.appendix-subhead { margin: 22px 0 8px; font-size: 15px; }
+
+/* #s9 model configuration cards */
+.judge-config-card h3 { margin: 0 0 10px; font-family: var(--mono); font-size: 17px; }
+.config-list { margin: 0; display: grid; gap: 8px; }
+.config-list > div { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.config-list dt { margin: 0; color: var(--muted); font-size: 14px; }
+.config-list dd { margin: 0; font-weight: 700; }
+.config-list dd.status-neutral { color: var(--muted); }
+.model-plan-note { margin-top: 16px; }
 .boundary-list, .replacement-list { margin: 0; padding-left: 24px; }
 .boundary-list li, .replacement-list li { margin: 9px 0; }
 
@@ -241,7 +330,7 @@ footer.site .wrap { padding-top: 22px; padding-bottom: 22px; }
 
 @media (max-width: 900px) {
   .grid.cols-3, .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .coverage-layout, .figure-grid { grid-template-columns: 1fr; }
+  .coverage-layout, .figure-grid, .profile-layout { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {

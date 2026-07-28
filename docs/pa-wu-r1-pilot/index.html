@@ -146,68 +146,119 @@
       <div class="section-heading">
         <span class="section-index">07</span>
         <div>
-          <h2>合成演示结果总览</h2>
-          <p class="lead">以下结果只用于验证统计与展示流程，不代表真实模型表现。</p>
+          <h2>分析框架与结果呈现方式</h2>
+          <p class="lead" id="s7Intro">真实运行完成后，本节将按构念呈现六个条件下的评分变化。当前数值为合成流程演示，只用于确认页面、表格和分析输出能够生成，不用于解释效应方向、显著性或理论结论。</p>
         </div>
       </div>
+
+      <div class="grid cols-3 question-cards">
+        <article class="card question-card">
+          <h3>过程信息是否改变归因</h3>
+          <p>比较直接决定、备选方案和理由信息对归因评分的影响。</p>
+        </article>
+        <article class="card question-card">
+          <h3>反馈与后续行为是否改变归因</h3>
+          <p>比较收到反馈、维持决定和改变决定后的评分差异。</p>
+        </article>
+        <article class="card question-card">
+          <h3>不同构念是否呈现不同敏感性</h3>
+          <p>分别分析 IN、GO、MSI、IC、PA5 和 PA8，不合并为总分。</p>
+        </article>
+      </div>
+
       <div class="controls">
         <label>选择构念
           <select id="resConstructSelect"></select>
         </label>
       </div>
+
+      <p id="constructExplain" class="instruction-box"></p>
+
+      <div class="profile-layout">
+        <div class="profile-chart-wrap">
+          <svg id="conditionProfileChart" role="img" aria-label="单构念在六个条件下的合成平均得分折线图" preserveAspectRatio="xMidYMid meet"></svg>
+          <p class="chart-scale-note" id="chartScaleNote"></p>
+        </div>
+        <aside class="synth-tag" aria-hidden="false">
+          <span class="pill-tag">数据状态：合成流程演示</span>
+          <p class="small muted">图中数值仅用于验证呈现方式，不解释其实际方向。</p>
+        </aside>
+      </div>
+
+      <p class="small muted aggregation-note">当前条件均值聚合了 2 个评判模型配置、8 个场景与 2 个决策方向；它不是某一具体模型、具体场景或具体方向的单独结果。</p>
+
       <div class="table-scroll"><table id="condResultTable"></table></div>
-      <figure class="figure">
-        <img src="assets/figures/fig1_condition_construct_means.png" data-fig="fig1_condition_construct_means.png" loading="lazy" decoding="async" alt="不同实验条件下各构念的合成平均得分" />
-        <figcaption>
-          <strong>怎么看：</strong> 横轴为C0—C5六个条件，纵轴为各构念在自身原量尺上的平均得分。线条或柱形的变化只表示合成演示数据中的条件差异。
-        </figcaption>
-      </figure>
     </section>
 
     <section id="s8">
       <div class="section-heading">
         <span class="section-index">08</span>
         <div>
-          <h2>预设对比 P1—P6</h2>
-          <p class="lead">比较备选方案、理由、反馈、维持决定与改变决定等信息所对应的得分差异。</p>
+          <h2>预设对比与解释规则</h2>
+          <p class="lead">P1—P6用于回答不同材料增量分别带来什么评分变化。当前页面先展示比较逻辑，真实运行后再填入正式估计结果。</p>
         </div>
       </div>
-      <div class="controls contrast-controls">
-        <label>选择构念
-          <select id="contrastConstructSelect"></select>
-        </label>
-        <div class="toggle-group" id="contrastMode" aria-label="结果模式">
-          <button type="button" data-mode="raw">直接均值差</button>
-          <button type="button" data-mode="adjusted" class="active">模型调整后差异</button>
+
+      <div class="grid cols-2 contrast-card-grid" id="contrastCards"></div>
+
+      <p class="instruction-box direction-boundary">对比值为正，只表示后一个条件评分更高；对比值为负，只表示后一个条件评分更低；两者均不表示“更好”或“更差”。</p>
+      <p class="small muted combo-boundary">P4和P5相对于C2，反映的是“反馈与后续决定行为”的组合条件差异；只有P6直接比较相同反馈背景下的改变与维持。</p>
+
+      <details id="syntheticPipelineAppendix" class="tech-appendix">
+        <summary>查看合成流程输出与旧图表</summary>
+        <div class="appendix-body">
+          <p class="instruction-box appendix-boundary">以下数值和图形只用于确认统计字段、表格与绘图代码能够生成。不得据此解释效应方向、显著性、模型差异或理论结论。</p>
+
+          <div class="controls contrast-controls">
+            <label>选择构念
+              <select id="contrastConstructSelect"></select>
+            </label>
+            <div class="toggle-group" id="contrastMode" aria-label="结果模式">
+              <button type="button" data-mode="raw">直接均值差</button>
+              <button type="button" data-mode="adjusted" class="active">模型调整后差异</button>
+            </div>
+          </div>
+          <p id="contrastHelp" class="instruction-box"></p>
+
+          <h3 class="appendix-subhead">条件均值完整表</h3>
+          <div class="table-scroll"><table id="appxCondTable"></table></div>
+
+          <h3 class="appendix-subhead">预设对比表</h3>
+          <div class="table-scroll"><table id="contrastTable"></table></div>
+
+          <h3 class="appendix-subhead">合成流程静态图</h3>
+          <div class="figure-grid">
+            <figure class="figure">
+              <img src="assets/figures/fig1_condition_construct_means.png" data-fig="fig1_condition_construct_means.png" loading="lazy" decoding="async" alt="不同实验条件下各构念的合成平均得分" />
+              <figcaption><strong>怎么看：</strong> 横轴为C0—C5六个条件，纵轴为各构念在自身原量尺上的平均得分；变化只表示合成演示数据中的条件差异。</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/figures/fig2_model_adjusted_contrasts.png" data-fig="fig2_model_adjusted_contrasts.png" loading="lazy" decoding="async" alt="模型调整后的P1至P6预设对比" />
+              <figcaption><strong>怎么看：</strong> 点估计表示两个条件的模型调整后差异，区间跨过0时不应把方向解释为稳定差异。</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/figures/fig5_contrast_forest.png" data-fig="fig5_contrast_forest.png" loading="lazy" decoding="async" alt="P1至P6预设对比森林图" />
+              <figcaption><strong>怎么看：</strong> 森林图把多个预设对比放在同一坐标中，便于比较方向、幅度和不确定性。</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/figures/fig3_model_profiles.png" data-fig="fig3_model_profiles.png" loading="lazy" decoding="async" alt="两个评判模型的构念评分轮廓" />
+              <figcaption><strong>怎么看：</strong> 比较两个模型在六个构念上的合成平均得分；这里不判断哪个模型更正确或更强。</figcaption>
+            </figure>
+          </div>
         </div>
-      </div>
-      <p id="contrastHelp" class="instruction-box"></p>
-      <div class="table-scroll"><table id="contrastTable"></table></div>
-      <div class="figure-grid">
-        <figure class="figure">
-          <img src="assets/figures/fig2_model_adjusted_contrasts.png" data-fig="fig2_model_adjusted_contrasts.png" loading="lazy" decoding="async" alt="模型调整后的P1至P6预设对比" />
-          <figcaption><strong>怎么看：</strong> 点估计表示两个条件的模型调整后差异，区间跨过0时不应把方向解释为稳定差异。</figcaption>
-        </figure>
-        <figure class="figure">
-          <img src="assets/figures/fig5_contrast_forest.png" data-fig="fig5_contrast_forest.png" loading="lazy" decoding="async" alt="P1至P6预设对比森林图" />
-          <figcaption><strong>怎么看：</strong> 森林图把多个预设对比放在同一坐标中，便于比较方向、幅度和不确定性。</figcaption>
-        </figure>
-      </div>
+      </details>
     </section>
 
     <section id="s9">
       <div class="section-heading">
         <span class="section-index">09</span>
         <div>
-          <h2>评判模型的描述性差异</h2>
-          <p class="lead">仅比较两个模型在合成数据中的平均评分轮廓，不代表能力优劣。</p>
+          <h2>评判模型配置与后续比较计划</h2>
+          <p class="lead">两个共同主要评判模型已选定，此处只呈现配置与后续比较计划，不进行模型排名。</p>
         </div>
       </div>
-      <div class="table-scroll"><table id="judgeDiffTable"></table></div>
-      <figure class="figure">
-        <img src="assets/figures/fig3_model_profiles.png" data-fig="fig3_model_profiles.png" loading="lazy" decoding="async" alt="两个评判模型的构念评分轮廓" />
-        <figcaption><strong>怎么看：</strong> 比较两个模型在六个构念上的合成平均得分；这里不判断哪个模型更正确或更强。</figcaption>
-      </figure>
+      <div class="grid cols-2" id="judgeConfigCards"></div>
+      <p class="instruction-box model-plan-note">完整运行时，两个评判模型将对同一套96条材料独立评分。后续将检查评分模式是否因评判模型而异。此类差异只用于评估结果对评判模型选择的敏感性，不用于模型能力排名。</p>
     </section>
 
     <section id="s10">
