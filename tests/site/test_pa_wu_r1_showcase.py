@@ -319,3 +319,18 @@ def test_s9_states_empirical_performance_unevaluated():
     assert "renderJudgeConfig" in JS
     config = JS.split("function renderJudgeConfig(", 1)[1].split("\n}", 1)[0]
     assert "未评估" in config
+
+
+def test_contrast_card_diffs_match_analysis_plan():
+    # the reader-facing P1—P6 condition-diffs must match the pre-registered
+    # analysis_plan.md contrasts exactly (P2/P4/P5 reference C0/C2, not C1/C3).
+    block = JS.split("const CONTRAST_CARDS", 1)[1].split("\n];", 1)[0]
+    found = dict(re.findall(r'id:\s*"(P[1-6])",\s*diff:\s*"([^"]+)"', block))
+    assert found == {
+        "P1": "C1−C0",
+        "P2": "C2−C0",
+        "P3": "C3−C2",
+        "P4": "C4−C2",
+        "P5": "C5−C2",
+        "P6": "C5−C4",
+    }, found
