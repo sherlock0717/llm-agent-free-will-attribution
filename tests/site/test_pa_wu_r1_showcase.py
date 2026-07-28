@@ -47,10 +47,31 @@ FIGURES = [
     "fig5_contrast_forest.png",
 ]
 
+OUTPUT_DATA = (
+    REPO_ROOT
+    / "tasks"
+    / "attribution_behavior"
+    / "evaluations"
+    / "pa_wu_r1_pilot"
+    / "outputs"
+    / "showcase_data.json"
+)
+
 HTML = INDEX.read_text(encoding="utf-8")
 JS = APP.read_text(encoding="utf-8")
 CSS = STYLES.read_text(encoding="utf-8")
 SHOWCASE = json.loads(DATA.read_text(encoding="utf-8"))
+
+
+def _reject_nonstandard_constant(value):
+    raise ValueError(f"Non-standard JSON constant: {value}")
+
+
+def _strict_load(path: Path):
+    """Parse JSON while rejecting NaN / Infinity / -Infinity, which Python's
+    default json.loads would otherwise accept."""
+    return json.loads(path.read_text(encoding="utf-8"),
+                      parse_constant=_reject_nonstandard_constant)
 
 
 # --- 1. required files ------------------------------------------------------
@@ -154,7 +175,7 @@ def test_js_checks_response_ok():
 
 
 def test_js_has_chinese_error_and_retry():
-    assert "数据加载失败" in JS
+    assert "流程演示数据未能载入" in JS
     assert "重新加载" in JS
     assert "showLoadError" in JS
 
@@ -200,7 +221,7 @@ def test_no_removed_render_functions():
 
 
 def test_merged_and_new_render_functions_present():
-    for fn in ["renderJudgeSummary", "renderDemoMetrics", "renderStatus"]:
+    for fn in ["renderDemoMetrics", "renderStatus", "renderEntries", "renderFitSummary"]:
         assert fn in JS, fn
 
 
@@ -364,3 +385,83 @@ def test_render_report_uses_theoretical_0_1_mapping_for_heatmap():
     src = RENDER_REPORT.read_text(encoding="utf-8")
     # fig4 heatmap maps native scores to a theoretical 0–1 in-scale position
     assert "0–1" in src or "0-1" in src
+
+
+def test_render_report_writes_strict_json():
+    src = RENDER_REPORT.read_text(encoding="utf-8")
+    assert "allow_nan=False" in src
+    assert "_json_safe" in src
+
+
+# --- 9. strict JSON (no NaN / Infinity) -------------------------------------
+
+def test_docs_json_is_strict():
+    payload = _strict_load(DATA)
+    assert isinstance(payload, dict)
+
+
+def test_outputs_json_is_strict():
+    assert OUTPUT_DATA.is_file()
+    payload = _strict_load(OUTPUT_DATA)
+    assert isinstance(payload, dict)
+
+
+def test_no_nonstandard_json_constants_in_text():
+    number_token = re.compile(r"(?<![\"\\w])(NaN|-?Infinity)(?![\"\\w])")
+    for path in (DATA, OUTPUT_DATA):
+        text = path.read_text(encoding="utf-8")
+        # remove all JSON string literals so material text can't cause a false hit
+        without_strings = re.sub(r'"(?:[^"\\]|\\.)*"', '""', text)
+        hits = number_token.findall(without_strings)
+        assert hits == [], (path.name, hits)
+
+
+def test_captured_warnings_are_str_or_none():
+    for path in (DATA, OUTPUT_DATA):
+        payload = _strict_load(path)
+        for row in payload["model_adjusted_results"]["fit_summary"]:
+            assert "captured_warnings" in row
+            value = row["captured_warnings"]
+            assert value is None or isinstance(value, str), (path.name, value)
+
+
+def test_docs_and_outputs_json_identical():
+    assert DATA.read_bytes() == OUTPUT_DATA.read_bytes()
+
+
+# --- 10. load-failure resilience (static content) ---------------------------
+
+def test_static_research_design_baked_into_html():
+    # core research design must be readable without the demo JSON: it is present
+    # as static markup, not only injected by DATA-dependent JS.
+    for token in ["知觉独立性（IN）", "目标导向性（GO）", "心理状态推断（MSI）",
+                  "影响能力（IC）", "deepseek-v4-pro", "gpt-5.6-terra",
+                  "construct_score", "阶段一：决定信息", "阶段二：反馈后行为"]:
+        assert token in HTML, token
+
+
+def test_demo_error_panel_and_content_wrapper_present():
+    assert 'id="demoError"' in HTML
+    assert 'id="demoContent"' in HTML
+
+
+def test_load_failure_keeps_design_and_shows_demo_error():
+    # showLoadError degrades gracefully: hides dynamic demo content, shows the
+    # error panel with the file path and a collapsed technical error.
+    handler = JS.split("function showLoadError(", 1)[1]
+    assert "demoContent" in handler
+    assert "demoError" in handler
+    assert "data/showcase_data.json" in handler
+    assert "查看技术错误" in handler
+    assert "研究设计和分析计划仍可浏览" in handler
+
+
+def test_static_render_runs_before_fetch():
+    load_fn = JS.split("async function load(", 1)[1].split("\n}", 1)[0]
+    assert "renderStatic()" in load_fn
+
+
+def test_captured_warnings_null_shows_placeholder():
+    assert "无记录" in JS
+    warn_fn = JS.split("function warningText(", 1)[1].split("\n}", 1)[0]
+    assert "无记录" in warn_fn

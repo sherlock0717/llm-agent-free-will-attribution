@@ -15,14 +15,57 @@ Figures:
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from matplotlib import font_manager  # noqa: E402
+
+
+def _json_safe(value):
+    """Recursively convert a payload into strict, RFC-compliant JSON values.
+
+    Non-finite floats (NaN / ±Infinity) become None, numpy scalars become plain
+    Python numbers, and pandas NA/NaT become None. Everything else is returned
+    unchanged. This keeps optional fields such as ``captured_warnings`` as a real
+    JSON null when a fit recorded no warning text, instead of the literal ``NaN``.
+    """
+    if isinstance(value, dict):
+        return {key: _json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(item) for item in value]
+    if isinstance(value, (np.integer,)):
+        return int(value)
+    if isinstance(value, (np.floating,)):
+        value = float(value)
+    if isinstance(value, float):
+        return value if math.isfinite(value) else None
+    if value is None:
+        return None
+    # pandas NA / NaT and other scalar missing markers.
+    try:
+        if pd.isna(value):
+            return None
+    except (TypeError, ValueError):
+        pass
+    if isinstance(value, (np.bool_,)):
+        return bool(value)
+    return value
+
+
+def _write_json(path: Path, payload) -> None:
+    """Write a payload as strict JSON. ``allow_nan=False`` makes any residual
+    non-finite value fail loudly at generation time rather than shipping invalid
+    JSON to the page."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    text = json.dumps(_json_safe(payload), ensure_ascii=False, indent=2,
+                       allow_nan=False)
+    path.write_text(text, encoding="utf-8")
 
 
 def _configure_chinese_font() -> str:
@@ -589,8 +632,7 @@ def build_showcase_data(figs: list[Path]) -> None:
         },
         "figure_paths": [f.name for f in figs],
     }
-    SHOWCASE_OUT.parent.mkdir(parents=True, exist_ok=True)
-    SHOWCASE_OUT.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    _write_json(SHOWCASE_OUT, data)
 
 
 def _sync_docs(figs: list[Path]) -> None:

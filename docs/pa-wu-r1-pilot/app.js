@@ -3,45 +3,39 @@
 
 const CONDS = ["C0", "C1", "C2", "C3", "C4", "C5"];
 const ALL_CONSTRUCTS = ["IN", "GO", "MSI", "IC", "PA5", "PA8"];
-const PRIMARY_CONSTRUCTS = ["IN", "GO", "MSI", "IC"];
-const SUPPLEMENTARY_CONSTRUCTS = ["PA5", "PA8"];
 
+// Reader-facing construct labels and short descriptions used by the demo
+// selector and tables. The full construct cards are static markup in index.html.
 const CONSTRUCT_META = {
   IN: {
     name: "知觉独立性",
     option: "知觉独立性（IN）",
     description: "评判模型是否把机器主体看作能够相对独立地形成决定。",
-    source: "Wu & Shen 2026",
   },
   GO: {
     name: "目标导向性",
     option: "目标导向性（GO）",
     description: "评判模型是否把机器主体看作具有目标导向的决策过程。",
-    source: "Wu & Shen 2026",
   },
   MSI: {
     name: "心理状态推断",
     option: "心理状态推断（MSI）",
     description: "评判模型是否向机器主体归因意识、思考、意图等心理状态。",
-    source: "Wu & Shen 2026",
   },
   IC: {
     name: "影响能力",
     option: "影响能力（IC）",
     description: "评判模型是否认为机器主体具有影响决定与结果的能力。",
-    source: "Wu & Shen 2026",
   },
   PA5: {
     name: "感知能动性补充指标",
     option: "感知能动性补充指标（PA5）",
     description: "PA 2024 感知能动性指标的五题官方成员子分数。",
-    source: "PA 2024",
   },
   PA8: {
     name: "感知能动性补充指标",
     option: "感知能动性补充指标（PA8）",
     description: "PA 2024 感知能动性指标的八题官方成员子分数。",
-    source: "PA 2024",
   },
 };
 
@@ -163,61 +157,60 @@ function setLoadStatus(message, kind = "loading") {
   status.textContent = message;
 }
 
-async function load() {
-  setLoadStatus("正在加载流程演示数据……", "loading");
-  const response = await fetch("data/showcase_data.json", { cache: "no-store" });
-  if (!response.ok) throw new Error(`数据请求失败：HTTP ${response.status}`);
-  DATA = await response.json();
-  render();
-  setLoadStatus("流程演示数据已加载。可使用下拉框和结果切换按钮查看不同内容。", "success");
-}
-
-function render() {
-  renderQuestion();
-  renderConstructs();
+// Static research design does not depend on the demo JSON, so it renders first
+// and stays visible even if showcase_data.json fails to load. Only the dynamic
+// slots (material browser, coverage numbers, demo metrics, tables, charts) need
+// DATA and degrade gracefully when it is missing.
+function renderStatic() {
   renderConditions();
-  renderCoverage();
-  renderScenarioBrowser();
-  renderJudgeSummary();
   renderContrastCards();
-  renderDemoMetrics();
-  renderConstructView();
-  renderContrasts();
-  renderAppendixConditionTable();
-  renderScenarioHet();
   renderStatus();
   renderEntries();
   setupImageFallbacks();
   setupLightbox();
 }
 
-// #overview: research question sentence only.
-function renderQuestion() {
-  document.getElementById("researchQuestion").textContent =
-    "研究B考察机器主体的决策过程如何被语言模型读取。材料分别呈现直接决定、备选方案、明确理由、外部反馈以及反馈后的维持或改变行为，再观察六个构念上的归因评分。";
+function renderDynamic() {
+  renderCoverage();
+  renderScenarioBrowser();
+  renderDemoMetrics();
+  renderConstructView();
+  renderContrasts();
+  renderAppendixConditionTable();
+  renderFitSummary();
+  renderScenarioHet();
 }
 
-// #constructs: primary (2×2) + supplementary (compact) cards, source labels only.
-function renderConstructs() {
-  const buildCard = (key) => {
-    const meta = CONSTRUCT_META[key];
-    return el("article", { class: "construct-card" },
-      el("div", { class: "construct-head" },
-        el("h4", {}, `${meta.name}（${key}）`),
-        el("span", { class: "source-tag" }, meta.source)
-      ),
-      el("p", { class: "construct-desc" }, meta.description),
-      el("p", { class: "construct-scale" }, `原量尺：${DATA.constructs.native_scales[key]}`)
-    );
-  };
+async function load() {
+  setLoadStatus("正在加载流程演示数据……", "loading");
+  renderStatic();
+  let response;
+  try {
+    response = await fetch("data/showcase_data.json", { cache: "no-store" });
+  } catch (networkError) {
+    throw new Error(`无法请求数据文件：${networkError}`);
+  }
+  if (!response.ok) throw new Error(`数据请求失败：HTTP ${response.status}`);
+  DATA = await response.json();
+  renderDynamic();
+  clearDemoError();
+  enableBrowserControls(true);
+  document.getElementById("snapshotStatus").textContent = "流程演示已完成";
+  setLoadStatus("流程演示数据已载入，可浏览材料、统计表与图表输出。", "success");
+}
 
-  const primaryHost = document.getElementById("primaryConstructCards");
-  primaryHost.innerHTML = "";
-  PRIMARY_CONSTRUCTS.forEach((key) => primaryHost.appendChild(buildCard(key)));
+function enableBrowserControls(enabled) {
+  ["scenSelect", "scenCondSelect", "scenDirSelect"].forEach((id) => {
+    const node = document.getElementById(id);
+    if (node) node.disabled = !enabled;
+  });
+}
 
-  const suppHost = document.getElementById("supplementaryConstructCards");
-  suppHost.innerHTML = "";
-  SUPPLEMENTARY_CONSTRUCTS.forEach((key) => suppHost.appendChild(buildCard(key)));
+function clearDemoError() {
+  const panel = document.getElementById("demoError");
+  if (panel) { panel.hidden = true; panel.innerHTML = ""; }
+  const content = document.getElementById("demoContent");
+  if (content) content.hidden = false;
 }
 
 // #design: six condition cards with D/U combo, added information, P-role.
@@ -270,6 +263,12 @@ function renderCoverage() {
     el("span", {}, label), el("strong", {}, value)
   )));
   balance.appendChild(el("p", { class: "small muted" }, "所有条件、场景和方向均完整覆盖。"));
+
+  // sync the static material count with the actual dataset.
+  const countNode = document.getElementById("materialCount");
+  if (countNode && DATA.quality_summary && DATA.quality_summary.n_materials) {
+    countNode.textContent = String(DATA.quality_summary.n_materials);
+  }
 }
 
 function renderScenarioBrowser() {
@@ -343,22 +342,7 @@ function renderStim(material, scenarioId = null) {
   );
 }
 
-// #materials: single compact judge-model block (merged from the old two sections).
-function renderJudgeSummary() {
-  const host = document.getElementById("judgeSummary");
-  if (!host) return;
-  host.innerHTML = "";
-  DATA.judge_models.forEach((model) => {
-    host.appendChild(el("article", { class: "judge-block" },
-      el("h4", {}, model.id),
-      el("dl", { class: "judge-fields" },
-        el("div", {}, el("dt", {}, "提供方"), el("dd", {}, model.provider)),
-        el("div", {}, el("dt", {}, "角色"), el("dd", {}, "共同主要评判模型")),
-        el("div", {}, el("dt", {}, "任务"), el("dd", {}, "独立评分同一套96条材料"))
-      )
-    ));
-  });
-}
+
 
 function tableFrom(headers, rows, numericColumns = []) {
   const table = el("table");
@@ -634,6 +618,30 @@ function renderScenarioHet() {
   replaceTable("scenHetTable", tableFrom(["构念", "场景最低均值", "场景最高均值", "场景范围"], rows, [1, 2, 3]));
 }
 
+// null/empty captured_warnings displays as "无记录", never the literal "null".
+function warningText(value) {
+  if (value === null || value === undefined || value === "") return "无记录";
+  return String(value);
+}
+
+// #demo appendix: per-construct model fit + optimizer + captured warnings.
+function renderFitSummary() {
+  const host = document.getElementById("fitSummaryTable");
+  if (!host) return;
+  const fit = (DATA.model_adjusted_results && DATA.model_adjusted_results.fit_summary) || [];
+  const rows = fit.map((row) => [
+    constructLabel(row.construct),
+    row.converged ? "是" : "否",
+    row.optimizer_used || "—",
+    fmt(row.material_random_intercept_variance, 3),
+    fmt(row.residual_variance, 3),
+    warningText(row.captured_warnings),
+  ]);
+  replaceTable("fitSummaryTable",
+    tableFrom(["构念", "收敛", "使用的优化器", "材料随机截距方差", "残差方差", "记录的警告"],
+      rows, [3, 4]));
+}
+
 // #status: concentrated status notes.
 function renderStatus() {
   const host = document.getElementById("statusNotes");
@@ -642,28 +650,32 @@ function renderStatus() {
   STATUS_NOTES.forEach((text) => host.appendChild(el("li", {}, text)));
 }
 
-// #status: reproduction and documentation entries.
+// #status: reproduction and documentation entries. Static links only, so they
+// stay available even if the demo JSON fails to load.
+const REPO_BASE = "https://github.com/sherlock0717/llm-attribution-behavior-evaluation/";
+const REPO_PATH = "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot";
+
 function renderEntries() {
-  const entry = DATA.github_entry;
   const host = document.getElementById("entryGrid");
   if (!host) return;
   host.innerHTML = "";
-  const base = "https://github.com/sherlock0717/llm-attribution-behavior-evaluation/";
-  const tree = base + "tree/main/";
-  const blob = base + "blob/main/";
+  const tree = REPO_BASE + "tree/main/";
+  const blob = REPO_BASE + "blob/main/";
   const links = [
+    ["浏览完整材料", "#materials"],
     ["研究B说明", blob + "docs/CURRENT_STUDY_CARD.md"],
     ["测量来源", blob + "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md"],
-    ["研究协议", blob + "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/study_protocol.yaml"],
-    ["分析计划", blob + "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/analysis_plan.md"],
-    ["评分规则", blob + "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/scoring_spec.yaml"],
-    ["材料与评测目录", tree + entry.repo_path],
-    ["输出目录", tree + entry.repo_path + "/" + entry.outputs],
-    ["GitHub仓库", base],
+    ["研究协议", blob + REPO_PATH + "/study_protocol.yaml"],
+    ["分析计划", blob + REPO_PATH + "/analysis_plan.md"],
+    ["评分规则", blob + REPO_PATH + "/scoring_spec.yaml"],
+    ["输出目录", tree + REPO_PATH + "/outputs/"],
+    ["GitHub仓库", REPO_BASE],
   ];
   links.forEach(([label, href]) => {
-    host.appendChild(el("a", { class: "entry-item", href, target: "_blank", rel: "noopener" },
-      el("strong", {}, label)));
+    const attrs = href.startsWith("#")
+      ? { class: "entry-item", href }
+      : { class: "entry-item", href, target: "_blank", rel: "noopener" };
+    host.appendChild(el("a", attrs, el("strong", {}, label)));
   });
   host.appendChild(el("a", { class: "entry-item entry-back", href: "../" },
     el("strong", {}, "返回项目总览")));
@@ -713,14 +725,34 @@ function setupLightbox() {
 }
 
 function showLoadError(error) {
+  // 1. Hero status stays plain-language; the technical error is not shown here.
   const status = document.getElementById("loadStatus");
   status.className = "load-status error";
-  status.innerHTML = "";
-  status.appendChild(el("strong", {}, "数据加载失败。"));
-  status.appendChild(document.createTextNode(` ${String(error)}`));
-  const button = el("button", { type: "button" }, "重新加载");
-  button.addEventListener("click", () => load().catch(showLoadError));
-  status.appendChild(button);
+  status.textContent = "流程演示数据暂时未载入，研究设计和分析计划仍可浏览。";
+
+  // 2. Snapshot status reflects the pending data.
+  const snapshot = document.getElementById("snapshotStatus");
+  if (snapshot) snapshot.textContent = "页面数据待恢复";
+
+  // 3. Dynamic demo content is hidden; a clear error panel takes its place.
+  const content = document.getElementById("demoContent");
+  if (content) content.hidden = true;
+  enableBrowserControls(false);
+
+  const panel = document.getElementById("demoError");
+  if (panel) {
+    panel.hidden = false;
+    panel.innerHTML = "";
+    panel.appendChild(el("strong", {}, "流程演示数据未能载入"));
+    panel.appendChild(el("p", {}, "数据文件：data/showcase_data.json"));
+    const details = el("details", {},
+      el("summary", {}, "查看技术错误"),
+      el("p", { class: "tech-error" }, String(error)));
+    panel.appendChild(details);
+    const button = el("button", { type: "button" }, "重新加载");
+    button.addEventListener("click", () => load().catch(showLoadError));
+    panel.appendChild(button);
+  }
 }
 
 load().catch(showLoadError);
