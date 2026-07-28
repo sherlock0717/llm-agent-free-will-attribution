@@ -32,6 +32,9 @@ artifacts/runs/
 # The key itself lives only in the environment, never in this file.
 configs/model.deepseek.local.yaml
 
+# Assembled Pages artifact (built by scripts/assemble_pages.py; never committed)
+_site/
+
 # Temporary files
 *.tmp
 *.bak

@@ -1,10 +1,12 @@
 name: Deploy GitHub Pages
 
 # Publishes the combined static showcase to GitHub Pages.
-# - main showcase source: site/;
-# - R1 Pilot source: docs/pa-wu-r1-pilot/;
-# - both are assembled into a temporary _site/ directory during CI
-#   (site/ at the root, the pilot under /pa-wu-r1-pilot/);
+# - root overview source: site/;
+# - study B source stays under docs/pa-wu-r1-pilot/ for now;
+# - the canonical public route for study B is /machine-decision-process-attribution/;
+# - /pa-wu-r1-pilot/ is kept as a compatibility redirect;
+# - both are assembled into a temporary _site/ directory during CI by
+#   scripts/assemble_pages.py, so local preview and deploy use the same artifact;
 # - _site/ is a throwaway deploy directory and is NEVER committed to the repo;
 # - deploys only on push to main or manual dispatch;
 # - uses the GitHub Actions Pages path (no Jekyll build);
@@ -27,7 +29,7 @@ concurrency:
 
 jobs:
   deploy:
-    name: Assemble site/ + docs/pa-wu-r1-pilot and deploy to GitHub Pages
+    name: Assemble and deploy project pages
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -42,11 +44,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Assemble Pages artifact
-        run: |
-          rm -rf _site
-          mkdir -p _site
-          cp -R site/. _site/
-          cp -R docs/pa-wu-r1-pilot _site/pa-wu-r1-pilot
+        run: python scripts/assemble_pages.py --output _site
 
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v3

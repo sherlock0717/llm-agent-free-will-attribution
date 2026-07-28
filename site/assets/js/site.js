@@ -62,21 +62,46 @@ function repoPathURL(path, kind) {
 // ---------------------------------------------------------------------------
 // 1. Overview / hero core facts
 // ---------------------------------------------------------------------------
-function renderHero(story) {
-  const dl = requireSlot("hero-corefacts");
-  dl.textContent = "";
-  // The front-page hero shows the CURRENT PA-Wu R1 study facts, not the legacy
-  // AI/human route's core_facts. current_study is generated from the R1 assets.
-  const current = story.current_study;
-  if (!current || !Array.isArray(current.core_facts) || current.core_facts.length === 0) {
-    throw new Error("当前研究核心事实缺失：showcase_story.json 未提供 current_study.core_facts");
-  }
-  current.core_facts.forEach((f) => {
+function appendFacts(host, facts) {
+  host.textContent = "";
+  facts.forEach((f) => {
     const wrap = el("div", { className: "metric" });
     wrap.appendChild(el("dt", { text: f.label }));
     wrap.appendChild(el("dd", { text: String(f.value) }));
-    dl.appendChild(wrap);
+    host.appendChild(wrap);
   });
+}
+
+function renderHero(story) {
+  const program = story.research_program;
+  if (!program || !Array.isArray(program.core_facts) || program.core_facts.length === 0) {
+    throw new Error("项目核心事实缺失：showcase_story.json 未提供 research_program.core_facts");
+  }
+  appendFacts(requireSlot("hero-corefacts"), program.core_facts);
+}
+
+function renderResearchProgram(story) {
+  const program = story.research_program;
+  if (!program || !program.studies || !program.studies.study_a || !program.studies.study_b) {
+    throw new Error("研究计划缺失：必须分别提供 study_a 和 study_b");
+  }
+  const studyA = program.studies.study_a;
+  const studyB = program.studies.study_b;
+  setSlot("program-question",
+    "本项目比较不同身份标签、决策过程和反馈行为材料，观察语言模型如何形成对行动者能动性、心理状态、选择自主性、影响能力与责任的判断。");
+  setSlot("study-a-title", studyA.title_zh);
+  setSlot("study-a-role", studyA.role_zh);
+  setSlot("study-a-status", studyA.evidence_status_zh);
+  setSlot("study-a-design", studyA.design_summary_zh);
+  setSlot("study-b-title", studyB.title_zh);
+  setSlot("study-b-role", studyB.role_zh);
+  setSlot("study-b-status", studyB.evidence_status_zh);
+  setSlot("study-b-design", studyB.design_summary_zh);
+  setSlot("shared-method-title", program.shared_method_layer.title_zh);
+  setSlot("future-route-title", program.future_route.title_zh);
+  setSlot("future-route-status", program.future_route.status_zh);
+  appendFacts(requireSlot("study-a-facts"), studyA.core_facts);
+  appendFacts(requireSlot("study-b-facts"), studyB.core_facts);
 }
 
 // ---------------------------------------------------------------------------
@@ -745,8 +770,8 @@ function writeLayoutDiagnostics() {
   const root = document.documentElement;
   root.dataset.docClientWidth = String(root.clientWidth);
   root.dataset.docScrollWidth = String(root.scrollWidth);
-  const slots = ["process-cards", "scenario-cards", "research-source-cards",
-    "condition-profile", "identity-effect", "planned-contrasts",
+  const slots = ["hero-corefacts", "study-a-facts", "study-b-facts", "process-cards",
+    "scenario-cards", "research-source-cards", "condition-profile", "identity-effect", "planned-contrasts",
     "controlled-regression", "mediation-path", "figures", "mock-quality",
     "eval-steps", "readiness-flow", "benchmark-flow"];
   const empties = slots.filter((s) => {
@@ -775,6 +800,7 @@ async function main() {
       ]);
 
     renderHero(story);
+    renderResearchProgram(story);
     renderProcessConditions(summary);
     renderDesign(summary);
     renderScenarios(story);

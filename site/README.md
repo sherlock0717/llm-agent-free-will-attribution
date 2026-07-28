@@ -1,55 +1,38 @@
-# 静态展示页
+# LLM行动者归因评测静态展示页
 
-`site/` 展示决策过程表述和行动者身份如何影响模型的归因评分。页面使用原生 HTML、CSS、JavaScript 和静态 JSON，不依赖外部字体、CDN、第三方脚本或后端服务。
+`site/` 是项目级根展示页，呈现总体研究问题、研究A“身份与决策过程归因基线”、研究B“机器主体决策过程归因评测”、共享方法层与下一步研究。页面使用原生 HTML、CSS、JavaScript 和静态 JSON，仅依赖本地资源。
 
-页面以研究问题和当前结果为主，详细的运行状态、来源记录和复现说明通过仓库文档提供。
+研究A与研究B在根页面处于同一层级，并分别保存各自的材料、题项、数据和分析结果。研究A的已有结果、图表和分析由根页面展示；研究B的独立展示页发布在规范路径 `/machine-decision-process-attribution/`，其数据当前为 `synthetic_demo` 流程演示。
 
 ## 页面结构与部署组装
 
-- `site/` 是**主展示页**（历史 AI/human 研究路线）。
-- `docs/pa-wu-r1-pilot/` 是**独立的 R1 Pilot 展示页**（machine-only 新路线）。
-- Pages workflow（`.github/workflows/pages.yml`）在部署时把两者组装到临时目录 `_site/`：`site/` 放在根目录，Pilot 放到 `_site/pa-wu-r1-pilot/`。
-- Pilot 最终公开位置为 `/pa-wu-r1-pilot/`：
-  https://sherlock0717.github.io/llm-attribution-behavior-evaluation/pa-wu-r1-pilot/
-- `_site/` 只是临时部署目录，不提交仓库；也不会把第二份 Pilot 页面复制进 `site/`。
+- `site/`：项目级根展示页，以及研究A详细结果与复现区域；
+- `docs/pa-wu-r1-pilot/`：研究B独立展示页的源目录（内部路径暂时保留）；
+- 研究B规范公开路径：`/machine-decision-process-attribution/`；
+- `/pa-wu-r1-pilot/`：兼容跳转页，指向规范路径；
+- `scripts/assemble_pages.py` 把上述内容组装到临时目录 `_site/`，本地预览与线上部署使用同一组装产物；`_site/` 为临时目录，不提交仓库。
+
+研究B公开位置：
+https://sherlock0717.github.io/llm-attribution-behavior-evaluation/machine-decision-process-attribution/
 
 ## 本地预览
 
-只启动 `site/` 时**不会**自动包含 Pilot 页面：
+根页面和研究B页面通过组装后的 `_site` 预览：
 
 ```bash
-python -m http.server 8000 --directory site
-```
-
-要预览完整 Pages 结果（含 `/pa-wu-r1-pilot/`），需先组装临时目录再启动服务器。
-
-Linux / macOS：
-
-```bash
-rm -rf _site
-mkdir -p _site
-cp -R site/. _site/
-cp -R docs/pa-wu-r1-pilot _site/pa-wu-r1-pilot
+python scripts/assemble_pages.py --output _site
 python -m http.server 8000 --directory _site
 ```
 
-PowerShell：
+组装后可访问：
 
-```powershell
-Remove-Item -Recurse -Force _site -ErrorAction SilentlyContinue
-New-Item -ItemType Directory _site | Out-Null
-Copy-Item site\* _site -Recurse
-Copy-Item docs\pa-wu-r1-pilot _site\pa-wu-r1-pilot -Recurse
-python -m http.server 8000 --directory _site
-```
+- 根页面 http://localhost:8000/
+- 研究B http://localhost:8000/machine-decision-process-attribution/
+- 旧路径跳转 http://localhost:8000/pa-wu-r1-pilot/
 
-然后打开 http://localhost:8000/ ，Pilot 位于 http://localhost:8000/pa-wu-r1-pilot/ 。
-
-页面通过 `fetch` 读取本地 JSON，因此需要使用静态服务器访问。附加 `?diagnostics=1` 后，页面会把渲染完成状态和文档宽度等诊断信息写入 HTML 属性，供自动测试读取。
+直接以 `site/` 为根启动服务器只能查看根页面源，研究B相对路径需要组装后的 `_site`。页面通过 `fetch` 读取本地 JSON，请使用静态服务器访问。附加 `?diagnostics=1` 后，页面会写入渲染完成状态和布局诊断属性。
 
 ## 生成页面数据
-
-页面中的设计规模、构念信息、统计结果、运行状态和文档入口由脚本从仓库源文件生成：
 
 ```bash
 uv run python scripts/build_site_data.py
@@ -57,26 +40,25 @@ uv run python scripts/build_public_report.py
 uv run python scripts/build_showcase_data.py
 ```
 
-生成结果写入 `site/data/`。三个脚本均支持 `--check`，用于确认静态 JSON 与源文件一致。可计算的统计数字不直接维护在 HTML 中。
+生成结果写入 `site/data/`。可计算的研究数字由脚本从源文件生成。`showcase_story.json` 的 `research_program` 提供项目级事实，并分别保存研究A与研究B的设计和证据状态。
 
-## 图表与材料
+## 图表、材料与文档
 
-结果图来自仓库分析产物，页面构建过程会检查对应文件和哈希。研究结构示意图只解释输入、模型判断和归因输出之间的关系。
+研究A结果图来自仓库已有分析产物，构建过程检查对应文件与哈希。研究结构示意图只解释输入、模型判断和归因输出之间的关系。
 
-题项与文献来源见：
-
-- [`../docs/research_and_measurement_sources.md`](../docs/research_and_measurement_sources.md)
-- [`../docs/scale_source_mapping.md`](../docs/scale_source_mapping.md)
-- [`../docs/STUDY_CARD.md`](../docs/STUDY_CARD.md)
+- [项目研究计划](../docs/RESEARCH_PROGRAM.md)
+- [研究A说明](../docs/STUDY_CARD.md)
+- [研究A的研究与测量来源](../docs/research_and_measurement_sources.md)
+- [研究A题项来源映射](../docs/scale_source_mapping.md)
+- [研究B说明](../docs/CURRENT_STUDY_CARD.md)
+- [研究B的研究与测量来源](../docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md)
 
 ## 解释范围
 
-页面展示的是模型在当前材料和评分任务下的输出变化。现有数据来自单一模型，部分材料和题项仍有待进一步解耦，结果以描述性比较和关联性诊断为主。
-
-确定性 `mock` 运行只检查配置、解析、计分和产物生成，不进入结果解释。
+页面展示的是模型在给定材料和评分任务下的归因反应。研究A提供单模型输出，测量来源与运行溯源仍在完善；研究B完成了材料与合成流程演示，真实双模型运行列为下一步。两项研究均记录模型的归因反应，跨主体测量可比性列入后续验证。
 
 ## 部署
 
 在线地址：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/
 
-`.github/workflows/pages.yml` 在主分支更新或手动触发时发布 `site/` 目录。部署过程不调用模型接口，也不读取 API 密钥。
+`.github/workflows/pages.yml` 在主分支更新或手动触发时运行 `scripts/assemble_pages.py` 组装并发布根页面与研究B页面。部署过程仅使用静态资源。

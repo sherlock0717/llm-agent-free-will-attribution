@@ -1,8 +1,8 @@
-# 研究设计蓝图
+# 研究A设计蓝图：身份与决策过程归因基线
 
 ## 项目定位
 
-本项目结合心理学、行动哲学与模型评测，研究不同决策过程描述和身份标签如何改变模型的归因评分，并将这一研究设计整理为可复现的评测任务。当前阶段用 LLM-simulated respondents 预演关于决策过程、能动性知觉与自由意志归因的实验设计。
+研究A属于“LLM行动者归因评测”研究计划，结合心理学、行动哲学与模型评测，研究不同决策过程描述和身份标签如何改变模型的归因评分，并将这一研究设计整理为可复现的评测任务。研究A使用 LLM-simulated respondents 探索决策过程、能动性知觉与自由意志相关归因，其数据和分析结果按本研究单独保存。
 
 ## 理论来源
 
@@ -31,7 +31,7 @@ process_condition → perceived_intelligence → free_will_attribution
 process_condition → char_len → free_will_attribution
 ```
 
-核心判断不是“AI 是否真的有自由意志”，而是“观察者在什么条件下更容易做出类自由意志归因”。
+核心关注在于“观察者在什么条件下更容易做出类自由意志归因”，测量的是观察者的归因反应。
 
 ## 变量定义
 
@@ -76,7 +76,7 @@ process_condition → char_len → free_will_attribution
 
 ## 测量构念
 
-当前使用的是情境化归因题项池，不是完整成熟量表。
+研究A使用情境化归因题项池，来源为既有量表构念的情境化改写。
 
 主要构念：
 
@@ -123,7 +123,7 @@ process_condition → char_len → free_will_attribution
 - agency 与 perceived_intelligence 并行中介
 - 按 scenario/domain 的稳健性检查
 
-## 当前结果
+## 研究A结果
 
 基于 n-per-cell = 30 的稳定性复核：
 
@@ -137,7 +137,7 @@ process_condition → char_len → free_will_attribution
 - agency 的间接中介路径稳定。
 - perceived_intelligence 并未解释主要间接效应。
 - `alternatives` 相比 `direct_choice` 不足以提高 agency 或 free_will_attribution。
-- `reasons_concise` 高于 `direct_choice_long`，支持理由结构不是单纯长度效应。
+- `reasons_concise` 高于 `direct_choice_long`，支持理由结构承担独立于文本长度的作用。
 - responsibility 结果不稳定，只作为探索性结果。
 
 ## 真实被试升级方案
@@ -155,4 +155,4 @@ process_condition → char_len → free_will_attribution
 
 ## 解释范围
 
-当前结果描述模型在给定材料中的归因反应。它与模型本身是否具有自由意志，以及能否代表人类总体心理规律之间仍有很大距离。当前模拟预实验支持该研究原型继续进入真实被试预测试阶段。
+研究A结果描述模型在给定材料中的归因反应。它与模型本身是否具有自由意志，以及能否代表人类总体心理规律之间仍有很大距离。该探索性基线支持继续开展独立的测量验证，但不声称内容效度、构念效度或机器/人类测量等值性成立。

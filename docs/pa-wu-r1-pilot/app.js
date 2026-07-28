@@ -1,4 +1,4 @@
-// PA—Wu R1 Pilot 中文展示页。读取 data/showcase_data.json（合成演示数据）。
+// 研究B（机器主体决策过程归因评测）中文展示页。读取 data/showcase_data.json（流程演示数据）。
 "use strict";
 
 const CONDS = ["C0", "C1", "C2", "C3", "C4", "C5"];
@@ -172,12 +172,12 @@ function setLoadStatus(message, kind = "loading") {
 }
 
 async function load() {
-  setLoadStatus("正在加载合成演示数据……", "loading");
+  setLoadStatus("正在加载流程演示数据……", "loading");
   const response = await fetch("data/showcase_data.json", { cache: "no-store" });
   if (!response.ok) throw new Error(`数据请求失败：HTTP ${response.status}`);
   DATA = await response.json();
   render();
-  setLoadStatus("合成演示数据已加载。可使用下拉框和结果切换按钮查看不同内容。", "success");
+  setLoadStatus("流程演示数据已加载。可使用下拉框和结果切换按钮查看不同内容。", "success");
 }
 
 function render() {

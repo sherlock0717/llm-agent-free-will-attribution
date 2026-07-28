@@ -1,6 +1,6 @@
-# 当前研究与测量来源：PA—Wu R1
+# 研究B的研究与测量来源
 
-本文件描述当前主研究 PA—Wu R1 的构念与测量来源。内容严格基于仓库现有 R1 资产，不复制受版权保护的题项原文，也不新增最终中文题项翻译。
+本文件描述研究B“机器主体决策过程归因评测”的构念与测量来源。研究B属于“LLM行动者归因评测”研究计划；内容严格基于仓库现有机器主体评测资产，不复制受版权保护的题项原文，也不新增最终中文题项翻译。
 
 ## 使用原则
 
@@ -36,9 +36,7 @@
 - **哪些保持原文**：Wu & Shen 2026 与 PA 2024 的题项由 `scoring_spec.yaml` 顶部注释声明「REFERENCES the P0 item files verbatim; it does NOT rewrite」——即逐字引用 P0 文件，不改写；
 - **哪些是补充资产**：PA5 / PA8 属于 PA 2024 的补充感知能动性指标；
 - **中文题项状态**：当前评分链未新增最终中文题项翻译；施测使用英文刺激材料与英文题项，评判模型接收英文原始材料；
-- **未声称内容效度**：当前内部流程未确认内容效度；
-- **未声称构念效度**：当前内部流程未确认构念效度；
-- **未声称机器与人类测量等值**：R1 仅机器主体，不声称与人类测量等值。
+- **后续验证计划**：内容效度、构念效度与跨主体测量可比性列入后续验证；机器主体测量与人类主体测量之间的可比性将在独立人类题项建成后另行检验。
 
 ## 完整文献与许可状态
 
@@ -77,4 +75,4 @@
 - P0 题项资产目录：`tasks/attribution_behavior/measurement_candidates/pa_wu_p0/`
   - `items_wu_shen_2026.yaml`、`items_pa_2024.yaml`、`forms.yaml`、`scoring.yaml`、`manifest.yaml`、`README.md`
 
-当前研究说明见 [`CURRENT_STUDY_CARD.md`](CURRENT_STUDY_CARD.md)。早期探索性研究路线的来源见 [`research_and_measurement_sources.md`](research_and_measurement_sources.md)（早期归档）。
+研究B说明见 [`CURRENT_STUDY_CARD.md`](CURRENT_STUDY_CARD.md)。研究A的来源见 [`research_and_measurement_sources.md`](research_and_measurement_sources.md)；两项研究的数据与结论不混合。

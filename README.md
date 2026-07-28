@@ -1,139 +1,103 @@
-# LLM机器主体归因评测
+# LLM行动者归因评测
 
-本项目当前以PA—Wu R1为主研究，考察决策过程线索与决策后行为如何影响大语言模型对人工智能决策系统的独立性、目标导向性、心理状态和影响能力等属性的归因判断。
+本项目记录语言模型在不同身份、决策过程和反馈行为材料下形成的归因反应，重点分析能动性、心理状态、选择自主性、影响能力与责任判断的变化。
 
-- 当前研究说明：[`docs/CURRENT_STUDY_CARD.md`](docs/CURRENT_STUDY_CARD.md)
-- 当前研究与测量来源：[`docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md`](docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md)
-- 当前研究展示页：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/pa-wu-r1-pilot/
-- 早期研究来源归档：[`docs/research_and_measurement_sources.md`](docs/research_and_measurement_sources.md)
-- 早期题项来源映射：[`docs/scale_source_mapping.md`](docs/scale_source_mapping.md)
-- 早期研究说明：[`docs/STUDY_CARD.md`](docs/STUDY_CARD.md)
+## 项目概览
 
-## 当前主研究
+项目由两项研究和一套共享方法组成。研究A是身份与决策过程归因的探索性基线，研究B进一步拆分机器主体的决策信息和反馈行为。两项研究分别使用自己的材料、题项和分析结果，共同构成项目证据链。完整计划见 [`docs/RESEARCH_PROGRAM.md`](docs/RESEARCH_PROGRAM.md)。
 
-当前主研究是 **PA—Wu R1机器主体归因评测**：
+## 研究计划
 
-- 仅机器主体（人工智能决策系统），不含人类身份比较；
-- 6 个条件（C0—C5），逐步加入备选方案、理由、反馈与第二次决定；
-- 8 个场景、2 个方向；
-- 96 条材料；
-- 两个共同主要评判模型配置；每次完整 repeat 产生 192 条模型—材料响应；
-- 构念为知觉独立性（IN）、目标导向性（GO）、心理状态推断（MSI）、影响能力（IC），以及感知能动性补充指标（PA5、PA8）。
+### 研究A：身份与决策过程归因基线
 
-自由意志只对应 MSI 中的一个探索性题项，不是项目标题、不是唯一核心问题、不作为独立构念，也不生成总分。
+研究A采用六类决策过程与 AI/人类身份标签的交叉设计，使用已有单模型输出观察模型对能动性、体验性、自由意志相关归因与责任的评分变化。它建立探索性基线，并在分析中识别出题项来源、构念交叉、文本长度和主体可比性等需要继续完善的测量问题。
 
-当前页面公开数据为 synthetic_demo，仅用于验证材料、评分、分析与展示链，不代表两个评判模型的真实输出、不用于模型排名、不构成理论实证结论。详见 [`docs/CURRENT_STUDY_CARD.md`](docs/CURRENT_STUDY_CARD.md)。
+研究A保留为身份与决策过程归因的探索性基线，已有模型输出、分析图表和复现链继续作为该研究的证据，并按本研究设计单独呈现。
 
-## 早期探索性研究归档
+- 研究说明：[`docs/STUDY_CARD.md`](docs/STUDY_CARD.md)
+- 研究与测量来源：[`docs/research_and_measurement_sources.md`](docs/research_and_measurement_sources.md)
+- 题项来源映射：[`docs/scale_source_mapping.md`](docs/scale_source_mapping.md)
+- 设计蓝图：[`docs/research_design_blueprint.md`](docs/research_design_blueprint.md)
 
-仓库保留一条更早的探索性研究路线，作为**早期探索性研究归档**：
+### 研究B：机器主体决策过程归因评测
 
-- 包含旧的 AI 与人类身份比较；
-- 包含旧的单模型结果；
-- 包含自由意志和责任相关的旧指标；
-- **不属于当前 R1 设计**；
-- **不与当前 R1 结果合并**解释；
-- 保留用于版本追踪与方法反思。
+研究B聚焦机器主体，考察决策信息、反馈与第二次决定如何影响 IN、GO、MSI、IC、PA5 和 PA8。设计为 6 条件 × 8 场景 × 2 方向，共 96 条材料，并计划由两个评判模型对同一材料集独立评分。自由意志对应 MSI 中的一个探索性题项，按单项报告。
 
-早期路线的设计与历史结果记录在 [`docs/STUDY_CARD.md`](docs/STUDY_CARD.md) 与项目总览首页的「早期探索性研究归档」区域。
+研究B已经完成材料、评分、分析和展示管线。页面当前展示流程演示数据；真实双模型运行完成后，将在同一分析框架下更新结果。
 
-## 早期探索性研究的原设计
+- 研究说明：[`docs/CURRENT_STUDY_CARD.md`](docs/CURRENT_STUDY_CARD.md)
+- 研究与测量来源：[`docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md`](docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md)
+- 独立展示页：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/machine-decision-process-attribution/
 
-> 以下内容描述的是 PA—Wu R1 建立之前的早期探索性研究路线，**不代表当前主研究设计**。当前研究请见 [`docs/CURRENT_STUDY_CARD.md`](docs/CURRENT_STUDY_CARD.md)。
+## 为什么形成两项研究
 
-早期路线使用八个决策情境。每个情境分别呈现六种决策过程，并将行动者标记为 AI 决策者或人类决策者。模型阅读材料后，对行动控制、理由响应、选择自主性、体验性、感知智能和责任等题项评分。
+研究A提出关于身份与决策过程如何影响归因的广义问题，并在分析中识别出题项来源、构念交叉、文本长度和主体可比性问题。研究B据此聚焦机器主体，对决策信息和反馈行为做进一步拆分。两项研究分别报告结果，共同构成项目的证据链。
 
-早期设计包含：
+## 证据状态对照
 
-- 六种过程表述：直接选择、较长的直接选择、列出方案、简洁理由比较、完整理由比较、反思与反馈修正；
-- 两种行动者身份：AI 决策者、人类决策者；
-- 八个情境，覆盖道德冲突、自我控制、人际关系、风险决策、责任困境与服从情境；
-- 结构化响应、题项计分、条件比较和运行记录。
+| 维度 | 研究A | 研究B |
+|---|---|---|
+| 研究功能 | 探索性基线与测量问题识别 | 机器主体测量深化 |
+| 设计 | 6 类过程 × 2 种身份 | 6 条件 × 8 场景 × 2 方向，96 条材料 |
+| 已有数据 | 单模型输出与既有分析 | 材料与合成流程演示数据 |
+| 当前可回答 | 研究A材料下的描述性比较与关联性诊断 | 材料、评分、分析和展示链是否能够按协议运行 |
+| 测量状态 | 题项来源、构念交叉与主体可比性仍在完善 | 内容效度、构念效度与跨主体可比性列入后续验证 |
+| 下一步 | 跨模型与提示稳健性、测量验证、运行溯源补全 | 执行双评判模型运行并更新实证结果 |
 
-早期路线的分析单位是**模型对一份材料给出的评分响应**。
+研究A和研究B分别使用自己的材料、题项和分析结果。项目总览把两项研究放在同一研究计划中展示，同时保留各自的证据来源。
 
-### 早期历史公开结果
+## 共享方法与复现
 
-> 以下结果属于早期探索性研究路线，与 PA—Wu R1 的合成流程演示无关，不应混为当前设计。
+“归因评测方法与基础设施”统一记录材料、题项来源、评分、模型调用、质量检查、分析和页面输出。研究A与研究B分别调用这些工具，并保存各自的数据契约和分析结果。
 
-早期公开结果支持三项较稳妥的描述：
-
-1. 能动性评分对过程表述最敏感，包含理由比较和行为修正的材料通常获得更高评分。
-2. 行动者身份会明显影响体验性、自由意志与责任相关评分，模型对 AI 与人类标签采用了不同判断方式。
-3. 在加入感知智能与文本长度后，自由意志评分的直接过程差异明显减弱；能动性与自由意志评分之间的关系仅作为关联性诊断。
-
-这些结果来自单一模型和早期材料，更适合理解为**早期的模型归因敏感性测试**，而不是关于人类心理或 AI 主体性的结论。
-
-### 早期路线的可核查链路
-
-早期路线保留以下对象，使其历史结论能够回到具体输入和产物：
-
-```text
-情境与条件
-→ 实际 Prompt
-→ 模型响应
-→ 题项与构念分数
-→ 条件比较
-→ 图表与报告
-```
-
-运行器会记录任务配置、刺激快照、Prompt、响应、评分、错误信息和运行清单，并使用哈希关联输入与产物。确定性 `mock` 仅用于检查解析、校验、计分和文件生成流程。
-
-### 早期运行与复现说明
-
-早期路线使用 Python 3.12 和 `uv` 管理依赖。
+本地预览根页面和研究B页面时，先组装再启动服务器：
 
 ```bash
-git clone https://github.com/sherlock0717/llm-attribution-behavior-evaluation.git
-cd llm-attribution-behavior-evaluation
+python scripts/assemble_pages.py --output _site
+python -m http.server 8000 --directory _site
+```
 
+组装后可访问：
+
+- 根页面 http://localhost:8000/
+- 研究B http://localhost:8000/machine-decision-process-attribution/
+- 旧路径跳转 http://localhost:8000/pa-wu-r1-pilot/
+
+生成站点数据与运行测试：
+
+```bash
 uv sync --frozen
 uv run pytest -q
-
-# 在临时目录执行确定性模拟运行
-uv run python -m freewill_attribution.cli run \
-  --mock \
-  --n-per-cell 2 \
-  --out <临时目录>
+uv run python scripts/build_site_data.py --check
+uv run python scripts/build_showcase_data.py --check
 ```
 
-生成并预览展示页：
+## 后续扩展路线
 
-```bash
-uv run python scripts/build_site_data.py
-uv run python scripts/build_public_report.py
-uv run python scripts/build_showcase_data.py
-python -m http.server 8000 --directory site
-```
+下一步研究是“跨主体平行测量与可比性研究”。它将独立建设人类主体题项，记录其来源和适用范围，并在跨主体比较前检验机器与人类两套测量的可比性。
 
 ## 仓库结构
 
 ```text
 src/freewill_attribution/   任务运行、模型接口、解析、计分与运行记录
-configs/                    任务、Prompt、模型和指标配置
-outputs/                    当前公开分析产物
-scripts/                    报告与展示页数据生成脚本
-site/                       静态展示页
-docs/                       研究说明、测量来源和复现文档
+configs/                    研究A任务、Prompt、模型和指标配置
+tasks/                      研究B协议、材料、评分、分析与合成管线资产
+outputs/                    研究A已有分析产物（保持只读）
+scripts/                    站点数据、报告与 Pages 组装脚本
+site/                       项目级静态展示页
+docs/                       研究计划、研究说明、来源与复现文档
 tests/                      单元、集成和站点测试
 ```
 
 ## 文档入口
 
-当前研究：
-
-- 当前研究说明：[`docs/CURRENT_STUDY_CARD.md`](docs/CURRENT_STUDY_CARD.md)
-- 当前研究与测量来源：[`docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md`](docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md)
-- 当前研究展示页：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/pa-wu-r1-pilot/
-
-早期探索性研究归档：
-
-- 早期研究说明：[`docs/STUDY_CARD.md`](docs/STUDY_CARD.md)
-- 早期研究来源归档：[`docs/research_and_measurement_sources.md`](docs/research_and_measurement_sources.md)
-- 早期题项来源映射：[`docs/scale_source_mapping.md`](docs/scale_source_mapping.md)
-- 早期研究设计：[`docs/research_design_blueprint.md`](docs/research_design_blueprint.md)
-- 项目总览首页（含早期归档）：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/
+1. [项目研究计划](docs/RESEARCH_PROGRAM.md)
+2. [研究A：身份与决策过程归因基线](docs/STUDY_CARD.md)
+3. [研究B：机器主体决策过程归因评测](docs/CURRENT_STUDY_CARD.md)
+4. [研究A的研究与测量来源](docs/research_and_measurement_sources.md)
+5. [研究B的研究与测量来源](docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md)
+6. [研究A设计蓝图](docs/research_design_blueprint.md)
 
 ## 权利与使用
 
-仓库暂未采用开放许可证。代码、材料、数据和文档的复制、再分发或用于其他项目，需先获得作者许可。引用公开页面或研究说明时请注明项目名称与仓库地址。
+仓库暂未采用开放许可证。代码、材料、数据和文档的复制、再分发或用于其他项目，请先获得作者许可。引用公开页面或研究说明时请注明项目名称与仓库地址；各来源题项的许可状态以对应来源文档为准。

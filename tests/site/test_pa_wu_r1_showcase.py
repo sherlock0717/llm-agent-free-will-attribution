@@ -93,8 +93,8 @@ def test_fig5_is_referenced():
     assert "fig5_contrast_forest.png" in HTML
 
 
-def test_synthetic_demo_declaration_chinese():
-    assert "合成演示数据" in HTML
+def test_process_demo_declaration_chinese():
+    assert "流程演示数据" in HTML
 
 
 def test_how_to_use_present():
@@ -226,16 +226,20 @@ def test_png_signatures_valid():
 
 # --- 6. forbidden claims / hygiene -----------------------------------------
 
-def test_no_real_result_claim():
-    assert "不代表真实模型结果" in HTML
+def test_public_name_is_study_b():
+    assert "机器主体决策过程归因评测" in HTML
+    assert "PA—Wu R1" not in HTML
+    assert "PA-Wu R1" not in HTML
 
 
-def test_no_model_ranking_claim():
-    assert "不进行模型排名" in HTML or "不用于能力判断或模型排名" in HTML
+def test_return_to_overview_link_present():
+    assert 'href="../"' in HTML
+    assert "返回LLM行动者归因评测总览" in HTML
 
 
-def test_no_ai_human_comparison_result():
-    assert "不进行AI与人类主体比较" in HTML
+def test_process_demo_status_banner():
+    assert "流程演示状态" in HTML
+    assert "真实双模型运行完成后" in HTML
 
 
 def test_english_source_material_preserved_in_js():

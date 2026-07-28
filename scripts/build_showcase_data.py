@@ -149,8 +149,8 @@ STABILITY_POINTS = [
     "能动性随过程结构总体上升，是方向最稳定的主结果；n=30 稳定性复核维持同一方向。",
     "自由意志归因的直接过程效应在加入控制变量后并不稳定，更像经由能动性间接发生，属探索性诊断。",
     "责任相关维度（结果责任、道德褒贬、过程可归责）方向不如能动性稳定，仅作探索性呈现。",
-    "已识别的方法问题——历史 prompt 同时暴露构念名与判断规则、构念间高相关——在 v2 协议中通过盲化构念名与修订暴露策略处理。",
-    "当前结论仅描述单一模型在这套材料下的输出行为，稳定性与复核均在同一历史数据内进行，不外推为人类心理规律。",
+    "已识别的方法问题——研究A prompt 同时暴露构念名与判断规则、构念间高相关——需要通过盲化构念名与修订暴露策略处理。",
+    "研究A结论仅描述单一模型在这套材料下的输出行为，稳定性与复核均在同一数据内进行，不外推为人类心理规律。",
 ]
 
 RESULT_TAKEAWAYS = [
@@ -381,9 +381,18 @@ def _research_sources() -> dict:
     if not detail_docs:
         raise BuildError("research_sources.detail_docs missing")
 
+    def study_a_wording(value: str) -> str:
+        return (value.replace("早期题项池", "研究A题项池")
+                .replace("该历史路线", "研究A")
+                .replace("历史路线", "研究A"))
+
+    for source in sources:
+        source["role"] = study_a_wording(source["role"])
+        source["usage"] = study_a_wording(source["usage"])
+
     return {
-        "intro": block["intro_zh"],
-        "usage_note": block["usage_note_zh"],
+        "intro": study_a_wording(block["intro_zh"]),
+        "usage_note": study_a_wording(block["usage_note_zh"]),
         "sources": sources,
         "references": all_refs,
         "detail_docs": detail_docs,
@@ -402,21 +411,13 @@ DATA_STATUS_ZH = {"synthetic_demo": "合成流程演示"}
 TARGET_SUBJECT_ZH = {"machine": "仅机器主体"}
 
 
-def _current_study() -> dict:
-    """Current PA-Wu R1 hero facts, sourced (not hardcoded) from the R1 pilot
-    showcase_data.json and study_protocol.yaml. Fails loudly if a value is
-    missing so the current hero can never silently drift from the R1 assets.
+def _study_b() -> dict:
+    """Research B facts sourced from the machine-only protocol and showcase data.
 
-    Besides the count facts, three status/config values are cross-checked between
-    the two R1 source files and mapped to display text through controlled
-    vocabularies (never hardcoded prose):
-      * data_status  -- showcase_data.data_status vs protocol.data_status_of_package
-      * target_subject -- showcase_data.target_subject vs
-        protocol.identity_scope.target_subject
-      * judge model configuration -- protocol.design.judge_models vs the ids in
-        showcase_data.judge_models (no duplicates, same set/order)
-    Any mismatch, unknown status value or judge-model disagreement raises
-    BuildError."""
+    Counts, statuses, target subject, and judge-model configuration are validated
+    across the two source files so the project page cannot drift from Research B's
+    declared assets.
+    """
     showcase = json.loads(bsd._read_text(f"{_R1_DIR}/outputs/showcase_data.json"))
     protocol = yaml.safe_load(bsd._read_text(f"{_R1_DIR}/study_protocol.yaml"))
     design = protocol["design"]
@@ -432,7 +433,6 @@ def _current_study() -> dict:
     if int(quality["n_responses"]) != responses:
         raise BuildError("R1 responses_per_repeat mismatch between protocol and showcase_data")
 
-    # --- data_status: agree across sources, and be a known status value -------
     data_status = showcase["data_status"]
     if data_status != protocol["data_status_of_package"]:
         raise BuildError(
@@ -443,7 +443,6 @@ def _current_study() -> dict:
     if data_status_zh is None:
         raise BuildError(f"R1 unknown data_status '{data_status}'")
 
-    # --- target_subject: agree across sources, and be a known subject value ---
     target_subject = showcase["target_subject"]
     protocol_subject = protocol["identity_scope"]["target_subject"]
     if target_subject != protocol_subject:
@@ -454,7 +453,6 @@ def _current_study() -> dict:
     if target_subject_zh is None:
         raise BuildError(f"R1 unknown target_subject '{target_subject}'")
 
-    # --- judge models: same configured set across both sources, no dupes ------
     protocol_judges = [str(m) for m in design["judge_models"]]
     showcase_judges = [row["id"] for row in showcase["judge_models"]]
     if len(set(protocol_judges)) != len(protocol_judges):
@@ -472,20 +470,21 @@ def _current_study() -> dict:
         {"key": "scenario_count", "value": scenarios, "label": "场景"},
         {"key": "direction_count", "value": directions, "label": "决策方向"},
         {"key": "material_count", "value": materials, "label": "材料总数"},
-        {"key": "judge_model_config_count", "value": judge_models, "label": "评判模型配置"},
+        {"key": "judge_model_config_count", "value": judge_models, "label": "评判模型计划"},
         {"key": "responses_per_repeat", "value": responses, "label": "每次完整运行响应"},
         {"key": "data_status", "value": data_status_zh, "label": "数据状态"},
         {"key": "target_subject", "value": target_subject_zh, "label": "目标主体"},
     ]
     return {
-        "title_zh": "LLM机器主体归因评测",
-        "subtitle_zh": "PA—Wu R1仅机器主体研究",
-        "positioning_zh": (
-            "当前主研究考察决策过程信息与决策后行为如何改变大语言模型对机器主体的归因判断。"),
+        "study_id": "machine_decision_process_attribution",
+        "title_zh": "机器主体决策过程归因评测",
+        "role_zh": "机器主体测量深化",
+        "evidence_status_zh": "流程演示已完成",
+        "design_summary_zh": f"{conditions}条件 × {scenarios}场景 × {directions}方向，{materials}条材料",
         "core_facts": core_facts,
         "sources_doc": "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md",
         "study_card": "docs/CURRENT_STUDY_CARD.md",
-        "showcase_page": "pa-wu-r1-pilot/",
+        "showcase_page": "machine-decision-process-attribution/",
     }
 
 
@@ -499,34 +498,59 @@ def build_showcase_story() -> dict:
     process_conditions = study["design"]["process_conditions"]
     identity_labels = study["design"]["identity_labels"]
 
-    rel = _reliability_rows()
-    total_items = sum(int(r["n_items"]) for r in rel)
-    total_constructs = len(rel)
-
-    core_facts = [
-        {"key": "process_condition_count", "value": len(process_conditions),
-         "label": "过程条件"},
-        {"key": "identity_condition_count", "value": len(identity_labels),
-         "label": "行动者身份"},
-        {"key": "historical_record_count", "value": records, "label": "历史记录"},
+    study_a_facts = [
+        {"key": "process_identity_design",
+         "value": f"{len(process_conditions)} × {len(identity_labels)}",
+         "label": "过程 × 身份"},
         {"key": "scenario_count", "value": len(scenarios), "label": "情境"},
-        {"key": "item_count", "value": total_items, "label": "测量题项"},
-        {"key": "construct_count", "value": total_constructs, "label": "测量构念"},
-        {"key": "mock_reproducible_run", "value": "已实现", "label": "可复现 mock 运行"},
-        {"key": "offline_provider_ready", "value": "已完成", "label": "真实接口离线准备"},
+        {"key": "model_output_count", "value": records, "label": "已有模型输出"},
+        {"key": "model_configuration", "value": "单模型既有运行", "label": "模型配置"},
+        {"key": "measurement_status", "value": "仍在完善", "label": "测量状态"},
     ]
+    study_a = {
+        "study_id": "identity_process_attribution_baseline",
+        "title_zh": "身份与决策过程归因基线",
+        "role_zh": "探索性基线",
+        "evidence_status_zh": "已有探索性输出",
+        "design_summary_zh": (
+            f"{len(process_conditions)}类决策过程 × {len(identity_labels)}种身份标签"),
+        "core_facts": study_a_facts,
+        "study_card": "docs/STUDY_CARD.md",
+        "sources_doc": "docs/research_and_measurement_sources.md",
+    }
+    study_b = _study_b()
+    studies = {"study_a": study_a, "study_b": study_b}
+    clue_types = ["身份标签", "决策过程", "反馈后行为"]
+    shared_chain = ["材料", "评分", "分析", "展示"]
+    future_routes = ["跨主体平行测量与可比性研究"]
+    research_program = {
+        "program_id": "llm_actor_attribution_program",
+        "title_zh": "LLM行动者归因评测",
+        "research_question_zh": (
+            "身份标签、决策过程与反馈行为如何影响语言模型对行动者的归因判断"),
+        "study_count": len(studies),
+        "core_facts": [
+            {"key": "study_count", "value": len(studies), "label": "相互独立的研究"},
+            {"key": "clue_type_count", "value": len(clue_types), "label": "主要线索"},
+            {"key": "shared_chain", "value": "—".join(shared_chain), "label": "共享方法链"},
+            {"key": "future_route_count", "value": len(future_routes), "label": "跨主体扩展路线"},
+        ],
+        "studies": studies,
+        "shared_method_layer": {
+            "title_zh": "归因评测方法与基础设施",
+            "chain": shared_chain,
+        },
+        "future_route": {
+            "title_zh": future_routes[0],
+            "status_zh": "待展开",
+        },
+    }
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        # current PA-Wu R1 hero facts (drive the front page)
-        "current_study": _current_study(),
-        # legacy AI/human route facts (archive only; never the current hero)
-        "title_zh": "LLM机器主体归因评测",
-        "legacy_title_zh": "早期探索性研究",
-        "legacy_positioning_zh": (
-            "早期探索性研究考察行动者身份与决策过程表述如何影响模型对能动性、"
-            "自由意志与责任的归因，作为该历史路线的方法反思保留。"),
-        "core_facts": core_facts,
+        "research_program": research_program,
+        "title_zh": research_program["title_zh"],
+        "core_facts": study_a_facts,
         "scenarios": _scenario_cards(set(scenarios)),
         "domains": domains,
         "research_sources": _research_sources(),
@@ -572,7 +596,7 @@ def build_measurement_summary() -> dict:
         "scoring_note": "每个构念的分数为其题项的均值（事实操纵检验计 0–2，其余题项计 1–7）。",
         "reliability_note": (
             "Cronbach α 为合成（模型模拟）数据上的内部一致性指标，"
-            "不等于效度，也不构成人类被试的信效度证据。"),
+            "用于反映题项响应的一致性；效度与人类被试信效度证据留待后续验证。"),
         "responsibility_total": RESPONSIBILITY_TOTAL_META,
         "constructs": constructs,
     }

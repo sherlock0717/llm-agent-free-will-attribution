@@ -216,7 +216,7 @@ reproducibility_zh:
 
 version_history:
   - version: "v0.1"
-    title_zh: "历史研究原型与 DeepSeek API 数据"
+    title_zh: "研究A原型与 DeepSeek API 数据"
     highlights_zh:
       - "已有：真实 DeepSeek API 记录、6×2 设计、分析产物与图表"
       - "证据：公开的聚合结果与均值图来自这批历史记录"
