@@ -1,28 +1,73 @@
-"""Render the demo report and >=5 figures from the scored / analyzed demo data.
+"""
+Render the Study B flow-demonstration report and five scale-safe figures.
 
-MACHINE-ONLY R1: the target subject is an AI system. There is NO ai/human
-comparison. All figures carry the label "Synthetic demonstration data" and
-describe no real model result, capability, ranking or empirical theory support.
+Study B examines how decision information, feedback, and post-feedback
+behavior shape LLM judges' attribution to a machine subject. The report uses
+the existing workflow-demonstration scores and keeps each construct on its
+native scale. Figure 4 uses theoretical-scale 0–1 positions for display.
 
 Figures:
-  1. six conditions x four primary constructs mean plot
-  2. model-adjusted estimated-marginal contrast forest (P1..P6, primary)
-  3. two judge-model construct profile plot (not a ranking)
-  4. scenario x construct heatmap
-  5. raw descriptive planned-contrast forest (P1..P6, primary)
+  1. Condition means for the four primary constructs
+  2. Model-adjusted planned contrasts
+  3. Judge-model profiles by construct
+  4. Scenario-by-construct theoretical-scale heatmap
+  5. Raw descriptive planned contrasts
 """
 
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from matplotlib import font_manager  # noqa: E402
+
+
+def _json_safe(value):
+    """Recursively convert a payload into strict, RFC-compliant JSON values.
+
+    Non-finite floats (NaN / ±Infinity) become None, numpy scalars become plain
+    Python numbers, and pandas NA/NaT become None. Everything else is returned
+    unchanged. This keeps optional fields such as ``captured_warnings`` as a real
+    JSON null when a fit recorded no warning text, instead of the literal ``NaN``.
+    """
+    if isinstance(value, dict):
+        return {key: _json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(item) for item in value]
+    if isinstance(value, (np.integer,)):
+        return int(value)
+    if isinstance(value, (np.floating,)):
+        value = float(value)
+    if isinstance(value, float):
+        return value if math.isfinite(value) else None
+    if value is None:
+        return None
+    # pandas NA / NaT and other scalar missing markers.
+    try:
+        if pd.isna(value):
+            return None
+    except (TypeError, ValueError):
+        pass
+    if isinstance(value, (np.bool_,)):
+        return bool(value)
+    return value
+
+
+def _write_json(path: Path, payload) -> None:
+    """Write a payload as strict JSON. ``allow_nan=False`` makes any residual
+    non-finite value fail loudly at generation time rather than shipping invalid
+    JSON to the page."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    text = json.dumps(_json_safe(payload), ensure_ascii=False, indent=2,
+                       allow_nan=False)
+    path.write_text(text, encoding="utf-8")
 
 
 def _configure_chinese_font() -> str:
@@ -81,6 +126,55 @@ ALL_CONSTRUCTS = ["IN", "GO", "MSI", "IC", "PA5", "PA8"]
 MODELS = ["deepseek-v4-pro", "gpt-5.6-terra"]
 SYNTH = "Synthetic demonstration data"
 
+# --- controlled figure metadata (display labels + theoretical scale bounds) ---
+# Chinese construct names for panel titles (display only; ids/data unchanged).
+CONSTRUCT_LABELS_ZH = {
+    "IN": "知觉独立性",
+    "GO": "目标导向性",
+    "MSI": "心理状态推断",
+    "IC": "影响能力",
+    "PA5": "感知能动性 PA5",
+    "PA8": "感知能动性 PA8",
+}
+
+# Theoretical native-scale bounds per construct. Used to fix each panel's own
+# axis and (fig4 only) to map to a 0–1 display position. These are the scale
+# boundaries, NOT sample min/max, and never enter statistical inference.
+NATIVE_SCALE_BOUNDS = {
+    "IN": (1, 7),
+    "GO": (1, 7),
+    "MSI": (1, 5),
+    "IC": (1, 7),
+    "PA5": (1, 5),
+    "PA8": (1, 5),
+}
+
+# Contrast short labels for forest-panel y-axes. Must match analysis_plan.md.
+CONTRAST_LABELS_ZH = {
+    "P1": "P1｜C1−C0 备选方案",
+    "P2": "P2｜C2−C0 明确理由",
+    "P3": "P3｜C3−C2 加入反馈",
+    "P4": "P4｜C4−C2 反馈并维持",
+    "P5": "P5｜C5−C2 反馈并改变",
+    "P6": "P6｜C5−C4 改变与维持",
+}
+
+# Ordered P-ids for forest panels.
+CONTRAST_ORDER = ["P1", "P2", "P3", "P4", "P5", "P6"]
+
+# Short model tick labels for fig3 x-axis (full ids go in the shared legend).
+MODEL_SHORT = {"deepseek-v4-pro": "DS", "gpt-5.6-terra": "GPT"}
+
+# Neutral point colours / markers (no win/lose semantics).
+NEUTRAL_POINT = "#1f66d1"     # neutral blue
+NEUTRAL_LINE = "#7a869a"      # neutral grey
+MODEL_MARKERS = {"deepseek-v4-pro": "o", "gpt-5.6-terra": "^"}
+MODEL_COLORS = {"deepseek-v4-pro": "#1f66d1", "gpt-5.6-terra": "#6b57c7"}  # blue / purple
+
+
+def _panel_title(construct: str) -> str:
+    return f"{CONSTRUCT_LABELS_ZH.get(construct, construct)}（{construct}）"
+
 
 def _mean_by(df: pd.DataFrame, *cols: str) -> pd.DataFrame:
     valid = df[df["construct_score"].notna()]
@@ -88,59 +182,118 @@ def _mean_by(df: pd.DataFrame, *cols: str) -> pd.DataFrame:
 
 
 def fig1_condition_construct(df: pd.DataFrame) -> Path:
+    """2×2 faceted line plot, one primary construct per panel, each panel fixed
+    to its own theoretical native scale so cross-construct absolute heights are
+    never comparable."""
     m = _mean_by(df, "construct", "condition_id")
-    fig, ax = plt.subplots(figsize=(8, 5))
-    for construct in PRIMARY:
+    fig, axes = plt.subplots(2, 2, figsize=(9, 7))
+    for ax, construct in zip(axes.flat, PRIMARY):
         sub = m[m["construct"] == construct].set_index("condition_id").reindex(CONDITIONS)
-        ax.plot(CONDITIONS, sub["construct_score"].values, marker="o", label=construct)
-    ax.set_xlabel("实验条件（C0—C5）")
-    ax.set_ylabel("构念平均得分（原量尺）")
-    ax.set_title(f"不同实验条件下的主要构念均值\n[{SYNTH_ZH}]")
-    ax.legend(title="构念")
-    fig.tight_layout()
+        ax.plot(CONDITIONS, sub["construct_score"].values,
+                marker="o", color=NEUTRAL_POINT, linewidth=2)
+        lo, hi = NATIVE_SCALE_BOUNDS[construct]
+        ax.set_ylim(lo, hi)
+        ax.set_title(f"{_panel_title(construct)}｜量尺 {lo}—{hi}", fontsize=11)
+        ax.set_xlabel("实验条件 C0—C5", fontsize=9)
+        ax.set_ylabel(f"原量尺 {lo}—{hi}", fontsize=9)
+        ax.grid(True, axis="y", color="#e6edf6", linewidth=0.8)
+    fig.suptitle(f"六个实验条件下的主要构念均值\n[{SYNTH_ZH}｜各面板使用自身原量尺]",
+                 fontsize=13)
+    fig.text(0.5, 0.01,
+             "每个面板按对应构念的原量尺呈现；跨构念阅读时分别参照各自坐标。",
+             ha="center", fontsize=9, color="#5d6b7d")
+    fig.tight_layout(rect=(0, 0.04, 1, 0.93))
     out = FIG_DIR / "fig1_condition_construct_means.png"
     fig.savefig(out, dpi=120)
     plt.close(fig)
     return out
 
 
-def fig2_model_adjusted_forest(mcons: pd.DataFrame) -> Path:
-    sub = mcons[mcons["construct"].isin(PRIMARY)].copy()
-    labels = [f"{r.construct} {r.contrast_id} ({r.contrast})" for r in sub.itertuples()]
-    y = range(len(sub))
-    fig, ax = plt.subplots(figsize=(9, max(5, len(sub) * 0.3)))
-    for i, r in enumerate(sub.itertuples()):
-        est = getattr(r, "estimate")
-        lo = getattr(r, "ci95_low")
-        hi = getattr(r, "ci95_high")
-        if pd.notna(lo) and pd.notna(hi):
-            ax.plot([lo, hi], [i, i], color="gray")
-        if pd.notna(est):
-            ax.plot(est, i, marker="o", color="C1")
-    ax.axvline(0.0, color="black", linewidth=0.8, linestyle="--")
-    ax.set_yticks(list(y))
-    ax.set_yticklabels(labels, fontsize=7)
-    ax.set_xlabel("模型调整后的边际差异（原量尺）")
-    ax.set_title(f"模型调整后的预设对比 P1—P6\n[{SYNTH_ZH}]")
-    fig.tight_layout()
-    out = FIG_DIR / "fig2_model_adjusted_contrasts.png"
+def _forest_panels(data_by_construct, xlabel: str, suptitle: str, note: str,
+                   out_name: str) -> Path:
+    """Shared 2×2 forest layout: one primary construct per panel, own x-axis,
+    x symmetric around 0, neutral colours, 0 reference line."""
+    fig, axes = plt.subplots(2, 2, figsize=(10, 7))
+    for ax, construct in zip(axes.flat, PRIMARY):
+        rows = data_by_construct.get(construct, {})
+        ys = list(range(len(CONTRAST_ORDER)))
+        max_abs = 0.0
+        for i, pid in enumerate(CONTRAST_ORDER):
+            entry = rows.get(pid)
+            if not entry:
+                continue
+            est, lo, hi = entry
+            if lo is not None and hi is not None:
+                ax.plot([lo, hi], [i, i], color=NEUTRAL_LINE, linewidth=1.6)
+                max_abs = max(max_abs, abs(lo), abs(hi))
+            if est is not None:
+                ax.plot(est, i, marker="o", color=NEUTRAL_POINT, markersize=6)
+                max_abs = max(max_abs, abs(est))
+        ax.axvline(0.0, color="#182230", linewidth=0.9, linestyle="--")
+        ax.set_yticks(ys)
+        ax.set_yticklabels([CONTRAST_LABELS_ZH[p] for p in CONTRAST_ORDER], fontsize=8)
+        ax.invert_yaxis()
+        span = (max_abs * 1.15) if max_abs > 0 else 1.0
+        ax.set_xlim(-span, span)
+        ax.set_title(_panel_title(construct), fontsize=11)
+        ax.set_xlabel(xlabel, fontsize=9)
+        ax.grid(True, axis="x", color="#e6edf6", linewidth=0.8)
+    fig.suptitle(suptitle, fontsize=13)
+    fig.text(0.5, 0.01, note, ha="center", fontsize=9, color="#5d6b7d")
+    fig.tight_layout(rect=(0, 0.04, 1, 0.92))
+    out = FIG_DIR / out_name
     fig.savefig(out, dpi=120)
     plt.close(fig)
     return out
 
 
+def fig2_model_adjusted_forest(mcons: pd.DataFrame) -> Path:
+    data: dict = {}
+    for r in mcons[mcons["construct"].isin(PRIMARY)].itertuples():
+        est = None if pd.isna(r.estimate) else float(r.estimate)
+        lo = None if pd.isna(r.ci95_low) else float(r.ci95_low)
+        hi = None if pd.isna(r.ci95_high) else float(r.ci95_high)
+        data.setdefault(r.construct, {})[r.contrast_id] = (est, lo, hi)
+    return _forest_panels(
+        data,
+        xlabel="模型调整后差值（该构念原量尺）",
+        suptitle=f"模型调整后的预设对比\n[{SYNTH_ZH}｜按构念分面]",
+        note="方向、幅度与不确定性在各构念面板内读取。",
+        out_name="fig2_model_adjusted_contrasts.png")
+
+
 def fig3_model_profiles(df: pd.DataFrame) -> Path:
+    """2×3 small multiples, one construct per panel, two judge-model configuration
+    means as separate points on that construct's own native scale. No cross-
+    construct profile line; neutral markers; descriptive only, no ranking."""
     m = _mean_by(df, "construct", "judge_model_id")
-    constructs = ALL_CONSTRUCTS
-    fig, ax = plt.subplots(figsize=(8, 5))
-    for model in MODELS:
-        sub = m[m["judge_model_id"] == model].set_index("construct").reindex(constructs)
-        ax.plot(constructs, sub["construct_score"].values, marker="s", label=model)
-    ax.set_xlabel("构念")
-    ax.set_ylabel("构念平均得分（原量尺）")
-    ax.set_title(f"两个评判模型的构念评分轮廓\n[{SYNTH_ZH}]（不用于模型排名）")
-    ax.legend(title="评判模型")
-    fig.tight_layout()
+    fig, axes = plt.subplots(2, 3, figsize=(11, 7))
+    for ax, construct in zip(axes.flat, ALL_CONSTRUCTS):
+        sub = m[m["construct"] == construct].set_index("judge_model_id")
+        lo, hi = NATIVE_SCALE_BOUNDS[construct]
+        for j, model in enumerate(MODELS):
+            val = sub["construct_score"].get(model)
+            if val is None or pd.isna(val):
+                continue
+            ax.plot(j, float(val), marker=MODEL_MARKERS[model],
+                    color=MODEL_COLORS[model], markersize=11, linestyle="none")
+        ax.set_ylim(lo, hi)
+        ax.set_xlim(-0.6, len(MODELS) - 0.4)
+        ax.set_xticks(range(len(MODELS)))
+        ax.set_xticklabels([MODEL_SHORT[mo] for mo in MODELS], fontsize=9)
+        ax.set_title(f"{_panel_title(construct)}｜量尺 {lo}—{hi}", fontsize=10)
+        ax.set_ylabel(f"原量尺 {lo}—{hi}", fontsize=8)
+        ax.grid(True, axis="y", color="#e6edf6", linewidth=0.8)
+    handles = [
+        plt.Line2D([0], [0], marker=MODEL_MARKERS[mo], color=MODEL_COLORS[mo],
+                   linestyle="none", markersize=10, label=mo)
+        for mo in MODELS
+    ]
+    fig.legend(handles=handles, title="评判模型配置",
+               loc="lower center", ncol=2, fontsize=9)
+    fig.suptitle(f"两个评判模型配置的构念均值\n[{SYNTH_ZH}｜描述性展示]",
+                 fontsize=13)
+    fig.tight_layout(rect=(0, 0.07, 1, 0.92))
     out = FIG_DIR / "fig3_model_profiles.png"
     fig.savefig(out, dpi=120)
     plt.close(fig)
@@ -148,18 +301,39 @@ def fig3_model_profiles(df: pd.DataFrame) -> Path:
 
 
 def fig4_scenario_heatmap(df: pd.DataFrame) -> Path:
+    """Heatmap where each column is mapped to a 0–1 within-scale position using
+    THEORETICAL scale bounds (not sample min/max). Display transform only; formal
+    inference keeps native scales."""
     m = _mean_by(df, "scenario_id", "construct")
     pivot = m.pivot(index="scenario_id", columns="construct", values="construct_score")
     pivot = pivot.reindex(columns=ALL_CONSTRUCTS)
-    fig, ax = plt.subplots(figsize=(8, 6))
-    im = ax.imshow(pivot.values, aspect="auto", cmap="viridis")
-    ax.set_xticks(range(len(pivot.columns)))
-    ax.set_xticklabels(pivot.columns)
-    ax.set_yticks(range(len(pivot.index)))
-    ax.set_yticklabels([SCENARIO_LABELS_ZH.get(sid, sid) for sid in pivot.index])
-    ax.set_title(f"场景与构念的平均得分热力图\n[{SYNTH_ZH}]")
-    fig.colorbar(im, ax=ax, label="平均得分（原量尺）")
-    fig.tight_layout()
+
+    display = pivot.copy()
+    for construct in ALL_CONSTRUCTS:
+        lo, hi = NATIVE_SCALE_BOUNDS[construct]
+        # display_value = (score - scale_min) / (scale_max - scale_min), clipped 0–1
+        display[construct] = ((pivot[construct] - lo) / (hi - lo)).clip(0.0, 1.0)
+
+    fig, ax = plt.subplots(figsize=(8.5, 6.5))
+    im = ax.imshow(display.values, aspect="auto", cmap="cividis", vmin=0.0, vmax=1.0)
+    ax.set_xticks(range(len(display.columns)))
+    ax.set_xticklabels([f"{CONSTRUCT_LABELS_ZH.get(c, c)}\n({c})" for c in display.columns],
+                       fontsize=9)
+    ax.set_yticks(range(len(display.index)))
+    ax.set_yticklabels([SCENARIO_LABELS_ZH.get(sid, sid) for sid in display.index], fontsize=9)
+    for i in range(display.shape[0]):
+        for j in range(display.shape[1]):
+            val = display.values[i, j]
+            if pd.notna(val):
+                ax.text(j, i, f"{val:.2f}", ha="center", va="center",
+                        fontsize=8, color="#ffffff" if val < 0.55 else "#182230")
+    ax.set_title(f"场景与构念的量尺内评分位置\n[{SYNTH_ZH}]", fontsize=13)
+    cbar = fig.colorbar(im, ax=ax)
+    cbar.set_label("量尺内位置（0—1，仅展示）")
+    fig.text(0.5, 0.01,
+             "0—1转换服务于同图展示，正式统计继续使用各构念原量尺。",
+             ha="center", fontsize=9, color="#5d6b7d")
+    fig.tight_layout(rect=(0, 0.04, 1, 1))
     out = FIG_DIR / "fig4_scenario_construct_heatmap.png"
     fig.savefig(out, dpi=120)
     plt.close(fig)
@@ -167,32 +341,25 @@ def fig4_scenario_heatmap(df: pd.DataFrame) -> Path:
 
 
 def fig5_contrast_forest(contrasts: pd.DataFrame) -> Path:
-    sub = contrasts[(contrasts["split"] == "overall") & (contrasts["construct"].isin(PRIMARY))].copy()
-    labels = [f"{r.construct} {r.contrast_id} ({r.contrast})" for r in sub.itertuples()]
-    y = range(len(sub))
-    fig, ax = plt.subplots(figsize=(9, max(5, len(sub) * 0.3)))
-    diffs = sub["difference"].values
-    los = sub["ci95_low"].values
-    his = sub["ci95_high"].values
-    for i, (d, lo, hi) in enumerate(zip(diffs, los, his)):
-        if pd.notna(lo) and pd.notna(hi):
-            ax.plot([lo, hi], [i, i], color="gray")
-        ax.plot(d, i, marker="o", color="C0")
-    ax.axvline(0.0, color="black", linewidth=0.8, linestyle="--")
-    ax.set_yticks(list(y))
-    ax.set_yticklabels(labels, fontsize=7)
-    ax.set_xlabel("直接均值差（原量尺）")
-    ax.set_title(f"直接描述性预设对比 P1—P6\n[{SYNTH_ZH}]")
-    fig.tight_layout()
-    out = FIG_DIR / "fig5_contrast_forest.png"
-    fig.savefig(out, dpi=120)
-    plt.close(fig)
-    return out
+    sub = contrasts[(contrasts["split"] == "overall") & (contrasts["construct"].isin(PRIMARY))]
+    data: dict = {}
+    for r in sub.itertuples():
+        d = None if pd.isna(r.difference) else float(r.difference)
+        lo = None if pd.isna(r.ci95_low) else float(r.ci95_low)
+        hi = None if pd.isna(r.ci95_high) else float(r.ci95_high)
+        data.setdefault(r.construct, {})[r.contrast_id] = (d, lo, hi)
+    return _forest_panels(
+        data,
+        xlabel="直接均值差（该构念原量尺）",
+        suptitle=f"直接描述性预设对比\n[{SYNTH_ZH}｜按构念分面]",
+        note="各构念差值在对应原量尺内读取。",
+        out_name="fig5_contrast_forest.png")
 
 
 def _synth_banner() -> str:
-    return f"> **{SYNTH}.** Not real model results; no model capability, no model " \
-           "ranking, no empirical theory support."
+    return ("> **Workflow demonstration data.** These deterministic synthetic values "
+            "exercise the material, scoring, analysis, and visualization pipeline. "
+            "Empirical interpretation begins after the authorized dual-model run.")
 
 
 def render_report(figs: list[Path]) -> None:
@@ -203,12 +370,12 @@ def render_report(figs: list[Path]) -> None:
     cmean = desc.groupby(["construct", "condition_id"])["mean"].mean().reset_index()
 
     L: list[str] = []
-    L.append("# PA—Wu R1 Pilot — Demo Report (machine-only)")
+    L.append("# Study B — Machine Decision-Process Attribution — Flow Demonstration Report")
     L.append("")
     L.append(_synth_banner())
     L.append("")
-    L.append("> **Target subject: machine-only.** The R1 pilot studies attribution to "
-             "an AI system only. There is **no** ai/human comparison "
+    L.append("> **Study scope.** The pilot holds the target subject fixed as a machine. "
+             "Cross-subject measurement is planned as a separate research route "
              "(see `identity_scope_decision.md`).")
     L.append("")
 
@@ -223,15 +390,17 @@ def render_report(figs: list[Path]) -> None:
     L.append("## 2. Construct framework")
     L.append("Primary: IN (Perceptual Independence, 1–7), GO (Goal Orientation, 1–7), "
              "MSI (Mental-State Inference, 1–5), IC (Influential Capacity, 1–7). "
-             "Supplementary: PA5, PA8 (Perceived Agency, 1–5). No cross-scale total. "
-             "The four primary Wu & Shen 2026 constructs use machine-specific original items.")
+             "Supplementary: PA5, PA8 (Perceived Agency, 1–5). Each construct is "
+             "reported on its native scale. The four primary Wu & Shen 2026 "
+             "constructs use machine-specific original items.")
     L.append("")
     # 3
     L.append("## 3. Six-condition design")
     L.append("C0 D0-U0; C1 D1-U0; C2 D2-U0; C3 D2-U1; C4 D2-U2; C5 D2-U3. "
              "D0 adds no process cue; D1 adds only explicit alternatives information; "
-             "D2 adds only the explicit stated reason. Six-level condition factor; the "
-             "pilot does NOT estimate a full D×U interaction.")
+             "D2 adds only the explicit stated reason. The pilot estimates differences "
+             "among six selected D/U combinations. A future factorial design will "
+             "estimate the full D×U interaction.")
     L.append("")
     # 4
     L.append("## 4. Material coverage")
@@ -244,11 +413,11 @@ def render_report(figs: list[Path]) -> None:
              f"{quality['n_judge_models']} judge models (each model scores the same 96 materials).")
     L.append("")
     # 5
-    L.append("## 5. Synthetic-data note")
+    L.append("## 5. Workflow-demonstration data note")
     L.append(_synth_banner())
     L.append("Demo responses are deterministic (fixed seed) with a few baked-in condition "
-             "differences purely to exercise scoring/analysis/figures. They imitate no "
-             "real DeepSeek or GPT behavior.")
+             "differences that exercise scoring, analysis, and figures. The authorized "
+             "dual-model run supplies the empirical values in the same structure.")
     L.append("")
     # 6
     L.append("## 6. Descriptive results — condition × primary construct means")
@@ -279,9 +448,13 @@ def render_report(figs: list[Path]) -> None:
                  f"{r.optimizer_attempts} |")
     L.append("")
     # captured warnings
-    warns = [(r.construct, r.captured_warnings) for r in mfit.itertuples() if str(r.captured_warnings)]
+    warns = []
+    for row in mfit.itertuples():
+        warning = row.captured_warnings
+        if pd.notna(warning) and str(warning).strip():
+            warns.append((row.construct, str(warning).strip()))
     if warns:
-        L.append("Captured convergence/Hessian warnings (not discarded):")
+        L.append("Captured convergence/Hessian warnings, kept in the fit summary:")
         for c, w in warns:
             L.append(f"- **{c}**: {w}")
         L.append("")
@@ -303,7 +476,10 @@ def render_report(figs: list[Path]) -> None:
                  f"{p} | {ph} | {r.raw_descriptive_contrast:+.3f} |")
     L.append("")
     # 9
-    L.append("## 9. Judge-model differences (descriptive, synthetic; NOT a ranking)")
+    L.append("## 9. Judge-model sensitivity view")
+    L.append("")
+    L.append("Both judge models score the same 96 materials; the two profiles below feed "
+             "the sensitivity check on judge-model choice.")
     L.append("")
     mm = desc.groupby(["construct", "judge_model_id"])["mean"].mean().reset_index()
     L.append("| construct | deepseek-v4-pro | gpt-5.6-terra |")
@@ -324,20 +500,31 @@ def render_report(figs: list[Path]) -> None:
                  f"{h['scenario_mean_range']} |")
     L.append("")
     # figures
-    L.append("### Figures (synthetic)")
+    L.append("### Figures (workflow demonstration)")
+    L.append("")
+    L.append("- Figures 1, 2, 3 and 5 are **faceted per construct**, and each panel uses "
+             "that construct's own **native scale**; read heights and differences within "
+             "a construct's own coordinates.")
+    L.append("- Figure 4 maps each column to a **0–1 within-scale position using the "
+             "theoretical scale bounds** (display only), not sample min/max.")
+    L.append("- Formal inference always uses the native scales.")
     L.append("")
     for f in figs:
         L.append(f"- `{f.relative_to(PKG_DIR).as_posix()}`")
     L.append("")
     # 11
-    L.append("## 11. Interpretation boundaries")
-    L.append("- **Machine-only**: attribution to an AI system; no ai/human comparison.")
-    L.append("- Native-scale inference is primary; 0–1 standardization is display-only.")
-    L.append("- No missing-value imputation; a construct requires all its items valid.")
-    L.append("- Free-will item (`wu_ms3`) is exploratory; never a construct or total.")
-    L.append("- Pilot uses a six-level condition factor; no full D×U causal interaction.")
-    L.append("- No model ranking; no capability claim; no empirical theory support.")
-    L.append("- Demo significance/effect values are pipeline checks, not findings.")
+    L.append("## 11. Evidence scope")
+    L.append("- **Machine target fixed**: the pilot studies attribution to a machine subject.")
+    L.append("- **Native-scale inference**: each construct is analyzed on its own scale; "
+             "the 0–1 standardization is display-only.")
+    L.append("- **Complete-item scoring**: a construct score requires all its items valid, "
+             "and the scoring chain keeps the original missing state.")
+    L.append("- **Exploratory free-will item**: `wu_ms3` is recorded as one MSI item.")
+    L.append("- **Six selected D/U combinations**: the pilot compares these six; the full "
+             "D×U interaction is a future factorial extension.")
+    L.append("- **Workflow-demonstration values**: current numbers are pipeline checks.")
+    L.append("- **Future authorized dual-model run**: supplies the empirical results in "
+             "the same material, scoring, and analysis structure.")
     L.append("")
     # 12
     L.append("## 12. Real-data replacement procedure")
@@ -461,8 +648,7 @@ def build_showcase_data(figs: list[Path]) -> None:
         },
         "figure_paths": [f.name for f in figs],
     }
-    SHOWCASE_OUT.parent.mkdir(parents=True, exist_ok=True)
-    SHOWCASE_OUT.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    _write_json(SHOWCASE_OUT, data)
 
 
 def _sync_docs(figs: list[Path]) -> None:

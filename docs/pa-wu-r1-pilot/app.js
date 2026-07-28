@@ -4,6 +4,8 @@
 const CONDS = ["C0", "C1", "C2", "C3", "C4", "C5"];
 const ALL_CONSTRUCTS = ["IN", "GO", "MSI", "IC", "PA5", "PA8"];
 
+// Reader-facing construct labels and short descriptions used by the demo
+// selector and tables. The full construct cards are static markup in index.html.
 const CONSTRUCT_META = {
   IN: {
     name: "知觉独立性",
@@ -18,7 +20,7 @@ const CONSTRUCT_META = {
   MSI: {
     name: "心理状态推断",
     option: "心理状态推断（MSI）",
-    description: "评判模型是否向机器主体归因意识、思考、意图等心理状态。自由意志只是其中一个探索性题项。",
+    description: "评判模型是否向机器主体归因意识、思考、意图等心理状态。",
   },
   IC: {
     name: "影响能力",
@@ -51,49 +53,43 @@ const CONDITION_SHORT = {
 const CONTRAST_CARDS = [
   {
     id: "P1", diff: "C1−C0", name: "加入明确备选方案",
-    question: "仅增加备选方案信息后，归因评分是否变化。",
-    allow: "评判模型是否对“存在可选方案”这一文本线索敏感。",
-    forbid: "机器主体真实拥有选择自由。",
+    comparison: "比较呈现备选方案与直接决定。",
+    reading: "用于观察评判模型对可选方案线索的敏感性。",
   },
   {
     id: "P2", diff: "C2−C0", name: "给出明确理由",
-    question: "与只呈现直接决定相比，呈现决定及明确理由后，归因评分是否变化。",
-    allow: "评判模型是否对“材料中呈现明确理由”这一条件差异敏感。",
-    forbid: "不得把该对比解释为“在备选方案基础上单独增加理由”的纯增量效应，也不得据此断言机器主体真实进行了人类式理性推理。",
+    comparison: "比较明确理由条件与直接决定。",
+    reading: "参考条件为C0，因此它呈现的是明确理由条件与直接决定之间的整体差异。",
   },
   {
-    id: "P3", diff: "C3−C2", name: "加入反馈信息",
-    question: "在已有决定和理由的基础上，仅增加反馈是否改变评分。",
-    allow: "评判模型是否对“主体收到反馈”这一线索敏感。",
-    forbid: "机器主体真实具有反思或学习能力。",
+    id: "P3", diff: "C3−C2", name: "加入反馈",
+    comparison: "比较收到反馈与只呈现决定及理由。",
+    reading: "用于观察反馈信息加入后的评分变化。",
   },
   {
     id: "P4", diff: "C4−C2", name: "反馈后维持决定",
-    question: "与只呈现决定及理由相比，加入反馈并明确维持原决定后，归因评分是否变化。",
-    allow: "评判模型是否对“反馈加维持决定”这一组合条件敏感。",
-    forbid: "不得把该对比解释为维持决定本身的纯效应，也不得断言维持决定必然代表更强能动性、更高自主性或更优决策。",
+    comparison: "比较反馈并维持决定与只呈现决定及理由。",
+    reading: "该差异同时包含反馈和维持决定两部分信息。",
   },
   {
     id: "P5", diff: "C5−C2", name: "反馈后改变决定",
-    question: "与只呈现决定及理由相比，加入反馈并明确改变原决定后，归因评分是否变化。",
-    allow: "评判模型是否对“反馈加改变决定”这一组合条件敏感。",
-    forbid: "不得把该对比解释为改变决定本身的纯效应，也不得断言改变决定必然代表更强反思、学习或自主能力。",
+    comparison: "比较反馈并改变决定与只呈现决定及理由。",
+    reading: "该差异同时包含反馈和改变决定两部分信息。",
   },
   {
-    id: "P6", diff: "C5−C4", name: "改变与维持的比较",
-    question: "同样收到反馈后，改变决定与维持决定的评分是否不同。",
-    allow: "在相同的反馈与第二次决定结构下，评判模型对改变决定和维持决定的相对敏感性。",
-    forbid: "不得认为任一行为在规范意义上更正确、更理性或更自主。",
+    id: "P6", diff: "C5−C4", name: "改变与维持",
+    comparison: "在相同反馈结构下比较改变决定与维持决定。",
+    reading: "用于观察评判模型对两种后续行为的相对敏感性。",
   },
 ];
 
 const CONDITION_META = {
-  C0: { title: "直接作出决定", description: "只呈现最终决定，不展示备选方案、理由或反馈。" },
-  C1: { title: "呈现备选方案后决定", description: "展示两种可选方案，再呈现最终决定。" },
-  C2: { title: "决定并说明理由", description: "呈现最终决定及其明确理由。" },
-  C3: { title: "说明理由并收到反馈", description: "在决定和理由之后增加外部反馈，但不呈现第二次决定。" },
-  C4: { title: "收到反馈后维持决定", description: "呈现反馈，并明确机器主体再次决定维持原选择。" },
-  C5: { title: "收到反馈后改变决定", description: "呈现反馈，并明确机器主体再次决定改选另一方案。" },
+  C0: { title: "直接作出决定", du: "D0-U0", added: "只呈现最终决定，不展示备选方案、理由或反馈。", role: "P1、P2的参考条件" },
+  C1: { title: "呈现备选方案后决定", du: "D1-U0", added: "在直接决定基础上加入备选方案。", role: "P1的比较条件" },
+  C2: { title: "决定并说明理由", du: "D2-U0", added: "在决定基础上加入明确理由。", role: "P2的比较条件；P3、P4、P5的参考条件" },
+  C3: { title: "说明理由并收到反馈", du: "D2-U1", added: "在理由基础上加入外部反馈，无第二次决定。", role: "P3的比较条件" },
+  C4: { title: "收到反馈后维持决定", du: "D2-U2", added: "在反馈基础上再次决定维持原选择。", role: "P4的比较条件；P6的参考条件" },
+  C5: { title: "收到反馈后改变决定", du: "D2-U3", added: "在反馈基础上再次决定改选另一方案。", role: "P5、P6的比较条件" },
 };
 
 const SCENARIO_META = {
@@ -116,22 +112,12 @@ const CONTRAST_META = {
   P6: "改变决定与维持决定的差异（C5−C4）",
 };
 
-const BOUNDARY_TRANSLATIONS = [
-  "R1只研究机器主体，不进行AI与人类主体比较。",
-  "当前采用六水平条件因子，不把结果解释为完整D×U因果交互。",
-  "各构念按原量尺推断；0—1标准化仅可用于展示。",
-  "不进行缺失值插补；构念得分要求相关题项均有效。",
-  "自由意志题项仅作为MSI中的探索性单项，不构成独立总分。",
-  "不进行模型排名；两个评判模型的差异只作描述性展示。",
-];
-
-const REPLACEMENT_TRANSLATIONS = [
-  "完成并通过双模型真实运行的授权与前置检查。",
-  "让两个模型对同一套96条机器主体材料完成真实评分。",
-  "将真实响应写入独立运行目录，不覆盖当前合成演示数据。",
-  "沿用既有评分、描述统计、混合效应模型和报告生成流程。",
-  "在每个构念内报告经Holm校正的P1—P6预设对比。",
-  "只有真实结果完成核验后，才可移除合成演示数据提示。",
+// 研究状态说明（集中在 #status 章节）。
+const STATUS_NOTES = [
+  "六个构念保留各自原量尺并分别报告。",
+  "流程演示数据用于检查材料、评分、分析和页面输出。",
+  "正式双模型运行将沿用已经固定的材料和分析计划。",
+  "跨主体研究将使用独立的人类题项和可比性检验。",
 ];
 
 let DATA = null;
@@ -171,96 +157,81 @@ function setLoadStatus(message, kind = "loading") {
   status.textContent = message;
 }
 
-async function load() {
-  setLoadStatus("正在加载流程演示数据……", "loading");
-  const response = await fetch("data/showcase_data.json", { cache: "no-store" });
-  if (!response.ok) throw new Error(`数据请求失败：HTTP ${response.status}`);
-  DATA = await response.json();
-  render();
-  setLoadStatus("流程演示数据已加载。可使用下拉框和结果切换按钮查看不同内容。", "success");
-}
-
-function render() {
-  renderQuestion();
-  renderConstructs();
+// Static research design does not depend on the demo JSON, so it renders first
+// and stays visible even if showcase_data.json fails to load. Only the dynamic
+// slots (material browser, coverage numbers, demo metrics, tables, charts) need
+// DATA and degrade gracefully when it is missing.
+function renderStatic() {
   renderConditions();
-  renderCoverage();
-  renderScenarioBrowser();
-  renderJudges();
-  renderConstructView();      // #s7: selector drives title + explain + scale + SVG + table
-  renderContrastCards();      // #s8: reader-facing P1—P6 comparison logic
-  renderContrasts();          // #s8 appendix: synthetic stats tables
-  renderAppendixConditionTable();
-  renderJudgeConfig();        // #s9: model configuration + comparison plan (no ranking)
-  renderScenarioHet();
-  renderMaterialExamples();
-  renderBoundaries();
-  renderReplacement();
-  renderGithub();
+  renderContrastCards();
+  renderStatus();
+  renderEntries();
   setupImageFallbacks();
   setupLightbox();
 }
 
-function renderQuestion() {
-  document.getElementById("researchQuestion").textContent =
-    "本评测考察：当机器主体的材料中依次加入备选方案、理由、反馈以及第二次决定时，大语言模型对其知觉独立性、目标导向性、心理状态、影响能力与感知能动性的评分是否发生变化。";
-  document.getElementById("freeWillRole").textContent =
-    "自由意志只对应心理状态推断（MSI）中的一个探索性题项，不作为唯一核心构念，也不生成跨量尺总分。";
-  document.getElementById("identityScope").textContent =
-    "当前R1固定为机器主体。页面不生成或解释AI与人类主体之间的比较。";
+function renderDynamic() {
+  renderCoverage();
+  renderScenarioBrowser();
+  renderDemoMetrics();
+  renderConstructView();
+  renderContrasts();
+  renderAppendixConditionTable();
+  renderFitSummary();
+  renderScenarioHet();
 }
 
-function renderConstructs() {
-  const host = document.getElementById("constructCards");
-  host.innerHTML = "";
-  const primary = new Set(DATA.constructs.primary);
-  ALL_CONSTRUCTS.forEach((key) => {
-    const meta = CONSTRUCT_META[key];
-    host.appendChild(el("article", { class: "card construct-card" },
-      el("div", { class: "card-title-row" },
-        el("h3", {}, `${meta.name}（${key}）`),
-        el("span", { class: `badge ${primary.has(key) ? "primary" : "supplementary"}` }, primary.has(key) ? "主要构念" : "补充构念")
-      ),
-      el("p", {}, meta.description),
-      el("p", { class: "small" }, `原量尺：${DATA.constructs.native_scales[key]}`),
-      key === "MSI" ? el("p", { class: "small warn-text" }, "包含一个自由意志探索性题项。") : null
-    ));
+async function load() {
+  setLoadStatus("正在加载流程演示数据……", "loading");
+  let response;
+  try {
+    response = await fetch("data/showcase_data.json", { cache: "no-store" });
+  } catch (networkError) {
+    throw new Error(`无法请求数据文件：${networkError}`);
+  }
+  if (!response.ok) throw new Error(`数据请求失败：HTTP ${response.status}`);
+  DATA = await response.json();
+  renderDynamic();
+  clearDemoError();
+  enableBrowserControls(true);
+  document.getElementById("snapshotStatus").textContent = "流程演示已完成";
+  setLoadStatus("流程演示数据已载入，可浏览材料、统计表与图表输出。", "success");
+}
+
+function enableBrowserControls(enabled) {
+  ["scenSelect", "scenCondSelect", "scenDirSelect"].forEach((id) => {
+    const node = document.getElementById(id);
+    if (node) node.disabled = !enabled;
   });
 }
 
+function clearDemoError() {
+  const panel = document.getElementById("demoError");
+  if (panel) { panel.hidden = true; panel.innerHTML = ""; }
+  const content = document.getElementById("demoContent");
+  if (content) content.hidden = false;
+}
+
+// #design: six condition cards with D/U combo, added information, P-role.
 function renderConditions() {
   const host = document.getElementById("conditionCards");
   host.innerHTML = "";
   CONDS.forEach((key) => {
     const meta = CONDITION_META[key];
-    host.appendChild(el("article", { class: "card condition-card" },
-      el("div", { class: "card-title-row" },
+    host.appendChild(el("article", { class: "condition-card" },
+      el("div", { class: "condition-head" },
         el("span", { class: "cond-pill" }, key),
-        el("h3", {}, meta.title)
+        el("span", { class: "du-tag" }, meta.du)
       ),
-      el("p", {}, meta.description)
+      el("h4", {}, meta.title),
+      el("p", { class: "cond-added" }, meta.added),
+      el("p", { class: "cond-role" }, `在P1—P6中：${meta.role}`)
     ));
   });
 }
 
+// #materials coverage matrix + balance panel (collapsed in <details>).
 function renderCoverage() {
-  const metrics = document.getElementById("coverageMetrics");
-  metrics.innerHTML = "";
-  const q = DATA.quality_summary;
-  [
-    ["实验条件", "6"],
-    ["场景", "8"],
-    ["决策方向", "2"],
-    ["材料总数", String(q.n_materials)],
-    ["合成评分响应", String(q.n_responses)],
-    ["有效构念得分率", `${fmt(q.construct_scored_rate * 100, 0)}%`],
-  ].forEach(([label, value]) => {
-    metrics.appendChild(el("div", { class: "metric-card" },
-      el("strong", {}, value),
-      el("span", {}, label)
-    ));
-  });
-
   const table = el("table", { class: "coverage-matrix" });
   const head = el("tr", {}, el("th", {}, "场景"));
   CONDS.forEach((condition) => head.appendChild(el("th", {}, condition)));
@@ -279,18 +250,24 @@ function renderCoverage() {
 
   const balance = document.getElementById("balancePanel");
   balance.innerHTML = "";
-  balance.appendChild(el("h3", {}, "平衡性检查"));
+  balance.appendChild(el("h4", {}, "平衡性检查"));
   const rows = [
     ["每个条件", `${Object.values(DATA.material_balance.per_condition)[0]}条`],
     ["每个场景", `${Object.values(DATA.material_balance.per_scenario)[0]}条`],
     ["方向A", `${DATA.material_balance.per_direction.A}条`],
     ["方向B", `${DATA.material_balance.per_direction.B}条`],
-    ["目标主体", "仅机器主体"],
+    ["目标主体", "机器主体"],
   ];
   rows.forEach(([label, value]) => balance.appendChild(el("div", { class: "balance-row" },
     el("span", {}, label), el("strong", {}, value)
   )));
-  balance.appendChild(el("p", { class: "small muted" }, "所有条件、场景和方向均完整覆盖，没有缺格。"));
+  balance.appendChild(el("p", { class: "small muted" }, "所有条件、场景和方向均完整覆盖。"));
+
+  // sync the static material count with the actual dataset.
+  const countNode = document.getElementById("materialCount");
+  if (countNode && DATA.quality_summary && DATA.quality_summary.n_materials) {
+    countNode.textContent = String(DATA.quality_summary.n_materials);
+  }
 }
 
 function renderScenarioBrowser() {
@@ -342,7 +319,7 @@ function renderStim(material, scenarioId = null) {
   const bridge = 'In the following items, "the machine" refers to the AI system described above.';
   let sourceText = material.complete_stimulus_text;
   if (sourceText.includes(bridge)) sourceText = sourceText.replace(bridge, "").trim();
-  const scenarioName = SCENARIO_META[scenarioId] || SCENARIO_META[material.material_id.split("__")[1]] || "材料示例";
+  const scenarioName = SCENARIO_META[scenarioId] || SCENARIO_META[material.material_id.split("__")[1]] || "材料";
   const condition = CONDITION_META[material.condition_id];
 
   return el("article", { class: "stim" },
@@ -356,7 +333,7 @@ function renderStim(material, scenarioId = null) {
     ),
     el("details", { class: "source-details" },
       el("summary", {}, "展开查看英文原始材料"),
-      el("p", { class: "source-note" }, "以下英文为评判模型实际接收的源材料，不是中文翻译版本。"),
+      el("p", { class: "source-note" }, "以下保留评判模型实际接收的英文原文；上方中文内容用于说明材料结构。"),
       el("div", { class: "source-text" }, sourceText),
       el("div", { class: "bridge" }, "题项指称说明：后续量表中的“the machine”均指上述AI系统。")
     ),
@@ -364,18 +341,7 @@ function renderStim(material, scenarioId = null) {
   );
 }
 
-function renderJudges() {
-  const host = document.getElementById("judgeCards");
-  host.innerHTML = "";
-  DATA.judge_models.forEach((model) => {
-    host.appendChild(el("article", { class: "card" },
-      el("h3", {}, model.id),
-      el("p", {}, `提供方：${model.provider}`),
-      el("p", { class: "small" }, "角色：共同主要评判模型（配置已确定）；后续完整运行时将对同一套96条材料独立评分。"),
-      el("p", { class: "small warn-text" }, "当前展示为合成流程演示数据，不代表该模型的实际评分行为，实证表现未评估。")
-    ));
-  });
-}
+
 
 function tableFrom(headers, rows, numericColumns = []) {
   const table = el("table");
@@ -404,8 +370,47 @@ function scaleBounds(key) {
   return [min, max];
 }
 
-// #s7 selector: one handler synchronises title, explanation, native-scale label,
-// the single-construct SVG chart and the condition-means table together.
+// #analysis: six reader-facing contrast cards (comparison + reading; no statistics).
+function renderContrastCards() {
+  const host = document.getElementById("contrastCards");
+  if (!host) return;
+  host.innerHTML = "";
+  CONTRAST_CARDS.forEach((card) => {
+    host.appendChild(el("article", { class: "contrast-card" },
+      el("div", { class: "contrast-head" },
+        el("span", { class: "cond-pill" }, card.id),
+        el("span", { class: "diff-tag" }, card.diff)
+      ),
+      el("h4", {}, card.name),
+      el("p", { class: "contrast-comparison" }, el("strong", {}, "比较："), card.comparison),
+      el("p", { class: "contrast-reading" }, el("strong", {}, "读法："), card.reading)
+    ));
+  });
+}
+
+// #demo metrics: pipeline demonstration counters read from showcase_data.
+function renderDemoMetrics() {
+  const host = document.getElementById("demoMetrics");
+  if (!host) return;
+  host.innerHTML = "";
+  const q = DATA.quality_summary;
+  const contrastCount = DATA.model_adjusted_results.contrasts.length;
+  const figureCount = DATA.figure_paths.length;
+  [
+    ["流程演示响应数", String(q.n_responses)],
+    ["题项有效率", `${fmt(q.item_valid_rate * 100, 0)}%`],
+    ["构念得分率", `${fmt(q.construct_scored_rate * 100, 0)}%`],
+    ["预设对比数", String(contrastCount)],
+    ["图表数量", String(figureCount)],
+  ].forEach(([label, value]) => {
+    host.appendChild(el("div", { class: "demo-metric" },
+      el("strong", {}, value),
+      el("span", {}, label)
+    ));
+  });
+}
+
+// #demo single-construct view: selector drives explain + scale + SVG + table.
 function renderConstructView() {
   const select = document.getElementById("resConstructSelect");
   select.innerHTML = "";
@@ -420,7 +425,7 @@ function renderConstructView() {
     document.getElementById("constructExplain").textContent =
       `${meta.name}（${key}）：${meta.description}`;
     document.getElementById("chartScaleNote").textContent =
-      `纵轴按当前构念原量尺 ${scaleText} 显示；1—5 与 1—7 构念不共用同一坐标轴。`;
+      `纵轴按当前构念原量尺 ${scaleText} 显示；1—5 与 1—7 构念分别使用各自坐标轴。`;
     renderConditionProfile(key);
     const values = DATA.descriptive_results.condition_means[key] || {};
     const rows = CONDS.map((condition) => [
@@ -428,10 +433,10 @@ function renderConstructView() {
       CONDITION_META[condition].title,
       fmt(values[condition]),
       scaleText,
-      "合成流程演示",
+      "流程演示",
     ]);
     replaceTable("condResultTable",
-      tableFrom(["条件ID", "条件名称", "合成均值", "原量尺", "数据状态"], rows, [2]));
+      tableFrom(["条件ID", "条件名称", "流程演示均值", "原量尺", "数据状态"], rows, [2]));
   };
 
   select.addEventListener("change", update);
@@ -447,7 +452,6 @@ function renderConditionProfile(key) {
   const values = DATA.descriptive_results.condition_means[key] || {};
   const [minScale, maxScale] = scaleBounds(key);
 
-  // viewBox coordinate space; width is fluid via CSS, height fixed by ratio.
   const W = 720;
   const H = 320;
   const padL = 54;
@@ -459,7 +463,7 @@ function renderConditionProfile(key) {
 
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   svg.setAttribute("aria-label",
-    `${meta.name}（${key}）在C0至C5六个条件下的合成平均得分，原量尺 ${minScale}—${maxScale}`);
+    `${meta.name}（${key}）在C0至C5六个条件下的流程演示平均得分，原量尺 ${minScale}—${maxScale}`);
   while (svg.firstChild) svg.removeChild(svg.firstChild);
 
   const mk = (tag, attrs = {}, text = null) => {
@@ -469,7 +473,6 @@ function renderConditionProfile(key) {
     return node;
   };
 
-  // Title inside the SVG (changes with construct).
   svg.appendChild(mk("text",
     { x: padL, y: 24, class: "svg-title" },
     `${meta.name}（${key}）｜原量尺 ${minScale}—${maxScale}`));
@@ -477,7 +480,6 @@ function renderConditionProfile(key) {
   const x = (i) => padL + (plotW * i) / (CONDS.length - 1);
   const y = (v) => padT + plotH - (plotH * (v - minScale)) / (maxScale - minScale);
 
-  // Axis frame + a few horizontal gridlines with scale ticks.
   const ticks = 4;
   for (let t = 0; t <= ticks; t += 1) {
     const val = minScale + ((maxScale - minScale) * t) / ticks;
@@ -489,7 +491,6 @@ function renderConditionProfile(key) {
       val.toFixed(0)));
   }
 
-  // X labels (short) C0—C5.
   CONDS.forEach((cond, i) => {
     svg.appendChild(mk("text",
       { x: x(i), y: H - padB + 20, class: "svg-xlabel", "text-anchor": "middle" }, cond));
@@ -498,7 +499,6 @@ function renderConditionProfile(key) {
       CONDITION_SHORT[cond]));
   });
 
-  // Connecting polyline + points with value labels.
   const pts = CONDS
     .map((cond, i) => {
       const v = values[cond];
@@ -518,7 +518,7 @@ function renderConditionProfile(key) {
   });
 }
 
-// #s8 appendix: full condition-means table (all constructs, raw synthetic values).
+// #demo appendix: full condition-means table (all constructs).
 function renderAppendixConditionTable() {
   const host = document.getElementById("appxCondTable");
   if (!host) return;
@@ -535,46 +535,10 @@ function renderAppendixConditionTable() {
     });
   });
   replaceTable("appxCondTable",
-    tableFrom(["构念", "实验条件", "合成均值", "原量尺"], rows, [2]));
+    tableFrom(["构念", "实验条件", "流程演示均值", "原量尺"], rows, [2]));
 }
 
-// #s8 main area: six reader-facing contrast cards (no statistics).
-function renderContrastCards() {
-  const host = document.getElementById("contrastCards");
-  if (!host) return;
-  host.innerHTML = "";
-  CONTRAST_CARDS.forEach((card) => {
-    host.appendChild(el("article", { class: "card contrast-card" },
-      el("div", { class: "card-title-row" },
-        el("span", { class: "cond-pill" }, card.id),
-        el("h3", {}, card.name)
-      ),
-      el("p", { class: "small muted" }, `条件差：${card.diff}`),
-      el("p", {}, el("strong", {}, "研究问题："), card.question),
-      el("p", { class: "allow-line" }, el("strong", {}, "允许解释："), card.allow),
-      el("p", { class: "forbid-line" }, el("strong", {}, "禁止解释："), card.forbid)
-    ));
-  });
-}
-
-// #s9: two neutral model-configuration cards + comparison plan (no ranking).
-function renderJudgeConfig() {
-  const host = document.getElementById("judgeConfigCards");
-  if (!host) return;
-  host.innerHTML = "";
-  DATA.judge_models.forEach((model) => {
-    host.appendChild(el("article", { class: "card judge-config-card" },
-      el("h3", {}, model.id),
-      el("dl", { class: "config-list" },
-        el("div", {}, el("dt", {}, "角色"), el("dd", {}, "共同主要评判模型")),
-        el("div", {}, el("dt", {}, "供应方类别"), el("dd", {}, model.provider)),
-        el("div", {}, el("dt", {}, "当前状态"), el("dd", {}, "配置已确定")),
-        el("div", {}, el("dt", {}, "实证表现"), el("dd", { class: "status-neutral" }, "未评估"))
-      )
-    ));
-  });
-}
-
+// #demo appendix: contrast tables with raw / adjusted mode toggle.
 function renderContrasts() {
   const select = document.getElementById("contrastConstructSelect");
   const modeGroup = document.getElementById("contrastMode");
@@ -599,7 +563,7 @@ function renderContrasts() {
         ]);
       replaceTable("contrastTable", tableFrom(["编号", "比较含义", "调整后差异", "标准误", "Holm校正p值", "95%置信区间"], rows, [2, 3, 4]));
     } else {
-      help.textContent = "直接均值差：不进行模型调整，直接比较两个条件在合成数据中的平均得分。该模式更直观，但没有控制场景与方向。";
+      help.textContent = "直接均值差：直接比较两个条件在流程演示数据中的平均得分，作为控制场景与方向之前的参照。";
       const rows = DATA.raw_planned_contrasts
         .filter((row) => row.construct === key)
         .map((row) => [
@@ -653,38 +617,67 @@ function renderScenarioHet() {
   replaceTable("scenHetTable", tableFrom(["构念", "场景最低均值", "场景最高均值", "场景范围"], rows, [1, 2, 3]));
 }
 
-function renderMaterialExamples() {
-  const host = document.getElementById("materialExamples");
+// null/empty captured_warnings displays as "无记录", never the literal "null".
+function warningText(value) {
+  if (value === null || value === undefined || value === "") return "无记录";
+  return String(value);
+}
+
+// #demo appendix: per-construct model fit + optimizer + captured warnings.
+function renderFitSummary() {
+  const host = document.getElementById("fitSummaryTable");
+  if (!host) return;
+  const fit = (DATA.model_adjusted_results && DATA.model_adjusted_results.fit_summary) || [];
+  const rows = fit.map((row) => [
+    constructLabel(row.construct),
+    row.converged ? "是" : "否",
+    row.optimizer_used || "—",
+    fmt(row.material_random_intercept_variance, 3),
+    fmt(row.residual_variance, 3),
+    warningText(row.captured_warnings),
+  ]);
+  replaceTable("fitSummaryTable",
+    tableFrom(["构念", "收敛", "使用的优化器", "材料随机截距方差", "残差方差", "记录的警告"],
+      rows, [3, 4]));
+}
+
+// #status: concentrated status notes.
+function renderStatus() {
+  const host = document.getElementById("statusNotes");
+  if (!host) return;
   host.innerHTML = "";
-  const scenarioId = DATA.scenarios[0];
-  const materials = DATA.scenario_materials[scenarioId] || [];
-  CONDS.forEach((condition) => {
-    const material = materials.find((item) => item.condition_id === condition && item.direction_version === "A");
-    if (material) host.appendChild(renderStim(material, scenarioId));
+  STATUS_NOTES.forEach((text) => host.appendChild(el("li", {}, text)));
+}
+
+// #status: reproduction and documentation entries. Static links only, so they
+// stay available even if the demo JSON fails to load.
+const REPO_BASE = "https://github.com/sherlock0717/llm-attribution-behavior-evaluation/";
+const REPO_PATH = "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot";
+
+function renderEntries() {
+  const host = document.getElementById("entryGrid");
+  if (!host) return;
+  host.innerHTML = "";
+  const tree = REPO_BASE + "tree/main/";
+  const blob = REPO_BASE + "blob/main/";
+  const links = [
+    ["浏览完整材料", "#materials"],
+    ["研究B说明", blob + "docs/CURRENT_STUDY_CARD.md"],
+    ["测量来源", blob + "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md"],
+    ["研究协议", blob + REPO_PATH + "/study_protocol.yaml"],
+    ["分析计划", blob + REPO_PATH + "/analysis_plan.md"],
+    ["评分规则", blob + REPO_PATH + "/scoring_spec.yaml"],
+    ["输出目录", tree + REPO_PATH + "/outputs/"],
+    ["GitHub仓库", REPO_BASE],
+  ];
+  links.forEach(([label, href]) => {
+    const attrs = href.startsWith("#")
+      ? { class: "entry-item", href }
+      : { class: "entry-item", href, target: "_blank", rel: "noopener" };
+    host.appendChild(el("a", attrs, el("strong", {}, label)));
   });
-}
-
-function renderBoundaries() {
-  const host = document.getElementById("boundaryList");
-  host.innerHTML = "";
-  BOUNDARY_TRANSLATIONS.forEach((text) => host.appendChild(el("li", {}, text)));
-}
-
-function renderReplacement() {
-  const host = document.getElementById("replacementList");
-  host.innerHTML = "";
-  REPLACEMENT_TRANSLATIONS.forEach((text) => host.appendChild(el("li", {}, text)));
-}
-
-function renderGithub() {
-  const entry = DATA.github_entry;
-  const host = document.getElementById("githubCard");
-  host.innerHTML = "";
-  const base = "https://github.com/sherlock0717/llm-attribution-behavior-evaluation/tree/main/";
-  host.appendChild(el("p", {}, "评测目录：", el("a", { href: base + entry.repo_path, target: "_blank", rel: "noopener" }, entry.repo_path)));
-  host.appendChild(el("p", {}, "输出目录：", el("a", { href: base + entry.repo_path + "/" + entry.outputs, target: "_blank", rel: "noopener" }, entry.outputs)));
-  host.appendChild(el("p", {}, "演示报告：", el("a", { href: base + entry.repo_path + "/" + entry.report, target: "_blank", rel: "noopener" }, entry.report)));
-  host.appendChild(el("p", { class: "small muted" }, "真实授权运行应写入独立运行目录，并保留当前合成演示版本，不直接覆盖。"));
+  host.appendChild(el("a", { class: "entry-item entry-back", href: "../" },
+    el("strong", {}, "返回项目总览")));
 }
 
 function setupImageFallbacks() {
@@ -731,14 +724,37 @@ function setupLightbox() {
 }
 
 function showLoadError(error) {
+  // 1. Hero status stays plain-language; the technical error is not shown here.
   const status = document.getElementById("loadStatus");
   status.className = "load-status error";
-  status.innerHTML = "";
-  status.appendChild(el("strong", {}, "数据加载失败。"));
-  status.appendChild(document.createTextNode(` ${String(error)}`));
-  const button = el("button", { type: "button" }, "重新加载");
-  button.addEventListener("click", () => load().catch(showLoadError));
-  status.appendChild(button);
+  status.textContent = "流程演示数据暂时未载入，研究设计和分析计划仍可浏览。";
+
+  // 2. Snapshot status reflects the pending data.
+  const snapshot = document.getElementById("snapshotStatus");
+  if (snapshot) snapshot.textContent = "页面数据待恢复";
+
+  // 3. Dynamic demo content is hidden; a clear error panel takes its place.
+  const content = document.getElementById("demoContent");
+  if (content) content.hidden = true;
+  enableBrowserControls(false);
+
+  const panel = document.getElementById("demoError");
+  if (panel) {
+    panel.hidden = false;
+    panel.innerHTML = "";
+    panel.appendChild(el("strong", {}, "流程演示数据未能载入"));
+    panel.appendChild(el("p", {}, "数据文件：data/showcase_data.json"));
+    const details = el("details", {},
+      el("summary", {}, "查看技术错误"),
+      el("p", { class: "tech-error" }, String(error)));
+    panel.appendChild(details);
+    const button = el("button", { type: "button" }, "重新加载");
+    button.addEventListener("click", () => load().catch(showLoadError));
+    panel.appendChild(button);
+  }
 }
 
+// Static research content initializes once; the retry path only re-fetches the
+// JSON and re-renders the dynamic slots, so listeners are bound a single time.
+renderStatic();
 load().catch(showLoadError);

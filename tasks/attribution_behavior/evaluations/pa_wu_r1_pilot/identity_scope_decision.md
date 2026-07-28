@@ -1,8 +1,9 @@
-# PA—Wu R1 Pilot — Identity Scope Decision
+# Study B — Machine Decision-Process Attribution — Identity Scope Decision
 
-This note records, on the record, the decision to run the R1 pilot as a
-**machine-only** study of the target subject, and why the earlier ai/human
-comparison is deliberately removed from R1.
+This note records, on the record, the decision to run the pilot as a
+**machine-only** study of the target subject, and why cross-subject ai/human
+comparison is kept as a separate research route. Internal IDs and repository
+paths are retained for compatibility.
 
 The decision is grounded in one hard constraint: the four primary Wu & Shen
 (2026) constructs are measured with **machine-specific original item wording**,

@@ -1353,7 +1353,7 @@
         "residual_variance": 0.331644,
         "optimizer_attempts": "lbfgs;cg",
         "optimizer_used": "cg",
-        "captured_warnings": NaN,
+        "captured_warnings": null,
         "converged": true,
         "data_status": "synthetic_demo"
       },
@@ -1413,7 +1413,7 @@
         "residual_variance": 0.204481,
         "optimizer_attempts": "lbfgs;cg",
         "optimizer_used": "cg",
-        "captured_warnings": NaN,
+        "captured_warnings": null,
         "converged": true,
         "data_status": "synthetic_demo"
       }
