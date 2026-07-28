@@ -2,8 +2,7 @@
 
 const DATA_ROOT = "../data/";
 const STATUS = document.getElementById("pageStatus");
-let completedGroups = 0;
-let failedGroups = 0;
+const GROUP_STATE = { story: "loading", measurement: "loading", analysis: "loading" };
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -34,13 +33,17 @@ async function fetchJson(name) {
 
 function updateStatus() {
   if (!STATUS) return;
-  if (failedGroups === 0 && completedGroups >= 3) {
+  const states = Object.values(GROUP_STATE);
+  const success = states.filter((state) => state === "success").length;
+  const error = states.filter((state) => state === "error").length;
+  const loading = states.filter((state) => state === "loading").length;
+  if (success === states.length) {
     STATUS.textContent = "公开研究数据已载入。";
     STATUS.dataset.kind = "success";
-  } else if (failedGroups > 0) {
-    STATUS.textContent = `已载入 ${completedGroups} 组数据；${failedGroups} 组数据可重新加载。`;
+  } else if (error > 0) {
+    STATUS.textContent = `已载入 ${success} 组数据；${error} 组数据提供重新加载入口。`;
     STATUS.dataset.kind = "partial";
-  } else {
+  } else if (loading > 0) {
     STATUS.textContent = "正在载入公开研究数据……";
     STATUS.dataset.kind = "loading";
   }
@@ -52,19 +55,21 @@ function errorPanel(targetId, title, error, retry) {
   target.innerHTML = `
     <div class="error-panel">
       <strong>${escapeHtml(title)}</strong>
-      <p>该数据区暂时没有载入，页面其他研究内容保持可读。</p>
+      <p>页面已保留静态研究说明，可重新载入该数据区。</p>
       <button type="button" class="retry-btn">重新加载</button>
       <details><summary>技术信息</summary><code>${escapeHtml(error.message || error)}</code></details>
     </div>`;
   target.querySelector("button")?.addEventListener("click", retry, { once: true });
 }
 
-async function loadGroup(loader) {
+async function runGroup(name, loader) {
+  GROUP_STATE[name] = "loading";
+  updateStatus();
   try {
     await loader();
-    completedGroups += 1;
+    GROUP_STATE[name] = "success";
   } catch (error) {
-    failedGroups += 1;
+    GROUP_STATE[name] = "error";
     throw error;
   } finally {
     updateStatus();
@@ -165,8 +170,9 @@ async function loadStoryGroup() {
     renderScenarios(story);
     renderTakeaways(story);
   } catch (error) {
-    errorPanel("scenarioCards", "场景数据", error, () => loadGroup(loadStoryGroup));
-    errorPanel("takeaways", "结果摘要", error, () => loadGroup(loadStoryGroup));
+    const retry = () => runGroup("story", loadStoryGroup);
+    errorPanel("scenarioCards", "场景数据", error, retry);
+    errorPanel("takeaways", "结果摘要", error, retry);
     throw error;
   }
 }
@@ -175,7 +181,7 @@ async function loadMeasurementGroup() {
   try {
     renderConstructs(await fetchJson("measurement_summary.json"));
   } catch (error) {
-    errorPanel("constructCards", "构念数据", error, () => loadGroup(loadMeasurementGroup));
+    errorPanel("constructCards", "构念数据", error, () => runGroup("measurement", loadMeasurementGroup));
     throw error;
   }
 }
@@ -187,18 +193,19 @@ async function loadAnalysisGroup() {
     renderIdentityEffects(results);
     renderContrasts(results);
   } catch (error) {
+    const retry = () => runGroup("analysis", loadAnalysisGroup);
     for (const [id, title] of [
       ["conditionTable", "条件均值"],
       ["identityEffects", "身份效应"],
       ["contrastTables", "条件比较"],
-    ]) errorPanel(id, title, error, () => loadGroup(loadAnalysisGroup));
+    ]) errorPanel(id, title, error, retry);
     throw error;
   }
 }
 
 updateStatus();
 Promise.allSettled([
-  loadGroup(loadStoryGroup),
-  loadGroup(loadMeasurementGroup),
-  loadGroup(loadAnalysisGroup),
+  runGroup("story", loadStoryGroup),
+  runGroup("measurement", loadMeasurementGroup),
+  runGroup("analysis", loadAnalysisGroup),
 ]);
