@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="研究A：身份标签与决策过程如何影响语言模型对行动者的归因评分。" />
+  <title>研究A｜身份与决策过程归因基线</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">研究A · LLM行动者归因评测</p>
+        <h1>身份与决策过程归因基线</h1>
+        <p class="subtitle">身份标签与六类决策过程如何改变模型对行动者的归因评分</p>
+        <p class="lead">研究A记录DeepSeek模型在六类决策过程与两种身份标签下形成的归因反应。现有资产包含360条API模型模拟问卷响应、34个情境化题项、构念得分、条件比较、场景材料和复现脚本。</p>
+        <p class="lead">页面将研究问题、数据组成、测量结构和已有分析集中展示。扩展路线包括跨模型运行、Prompt盲化、场景级区组分析和测量结构复核。</p>
+        <div class="actions">
+          <a class="btn primary" href="#design">查看研究设计</a>
+          <a class="btn" href="#results">查看结果</a>
+          <a class="btn" href="#repro">查看复现入口</a>
+          <a class="btn" href="../">返回项目总览</a>
+        </div>
+      </div>
+      <aside class="snapshot" aria-label="研究快照">
+        <h2>研究快照</h2>
+        <dl id="heroFacts" class="fact-grid">
+          <div><dt>过程条件</dt><dd>6</dd></div>
+          <div><dt>身份标签</dt><dd>2</dd></div>
+          <div><dt>场景</dt><dd>8</dd></div>
+          <div><dt>记录</dt><dd>360</dd></div>
+          <div><dt>题项</dt><dd>34</dd></div>
+          <div><dt>数据类型</dt><dd>API模型模拟问卷响应</dd></div>
+        </dl>
+      </aside>
+      <div id="pageStatus" class="status" role="status" aria-live="polite">正在载入公开研究数据……</div>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="研究A页面导航">
+    <div class="wrap">
+      <a href="#question">研究问题</a>
+      <a href="#design">设计</a>
+      <a href="#materials">材料</a>
+      <a href="#measurement">测量</a>
+      <a href="#data">数据</a>
+      <a href="#analysis">分析</a>
+      <a href="#results">结果</a>
+      <a href="#repro">复现</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <section id="question" class="section">
+      <div class="wrap">
+        <p class="section-index">01</p>
+        <h2>研究问题</h2>
+        <p class="reading">研究A考察两类线索如何共同影响语言模型的行动者归因。第一类是身份标签：同一决策过程被标记为AI决策者或人类决策者。第二类是过程表述：材料从直接给出选择，扩展到候选方案、理由权衡、反思反馈和后续修正。</p>
+        <div class="question-grid">
+          <article><h3>过程线索</h3><p>模型是否根据材料中呈现的方案、理由和反馈结构调整能动性、自由意志、自主性与责任评分。</p></article>
+          <article><h3>身份线索</h3><p>同一过程结构被标记为AI或人类时，归因评分如何变化。</p></article>
+          <article><h3>关联结构</h3><p>能动性、感知智能和自由意志归因在同一批模型响应中呈现怎样的关联模式。</p></article>
+        </div>
+        <p class="reading note">当前结果描述单一DeepSeek配置在本材料集与问卷模拟Prompt中的归因反应。研究A的扩展路线将加入跨模型、跨Prompt和场景级复核。</p>
+      </div>
+    </section>
+
+    <section id="design" class="section soft">
+      <div class="wrap">
+        <p class="section-index">02</p>
+        <h2>身份与决策过程设计</h2>
+        <p class="reading">研究采用6×2设计：六类过程条件与AI/人类两种身份标签组合。长文本直接选择与简洁理由权衡承担诊断功能，用于把文本长度和理由结构分开观察。</p>
+        <div id="processCards" class="card-grid" aria-live="polite">
+          <article><h3>直接选择</h3><p>只给出情境和最终选择，作为最低过程信息条件。</p></article>
+          <article><h3>长文本直接选择</h3><p>扩写背景信息，同时保持没有候选比较和理由结构。</p></article>
+          <article><h3>列出可选方案</h3><p>明确呈现两个候选行动，再给出最终选择。</p></article>
+          <article><h3>简洁理由权衡</h3><p>在较短文本中加入最小理由比较。</p></article>
+          <article><h3>完整理由权衡</h3><p>从多项后果和可调整性角度比较方案。</p></article>
+          <article><h3>反思与反馈修正</h3><p>在理由之后加入反思、反馈和后续修正。</p></article>
+        </div>
+        <div class="design-equation" aria-label="实验设计">6类过程 × 2种身份 × 每格30条记录 = 360条响应</div>
+      </div>
+    </section>
+
+    <section id="materials" class="section">
+      <div class="wrap">
+        <p class="section-index">03</p>
+        <h2>场景与材料</h2>
+        <p class="reading">八个场景覆盖道德冲突、自我控制、人际关系、风险决策、责任困境与服从自主。每个场景提供情境、两个候选行动和固定选择，六种过程模板在同一场景骨架上展开。</p>
+        <div id="scenarioCards" class="scenario-grid"><p class="loading">正在载入场景……</p></div>
+      </div>
+    </section>
+
+    <section id="measurement" class="section soft">
+      <div class="wrap">
+        <p class="section-index">04</p>
+        <h2>构念与题项内部一致性</h2>
+        <p class="reading">研究A使用34个情境化归因题项，覆盖事实操纵检验、主观过程完整性、能动性、自由意志归因、自主性、体验感受、感知智能以及三类责任归因。题项来源于既有理论与量表构念，并根据决策材料改写。</p>
+        <p class="reading">Cronbach α在本页中用于描述同一构念题项在这批模型响应中的协同变化。构念解释同时结合题项来源、评分范围、场景变化和后续跨模型复核。</p>
+        <div id="constructCards" class="construct-grid"><p class="loading">正在载入构念……</p></div>
+        <div class="entry-links">
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/research_and_measurement_sources.md">研究A测量来源</a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/scale_source_mapping.md">逐题来源映射</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="data" class="section">
+      <div class="wrap">
+        <p class="section-index">05</p>
+        <h2>数据组成</h2>
+        <div class="data-callout">
+          <h3>DeepSeek API模型模拟问卷响应</h3>
+          <p>每条记录对应一次模型在指定身份标签、过程条件、场景和persona下完成结构化题项评分。记录用于描述该模型配置在研究A材料中的响应模式。</p>
+        </div>
+        <div class="data-grid">
+          <article><h3>设计字段</h3><p>身份标签、过程条件、场景、领域、选择倾向与文本长度。</p></article>
+          <article><h3>响应字段</h3><p>34个题项评分、操纵检验、简短理由和解析状态。</p></article>
+          <article><h3>聚合字段</h3><p>构念均值、责任总分、条件均值与场景汇总。</p></article>
+          <article><h3>来源记录</h3><p>历史API来源声明、公开输出文件与哈希清单。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="analysis" class="section soft">
+      <div class="wrap">
+        <p class="section-index">06</p>
+        <h2>分析方法</h2>
+        <p class="reading">页面将分析分成三层。第一层描述六个过程条件与两种身份标签下的构念均值。第二层使用预先定义的条件比较，读取候选方案、理由结构和反思反馈对应的评分差异。第三层整理场景变化和探索性关联路径。</p>
+        <div class="analysis-grid">
+          <article><h3>分类条件比较</h3><p>将六个过程条件作为分类变量，读取具体条件之间的差异。</p></article>
+          <article><h3>场景区组视角</h3><p>按场景组织条件结果，呈现方向一致数、场景范围和留一场景复核。</p></article>
+          <article><h3>探索性关联路径</h3><p>描述过程结构、能动性、感知智能和自由意志归因之间的关联模式。</p></article>
+        </div>
+        <p class="reading note">旧版OLS、计划对比和Bootstrap产物作为既有探索性分析保留。研究A V2将把场景×身份×过程条件作为核心组织单元，生成场景级差异与方向一致性结果。</p>
+      </div>
+    </section>
+
+    <section id="results" class="section">
+      <div class="wrap">
+        <p class="section-index">07</p>
+        <h2>已有结果</h2>
+        <p class="reading">现有结果集中呈现该DeepSeek配置在研究A材料中的归因模式。能动性在理由与反思反馈条件下表现出较清晰的上升结构；身份标签在自由意志、体验和责任相关评分中对应系统性差异；自由意志归因与能动性之间呈现较强关联。</p>
+        <div id="takeaways" class="takeaways"><p class="loading">正在载入结果摘要……</p></div>
+
+        <h3>五个构念的条件均值</h3>
+        <p class="reading">表格保留1—7原量尺，便于直接查看每个构念在六种过程条件中的位置。</p>
+        <div id="conditionTable" class="table-scroll"><p class="loading">正在载入条件均值……</p></div>
+
+        <h3>身份标签对应的评分差异</h3>
+        <p class="reading">效应量使用固定0—1轴呈现。条长统一对应partial η²，便于在同一图中读取差异幅度。</p>
+        <div id="identityEffects" class="effect-list"><p class="loading">正在载入身份效应……</p></div>
+
+        <h3>预先指定的条件比较</h3>
+        <p class="reading">表格列出均值差、t和p；颜色不承担显著性判断，读者可结合具体比较与分析单位阅读。</p>
+        <div id="contrastTables" class="contrast-groups"><p class="loading">正在载入条件比较……</p></div>
+
+        <details class="legacy-details">
+          <summary>查看既有分析图</summary>
+          <div class="figure-grid">
+            <figure><img src="../assets/figures/mean_agency.png" alt="六个过程条件下的能动性均值图" /><figcaption>能动性条件均值</figcaption></figure>
+            <figure><img src="../assets/figures/mean_free_will_attribution.png" alt="六个过程条件下的自由意志归因均值图" /><figcaption>自由意志归因条件均值</figcaption></figure>
+            <figure><img src="../assets/figures/mean_subjective_process_completeness.png" alt="六个过程条件下的主观过程完整性均值图" /><figcaption>主观过程完整性条件均值</figcaption></figure>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="repro" class="section soft">
+      <div class="wrap">
+        <p class="section-index">08</p>
+        <h2>运行与复现</h2>
+        <p class="reading">仓库保存研究A的刺激定义、题项、分析代码、聚合输出、证据声明和工程运行器。新运行使用独立目录保存配置快照、Prompt、原始响应、规范化响应、计分结果和运行清单。</p>
+        <div class="code-block"><code>uv sync --frozen
+python -m freewill_attribution.cli run --mock --n-per-cell 2 --out &lt;临时目录&gt;
+python scripts/assemble_pages.py --output _site
+python -m http.server 8000 --directory _site</code></div>
+        <div class="entry-links grid">
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/research_design_blueprint.md">研究A设计蓝图</a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/outputs/final_simulated_pilot_report.md">研究A结果报告</a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/audit/v1_provenance_statement.md">数据来源声明</a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation">GitHub仓库</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <strong>LLM行动者归因评测 · 研究A</strong>
+      <p>身份与决策过程归因基线记录模型在不同身份和过程材料下的归因反应，并为跨模型与测量深化提供统一起点。</p>
+    </div>
+  </footer>
+  <script src="app.js" defer></script>
+</body>
+</html>
