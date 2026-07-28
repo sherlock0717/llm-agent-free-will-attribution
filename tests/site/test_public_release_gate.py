@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import math
 import re
 import sys
 from pathlib import Path
@@ -24,6 +25,7 @@ def _load(path: Path, name: str):
 
 assemble_pages = _load(ROOT / "scripts" / "assemble_pages.py", "assemble_pages_release_gate")
 check_public_json = _load(ROOT / "scripts" / "check_public_json.py", "check_public_json_release_gate")
+public_json = _load(ROOT / "scripts" / "public_json.py", "public_json_release_gate")
 
 
 def test_research_a_public_page_has_complete_structure():
@@ -67,17 +69,14 @@ def test_strict_json_checker_rejects_nan(tmp_path: Path):
         check_public_json.validate_file(invalid)
 
 
+def test_public_json_writer_normalizes_non_finite_values():
+    text = public_json.dumps({"nan": math.nan, "pos": math.inf, "neg": -math.inf})
+    assert "NaN" not in text and "Infinity" not in text
+    assert json.loads(text) == {"nan": None, "neg": None, "pos": None}
+
+
 def test_repository_public_json_is_browser_compatible():
-    paths = [
-        ROOT / "site" / "data",
-        ROOT / "docs" / "pa-wu-r1-pilot" / "data",
-        ROOT
-        / "tasks"
-        / "attribution_behavior"
-        / "evaluations"
-        / "pa_wu_r1_pilot"
-        / "outputs",
-    ]
+    paths = list(check_public_json.DEFAULT_PATHS)
     files = check_public_json._iter_json_files(paths)
     assert files
     for path in files:
