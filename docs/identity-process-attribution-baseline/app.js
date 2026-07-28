@@ -3,6 +3,13 @@
 const DATA_ROOT = "../data/";
 const STATUS = document.getElementById("pageStatus");
 const GROUP_STATE = { story: "loading", measurement: "loading", analysis: "loading" };
+const PUBLIC_TAKEAWAYS = [
+  "在该DeepSeek配置中，能动性评分从直接选择到理由与反思反馈条件总体抬升。",
+  "AI与人类身份标签对应了自由意志、体验与责任相关评分的系统差异。",
+  "加入感知智能和文本长度后，能动性的过程条件差异保持清晰，自由意志的直接过程差异接近零。",
+  "能动性与自由意志归因在这批响应中呈现较强关联，研究A V2进一步以场景级差异检查这一模式。",
+  "研究A结果描述该模型配置在本材料集与问卷模拟Prompt中的归因反应。",
+];
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -78,8 +85,7 @@ async function runGroup(name, loader) {
 
 function renderScenarios(story) {
   const target = document.getElementById("scenarioCards");
-  const rows = story.scenarios || [];
-  target.innerHTML = rows.map((row) => `
+  target.innerHTML = (story.scenarios || []).map((row) => `
     <article class="scenario-card">
       <div class="card-head"><span>${escapeHtml(row.domain)}</span><code>${escapeHtml(row.id)}</code></div>
       <h3>${escapeHtml(row.label)}</h3>
@@ -94,8 +100,7 @@ function renderScenarios(story) {
 
 function renderConstructs(measurement) {
   const target = document.getElementById("constructCards");
-  const rows = measurement.constructs || [];
-  target.innerHTML = rows.map((row) => `
+  target.innerHTML = (measurement.constructs || []).map((row) => `
     <article class="construct-card">
       <div class="card-head"><span>${escapeHtml(row.role)}</span><code>${escapeHtml(row.key)}</code></div>
       <h3>${escapeHtml(row.label)}</h3>
@@ -109,9 +114,8 @@ function renderConstructs(measurement) {
     </article>`).join("");
 }
 
-function renderTakeaways(story) {
-  const target = document.getElementById("takeaways");
-  target.innerHTML = `<ol>${(story.result_takeaways || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>`;
+function renderTakeaways() {
+  document.getElementById("takeaways").innerHTML = `<ol>${PUBLIC_TAKEAWAYS.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>`;
 }
 
 function renderConditionTable(results) {
@@ -121,58 +125,55 @@ function renderConditionTable(results) {
   const labels = profile.condition_labels || {};
   const series = profile.series || [];
   const values = Object.fromEntries(series.map((row) => [row.construct, Object.fromEntries(row.points.map((point) => [point.condition, point.value]))]));
-
-  target.innerHTML = `
-    <table>
-      <thead><tr><th>过程条件</th>${series.map((row) => `<th>${escapeHtml(row.label)}</th>`).join("")}</tr></thead>
-      <tbody>${conditions.map((condition) => `
-        <tr>
-          <th>${escapeHtml(labels[condition] || condition)}</th>
-          ${series.map((row) => `<td>${formatNumber(values[row.construct]?.[condition])}</td>`).join("")}
-        </tr>`).join("")}</tbody>
-    </table>`;
+  target.innerHTML = `<table><thead><tr><th>过程条件</th>${series.map((row) => `<th>${escapeHtml(row.label)}</th>`).join("")}</tr></thead><tbody>${conditions.map((condition) => `<tr><th>${escapeHtml(labels[condition] || condition)}</th>${series.map((row) => `<td>${formatNumber(values[row.construct]?.[condition])}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
 }
 
 function renderIdentityEffects(results) {
   const target = document.getElementById("identityEffects");
-  const effects = results.identity_effect?.effects || [];
-  target.innerHTML = effects.map((row) => {
+  target.innerHTML = (results.identity_effect?.effects || []).map((row) => {
     const eta = Math.max(0, Math.min(1, Number(row.partial_eta_sq) || 0));
-    const means = Object.entries(row.means_by_identity || {})
-      .map(([label, value]) => `${escapeHtml(label)} ${formatNumber(value)}`)
-      .join(" · ");
-    return `
-      <article class="effect-row">
-        <div class="effect-label"><strong>${escapeHtml(row.label)}</strong><span>${means}</span></div>
-        <div class="effect-track" aria-label="partial eta squared ${formatNumber(eta)}"><span style="width:${eta * 100}%"></span></div>
-        <div class="effect-stat">η²p=${formatNumber(eta)} · F=${formatNumber(row.F, 2)} · p ${formatP(row.p)}</div>
-      </article>`;
+    const means = Object.entries(row.means_by_identity || {}).map(([label, value]) => `${escapeHtml(label)} ${formatNumber(value)}`).join(" · ");
+    return `<article class="effect-row"><div class="effect-label"><strong>${escapeHtml(row.label)}</strong><span>${means}</span></div><div class="effect-track" aria-label="partial eta squared ${formatNumber(eta)}"><span style="width:${eta * 100}%"></span></div><div class="effect-stat">η²p=${formatNumber(eta)} · F=${formatNumber(row.F, 2)} · p ${formatP(row.p)}</div></article>`;
   }).join("");
 }
 
 function renderContrasts(results) {
   const target = document.getElementById("contrastTables");
-  const groups = results.planned_contrasts?.groups || [];
-  target.innerHTML = groups.map((group) => `
-    <article class="contrast-group">
-      <h3>${escapeHtml(group.label)}</h3>
-      <div class="table-scroll"><table>
-        <thead><tr><th>比较</th><th>均值A</th><th>均值B</th><th>差值</th><th>t</th><th>p</th></tr></thead>
-        <tbody>${group.contrasts.map((row) => `
-          <tr><th>${escapeHtml(row.label)}</th><td>${formatNumber(row.mean_a)}</td><td>${formatNumber(row.mean_b)}</td><td>${formatNumber(row.diff)}</td><td>${formatNumber(row.t)}</td><td>${formatP(row.p)}</td></tr>`).join("")}</tbody>
-      </table></div>
-    </article>`).join("");
+  target.innerHTML = (results.planned_contrasts?.groups || []).map((group) => `
+    <article class="contrast-group"><h3>${escapeHtml(group.label)}</h3><div class="table-scroll"><table>
+      <thead><tr><th>比较</th><th>均值A</th><th>均值B</th><th>差值</th><th>t</th><th>p</th></tr></thead>
+      <tbody>${group.contrasts.map((row) => `<tr><th>${escapeHtml(row.label)}</th><td>${formatNumber(row.mean_a)}</td><td>${formatNumber(row.mean_b)}</td><td>${formatNumber(row.diff)}</td><td>${formatNumber(row.t)}</td><td>${formatP(row.p)}</td></tr>`).join("")}</tbody>
+    </table></div></article>`).join("");
+}
+
+function prepareLegacyInferenceDetails() {
+  const identity = document.getElementById("identityEffects");
+  const contrasts = document.getElementById("contrastTables");
+  if (!identity || !contrasts || identity.closest("details")) return;
+  const firstHeading = identity.previousElementSibling?.previousElementSibling;
+  const firstNote = identity.previousElementSibling;
+  const secondHeading = contrasts.previousElementSibling?.previousElementSibling;
+  const secondNote = contrasts.previousElementSibling;
+  if (![firstHeading, firstNote, secondHeading, secondNote].every(Boolean)) return;
+  const details = document.createElement("details");
+  details.className = "legacy-details inferential-details";
+  const summary = document.createElement("summary");
+  summary.textContent = "查看既有推断性分析";
+  const body = document.createElement("div");
+  body.className = "legacy-analysis-body";
+  firstHeading.before(details);
+  details.append(summary, body);
+  body.append(firstHeading, firstNote, identity, secondHeading, secondNote, contrasts);
 }
 
 async function loadStoryGroup() {
   try {
-    const story = await fetchJson("showcase_story.json");
-    renderScenarios(story);
-    renderTakeaways(story);
+    renderScenarios(await fetchJson("showcase_story.json"));
+    renderTakeaways();
   } catch (error) {
     const retry = () => runGroup("story", loadStoryGroup);
     errorPanel("scenarioCards", "场景数据", error, retry);
-    errorPanel("takeaways", "结果摘要", error, retry);
+    renderTakeaways();
     throw error;
   }
 }
@@ -194,15 +195,13 @@ async function loadAnalysisGroup() {
     renderContrasts(results);
   } catch (error) {
     const retry = () => runGroup("analysis", loadAnalysisGroup);
-    for (const [id, title] of [
-      ["conditionTable", "条件均值"],
-      ["identityEffects", "身份效应"],
-      ["contrastTables", "条件比较"],
-    ]) errorPanel(id, title, error, retry);
+    for (const [id, title] of [["conditionTable", "条件均值"], ["identityEffects", "身份效应"], ["contrastTables", "条件比较"]]) errorPanel(id, title, error, retry);
     throw error;
   }
 }
 
+prepareLegacyInferenceDetails();
+renderTakeaways();
 updateStatus();
 Promise.allSettled([
   runGroup("story", loadStoryGroup),
