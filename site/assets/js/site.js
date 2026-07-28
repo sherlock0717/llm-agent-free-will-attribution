@@ -5,6 +5,11 @@ function text(id, value) {
   if (node && value != null) node.textContent = String(value);
 }
 
+function selectFacts(facts, keys) {
+  const byKey = new Map((facts || []).map((fact) => [fact.key, fact]));
+  return keys.map((key) => byKey.get(key)).filter(Boolean);
+}
+
 function renderFacts(id, facts) {
   const host = document.getElementById(id);
   if (!host || !Array.isArray(facts)) return;
@@ -34,8 +39,24 @@ function renderStory(story) {
   if (!program || !studyA || !studyB) throw new Error("研究计划数据缺少研究A或研究B");
 
   renderFacts("programFacts", program.core_facts);
-  renderFacts("studyAFacts", studyA.core_facts);
-  renderFacts("studyBFacts", studyB.core_facts);
+  renderFacts(
+    "studyAFacts",
+    selectFacts(studyA.core_facts, [
+      "process_identity_design",
+      "scenario_count",
+      "model_output_count",
+      "model_configuration",
+    ]),
+  );
+  renderFacts(
+    "studyBFacts",
+    selectFacts(studyB.core_facts, [
+      "condition_count",
+      "scenario_count",
+      "material_count",
+      "data_status",
+    ]),
+  );
   text("studyATitle", studyA.title_zh);
   text("studyBTitle", studyB.title_zh);
   text("studyAStatus", studyA.evidence_status_zh);
