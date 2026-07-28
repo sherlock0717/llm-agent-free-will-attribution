@@ -465,3 +465,20 @@ def test_captured_warnings_null_shows_placeholder():
     assert "无记录" in JS
     warn_fn = JS.split("function warningText(", 1)[1].split("\n}", 1)[0]
     assert "无记录" in warn_fn
+
+
+# --- 11. final research-copy refinements ------------------------------------
+
+def test_html_free_of_time_and_comparative_negations():
+    for token in ["研究A在早期探索", "而不是机器主体本身", "这些都不依赖真实模型输出"]:
+        assert token not in HTML, token
+
+
+def test_html_has_precise_p_value_definition():
+    assert "在零假设成立时，获得当前检验统计量或更极端值的概率" in HTML
+
+
+def test_render_report_docstring_free_of_stacked_negations():
+    head = RENDER_REPORT.read_text(encoding="utf-8").split('"""', 2)[1]
+    assert "MACHINE-ONLY R1" not in head
+    assert "NO ai/human" not in head

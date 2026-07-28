@@ -1,15 +1,17 @@
-"""Render the demo report and >=5 figures from the scored / analyzed demo data.
+"""
+Render the Study B flow-demonstration report and five scale-safe figures.
 
-MACHINE-ONLY R1: the target subject is an AI system. There is NO ai/human
-comparison. All figures carry the label "Synthetic demonstration data" and
-describe no real model result, capability, ranking or empirical theory support.
+Study B examines how decision information, feedback, and post-feedback
+behavior shape LLM judges' attribution to a machine subject. The report uses
+the existing workflow-demonstration scores and keeps each construct on its
+native scale. Figure 4 uses theoretical-scale 0–1 positions for display.
 
 Figures:
-  1. six conditions x four primary constructs mean plot
-  2. model-adjusted estimated-marginal contrast forest (P1..P6, primary)
-  3. two judge-model construct profile plot (not a ranking)
-  4. scenario x construct heatmap
-  5. raw descriptive planned-contrast forest (P1..P6, primary)
+  1. Condition means for the four primary constructs
+  2. Model-adjusted planned contrasts
+  3. Judge-model profiles by construct
+  4. Scenario-by-construct theoretical-scale heatmap
+  5. Raw descriptive planned contrasts
 """
 
 from __future__ import annotations
