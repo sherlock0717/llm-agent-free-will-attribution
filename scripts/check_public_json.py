@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Validate every public JSON asset with browser-compatible strict parsing.
+"""Validate public JSON assets with browser-compatible strict parsing.
 
 Python's default ``json.loads`` accepts NaN and Infinity, while browsers reject
 those tokens. This script rejects non-standard constants and verifies that all
@@ -18,8 +18,14 @@ from typing import Any, Iterable
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PATHS = (
     ROOT / "site" / "data",
-    ROOT / "docs" / "pa-wu-r1-pilot" / "data",
-    ROOT / "tasks" / "attribution_behavior" / "evaluations" / "pa_wu_r1_pilot" / "outputs",
+    ROOT / "docs" / "pa-wu-r1-pilot" / "data" / "showcase_data.json",
+    ROOT
+    / "tasks"
+    / "attribution_behavior"
+    / "evaluations"
+    / "pa_wu_r1_pilot"
+    / "outputs"
+    / "showcase_data.json",
 )
 
 
@@ -71,11 +77,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "paths",
         nargs="*",
-        help="Files or directories to scan. Defaults to all public data directories.",
+        help="Files or directories to scan. Defaults to the published data assets.",
     )
     args = parser.parse_args(argv)
 
     paths = [Path(value).resolve() for value in args.paths] if args.paths else list(DEFAULT_PATHS)
+    missing_paths = [str(path) for path in paths if not path.exists()]
+    if missing_paths:
+        print("check_public_json: ERROR: public paths missing: " + ", ".join(missing_paths), file=sys.stderr)
+        return 2
+
     files = _iter_json_files(paths)
     if not files:
         print("check_public_json: ERROR: no JSON files found", file=sys.stderr)
