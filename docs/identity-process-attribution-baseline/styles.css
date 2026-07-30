@@ -82,7 +82,7 @@ h1 { margin: 0 0 8px; max-width: 760px; font-size: clamp(2.4rem, 5vw, 4rem); let
 .entry-links.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
 .takeaways ol { max-width: var(--reading); padding-left: 24px; display: grid; gap: 10px; }
-.table-scroll { overflow-x: auto; margin: 12px 0 28px; }
+.table-scroll { overflow-x: auto; max-width: 100%; margin: 12px 0 28px; }
 table { width: 100%; min-width: 720px; border-collapse: collapse; background: #fff; }
 th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
 thead th { background: #172033; color: #fff; }
