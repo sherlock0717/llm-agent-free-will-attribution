@@ -1,0 +1,48 @@
+# Study B offline research protocol manifest.
+#
+# This manifest freezes the offline research scope. It records protocol
+# metadata and source paths only. It contains no API URL, no API key field,
+# no token budget, no cost, no concurrency, no timeout, no retry policy and
+# no online model state. Judge model ids are protocol metadata only and
+# must never be used to originate a call.
+
+program_name: LLM行动者归因评测
+study_name: 机器主体决策过程归因
+source_commit: 9cb4aae1e3010f90b2a9c34ae87111b5e373de59
+protocol_date: 2026-07-30
+protocol_scope: offline_protocol_and_import
+material_count: 96
+condition_count: 6
+scenario_count: 8
+direction_count: 2
+construct_ids: [IN, GO, MSI, IC]
+supplementary_score_ids: [PA5, PA8]
+contrast_ids: [P1, P2, P3, P4, P5, P6]
+analysis_formula: >-
+  construct_score ~ C(condition_id) * C(judge_model_id) + C(direction_version) + C(scenario_id); random intercept: material_id
+
+judge_models:
+  protocol_metadata_only: true
+  models:
+    - deepseek-v4-pro
+    - gpt-5.6-terra
+
+material_source_paths:
+  - tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/stimuli.jsonl
+  - tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/condition_matrix.csv
+item_source_paths:
+  - tasks/attribution_behavior/measurement_candidates/pa_wu_p0/items_wu_shen_2026.yaml
+  - tasks/attribution_behavior/measurement_candidates/pa_wu_p0/items_pa_2024.yaml
+  - tasks/attribution_behavior/measurement_candidates/pa_wu_p0/forms.yaml
+scoring_spec_paths:
+  - tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/scoring_spec.yaml
+analysis_plan_paths:
+  - tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/analysis_plan.md
+  - tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/study_protocol.yaml
+example_data_paths:
+  - docs/pa-wu-r1-pilot/data/showcase_data.json
+  - research_packages/study_b/external_result_example.jsonl
+public_page_paths:
+  - docs/pa-wu-r1-pilot/index.html
+  - /machine-decision-process-attribution/
+

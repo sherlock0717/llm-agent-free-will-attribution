@@ -1,1 +1,7 @@
 *.sh text eol=lf
+
+# The Study B offline research package and demo chain are generated with LF and
+# verified byte-for-byte by --check; pin them to LF so the check is stable on
+# every platform.
+research_packages/study_b/** text eol=lf
+runs/study_b_offline_demo/** text eol=lf

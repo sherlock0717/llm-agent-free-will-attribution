@@ -1,0 +1,402 @@
+{
+  "condition_means": {
+    "GO": {
+      "C0": 4.4453,
+      "C1": 3.7891,
+      "C2": 4.4766,
+      "C3": 4.5391,
+      "C4": 4.1406,
+      "C5": 4.3906
+    },
+    "IC": {
+      "C0": 4.1813,
+      "C1": 4.4688,
+      "C2": 4.3312,
+      "C3": 4.35,
+      "C4": 4.325,
+      "C5": 4.6375
+    },
+    "IN": {
+      "C0": 4.4141,
+      "C1": 4.5234,
+      "C2": 4.5547,
+      "C3": 4.4922,
+      "C4": 4.4219,
+      "C5": 4.4844
+    },
+    "MSI": {
+      "C0": 3.401,
+      "C1": 3.3177,
+      "C2": 3.5469,
+      "C3": 3.5312,
+      "C4": 3.4219,
+      "C5": 3.4063
+    },
+    "PA5": {
+      "C0": 3.4188,
+      "C1": 3.3375,
+      "C2": 3.5,
+      "C3": 3.4688,
+      "C4": 3.2188,
+      "C5": 3.35
+    },
+    "PA8": {
+      "C0": 3.2969,
+      "C1": 3.3125,
+      "C2": 3.5312,
+      "C3": 3.5156,
+      "C4": 3.3516,
+      "C5": 3.418
+    }
+  },
+  "construct_ids": [
+    "IN",
+    "GO",
+    "MSI",
+    "IC",
+    "PA5",
+    "PA8"
+  ],
+  "contrast_ids": [
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6"
+  ],
+  "contrasts": [
+    {
+      "construct": "IN",
+      "contrast_id": "P1",
+      "left": "C1",
+      "raw_mean_difference": 0.1093,
+      "right": "C0"
+    },
+    {
+      "construct": "IN",
+      "contrast_id": "P2",
+      "left": "C2",
+      "raw_mean_difference": 0.1406,
+      "right": "C0"
+    },
+    {
+      "construct": "IN",
+      "contrast_id": "P3",
+      "left": "C3",
+      "raw_mean_difference": -0.0625,
+      "right": "C2"
+    },
+    {
+      "construct": "IN",
+      "contrast_id": "P4",
+      "left": "C4",
+      "raw_mean_difference": -0.1328,
+      "right": "C2"
+    },
+    {
+      "construct": "IN",
+      "contrast_id": "P5",
+      "left": "C5",
+      "raw_mean_difference": -0.0703,
+      "right": "C2"
+    },
+    {
+      "construct": "IN",
+      "contrast_id": "P6",
+      "left": "C5",
+      "raw_mean_difference": 0.0625,
+      "right": "C4"
+    },
+    {
+      "construct": "GO",
+      "contrast_id": "P1",
+      "left": "C1",
+      "raw_mean_difference": -0.6562,
+      "right": "C0"
+    },
+    {
+      "construct": "GO",
+      "contrast_id": "P2",
+      "left": "C2",
+      "raw_mean_difference": 0.0313,
+      "right": "C0"
+    },
+    {
+      "construct": "GO",
+      "contrast_id": "P3",
+      "left": "C3",
+      "raw_mean_difference": 0.0625,
+      "right": "C2"
+    },
+    {
+      "construct": "GO",
+      "contrast_id": "P4",
+      "left": "C4",
+      "raw_mean_difference": -0.336,
+      "right": "C2"
+    },
+    {
+      "construct": "GO",
+      "contrast_id": "P5",
+      "left": "C5",
+      "raw_mean_difference": -0.086,
+      "right": "C2"
+    },
+    {
+      "construct": "GO",
+      "contrast_id": "P6",
+      "left": "C5",
+      "raw_mean_difference": 0.25,
+      "right": "C4"
+    },
+    {
+      "construct": "MSI",
+      "contrast_id": "P1",
+      "left": "C1",
+      "raw_mean_difference": -0.0833,
+      "right": "C0"
+    },
+    {
+      "construct": "MSI",
+      "contrast_id": "P2",
+      "left": "C2",
+      "raw_mean_difference": 0.1459,
+      "right": "C0"
+    },
+    {
+      "construct": "MSI",
+      "contrast_id": "P3",
+      "left": "C3",
+      "raw_mean_difference": -0.0157,
+      "right": "C2"
+    },
+    {
+      "construct": "MSI",
+      "contrast_id": "P4",
+      "left": "C4",
+      "raw_mean_difference": -0.125,
+      "right": "C2"
+    },
+    {
+      "construct": "MSI",
+      "contrast_id": "P5",
+      "left": "C5",
+      "raw_mean_difference": -0.1406,
+      "right": "C2"
+    },
+    {
+      "construct": "MSI",
+      "contrast_id": "P6",
+      "left": "C5",
+      "raw_mean_difference": -0.0156,
+      "right": "C4"
+    },
+    {
+      "construct": "IC",
+      "contrast_id": "P1",
+      "left": "C1",
+      "raw_mean_difference": 0.2875,
+      "right": "C0"
+    },
+    {
+      "construct": "IC",
+      "contrast_id": "P2",
+      "left": "C2",
+      "raw_mean_difference": 0.1499,
+      "right": "C0"
+    },
+    {
+      "construct": "IC",
+      "contrast_id": "P3",
+      "left": "C3",
+      "raw_mean_difference": 0.0188,
+      "right": "C2"
+    },
+    {
+      "construct": "IC",
+      "contrast_id": "P4",
+      "left": "C4",
+      "raw_mean_difference": -0.0062,
+      "right": "C2"
+    },
+    {
+      "construct": "IC",
+      "contrast_id": "P5",
+      "left": "C5",
+      "raw_mean_difference": 0.3063,
+      "right": "C2"
+    },
+    {
+      "construct": "IC",
+      "contrast_id": "P6",
+      "left": "C5",
+      "raw_mean_difference": 0.3125,
+      "right": "C4"
+    },
+    {
+      "construct": "PA5",
+      "contrast_id": "P1",
+      "left": "C1",
+      "raw_mean_difference": -0.0813,
+      "right": "C0"
+    },
+    {
+      "construct": "PA5",
+      "contrast_id": "P2",
+      "left": "C2",
+      "raw_mean_difference": 0.0812,
+      "right": "C0"
+    },
+    {
+      "construct": "PA5",
+      "contrast_id": "P3",
+      "left": "C3",
+      "raw_mean_difference": -0.0312,
+      "right": "C2"
+    },
+    {
+      "construct": "PA5",
+      "contrast_id": "P4",
+      "left": "C4",
+      "raw_mean_difference": -0.2812,
+      "right": "C2"
+    },
+    {
+      "construct": "PA5",
+      "contrast_id": "P5",
+      "left": "C5",
+      "raw_mean_difference": -0.15,
+      "right": "C2"
+    },
+    {
+      "construct": "PA5",
+      "contrast_id": "P6",
+      "left": "C5",
+      "raw_mean_difference": 0.1312,
+      "right": "C4"
+    },
+    {
+      "construct": "PA8",
+      "contrast_id": "P1",
+      "left": "C1",
+      "raw_mean_difference": 0.0156,
+      "right": "C0"
+    },
+    {
+      "construct": "PA8",
+      "contrast_id": "P2",
+      "left": "C2",
+      "raw_mean_difference": 0.2343,
+      "right": "C0"
+    },
+    {
+      "construct": "PA8",
+      "contrast_id": "P3",
+      "left": "C3",
+      "raw_mean_difference": -0.0156,
+      "right": "C2"
+    },
+    {
+      "construct": "PA8",
+      "contrast_id": "P4",
+      "left": "C4",
+      "raw_mean_difference": -0.1796,
+      "right": "C2"
+    },
+    {
+      "construct": "PA8",
+      "contrast_id": "P5",
+      "left": "C5",
+      "raw_mean_difference": -0.1132,
+      "right": "C2"
+    },
+    {
+      "construct": "PA8",
+      "contrast_id": "P6",
+      "left": "C5",
+      "raw_mean_difference": 0.0664,
+      "right": "C4"
+    }
+  ],
+  "data_role": "analysis_interface_example",
+  "generation_method": "deterministic_fixture",
+  "judge_slot_sensitivity": [
+    {
+      "construct": "IN",
+      "difference": 0.8385,
+      "judge_1_mean": 4.0625,
+      "judge_2_mean": 4.901
+    },
+    {
+      "construct": "GO",
+      "difference": 0.8698,
+      "judge_1_mean": 3.862,
+      "judge_2_mean": 4.7318
+    },
+    {
+      "construct": "MSI",
+      "difference": 0.8334,
+      "judge_1_mean": 3.0208,
+      "judge_2_mean": 3.8542
+    },
+    {
+      "construct": "IC",
+      "difference": 0.873,
+      "judge_1_mean": 3.9458,
+      "judge_2_mean": 4.8188
+    },
+    {
+      "construct": "PA5",
+      "difference": 0.7812,
+      "judge_1_mean": 2.9917,
+      "judge_2_mean": 3.7729
+    },
+    {
+      "construct": "PA8",
+      "difference": 0.7878,
+      "judge_1_mean": 3.0104,
+      "judge_2_mean": 3.7982
+    }
+  ],
+  "material_count": 96,
+  "record_count": 192,
+  "scenario_sensitivity": [
+    {
+      "construct": "IN",
+      "scenario_count": 8,
+      "scenario_mean_max": 4.6354,
+      "scenario_mean_min": 4.2812
+    },
+    {
+      "construct": "GO",
+      "scenario_count": 8,
+      "scenario_mean_max": 4.5208,
+      "scenario_mean_min": 4.1562
+    },
+    {
+      "construct": "MSI",
+      "scenario_count": 8,
+      "scenario_mean_max": 3.5139,
+      "scenario_mean_min": 3.3264
+    },
+    {
+      "construct": "IC",
+      "scenario_count": 8,
+      "scenario_mean_max": 4.725,
+      "scenario_mean_min": 4.0583
+    },
+    {
+      "construct": "PA5",
+      "scenario_count": 8,
+      "scenario_mean_max": 3.5333,
+      "scenario_mean_min": 3.175
+    },
+    {
+      "construct": "PA8",
+      "scenario_count": 8,
+      "scenario_mean_max": 3.526,
+      "scenario_mean_min": 3.2656
+    }
+  ]
+}

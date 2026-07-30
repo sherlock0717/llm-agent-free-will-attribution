@@ -344,7 +344,7 @@ material_id</pre>
           <span class="section-index">05</span>
           <div>
             <h2>研究已经完成到哪里</h2>
-            <p class="lead">从研究问题到分析界面的整条链路已经建立，下一步是双模型正式评分。</p>
+            <p class="lead">研究B当前范围覆盖材料、测量、分析计划、确定性示例与离线结果导入。</p>
           </div>
         </div>
 
@@ -353,20 +353,20 @@ material_id</pre>
           <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>材料</li>
           <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>题项与评分规则</li>
           <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>分析计划</li>
-          <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>分析界面</li>
-          <li class="next"><span class="progress-mark" aria-hidden="true">→</span>双模型正式评分：下一步</li>
-          <li class="next"><span class="progress-mark" aria-hidden="true">→</span>正式结果：评分完成后更新</li>
+          <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>确定性分析界面示例</li>
+          <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>离线结果导入契约</li>
+          <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>可复现离线分析流程</li>
         </ol>
 
-        <p class="reading">到目前为止，研究B已经把从问题到展示的整条链路搭好：研究问题与三层线索、四个主要评价维度与两个补充指标的定义、来源与原量尺、六个条件、八个场景、两个方向、九十六条材料、评分规则、双评判模型配置、逐构念的混合效应分析模型、六个预设对比，以及一套可复现的静态页面。分析界面示例展示正式结果将如何组织。正式双模型评分完成后，同一页面将更新条件结果和稳定性分析。</p>
+        <p class="reading">研究B已经把从问题到展示的整条链路搭好：研究问题与三层线索、四个主要评价维度与两个补充指标的定义、来源与原量尺、六个条件、八个场景、两个方向、九十六条材料、评分规则、逐构念的混合效应分析计划、六个预设对比，以及一套可复现的静态页面。分析界面示例用于说明条件结果、预设比较和稳定性分析的组织方式。外部提供的离线评分文件通过验证后，可以进入同一分析流程。仓库的可执行范围止于本地验证、结果导入和离线分析。</p>
 
         <p class="reading">读者现在可以逐条检查材料，看每一个条件如何落到具体文本；核对六个指标的定义和各自原量尺；对照六个比较的参考条件与比较条件；查看每个数据字段的含义；并在本地组装后复现整张页面。这些核查基于已经固定的材料、量尺、评分规则和分析资产。</p>
 
         <div class="timeline-grid">
           <div class="timeline-col done">
-            <h3>正式评分产出的数据与统计</h3>
+            <h3>离线分析流程产出的数据与统计</h3>
             <ul class="timeline-list">
-              <li>原始响应 JSONL</li>
+              <li>标准化记录 JSONL</li>
               <li>题项分 CSV</li>
               <li>构念分 CSV</li>
               <li>描述统计 CSV</li>
@@ -374,13 +374,13 @@ material_id</pre>
               <li>P1—P6 对比表</li>
             </ul>
           </div>
-          <div class="timeline-col next">
-            <h3>正式评分产出的分析与展示</h3>
+          <div class="timeline-col done">
+            <h3>离线分析流程产出的分析与展示</h3>
             <ul class="timeline-list">
               <li>场景分析</li>
-              <li>评判模型敏感性分析</li>
-              <li>五张更新图</li>
-              <li>版本化研究报告</li>
+              <li>评判槽位敏感性分析</li>
+              <li>五张图</li>
+              <li>研究报告</li>
               <li>页面数据快照</li>
             </ul>
           </div>
@@ -399,11 +399,11 @@ material_id</pre>
           <span class="section-index">06</span>
           <div>
             <h2>分析界面示例</h2>
-            <p class="lead">展示正式结果页面将如何组织。</p>
+            <p class="lead">说明条件结果、预设比较和稳定性分析的组织方式。</p>
           </div>
         </div>
 
-        <div class="instruction-box demo-lead">以下数值用于展示结果页面的阅读方式。正式双模型评分完成后，该区域将更新研究结果。</div>
+        <div class="instruction-box demo-lead">以下数值用于展示结果页面的阅读方式。外部提供的离线评分文件通过验证后，该区域将按同一结构填入分析结果。</div>
 
         <div id="demoError" class="error-panel" hidden></div>
 
@@ -544,16 +544,16 @@ material_id</pre>
         <details class="tech-details" id="modelIdDetails">
           <summary>评判模型精确配置</summary>
           <div class="details-body">
-            <p class="reading">正式运行使用两个共同主要评判模型，其精确模型标识与结果版本会随运行清单一并保存，以便复核。两个模型之间的评分差异用于考察结论是否依赖某一个模型的读取方式。</p>
+            <p class="reading">分析计划固定两个共同主要评判槽位，其精确模型标识作为协议元数据保存，以便复核。两个槽位之间的评分差异用于考察结论是否依赖某一个槽位的读取方式。这些标识仅作协议元数据，不用于在本仓库发起调用。</p>
           </div>
         </details>
 
-        <p class="reading">现有证据范围集中在材料、评分、分析和展示流程是否按协议衔接。效应方向、模型差异和理论解释会在正式评分完成后报告。研究B采用机器主体专用题项，跨主体比较进入后续独立测量路线。</p>
+        <p class="reading">现有范围集中在材料、评分、分析和展示流程是否按协议衔接。效应方向、模型差异和理论解释会在外部离线评分文件通过验证并进入同一分析流程后报告。研究B采用机器主体专用题项，跨主体比较进入后续独立测量路线。</p>
 
         <h3 class="group-label">进入数据与代码</h3>
         <div class="entry-grid" id="entryGrid"></div>
 
-        <p class="reading closing">研究B已经完成从研究问题、材料和评分规则到分析与展示的完整框架。下一阶段运行两个评判模型，并将正式结果写入同一套可追溯的数据和页面结构。</p>
+        <p class="reading closing">研究B已经完成从研究问题、材料和评分规则到分析与展示的完整框架，并提供离线结果导入契约与可复现分析流程。外部离线评分文件通过验证后，其结果写入同一套可追溯的数据和页面结构。</p>
       </div>
     </section>
   </main>

@@ -198,7 +198,7 @@ def test_progress_chain_present():
     progress = HTML.split('id="progress"', 1)[1].split("</section>", 1)[0]
     assert "progress-chain" in progress
     for step in ["研究问题", "材料", "题项与评分规则", "分析计划",
-                 "分析界面", "双模型正式评分", "正式结果"]:
+                 "确定性分析界面示例", "离线结果导入契约", "可复现离线分析流程"]:
         assert step in progress, step
 
 
