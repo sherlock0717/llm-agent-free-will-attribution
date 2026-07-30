@@ -51,10 +51,11 @@ jobs:
           uv run --frozen python scripts/build_site_data.py --check
           uv run --frozen python scripts/build_showcase_data.py --check
 
-      - name: Build Research A V2 analysis
+      - name: Build Research A V2 analysis and public JSON
         run: >-
           uv run --frozen python scripts/build_research_a_v2.py
           --output "${{ runner.temp }}/research-a-v2"
+          --public-json site/data/research_a_v2_summary.json
 
       - name: Validate strict public JSON
         run: uv run --frozen python scripts/check_public_json.py

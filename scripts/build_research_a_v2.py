@@ -147,7 +147,31 @@ def build_report(data: pd.DataFrame, units: pd.DataFrame, contrasts: pd.DataFram
     return "\n".join(lines) + "\n"
 
 
-def run(input_path: Path, output: Path) -> None:
+def build_public_payload(data: pd.DataFrame, units: pd.DataFrame,
+                         contrasts: pd.DataFrame) -> dict:
+    """Assemble the public summary object shared by the artifact JSON and the
+    site/data JSON. ``generated_at`` is intentionally omitted so the published
+    file is deterministic and does not create timestamp noise on each run."""
+    public = contrasts[(contrasts.construct.isin(PUBLIC_CONSTRUCTS))
+                       & (contrasts.scope == "all_identities")]
+    return {
+        "schema_version": 1,
+        "study_id": "identity_process_attribution_baseline",
+        "analysis_version": "research_a_v2_scenario_block",
+        "data_label_zh": "DeepSeek API模型模拟问卷响应",
+        "analysis_unit": "scenario_id × identity_label × process_condition",
+        "record_count": len(data),
+        "unit_count": len(units),
+        "scenario_count": data.scenario_id.nunique(),
+        "identity_count": data.identity_label.nunique(),
+        "condition_count": data.process_condition.nunique(),
+        "public_constructs": PUBLIC_CONSTRUCTS,
+        "contrasts": [{"id": cid, "label": label} for cid, _, _, label in CONTRASTS],
+        "public_contrast_summary": public.to_dict(orient="records"),
+    }
+
+
+def run(input_path: Path, output: Path, public_json: Path | None = None) -> None:
     data = load_scores(input_path)
     units = build_units(data)
     conditions = build_conditions(units)
@@ -158,27 +182,28 @@ def run(input_path: Path, output: Path) -> None:
     conditions.to_csv(output / "condition_summary.csv", index=False)
     differences.to_csv(output / "contrast_unit_differences.csv", index=False)
     contrasts.to_csv(output / "contrast_summary.csv", index=False)
-    public = contrasts[(contrasts.construct.isin(PUBLIC_CONSTRUCTS)) & (contrasts.scope == "all_identities")]
-    write_json(output / "research_a_v2_summary.json", {
-        "schema_version": 1, "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "study_id": "identity_process_attribution_baseline", "analysis_version": "research_a_v2_scenario_block",
-        "data_label_zh": "DeepSeek API模型模拟问卷响应",
-        "analysis_unit": "scenario_id × identity_label × process_condition",
-        "record_count": len(data), "unit_count": len(units),
-        "scenario_count": data.scenario_id.nunique(), "identity_count": data.identity_label.nunique(),
-        "condition_count": data.process_condition.nunique(), "public_constructs": PUBLIC_CONSTRUCTS,
-        "public_contrast_summary": public.to_dict(orient="records"),
-    })
-    (output / "research_a_v2_report.md").write_text(build_report(data, units, contrasts), encoding="utf-8")
+    payload = build_public_payload(data, units, contrasts)
+    # artifact JSON keeps a run timestamp; the published site JSON stays stable.
+    artifact_payload = {**payload,
+                        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+    write_json(output / "research_a_v2_summary.json", artifact_payload)
+    (output / "research_a_v2_report.md").write_text(build_report(data, units, contrasts),
+                                                    encoding="utf-8")
+    if public_json is not None:
+        public_json.parent.mkdir(parents=True, exist_ok=True)
+        write_json(public_json, payload)
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Build Research A V2 scenario-block outputs.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
+    parser.add_argument("--public-json", default=None,
+                        help="also write a deterministic strict-JSON summary for the public site")
     args = parser.parse_args(argv)
+    public_json = Path(args.public_json).resolve() if args.public_json else None
     try:
-        run(Path(args.input).resolve(), Path(args.output).resolve())
+        run(Path(args.input).resolve(), Path(args.output).resolve(), public_json)
     except AnalysisError as exc:
         parser.error(str(exc))
     return 0

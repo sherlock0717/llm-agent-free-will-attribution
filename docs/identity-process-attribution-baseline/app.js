@@ -2,7 +2,14 @@
 
 const DATA_ROOT = "../data/";
 const STATUS = document.getElementById("pageStatus");
-const GROUP_STATE = { story: "loading", measurement: "loading", analysis: "loading" };
+const GROUP_STATE = { story: "loading", measurement: "loading", analysis: "loading", v2: "loading" };
+const CONSTRUCT_LABELS_ZH = {
+  subjective_process_completeness: "主观过程完整性",
+  agency: "能动性",
+  free_will_attribution: "自由意志归因",
+  perceived_intelligence: "感知智能",
+  responsibility_total: "责任总分",
+};
 const PUBLIC_TAKEAWAYS = [
   "在该DeepSeek配置中，能动性评分从直接选择到理由与反思反馈条件总体抬升。",
   "AI与人类身份标签对应了自由意志、体验与责任相关评分的系统差异。",
@@ -118,6 +125,69 @@ function renderTakeaways() {
   document.getElementById("takeaways").innerHTML = `<ol>${PUBLIC_TAKEAWAYS.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>`;
 }
 
+// The public takeaways stay consistent with the V2 summary: the closing line is
+// rebuilt from the strongest scenario-level contrast rather than hardcoded.
+function renderTakeawaysFromV2(summary) {
+  const rows = (summary.public_contrast_summary || []).filter((row) => row.scope === "all_identities");
+  if (!rows.length) { renderTakeaways(); return; }
+  const strongest = rows.reduce((best, row) =>
+    Math.abs(Number(row.mean_difference)) > Math.abs(Number(best.mean_difference)) ? row : best);
+  const label = CONSTRUCT_LABELS_ZH[strongest.construct] || strongest.construct;
+  const items = PUBLIC_TAKEAWAYS.slice(0, PUBLIC_TAKEAWAYS.length - 1);
+  items.push(
+    `场景级V2把${summary.record_count}条记录汇总为${summary.unit_count}个场景×身份×过程条件单元；` +
+    `其中${label}在对比${strongest.contrast_id}上的平均差异为${formatNumber(strongest.mean_difference)}，` +
+    `方向一致率${formatNumber(strongest.direction_consistency, 2)}。`);
+  document.getElementById("takeaways").innerHTML = `<ol>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>`;
+}
+
+function v2ContrastRow(row) {
+  return `<tr>
+    <th>${escapeHtml(row.contrast_id)} · ${escapeHtml(row.contrast_label)}</th>
+    <td>${formatNumber(row.mean_difference)}</td>
+    <td>${escapeHtml(row.positive_count)} / ${escapeHtml(row.negative_count)}</td>
+    <td>${formatNumber(row.direction_consistency, 2)}</td>
+    <td>[${formatNumber(row.scenario_mean_min)}, ${formatNumber(row.scenario_mean_max)}]</td>
+    <td>[${formatNumber(row.leave_one_scenario_mean_min)}, ${formatNumber(row.leave_one_scenario_mean_max)}]</td>
+  </tr>`;
+}
+
+function renderV2Construct(summary, construct) {
+  const rows = (summary.public_contrast_summary || [])
+    .filter((row) => row.scope === "all_identities" && row.construct === construct);
+  const target = document.getElementById("v2Result");
+  target.innerHTML = `<div class="table-scroll"><table class="v2-table">
+    <thead><tr>
+      <th>预设对比</th><th>平均差异</th><th>正向 / 负向单元</th>
+      <th>方向一致率</th><th>场景均值范围</th><th>留一场景范围</th>
+    </tr></thead>
+    <tbody>${rows.map(v2ContrastRow).join("")}</tbody>
+  </table></div>`;
+}
+
+function renderV2(summary) {
+  const intro = document.getElementById("v2Intro");
+  if (intro) {
+    intro.textContent =
+      `${summary.record_count}条API模型模拟问卷响应按场景×身份×过程条件汇总为` +
+      `${summary.unit_count}个分析单元（${summary.scenario_count}场景 × ${summary.identity_count}身份 × ` +
+      `${summary.condition_count}过程条件）。下表按构念读取${(summary.contrasts || []).length}个预设对比在场景—身份单元上的差异，` +
+      `保留原量尺，不使用显著性颜色或p值。`;
+  }
+  const controls = document.getElementById("v2Controls");
+  const select = document.getElementById("v2ConstructSelect");
+  const constructs = summary.public_constructs || [];
+  select.innerHTML = constructs
+    .map((key) => `<option value="${escapeHtml(key)}">${escapeHtml(CONSTRUCT_LABELS_ZH[key] || key)}</option>`)
+    .join("");
+  select.onchange = () => renderV2Construct(summary, select.value);
+  if (controls) controls.hidden = false;
+  if (constructs.length) renderV2Construct(summary, constructs[0]);
+  renderTakeawaysFromV2(summary);
+}
+
+
+
 function renderConditionTable(results) {
   const target = document.getElementById("conditionTable");
   const profile = results.condition_profile;
@@ -200,6 +270,16 @@ async function loadAnalysisGroup() {
   }
 }
 
+async function loadV2Group() {
+  try {
+    renderV2(await fetchJson("research_a_v2_summary.json"));
+  } catch (error) {
+    const retry = () => runGroup("v2", loadV2Group);
+    errorPanel("v2Result", "场景级V2结果", error, retry);
+    throw error;
+  }
+}
+
 prepareLegacyInferenceDetails();
 renderTakeaways();
 updateStatus();
@@ -207,4 +287,5 @@ Promise.allSettled([
   runGroup("story", loadStoryGroup),
   runGroup("measurement", loadMeasurementGroup),
   runGroup("analysis", loadAnalysisGroup),
+  runGroup("v2", loadV2Group),
 ]);

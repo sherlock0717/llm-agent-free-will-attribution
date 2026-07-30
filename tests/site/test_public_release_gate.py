@@ -106,7 +106,57 @@ def test_research_a_page_uses_existing_root_data_contract():
         "showcase_story.json",
         "measurement_summary.json",
         "analysis_results.json",
+        "research_a_v2_summary.json",
     }
     for name in names:
         payload = json.loads((ROOT / "site" / "data" / name).read_text(encoding="utf-8"))
         assert isinstance(payload, dict)
+
+
+V2_JSON = ROOT / "site" / "data" / "research_a_v2_summary.json"
+
+
+def test_research_a_v2_public_json_is_strict_and_complete():
+    check_public_json.validate_file(V2_JSON)
+    payload = json.loads(V2_JSON.read_text(encoding="utf-8"))
+    assert payload["record_count"] == 360
+    assert payload["unit_count"] == 96
+    assert payload["scenario_count"] == 8
+    assert payload["identity_count"] == 2
+    assert payload["condition_count"] == 6
+    assert len(payload["public_constructs"]) == 5
+    assert len(payload["contrasts"]) == 4
+    assert len(payload["public_contrast_summary"]) == 20
+    for row in payload["public_contrast_summary"]:
+        for field in [
+            "mean_difference", "positive_count", "negative_count", "zero_count",
+            "direction_consistency", "scenario_mean_min", "scenario_mean_max",
+            "leave_one_scenario_mean_min", "leave_one_scenario_mean_max",
+        ]:
+            assert field in row, field
+
+
+def test_research_a_page_has_v2_results_section():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    assert "场景级V2结果" in html
+    for slot in ['id="v2Result"', 'id="v2ConstructSelect"', 'id="v2Intro"']:
+        assert slot in html, slot
+
+
+def test_research_a_v2_group_is_independent_and_recoverable():
+    app = (STUDY_A / "app.js").read_text(encoding="utf-8")
+    # v2 is a fourth independent group with its own retry path.
+    assert re.search(r"GROUP_STATE\s*=\s*\{[^}]*\bv2\b", app)
+    assert "loadV2Group" in app
+    assert 'runGroup("v2", loadV2Group)' in app
+    # v2 rendering shows direction consistency and both scenario ranges.
+    assert "direction_consistency" in app
+    assert "scenario_mean_min" in app
+    assert "leave_one_scenario_mean_min" in app
+
+
+def test_study_card_uses_positive_extension_language():
+    text = (ROOT / "docs" / "STUDY_CARD.md").read_text(encoding="utf-8")
+    for phrase in ["无法逐请求还原", "不能逐请求复现", "已知方法问题", "后续研究需要优先处理"]:
+        assert phrase not in text, phrase
+    assert "研究A扩展路线" in text
