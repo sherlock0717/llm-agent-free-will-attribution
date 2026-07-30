@@ -1,11 +1,10 @@
 [project]
-# NOTE: the distribution name is an internal technical identifier kept stable to
-# avoid breaking uv.lock / build compatibility. The public brand is
-# "LLM 归因行为评测 (LLM Attribution Behavior Evaluation)"; public URLs below use
-# the new repository slug.
+# The distribution name is an internal compatibility identifier retained for
+# uv.lock and import stability. The public project name is
+# "LLM行动者归因评测 (LLM Actor Attribution Evaluation)".
 name = "llm-agent-free-will-attribution"
 version = "0.2.0.dev0"
-description = "LLM 归因行为评测｜A Reproducible Study and Evaluation Prototype: a reproducible test-style evaluation benchmark for how models attribute agency, free will and responsibility."
+description = "LLM行动者归因评测：研究身份标签、决策过程与反馈行为如何影响语言模型的行动者归因反应。"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
