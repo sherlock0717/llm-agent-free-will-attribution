@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LLM行动者归因评测</title>
-  <meta name="description" content="身份标签、决策过程与反馈行为如何影响语言模型对行动者的归因判断。" />
+  <meta name="description" content="同一个决定被写成不同的决策过程时，语言模型会怎样评价行动者。" />
   <link rel="canonical" href="https://sherlock0717.github.io/llm-attribution-behavior-evaluation/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="LLM行动者归因评测" />
-  <meta property="og:description" content="身份标签、决策过程与反馈行为如何影响语言模型对行动者的归因判断。" />
+  <meta property="og:description" content="同一个决定被写成不同的决策过程时，语言模型会怎样评价行动者。" />
   <meta property="og:url" content="https://sherlock0717.github.io/llm-attribution-behavior-evaluation/" />
   <link rel="stylesheet" href="assets/css/site.css" />
 </head>
@@ -21,12 +21,12 @@
       <nav class="site-nav" aria-label="主导航">
         <ul id="site-nav-list">
           <li><a href="#overview">项目问题</a></li>
-          <li><a href="#program">研究计划</a></li>
-          <li><a href="#studies">研究A与研究B</a></li>
-          <li><a href="#evidence">证据组成</a></li>
-          <li><a href="#methods">共享方法</a></li>
-          <li><a href="#future">扩展路线</a></li>
-          <li><a href="#entries">数据与文档</a></li>
+          <li><a href="#program">一个例子</a></li>
+          <li><a href="#studies">两项研究</a></li>
+          <li><a href="#evidence">结果与进度</a></li>
+          <li><a href="#methods">研究方法</a></li>
+          <li><a href="#future">下一步</a></li>
+          <li><a href="#entries">深入阅读</a></li>
         </ul>
       </nav>
     </div>
@@ -36,24 +36,24 @@
     <section id="overview" class="hero">
       <div class="wrap hero-grid">
         <div>
-          <p class="eyebrow">行动者归因 · 决策过程 · 身份与反馈</p>
-          <h1>LLM行动者归因评测</h1>
-          <p class="subtitle">身份标签、决策过程与反馈行为如何影响语言模型对行动者的归因判断</p>
-          <p class="hero-intro">项目以语言模型的归因反应为研究对象，观察材料中的身份标签、决定信息、反馈和后续行为如何改变对能动性、心理状态、选择自主性、影响能力与责任的评分。</p>
-          <p class="hero-intro">研究A建立身份与决策过程归因基线，研究B深化机器主体的决定信息与反馈行为测量。两项研究分别保存材料、题项、数据和分析结果，共享材料—评分—分析—展示的方法链。</p>
+          <p class="eyebrow">身份、理由、反馈与后续行动</p>
+          <h1>模型会怎样评价一个作出决定的主体？</h1>
+          <p class="subtitle">同一个决定，如果只写结果、补上理由，或加入反馈后的坚持与改变，语言模型给出的评价会不会随之变化？</p>
+          <p class="hero-intro">这个项目让语言模型阅读不同版本的决策材料，再评价行动者是否显得有主见、能够形成目标、具有思考和意图，以及应承担多大责任。材料中的行动者有时被描述为AI，有时被描述为人类。</p>
+          <p class="hero-intro">我们关心的不只是评分高低，还关心模型依据了哪些文字线索。这样的分析可以帮助我们理解，模型评价AI主体时会在多大程度上受到理由、反馈和类人化描述的影响。</p>
           <div class="actions">
-            <a class="btn primary" href="#studies">进入两项研究</a>
-            <a class="btn" href="#evidence">查看证据组成</a>
+            <a class="btn primary" href="#program">先看一个例子</a>
+            <a class="btn" href="#evidence">直接看结果与进度</a>
             <a class="btn" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation">GitHub仓库</a>
           </div>
         </div>
         <aside class="hero-panel" aria-label="项目核心事实">
-          <h2>项目核心事实</h2>
+          <h2>项目现在包含什么</h2>
           <dl id="programFacts" class="fact-grid">
-            <div><dt>研究</dt><dd>2项</dd></div>
-            <div><dt>主要线索</dt><dd>3类</dd></div>
-            <div><dt>共享方法</dt><dd>材料—评分—分析—展示</dd></div>
-            <div><dt>扩展路线</dt><dd>跨主体平行测量</dd></div>
+            <div><dt>研究A响应</dt><dd>360条</dd></div>
+            <div><dt>研究B材料</dt><dd>96条</dd></div>
+            <div><dt>共同场景</dt><dd>8类</dd></div>
+            <div><dt>研究关系</dt><dd>先观察，再拆解</dd></div>
           </dl>
         </aside>
         <div id="loadStatus" class="load-status" role="status" aria-live="polite">正在载入项目数据……</div>
@@ -63,16 +63,17 @@
     <section id="program" class="section soft">
       <div class="wrap">
         <p class="section-index">01</p>
-        <h2>研究计划地图</h2>
-        <div class="program-map" aria-label="研究计划结构">
-          <article class="map-node question"><span>项目问题</span><strong>行动者归因如何形成</strong><p>身份标签、决策过程与反馈行为共同构成材料线索。</p></article>
+        <h2>用一个例子看懂项目</h2>
+        <p class="reading">设想一个系统需要在两条配送路线中作出选择。材料可以只写“系统选择了路线A”，也可以写它比较了两条路线并说明原因，还可以继续写它收到新信息后维持原判断或改选路线B。最终行动可能相同，读者看到的决策过程却不同。</p>
+        <div class="program-map" aria-label="材料变化示例">
+          <article class="map-node question"><span>最少信息</span><strong>系统选择了路线A</strong><p>只呈现最后决定。</p></article>
           <span class="map-arrow" aria-hidden="true">→</span>
           <div class="study-pair">
-            <article class="map-node"><span>研究A</span><strong>身份与决策过程归因基线</strong><p>六类过程 × 两种身份标签。</p></article>
-            <article class="map-node"><span>研究B</span><strong>机器主体决策过程归因评测</strong><p>六个D/U组合 × 八场景 × 两方向。</p></article>
+            <article class="map-node"><span>补充过程</span><strong>比较路线并给出理由</strong><p>让读者看到备选方案和判断依据。</p></article>
+            <article class="map-node"><span>加入后续</span><strong>收到反馈后维持或改变</strong><p>让读者看到反馈后的第二次行动。</p></article>
           </div>
           <span class="map-arrow" aria-hidden="true">→</span>
-          <article class="map-node future"><span>扩展路线</span><strong>跨主体平行测量</strong><p>独立建设人类主体题项与可比性分析。</p></article>
+          <article class="map-node future"><span>模型评价</span><strong>它有多独立、有意图、能负责？</strong><p>比较不同材料版本带来的评分变化。</p></article>
         </div>
       </div>
     </section>
@@ -80,19 +81,20 @@
     <section id="studies" class="section">
       <div class="wrap">
         <p class="section-index">02</p>
-        <h2>研究A与研究B</h2>
+        <h2>两项研究如何衔接</h2>
+        <p class="reading">研究A先观察一种现象：改变行动者身份和决策过程描述，模型的评价是否随之变化。研究B承接这个结果，把决策过程拆得更细，分别考察备选方案、明确理由、反馈以及反馈后的维持或改变。</p>
         <div class="study-grid">
           <article class="study-card study-a">
-            <div class="study-head"><span>研究A · 身份与过程归因基线</span><b id="studyAStatus">已有探索性输出</b></div>
-            <h3 id="studyATitle">身份与决策过程归因基线</h3>
-            <p>研究A使用DeepSeek API模型模拟问卷响应，交叉六类决策过程与AI/人类身份标签，记录能动性、自由意志、体验、感知智能和责任相关评分。</p>
+            <div class="study-head"><span>研究A</span><b id="studyAStatus">已有模型响应与结果</b></div>
+            <h3 id="studyATitle">身份与决策过程归因</h3>
+            <p>同一类决定被标记为AI或人类，并用六种方式描述决策过程。模型随后完成一组关于能动性、自由意志、体验、感知智能与责任的评分。</p>
             <dl id="studyAFacts" class="study-facts">
-              <div><dt>设计</dt><dd>6 × 2</dd></div>
-              <div><dt>场景</dt><dd>8</dd></div>
-              <div><dt>记录</dt><dd>360</dd></div>
-              <div><dt>数据类型</dt><dd>API模型模拟问卷响应</dd></div>
+              <div><dt>过程描述</dt><dd>6种</dd></div>
+              <div><dt>身份</dt><dd>2种</dd></div>
+              <div><dt>场景</dt><dd>8个</dd></div>
+              <div><dt>响应</dt><dd>360条</dd></div>
             </dl>
-            <p class="study-route">扩展路线：场景级分析、Prompt盲化、跨模型运行与测量结构复核。</p>
+            <p class="study-route">它回答：身份标签和过程表述会不会改变模型对行动者的看法？</p>
             <div class="actions">
               <a class="btn primary" href="identity-process-attribution-baseline/">进入研究A页面</a>
               <a class="btn" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/STUDY_CARD.md">研究说明</a>
@@ -100,19 +102,19 @@
           </article>
 
           <article class="study-card study-b">
-            <div class="study-head"><span>研究B · 机器主体测量深化</span><b id="studyBStatus">流程演示已完成</b></div>
-            <h3 id="studyBTitle">机器主体决策过程归因评测</h3>
-            <p>研究B固定机器主体，将决定信息、反馈与第二次决定拆分为六个D/U组合，使用四个主要构念和感知能动性的两个重叠评分版本。</p>
+            <div class="study-head"><span>研究B</span><b id="studyBStatus">材料与分析计划已完成</b></div>
+            <h3 id="studyBTitle">机器主体决策过程归因</h3>
+            <p>行动者固定为机器主体。材料分别加入备选方案、明确理由、外部反馈，以及反馈后的维持或改变，让每一种线索都能对应到具体比较。</p>
             <dl id="studyBFacts" class="study-facts">
-              <div><dt>条件</dt><dd>6</dd></div>
-              <div><dt>场景</dt><dd>8</dd></div>
-              <div><dt>方向</dt><dd>2</dd></div>
-              <div><dt>材料</dt><dd>96</dd></div>
+              <div><dt>材料条件</dt><dd>6种</dd></div>
+              <div><dt>场景</dt><dd>8个</dd></div>
+              <div><dt>决定方向</dt><dd>2种</dd></div>
+              <div><dt>材料</dt><dd>96条</dd></div>
             </dl>
-            <p class="study-route">下一阶段：两个评判模型对同一材料集独立评分，并更新条件结果、P1—P6与敏感性分析。</p>
+            <p class="study-route">它回答：究竟是理由、反馈，还是反馈后的行动推动了评价变化？</p>
             <div class="actions">
               <a class="btn primary" href="machine-decision-process-attribution/">进入研究B页面</a>
-              <a class="btn" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/CURRENT_STUDY_CARD.md">研究说明</a>
+              <a class="btn" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/STUDY_B_CARD.md">研究说明</a>
             </div>
           </article>
         </div>
@@ -122,43 +124,39 @@
     <section id="evidence" class="section soft">
       <div class="wrap">
         <p class="section-index">03</p>
-        <h2>两项研究的证据组成</h2>
+        <h2>目前已经知道什么</h2>
         <div class="table-scroll">
           <table>
-            <thead><tr><th>维度</th><th>研究A</th><th>研究B</th></tr></thead>
+            <thead><tr><th>研究</th><th>现在可以回答的问题</th><th>证据状态</th></tr></thead>
             <tbody>
-              <tr><th>研究功能</th><td>身份与过程归因基线</td><td>机器主体测量深化</td></tr>
-              <tr><th>设计</th><td id="studyADesign">6类过程 × 2种身份</td><td id="studyBDesign">6个D/U组合 × 8场景 × 2方向</td></tr>
-              <tr><th>数据资产</th><td>DeepSeek API模型模拟问卷响应</td><td>流程演示数据与双模型运行协议</td></tr>
-              <tr><th>结果用途</th><td>描述该模型配置在研究A材料中的归因模式</td><td>呈现机器主体材料、评分、分析和图表链</td></tr>
-              <tr><th>测量路线</th><td>题项结构、构念区分、跨Prompt和跨模型复核</td><td>原量尺构念、重叠评分版本与跨主体平行测量</td></tr>
-              <tr><th>扩展路线</th><td>场景级结果与跨模型运行</td><td>双评判模型运行与正式结果更新</td></tr>
+              <tr><th>研究A</th><td>理由与反思描述、AI/人类身份标签是否对应不同的能动性、心智与责任评分。</td><td>已有360条DeepSeek模型量表响应，并完成条件与场景分析。</td></tr>
+              <tr><th>研究B</th><td>备选方案、理由、反馈、维持决定和改变决定分别会带来怎样的评分变化。</td><td>材料、评分规则和分析流程已经建立；下一步执行两个评判模型的正式评分。</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="reading">两项研究分别保存材料、题项、数据和分析结果。项目总览提供统一入口，研究A与研究B页面分别展开完整方法与结果。</p>
+        <p class="reading">研究A的结果描述一个DeepSeek配置在这批材料与问卷提示下形成的评价模式。研究B页面目前集中呈现研究设计、材料和分析方式，示例数值用于说明分析界面如何工作。</p>
       </div>
     </section>
 
     <section id="methods" class="section">
       <div class="wrap">
         <p class="section-index">04</p>
-        <h2>共享方法与基础设施</h2>
-        <p class="reading">共享方法层统一组织研究对象、材料、题项来源、评分、模型调用、质量检查、分析、展示和复现。每项研究拥有独立协议与输出目录，并沿用同一套运行记录与公开发布检查。</p>
-        <ol class="method-chain" aria-label="共享方法链">
-          <li><span>1</span>研究问题</li>
-          <li><span>2</span>材料</li>
-          <li><span>3</span>题项来源</li>
-          <li><span>4</span>模型运行</li>
-          <li><span>5</span>解析与评分</li>
-          <li><span>6</span>分析</li>
-          <li><span>7</span>页面展示</li>
-          <li><span>8</span>复现与审计</li>
+        <h2>研究怎样进行</h2>
+        <p class="reading">每项研究都从具体决策场景开始。我们改变材料中出现的身份与过程信息，让模型阅读材料并完成量表评分，再按评价维度汇总结果，比较条件差异和场景变化。材料、响应、评分规则与分析输出分别保存，读者可以从页面结论回到原始研究资产。</p>
+        <ol class="method-chain" aria-label="研究流程">
+          <li><span>1</span>提出问题</li>
+          <li><span>2</span>编写材料</li>
+          <li><span>3</span>模型评分</li>
+          <li><span>4</span>检查响应</li>
+          <li><span>5</span>汇总维度</li>
+          <li><span>6</span>比较条件</li>
+          <li><span>7</span>检查场景</li>
+          <li><span>8</span>公开结果</li>
         </ol>
         <div class="method-grid">
-          <article><h3>数据来源字典</h3><p>统一记录响应模式、生成来源和数据角色，区分API模型模拟问卷响应、确定性工程验证与流程演示。</p><a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/data_provenance.yaml">查看字典</a></article>
-          <article><h3>公开表达规范</h3><p>统一项目、研究A和研究B页面的结构、数据标签、统计表述与扩展路线。</p><a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/PUBLIC_PRESENTATION_GUIDE.md">查看规范</a></article>
-          <article><h3>发布门禁</h3><p>站点数据检查、严格JSON、路由测试和Pages组装在部署前统一执行。</p><a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/tree/main/tests/site">查看测试</a></article>
+          <article><h3>材料与题项</h3><p>每条材料都有明确场景、条件和方向，题项保留来源与评分范围。</p><a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/tree/main/docs">查看研究文档</a></article>
+          <article><h3>数据与分析</h3><p>响应、题项分、评价维度和条件结果分别保存，方便逐层核查。</p><a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/tree/main/site/data">查看公开数据</a></article>
+          <article><h3>复现与审计</h3><p>运行配置、脚本和发布检查保留在仓库中，技术细节不占用主要阅读路径。</p><a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation">进入仓库</a></article>
         </div>
       </div>
     </section>
@@ -166,15 +164,9 @@
     <section id="future" class="section soft">
       <div class="wrap">
         <p class="section-index">05</p>
-        <h2>跨主体平行测量与可比性研究</h2>
+        <h2>下一步关注什么</h2>
         <div class="future-card">
-          <p>扩展路线将独立建设人类主体题项，记录来源、构念定义和适用范围，再与机器主体测量形成平行结构。该路线重点分析两套测量的构念关系、题项结构和比较方式。</p>
-          <ol>
-            <li>人类主体构念与题项来源整理</li>
-            <li>机器与人类两套平行材料</li>
-            <li>题项结构与构念区分分析</li>
-            <li>跨主体比较规则与报告模板</li>
-          </ol>
+          <p>近期工作集中在研究B的双模型正式评分。结果生成后，我们会比较六种材料条件在不同评价维度、场景和评判模型中的表现。随后再建立与机器主体材料平行的人类主体测量，分析两类主体的评价结构如何对应。</p>
         </div>
       </div>
     </section>
@@ -182,14 +174,14 @@
     <section id="entries" class="section">
       <div class="wrap">
         <p class="section-index">06</p>
-        <h2>数据、代码和文档入口</h2>
+        <h2>继续阅读</h2>
         <div class="entry-grid">
-          <a href="identity-process-attribution-baseline/"><strong>研究A页面</strong><span>设计、场景、测量、数据、分析、结果与复现</span></a>
-          <a href="machine-decision-process-attribution/"><strong>研究B页面</strong><span>机器主体材料、构念、D/U设计、P1—P6与流程演示</span></a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESEARCH_PROGRAM.md"><strong>研究计划</strong><span>项目结构、两项研究与共享方法</span></a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/tree/main/site/data"><strong>公开页面数据</strong><span>项目总览与研究A的数据文件</span></a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/tree/main/tasks/attribution_behavior/evaluations/pa_wu_r1_pilot"><strong>研究B资产</strong><span>协议、材料、评分、分析与报告</span></a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation"><strong>GitHub仓库</strong><span>代码、文档、输出与测试</span></a>
+          <a href="identity-process-attribution-baseline/"><strong>研究A</strong><span>材料例子、主要发现、场景一致性与方法</span></a>
+          <a href="machine-decision-process-attribution/"><strong>研究B</strong><span>六种材料条件、评价维度、分析计划与研究进度</span></a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESEARCH_PROGRAM.md"><strong>研究计划</strong><span>两项研究的关系与后续路线</span></a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/PUBLIC_NARRATIVE_GUIDE.md"><strong>公开叙事规范</strong><span>页面命名、语言和信息层级规则</span></a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/study_b/README.md"><strong>研究B文档</strong><span>研究说明、测量来源与研究资产入口</span></a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation"><strong>GitHub仓库</strong><span>代码、文档、数据与复现入口</span></a>
         </div>
         <div class="preview-box"><strong>本地预览</strong><code>python scripts/assemble_pages.py --output _site
 python -m http.server 8000 --directory _site</code></div>
@@ -198,7 +190,7 @@ python -m http.server 8000 --directory _site</code></div>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap"><strong>LLM行动者归因评测</strong><p>研究A与研究B分别记录身份、决策过程与反馈行为材料中的模型归因反应。</p></div>
+    <div class="wrap"><strong>LLM行动者归因评测</strong><p>研究身份、理由、反馈和后续行动如何改变语言模型对决策主体的评价。</p></div>
   </footer>
   <script src="assets/js/site.js" defer></script>
 </body>

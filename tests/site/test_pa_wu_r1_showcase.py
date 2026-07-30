@@ -3,8 +3,8 @@ attribution) showcase page.
 
 These tests never start a real model and never make a network call. They only
 read files under docs/pa-wu-r1-pilot/ and its showcase_data.json, enforcing the
-seven-section architecture, the JS interaction contract, the synthetic-demo data
-contract, local resource resolution, and the public-name rules.
+seven-section architecture, the JS interaction contract, the analysis-interface
+example data contract, local resource resolution, and the public-name rules.
 """
 
 from __future__ import annotations
@@ -92,15 +92,13 @@ def test_required_files_exist():
 
 
 def test_deployed_figures_match_generated_outputs():
-    # keep the analysis product (outputs/figures) and the published product
-    # (docs/.../assets/figures) byte-identical so they never diverge again.
     for fig in FIGURES:
         deployed = (FIG_DIR / fig).read_bytes()
         generated = (OUTPUT_FIG_DIR / fig).read_bytes()
         assert deployed == generated, fig
 
 
-# --- 2. seven-section architecture ------------------------------------------
+# --- 2. seven-section architecture (new reading order) ----------------------
 
 def test_lang_is_zh_cn():
     assert '<html lang="zh-CN">' in HTML
@@ -117,8 +115,8 @@ def test_page_has_seven_sections_numbered_01_to_07():
 
 
 def test_semantic_section_ids_present():
-    for sid in ["overview", "constructs", "design", "materials",
-                "analysis", "demo", "status"]:
+    for sid in ["overview", "example", "measurement", "comparison",
+                "progress", "demo", "methods"]:
         assert f'id="{sid}"' in HTML, sid
 
 
@@ -131,8 +129,8 @@ def test_nav_has_seven_entries_matching_sections():
     nav = HTML.split('nav class="toc"', 1)[1].split("</nav>", 1)[0]
     hrefs = re.findall(r'<a href="#([^"]+)">([^<]+)</a>', nav)
     assert [h for h, _ in hrefs] == [
-        "overview", "constructs", "design", "materials",
-        "analysis", "demo", "status",
+        "overview", "example", "measurement", "comparison",
+        "progress", "demo", "methods",
     ], hrefs
     for _, label in hrefs:
         assert re.search(r"[\u4e00-\u9fff]", label), label
@@ -143,29 +141,102 @@ def test_five_figures_have_direct_src():
         assert re.search(rf'<img[^>]*src="assets/figures/{re.escape(fig)}"', HTML), fig
 
 
-def test_process_demo_declaration_chinese():
-    assert "流程演示数据" in HTML
+def test_hero_leads_from_research_a():
+    hero = HTML.split('class="hero-lead"', 1)[1].split("</header>", 1)[0]
+    assert "研究A" in hero
+    assert "备选方案" in hero and "反馈" in hero
+
+
+def test_material_example_tree_present():
+    example = HTML.split('id="example"', 1)[1].split("</section>", 1)[0]
+    assert "example-tree" in example
+    for label in ["只给出决定", "展示备选方案", "给出明确理由",
+                  "收到反馈", "反馈后维持决定", "反馈后改变决定"]:
+        assert label in example, label
+    for code in ["C0", "C1", "C2", "C3", "C4", "C5"]:
+        assert code in example, code
+
+
+def test_four_main_dimensions_in_first_layer():
+    measurement = HTML.split('id="measurement"', 1)[1].split("</section>", 1)[0]
+    for phrase in [
+        "是否能够相对独立地形成决定",
+        "行动是否围绕目标组织",
+        "是否被赋予思考、意图和意识",
+        "是否能够影响决定与结果",
+    ]:
+        assert phrase in measurement, phrase
+
+
+def test_pa5_pa8_collapsed_by_default():
+    details = re.search(r'<details class="tech-details" id="supplementaryDetails"[^>]*>', HTML)
+    assert details, "supplementary measurement details missing"
+    assert "open" not in details.group(0)
+    measurement = HTML.split('id="measurement"', 1)[1].split("</section>", 1)[0]
+    before_details = measurement.split('id="supplementaryDetails"', 1)[0]
+    assert "PA5" not in before_details
+    assert "PA8" not in before_details
+
+
+def test_comparison_uses_natural_language_questions():
+    comparison = HTML.split('id="comparison"', 1)[1].split("</section>", 1)[0]
+    assert "展示备选方案与只给出决定相比会怎样" in comparison
+    assert "在共同反馈下，维持与改变之间有什么差异" in comparison
+
+
+def test_formal_model_formula_collapsed():
+    details = re.search(r'<details class="tech-details" id="analysisPlanDetails"[^>]*>', HTML)
+    assert details, "analysis plan details missing"
+    assert "open" not in details.group(0)
+    comparison = HTML.split('id="comparison"', 1)[1].split("</section>", 1)[0]
+    before_details = comparison.split('id="analysisPlanDetails"', 1)[0]
+    assert "construct_score" not in before_details
+    assert "random intercept" not in before_details
+
+
+def test_progress_chain_present():
+    progress = HTML.split('id="progress"', 1)[1].split("</section>", 1)[0]
+    assert "progress-chain" in progress
+    for step in ["研究问题", "材料", "题项与评分规则", "分析计划",
+                 "分析界面", "双模型正式评分", "正式结果"]:
+        assert step in progress, step
+
+
+def test_analysis_interface_example_naming():
+    demo = HTML.split('id="demo"', 1)[1].split("</section>", 1)[0]
+    assert "分析界面示例" in demo
+    assert "以下数值用于展示结果页面的阅读方式" in demo
+
+
+def test_precise_model_ids_not_in_first_layer():
+    methods = HTML.split('id="methods"', 1)[1].split("</section>", 1)[0]
+    details = re.search(r'<details class="tech-details" id="modelIdDetails"[^>]*>', HTML)
+    assert details, "model id details missing"
+    before_details = methods.split('id="modelIdDetails"', 1)[0]
+    assert "deepseek-v4-pro" not in before_details
+    assert "gpt-5.6-terra" not in before_details
 
 
 def test_public_name_is_study_b():
-    assert "机器主体决策过程归因评测" in HTML
+    assert "机器主体决策过程归因" in HTML
     assert "PA—Wu R1" not in HTML
     assert "PA-Wu R1" not in HTML
+
+
+def test_no_development_labels_in_html():
+    for label in ["流程演示", "V2", "旧版", "新版", "当前版", "legacy"]:
+        assert label not in HTML, label
+
+
+def test_no_current_entry_links_in_html_or_js():
+    assert "CURRENT_STUDY_CARD" not in HTML and "CURRENT_STUDY_CARD" not in JS
+    assert "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES" not in HTML
+    assert "CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES" not in JS
 
 
 def test_return_to_overview_link_present():
     assert 'href="../"' in HTML
     assert "返回项目总览" in HTML
-
-
-def test_no_old_section_names():
-    for bad in ["方法边界", "真实数据替换流程", "旧图表", "材料示例"]:
-        assert bad not in HTML, bad
-
-
-def test_no_current_r1_wording():
-    assert "当前R1" not in HTML
-    assert "当前R1" not in JS
 
 
 def test_every_image_has_chinese_alt():
@@ -180,7 +251,7 @@ def test_js_checks_response_ok():
 
 
 def test_js_has_chinese_error_and_retry():
-    assert "流程演示数据未能载入" in JS
+    assert "分析界面示例数据未能载入" in JS
     assert "重新加载" in JS
     assert "showLoadError" in JS
 
@@ -321,7 +392,7 @@ def test_no_external_cdn_assets():
 
 def test_synthetic_stats_only_in_demo_section():
     # the p-value / CI contrast table and the SVG profile chart must live inside
-    # the #demo section, not in overview/constructs/design/materials/analysis.
+    # the #demo section, not in overview/example/measurement/comparison/progress.
     demo = HTML.split('id="demo"', 1)[1].split("</section>", 1)[0]
     assert 'id="contrastTable"' in demo
     assert 'id="conditionProfileChart"' in demo
@@ -340,10 +411,6 @@ def test_pipeline_figures_collapsed_by_default():
     figs = re.search(r'<details class="tech-details" id="pipelineFigures"[^>]*>', HTML)
     assert figs, "pipeline figures details missing"
     assert "open" not in figs.group(0)
-
-
-def test_demo_marks_present():
-    assert 'class="demo-mark"' in HTML
 
 
 def test_condition_profile_chart_present_native_svg():
@@ -388,7 +455,6 @@ def test_render_report_has_native_scale_bounds():
 
 def test_render_report_uses_theoretical_0_1_mapping_for_heatmap():
     src = RENDER_REPORT.read_text(encoding="utf-8")
-    # fig4 heatmap maps native scores to a theoretical 0–1 in-scale position
     assert "0–1" in src or "0-1" in src
 
 
@@ -415,7 +481,6 @@ def test_no_nonstandard_json_constants_in_text():
     number_token = re.compile(r"(?<![\"\\w])(NaN|-?Infinity)(?![\"\\w])")
     for path in (DATA, OUTPUT_DATA):
         text = path.read_text(encoding="utf-8")
-        # remove all JSON string literals so material text can't cause a false hit
         without_strings = re.sub(r'"(?:[^"\\]|\\.)*"', '""', text)
         hits = number_token.findall(without_strings)
         assert hits == [], (path.name, hits)
@@ -439,8 +504,8 @@ def test_docs_and_outputs_json_identical():
 def test_static_research_design_baked_into_html():
     # core research design must be readable without the demo JSON: it is present
     # as static markup, not only injected by DATA-dependent JS.
-    for token in ["知觉独立性（IN）", "目标导向性（GO）", "心理状态推断（MSI）",
-                  "影响能力（IC）", "deepseek-v4-pro", "gpt-5.6-terra",
+    for token in ["是否能够相对独立地形成决定", "行动是否围绕目标组织",
+                  "是否被赋予思考、意图和意识", "是否能够影响决定与结果",
                   "construct_score", "阶段一：决定信息", "阶段二：反馈后行为"]:
         assert token in HTML, token
 
@@ -451,8 +516,6 @@ def test_demo_error_panel_and_content_wrapper_present():
 
 
 def test_load_failure_keeps_design_and_shows_demo_error():
-    # showLoadError degrades gracefully: hides dynamic demo content, shows the
-    # error panel with the file path and a collapsed technical error.
     handler = JS.split("function showLoadError(", 1)[1]
     assert "demoContent" in handler
     assert "demoError" in handler
@@ -462,8 +525,6 @@ def test_load_failure_keeps_design_and_shows_demo_error():
 
 
 def test_static_render_initializes_once_before_load():
-    # renderStatic() runs a single time before the initial load, and the retry
-    # path only re-fetches JSON; listeners are therefore bound exactly once.
     load_fn = JS.split("async function load(", 1)[1].split("\n}", 1)[0]
     assert "renderStatic()" not in load_fn
     tail = JS.rsplit("renderStatic();", 1)[1]
@@ -477,7 +538,7 @@ def test_captured_warnings_null_shows_placeholder():
     assert "无记录" in warn_fn
 
 
-# --- 11. final research-copy refinements ------------------------------------
+# --- 11. research-copy refinements ------------------------------------------
 
 def test_html_free_of_time_and_comparative_negations():
     for token in ["研究A在早期探索", "而不是机器主体本身", "这些都不依赖真实模型输出"]:
@@ -530,13 +591,7 @@ def test_analysis_plan_effect_structure_consistent():
 
 
 def test_five_figures_outputs_and_docs_byte_identical():
-    for name in [
-        "fig1_condition_construct_means.png",
-        "fig2_model_adjusted_contrasts.png",
-        "fig3_model_profiles.png",
-        "fig4_scenario_construct_heatmap.png",
-        "fig5_contrast_forest.png",
-    ]:
+    for name in FIGURES:
         assert (FIG_DIR / name).read_bytes() == (OUTPUT_FIG_DIR / name).read_bytes(), name
 
 

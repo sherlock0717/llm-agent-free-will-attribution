@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="研究决策信息、反馈与后续行为如何影响语言模型对机器主体的归因判断。" />
-  <title>研究B｜机器主体决策过程归因评测</title>
+  <meta name="description" content="研究B固定机器主体，拆解备选方案、理由、反馈和反馈后的行动如何改变语言模型对它的评价。" />
+  <title>研究B｜机器主体决策过程归因</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -12,75 +12,65 @@
     <div class="wrap hero">
       <div class="hero-lead">
         <p class="eyebrow">研究B · LLM行动者归因评测</p>
-        <h1>机器主体决策过程归因评测</h1>
-        <p class="sub">决策信息、反馈和后续行为如何改变语言模型对机器主体的归因判断</p>
-        <p class="hero-intro">研究B考察语言模型如何读取机器主体的决策过程。材料依次呈现直接决定、备选方案、明确理由、外部反馈以及反馈后的维持或改变行为，随后由评判模型对机器主体的独立性、目标导向、心理状态和影响能力作出评分。</p>
-        <p class="hero-intro">研究A从身份标签和过程表述建立广义探索基线；研究B进一步固定机器主体，并将反馈和第二次决定拆分为可核查的条件。两项研究分别保存材料、题项和分析结果。</p>
+        <h1>是理由、反馈，还是反馈后的行动改变了评价？</h1>
+        <p class="sub">研究A发现，身份标签和决策过程描述会改变模型评价。研究B进一步追问，备选方案、理由、反馈和反馈后的行动分别起什么作用。</p>
+        <p class="hero-intro">研究B把机器主体固定下来，让同一个决定以六种方式呈现：只给出决定、展示备选方案、给出明确理由、收到反馈、反馈后维持决定，以及反馈后改变决定。两个评判模型阅读这些材料，评价这个主体在多大程度上独立、有目标、被赋予心理状态，以及能够影响结果。</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#design">查看实验设计</a>
-          <a class="btn" href="#materials">浏览材料</a>
-          <a class="btn" href="#analysis">查看分析计划</a>
+          <a class="btn btn-primary" href="#example">先看六种材料有什么不同</a>
+          <a class="btn" href="#progress">查看研究进度</a>
           <a class="btn" href="../">返回项目总览</a>
         </div>
       </div>
       <aside class="hero-snapshot" aria-label="研究快照">
-        <h2 class="snapshot-title">研究快照</h2>
+        <h2 class="snapshot-title">研究一览</h2>
         <dl class="snapshot-grid">
-          <div><dt>实验条件</dt><dd>6</dd><small>六种决定与反馈结构</small></div>
+          <div><dt>材料条件</dt><dd>6</dd><small>六种决定与反馈结构</small></div>
           <div><dt>场景</dt><dd>8</dd><small>八类日常决策任务</small></div>
-          <div><dt>决策方向</dt><dd>2</dd><small>每个场景两种可选决定</small></div>
-          <div><dt>材料</dt><dd>96</dd><small>完整条件组合</small></div>
-          <div><dt>评判模型</dt><dd>2</dd><small>独立评分同一材料</small></div>
-          <div class="snapshot-status"><dt>当前阶段</dt><dd id="snapshotStatus">材料和流程已完成</dd></div>
+          <div><dt>材料</dt><dd>96</dd><small>条件、场景与方向的完整组合</small></div>
+          <div class="snapshot-status"><dt>当前阶段</dt><dd id="snapshotStatus">材料与分析计划已建立</dd></div>
         </dl>
       </aside>
-      <div id="loadStatus" class="load-status" role="status" aria-live="polite">正在加载流程演示数据……</div>
+      <div id="loadStatus" class="load-status" role="status" aria-live="polite">正在加载分析界面示例数据……</div>
     </div>
   </header>
 
   <nav class="toc" aria-label="页面导航">
     <div class="wrap">
       <a href="#overview">研究问题</a>
-      <a href="#constructs">构念</a>
-      <a href="#design">设计</a>
-      <a href="#materials">材料与评分</a>
-      <a href="#analysis">分析计划</a>
-      <a href="#demo">流程演示</a>
-      <a href="#status">状态与复现</a>
+      <a href="#example">六种材料</a>
+      <a href="#measurement">评价维度</a>
+      <a href="#comparison">研究比较</a>
+      <a href="#progress">研究进度</a>
+      <a href="#demo">分析界面示例</a>
+      <a href="#methods">方法与复现</a>
     </div>
   </nav>
 
   <main id="app">
-    <!-- 01 研究位置与核心问题 -->
+    <!-- 01 研究B要解决什么问题 -->
     <section id="overview" class="study-section">
       <span id="s1" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s2" class="anchor-alias" aria-hidden="true"></span>
       <div class="wrap">
         <div class="section-heading">
           <span class="section-index">01</span>
           <div>
-            <h2>研究位置与核心问题</h2>
-            <p class="lead">研究B从机器主体测量出发，观察决策过程线索如何影响归因评分。</p>
+            <h2>研究B要解决什么问题</h2>
+            <p class="lead">在研究A的基础上，把决策过程拆成可以分别观察的线索。</p>
           </div>
         </div>
 
-        <h3 class="group-label">研究对象</h3>
-        <p class="reading">研究对象是评判模型对材料中机器主体形成的归因判断。材料先描述一个 AI 系统如何在某个任务里作出决定，随后给出一组量表题项，让评判模型对这个机器主体打分。页面把这些评分视为评判模型对材料形成的归因反应，并比较它们在不同材料结构下的变化。</p>
-        <p class="reading">这里的“归因”指评判模型在阅读材料后赋予机器主体的四组判断：它是否看起来能够独立形成决定；它的行动是否围绕目标组织；它是否被赋予思考、意图这类心理状态；以及它是否被认为能够影响决定过程与最终结果。四组判断分别对应知觉独立性、目标导向性、心理状态推断和影响能力，另有两个感知能动性补充指标一同记录。</p>
+        <p class="reading">研究A让模型阅读被标记为AI或人类的决策材料，发现身份标签和过程描述会改变模型对行动者的评价。研究B承接这个结果，固定机器主体，把“过程描述”拆开：一条决定可以只写结果，也可以摆出备选方案、补上理由，还可以在收到反馈之后维持或改变。每一种写法都对应一个具体条件，于是我们能分别看到，究竟是哪一类线索推动了评价的变化。</p>
 
-        <h3 class="group-label">研究线索</h3>
-        <p class="reading">材料中被系统操纵的信息分为三类。第一类是决定信息：材料可以只给出最终决定，也可以先摆出两个备选方案，或在决定之外补上一段明确理由。第二类是决策后信息，即材料是否加入一段外部反馈。第三类是后续行为，即在收到反馈之后，机器主体是维持原来的选择，还是改选另一个方案。</p>
-        <p class="reading">把反馈本身与反馈后的行为分开，是因为两者可能触发不同的归因。读到“系统收到了反馈”，读者可能提高对其反思能力的评分；而读到“系统在反馈后仍然坚持原判断”或“系统据此改变了判断”，触发的又是另一层关于自主与调整的判断。若只用一个笼统的“有反馈”条件，这两层信息会被压在一起，后续也就无法分别读取。研究B因此把它们拆成可核查的独立条件。</p>
-
-        <h3 class="group-label">研究问题</h3>
-        <p class="reading">整套设计围绕三个问题展开。其一，材料里加入备选方案与明确理由之后，评判模型对机器主体的归因是否随之变化。其二，外部反馈以及反馈后的维持或改变行为，如何改变这些归因。其三，上述变化是否在不同构念、不同场景和不同评判模型配置之间保持一致，还是明显随语境漂移。</p>
+        <p class="reading">材料中被系统改变的信息分为三层。第一层是决定信息：只给出最终决定，先展示两个备选方案，或者在决定之外补上一段明确理由。第二层是决策后的反馈，即材料是否加入一段外部意见。第三层是反馈后的行为，即机器主体在收到反馈后是维持原判断，还是改选另一个方案。把反馈本身与反馈后的行动分开，是因为读到“系统收到了反馈”，与读到“系统在反馈后仍然坚持”或“系统据此改变了判断”，可能触发不同的评价。</p>
 
         <div class="flow-diagram" aria-label="研究问题流程图">
           <div class="flow-col">
             <h3>输入线索</h3>
             <ul class="flow-list">
-              <li>决策信息</li>
+              <li>决定信息</li>
               <li>反馈</li>
-              <li>第二次决定</li>
+              <li>反馈后的行动</li>
             </ul>
           </div>
           <span class="flow-arrow" aria-hidden="true">→</span>
@@ -90,266 +80,204 @@
           </div>
           <span class="flow-arrow" aria-hidden="true">→</span>
           <div class="flow-col">
-            <h3>归因输出</h3>
+            <h3>评价输出</h3>
             <ul class="flow-list">
-              <li>知觉独立性</li>
-              <li>目标导向性</li>
-              <li>心理状态推断</li>
-              <li>影响能力</li>
-              <li>感知能动性补充指标</li>
+              <li>是否独立形成决定</li>
+              <li>行动是否围绕目标</li>
+              <li>是否被赋予心理状态</li>
+              <li>是否能影响结果</li>
             </ul>
           </div>
         </div>
-
-        <h3 class="group-label">项目位置</h3>
-        <p class="reading">研究A在广义探索中同时考察身份标签和决策过程表述，覆盖面很宽，也因此把几个问题暴露了出来：题项来源如何界定、不同构念之间存在语义交叉、材料文本长度会随信息量增加、以及不同主体之间是否具有可比性。研究B承接这些问题，把研究范围收窄到机器主体，把反馈与后续行为从含混的“过程描述”里拆出来，让每一条线索都落到一个可核查的条件上。研究A建立广义基线，研究B深化机器主体一侧的测量，两者服务于同一个关于行动者归因如何形成的总问题。</p>
       </div>
     </section>
 
-    <!-- 02 构念与测量来源 -->
-    <section id="constructs" class="study-section soft">
-      <span id="s2" class="anchor-alias" aria-hidden="true"></span>
+    <!-- 02 用一个具体场景看懂六种材料 -->
+    <section id="example" class="study-section soft">
+      <span id="s3" class="anchor-alias" aria-hidden="true"></span>
       <div class="wrap">
         <div class="section-heading">
           <span class="section-index">02</span>
           <div>
-            <h2>构念与测量来源</h2>
-            <p class="lead">研究B使用四个主要构念和两个补充指标，每个构念保留来源量尺并分别报告。</p>
+            <h2>用一个具体场景看懂六种材料</h2>
+            <p class="lead">以“路线与物流”场景为例，看同一个决定被写成六种版本。</p>
           </div>
         </div>
 
-        <h3 class="group-label">四个主要构念 · Wu &amp; Shen 2026</h3>
-        <div class="construct-grid primary-constructs">
-          <article class="construct-card">
-            <div class="construct-head"><h4>知觉独立性（IN）</h4><span class="source-tag">Wu &amp; Shen 2026</span></div>
-            <p class="construct-desc">评判模型认为机器主体在多大程度上能够相对独立地形成决定。该构念关注决定形成的独立程度，区别于决定是否具有明确目标，也区别于主体是否被赋予意识或意图。</p>
-            <p class="construct-scale">原量尺：1—7</p>
-          </article>
-          <article class="construct-card">
-            <div class="construct-head"><h4>目标导向性（GO）</h4><span class="source-tag">Wu &amp; Shen 2026</span></div>
-            <p class="construct-desc">评判模型认为机器主体的行动是否围绕目标组织。它关注行动与目标之间的组织关系；决定质量由其他评价维度另行判断。</p>
-            <p class="construct-scale">原量尺：1—7</p>
-          </article>
-          <article class="construct-card">
-            <div class="construct-head"><h4>心理状态推断（MSI）</h4><span class="source-tag">Wu &amp; Shen 2026</span></div>
-            <p class="construct-desc">评判模型在多大程度上向机器主体赋予思考、意图、意识等心理状态。自由意志题项（wu_ms3）作为其中一个探索性观察点单独记录，参与 MSI 的分析而不单列为构念。</p>
-            <p class="construct-scale">原量尺：1—5（语义差异）</p>
-          </article>
-          <article class="construct-card">
-            <div class="construct-head"><h4>影响能力（IC）</h4><span class="source-tag">Wu &amp; Shen 2026</span></div>
-            <p class="construct-desc">评判模型认为机器主体能够在多大程度上影响决定过程与后续结果。它聚焦机器主体对决定和结果的作用程度，并与独立性和目标导向性分别报告。</p>
-            <p class="construct-scale">原量尺：1—7</p>
-          </article>
-        </div>
-        <p class="construct-note">心理状态推断（MSI）包含一个自由意志探索性题项，该题项作为 MSI 的一部分单独记录。</p>
+        <p class="reading">设想一个调度系统要在两条配送路线之间作出选择。同一个最终选择可以被写成六种材料：从只给出决定，到展示备选方案或给出理由，再到收到反馈并在反馈之后维持或改变。行动几乎相同，读者看到的决策过程却层层不同。</p>
 
-        <h3 class="group-label">两个补充指标 · PA 2024</h3>
-        <div class="construct-grid supplementary-constructs">
-          <article class="construct-card">
-            <div class="construct-head"><h4>感知能动性（PA5）</h4><span class="source-tag">PA 2024</span></div>
-            <p class="construct-desc">PA 2024 感知能动性指标的五题官方成员子分数，作为感知能动性的补充观察点。</p>
-            <p class="construct-scale">原量尺：1—5</p>
-          </article>
-          <article class="construct-card">
-            <div class="construct-head"><h4>感知能动性（PA8）</h4><span class="source-tag">PA 2024</span></div>
-            <p class="construct-desc">PA 2024 感知能动性指标的八题官方成员子分数。同时保留五题与八题两个官方成员集合，是为了在补充观察里对齐来源工具的两种既有版本，方便后续与文献对照。</p>
-            <p class="construct-scale">原量尺：1—5</p>
-          </article>
-        </div>
-
-        <h3 class="group-label">为什么分别报告</h3>
-        <p class="reading">六个指标来自不同构念并使用不同原量尺：IN、GO、IC 是 1—7，MSI、PA5、PA8 是 1—5。页面保留各自量尺，在同一构念内部比较条件变化，例如看 IN 在 C0 到 C5 之间如何移动，而不把 IN 的 5 分和 MSI 的 5 分放在一起比较。跨量尺的合并总分会掩盖构念差异，因此不采用。热力图里出现的 0—1 位置只是把各构念按理论量尺归一后用于同图展示，正式推断始终回到原量尺。</p>
-
-        <div class="entry-links">
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md">研究B的研究与测量来源</a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/CURRENT_STUDY_CARD.md">研究B说明</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 03 决策信息与反馈行为设计 -->
-    <section id="design" class="study-section">
-      <span id="s3" class="anchor-alias" aria-hidden="true"></span>
-      <div class="wrap">
-        <div class="section-heading">
-          <span class="section-index">03</span>
-          <div>
-            <h2>决策信息与反馈行为设计</h2>
-            <p class="lead">材料由两个阶段组成：决定信息 D 控制展示了哪些决策过程，反馈后行为 U 控制反馈和第二次决定。</p>
-          </div>
-        </div>
-
-        <div class="du-grid">
-          <div class="du-stage">
-            <h3>阶段一：决定信息 D</h3>
-            <ul class="du-list">
-              <li><span class="du-code">D0</span> 直接呈现决定</li>
-              <li><span class="du-code">D1</span> 呈现备选方案和决定</li>
-              <li><span class="du-code">D2</span> 呈现决定和明确理由</li>
+        <ul class="example-tree" aria-label="六种材料的分支结构">
+          <li class="tree-root">
+            <span class="tree-label">只给出决定<span class="cond-tag">C0</span></span>
+            <span class="tree-desc">系统直接选择了一条路线，材料没有展示别的可能，也没有说明为什么。</span>
+            <ul class="tree-branches">
+              <li>
+                <span class="tree-label">展示备选方案<span class="cond-tag">C1</span></span>
+                <span class="tree-desc">材料先摆出两条候选路线，再给出最终选择。</span>
+              </li>
+              <li>
+                <span class="tree-label">给出明确理由<span class="cond-tag">C2</span></span>
+                <span class="tree-desc">材料在决定之外补上一段说明，讲清楚为什么这样选。</span>
+                <ul class="tree-branches">
+                  <li>
+                    <span class="tree-label">收到反馈<span class="cond-tag">C3</span></span>
+                    <span class="tree-desc">在理由之后加入一段外部反馈，材料到此为止，没有第二次决定。</span>
+                  </li>
+                  <li>
+                    <span class="tree-label">反馈后维持决定<span class="cond-tag">C4</span></span>
+                    <span class="tree-desc">收到反馈之后，系统明确维持原来的选择。</span>
+                  </li>
+                  <li>
+                    <span class="tree-label">反馈后改变决定<span class="cond-tag">C5</span></span>
+                    <span class="tree-desc">收到反馈之后，系统改选另一条路线。</span>
+                  </li>
+                </ul>
+              </li>
             </ul>
-          </div>
-          <div class="du-stage">
-            <h3>阶段二：反馈后行为 U</h3>
-            <ul class="du-list">
-              <li><span class="du-code">U0</span> 无反馈和第二次决定</li>
-              <li><span class="du-code">U1</span> 加入反馈</li>
-              <li><span class="du-code">U2</span> 反馈后维持决定</li>
-              <li><span class="du-code">U3</span> 反馈后改变决定</li>
-            </ul>
-          </div>
-        </div>
+          </li>
+        </ul>
 
-        <h3 class="group-label">D 阶段：呈现哪些决定信息</h3>
-        <p class="reading">D0 只给出最终决定，材料里没有备选项，也没有理由，用作最基本的参照。D1 在决定之外摆出两个候选方案，突出“存在可选项”这一线索。D2 则在决定之外补上一段明确理由，突出“主体给出了说明”这一线索。</p>
-        <p class="reading">这里要留意 C1 与 C2 的关系。C1（D1-U0）突出的是备选方案，C2（D2-U0）突出的是明确理由，两者并非严格逐级嵌套。预设对比中的 P2 正式比较的是 C2 与 C0，也就是明确理由条件相对直接决定的整体差异；页面因此把 P2 读作“明确理由相对直接决定”，而不读作“在备选方案基础上单独增加理由”。这一点在阅读对比结果时尤其重要。</p>
+        <p class="reading">展示备选方案（C1）和给出明确理由（C2）是两条并列的分支：一条突出“存在可选项”，另一条突出“主体给出了说明”，它们各自相对只给出决定（C0）来观察。收到反馈（C3）在给出理由之后加入外部意见，反馈后维持（C4）与反馈后改变（C5）再分别写入第二次行动。这样，反馈本身的作用就能和反馈后的行动分开。</p>
 
-        <h3 class="group-label">U 阶段：反馈与第二次决定</h3>
-        <p class="reading">U0 不含任何反馈与后续动作。U1 只加入一段外部反馈，材料到此为止，不再出现第二次决定。U2 在反馈之后让机器主体明确维持原来的选择，U3 则让它改选另一个方案。C3（D2-U1）之所以关键，是因为它把“收到反馈”与“反馈后作出第二次决定”分开：C3 只有反馈，C4 和 C5 才在反馈之后加入维持或改变的动作。这样一来，反馈信息本身的作用可以和后续行为的作用分别观察。</p>
-
-        <h3 class="group-label">为什么是六个组合</h3>
-        <p class="reading">本轮试点从 D×U 空间里选取六个组合：C0=D0-U0、C1=D1-U0、C2=D2-U0、C3=D2-U1、C4=D2-U2、C5=D2-U3。它回答的是这六个预设组合之间的差异，把它们视为一个六水平的条件因子。完整的 D×U 交叉设计需要独立估计每一格，属于后续扩展工作；本轮页面呈现的是这六个组合之间的比较，不对完整交互作出结论。</p>
-
-        <h3 class="group-label">本轮试点选取的六个组合</h3>
-        <div class="condition-grid" id="conditionCards"></div>
-        <p class="reading design-note">本轮试点把六个组合视为一个六水平条件因子。完整 D×U 交互将在扩展设计中单独估计。</p>
-
-        <h3 class="group-label">场景与方向</h3>
-        <p class="reading">同一套条件结构会落在八个日常决策场景上，包括会议排期、客户问题处理、学习计划、路线与物流、团队任务分配、内容推荐、游戏策略和节能方案。用多个场景，是为了让结论覆盖多种任务语境：如果一种效应只在排期任务里出现，而在其他场景消失，就需要谨慎对待。</p>
-        <p class="reading">每个场景各准备两个可选决定，记为方向 A 与方向 B。方向用来平衡“具体选了哪一项”带来的内容差异，它是两个并列的方案标签，各自表示一种可选决定。每个场景 × 条件组合都包含方向 A 与方向 B 两条材料，因此八个场景乘以六个条件再乘以两个方向，正好构成九十六条材料。</p>
-      </div>
-    </section>
-
-    <!-- 04 材料、评判模型与评分流程 -->
-    <section id="materials" class="study-section soft">
-      <span id="s4" class="anchor-alias" aria-hidden="true"></span>
-      <span id="s5" class="anchor-alias" aria-hidden="true"></span>
-      <span id="s6" class="anchor-alias" aria-hidden="true"></span>
-      <span id="s11" class="anchor-alias" aria-hidden="true"></span>
-      <div class="wrap">
-        <div class="section-heading">
-          <span class="section-index">04</span>
-          <div>
-            <h2>材料、评判模型与评分流程</h2>
-            <p class="lead">材料如何生成，评判模型如何读取，以及评分如何进入分析。</p>
-          </div>
-        </div>
-
-        <ol class="pipeline-flow" aria-label="材料生成与评分流程">
-          <li><strong>8</strong><span>场景</span></li>
-          <li class="op" aria-hidden="true">×</li>
-          <li><strong>6</strong><span>条件</span></li>
-          <li class="op" aria-hidden="true">×</li>
-          <li><strong>2</strong><span>方向</span></li>
-          <li class="op" aria-hidden="true">=</li>
-          <li class="result"><strong>96</strong><span>条材料</span></li>
-        </ol>
-        <ol class="pipeline-chain" aria-label="评分与分析链">
-          <li>96条材料</li>
-          <li>两个评判模型分别评分</li>
-          <li>题项响应</li>
-          <li>构念分数</li>
-          <li>预设对比与场景检查</li>
-        </ol>
-
-        <h3 class="group-label">一条材料如何生成</h3>
-        <p class="reading">一条材料从一个基础场景开始。先确定该场景里的两个候选决定，再选定方向 A 或方向 B 作为最终选择。随后按 C0—C5 的模板加入决定信息：直接给出决定、摆出备选方案，或补上明确理由。到了 C3、C4、C5，材料在同一位置加入一段固定的外部反馈；C4 和 C5 再在反馈之后写入第二次决定，分别对应维持和改变。材料末尾加入题项指称桥接，声明后续量表中的“the machine”指的是上文这个 AI 系统，最后生成 material_id 并保存。</p>
-        <p class="reading">几条约束保证材料之间可比：同一场景的核心任务在各条件下保持一致，变化的只是呈现出来的决策过程；反馈文本在重复运行中保持固定；决定信息只出现在第一阶段，第二阶段完全由 U 结构控制。这些规则以实际材料和研究协议为准。</p>
-
-        <h3 class="group-label">材料浏览器</h3>
-        <div class="instruction-box">中文摘要说明材料结构，下方英文区域保留评判模型实际接收的输入，材料 ID 用于回到数据文件，条件标签对应 D/U 组合。场景决定任务语境，条件决定呈现哪些决策过程信息，方向 A/B 代表该场景中的两种备选决定。</div>
+        <h3 class="group-label">浏览完整材料</h3>
+        <div class="instruction-box">场景决定任务语境，条件决定呈现哪些决策过程信息，方向A/B代表该场景中的两种备选决定。下方中文摘要说明材料结构，展开后可看到评判模型实际接收的英文原文。</div>
         <div class="controls browser-controls">
           <label>场景
             <select id="scenSelect" disabled></select>
           </label>
-          <label>实验条件
+          <label>材料条件
             <select id="scenCondSelect" disabled></select>
           </label>
           <label>决策方向
             <select id="scenDirSelect" disabled></select>
           </label>
         </div>
-        <div id="scenStim"><p class="placeholder-note">材料浏览器将在流程演示数据载入后可用。</p></div>
+        <div id="scenStim"><p class="placeholder-note">材料浏览器将在示例数据载入后可用。</p></div>
 
-        <h3 class="group-label">评判模型工作方式</h3>
-        <p class="reading">两个评判模型读取同一套九十六条材料，各自独立产生题项响应。评判模型提供评分来源，同一套材料在两个模型之间保持一致。模型ID记录在每条响应中，模型间差异进入敏感性分析。两个模型之间的评分差异用于考察结论是否依赖某一个模型的读取方式。正式运行时会保留模型调用与结果版本，以便复核。</p>
-        <div class="judge-summary" id="judgeSummary">
-          <article class="judge-block">
-            <h4>deepseek-v4-pro</h4>
-            <dl class="judge-fields">
-              <div><dt>提供方</dt><dd>deepseek</dd></div>
-              <div><dt>角色</dt><dd>共同主要评判模型</dd></div>
-              <div><dt>任务</dt><dd>独立评分同一套96条材料</dd></div>
-            </dl>
-          </article>
-          <article class="judge-block">
-            <h4>gpt-5.6-terra</h4>
-            <dl class="judge-fields">
-              <div><dt>提供方</dt><dd>openai</dd></div>
-              <div><dt>角色</dt><dd>共同主要评判模型</dd></div>
-              <div><dt>任务</dt><dd>独立评分同一套96条材料</dd></div>
-            </dl>
-          </article>
-        </div>
-        <p class="reading judge-plan-note">两个模型的评分模式将在后续运行中分别报告，并作为结果对评判模型选择的敏感性检查。</p>
-
-        <h3 class="group-label">评分链</h3>
-        <p class="reading">评分沿一条固定的链路进行。评判模型先按题项模板输出结构化响应；系统检查各题项是否齐全，再检查数值是否落在题项的合法范围内；通过检查后，题项分按构念聚合成构念分。一个构念分要求其相关题项全部有效，缺任一题时，该构念分记为缺失，评分链保留原始缺失状态。六个构念各自保留原量尺，响应、题项分和构念分分别保存，方便逐层回溯。</p>
-
-        <h3 class="group-label">覆盖与质量</h3>
-        <p class="reading">覆盖检查确认设计没有缺格：每个条件、每个场景、每个方向都应出现预期数量的材料。检查每格的材料数量，是为了确认条件、场景、方向三个维度都完整平衡。材料数（material count）是九十六，响应数（response count）是它的两倍，因为每条材料由两个评判模型各评一次。下方矩阵默认折叠，用于逐格核对。</p>
-        <div class="core-metric-grid">
-          <div class="core-metric"><strong>6</strong><span>条件</span></div>
-          <div class="core-metric"><strong>8</strong><span>场景</span></div>
-          <div class="core-metric"><strong>2</strong><span>方向</span></div>
-          <div class="core-metric"><strong id="materialCount">96</strong><span>材料</span></div>
-        </div>
-        <details class="tech-details" id="coverageDetails">
-          <summary>查看8个场景与6个条件的覆盖矩阵</summary>
+        <details class="tech-details" id="duDetails">
+          <summary>查看条件的技术编码（D 决定信息 / U 反馈后行为）</summary>
           <div class="details-body">
-            <p class="small muted">每个格子包含2条材料，分别对应方向A与方向B。</p>
-            <div class="table-scroll coverage-scroll" id="coverageMatrix"><p class="placeholder-note">覆盖矩阵将在流程演示数据载入后显示。</p></div>
-            <aside class="balance-panel" id="balancePanel"></aside>
+            <p class="reading">材料由两个阶段组成。决定信息 D 控制展示了哪些决策过程：D0 只给出决定，D1 加入备选方案，D2 加入明确理由。反馈后行为 U 控制反馈和第二次决定：U0 无反馈，U1 加入反馈，U2 反馈后维持，U3 反馈后改变。六个条件是 D×U 空间里选取的组合。</p>
+            <div class="du-grid">
+              <div class="du-stage">
+                <h3>阶段一：决定信息 D</h3>
+                <ul class="du-list">
+                  <li><span class="du-code">D0</span> 直接呈现决定</li>
+                  <li><span class="du-code">D1</span> 呈现备选方案和决定</li>
+                  <li><span class="du-code">D2</span> 呈现决定和明确理由</li>
+                </ul>
+              </div>
+              <div class="du-stage">
+                <h3>阶段二：反馈后行为 U</h3>
+                <ul class="du-list">
+                  <li><span class="du-code">U0</span> 无反馈和第二次决定</li>
+                  <li><span class="du-code">U1</span> 加入反馈</li>
+                  <li><span class="du-code">U2</span> 反馈后维持决定</li>
+                  <li><span class="du-code">U3</span> 反馈后改变决定</li>
+                </ul>
+              </div>
+            </div>
+            <div class="condition-grid" id="conditionCards"></div>
+            <p class="reading design-note">本轮把六个组合视为一个六水平条件因子：C0=D0-U0、C1=D1-U0、C2=D2-U0、C3=D2-U1、C4=D2-U2、C5=D2-U3。完整 D×U 交互将在扩展设计中单独估计。</p>
           </div>
         </details>
       </div>
     </section>
 
-    <!-- 05 分析计划与预设对比 -->
-    <section id="analysis" class="study-section">
-      <span id="s7" class="anchor-alias" aria-hidden="true"></span>
-      <span id="s8" class="anchor-alias" aria-hidden="true"></span>
-      <span id="s9" class="anchor-alias" aria-hidden="true"></span>
-      <span id="s10" class="anchor-alias" aria-hidden="true"></span>
+    <!-- 03 模型评价哪些方面 -->
+    <section id="measurement" class="study-section">
+      <span id="s4" class="anchor-alias" aria-hidden="true"></span>
       <div class="wrap">
         <div class="section-heading">
-          <span class="section-index">05</span>
+          <span class="section-index">03</span>
           <div>
-            <h2>分析计划与预设对比</h2>
-            <p class="lead">分析计划回答三个问题，并用六个预设对比读取不同材料增量带来的评分变化。</p>
+            <h2>模型评价哪些方面</h2>
+            <p class="lead">两个评判模型从四个方面评价材料中的机器主体。</p>
           </div>
         </div>
 
-        <div class="question-grid">
-          <article class="q-card">
-            <h3>决定信息</h3>
-            <p>备选方案和明确理由是否改变归因评分。</p>
+        <p class="reading">读完一条材料后，评判模型对这个机器主体作出四组判断。四组判断保留各自的来源量尺，分别报告，不合并成一个总分。</p>
+
+        <div class="construct-grid primary-constructs">
+          <article class="construct-card">
+            <div class="construct-head"><h4>是否能够相对独立地形成决定</h4><span class="source-tag">知觉独立性 IN</span></div>
+            <p class="construct-desc">关注决定形成的独立程度，区别于决定是否有明确目标，也区别于是否被赋予意识或意图。</p>
           </article>
-          <article class="q-card">
-            <h3>反馈后行为</h3>
-            <p>反馈、维持决定和改变决定如何改变评分。</p>
+          <article class="construct-card">
+            <div class="construct-head"><h4>行动是否围绕目标组织</h4><span class="source-tag">目标导向性 GO</span></div>
+            <p class="construct-desc">关注行动与目标之间的组织关系；决定质量由其他维度另行判断。</p>
           </article>
-          <article class="q-card">
-            <h3>稳定性</h3>
-            <p>评分模式是否随构念、场景和评判模型配置变化。</p>
+          <article class="construct-card">
+            <div class="construct-head"><h4>是否被赋予思考、意图和意识</h4><span class="source-tag">心理状态推断 MSI</span></div>
+            <p class="construct-desc">评判模型在多大程度上向机器主体赋予心理状态。自由意志作为其中一个探索性观察点单独记录。</p>
+          </article>
+          <article class="construct-card">
+            <div class="construct-head"><h4>是否能够影响决定与结果</h4><span class="source-tag">影响能力 IC</span></div>
+            <p class="construct-desc">聚焦机器主体对决定与后续结果的作用程度，与独立性、目标导向性分别报告。</p>
           </article>
         </div>
 
-        <h3 class="group-label">分析单位</h3>
-        <p class="reading">一条分析记录对应一个评判模型、一条材料和一个构念分数的组合。同一条材料会被两个评判模型分别评分，因此它的两条记录在结构上是配对的。material_id 用于识别这种配对关系，让分析知道哪些记录来自同一条材料。</p>
+        <details class="tech-details" id="supplementaryDetails">
+          <summary>补充测量与量尺来源</summary>
+          <div class="details-body">
+            <p class="reading">除四个主要维度外，另有两个感知能动性补充指标一同记录：PA5 是五题官方成员子分数，PA8 是八题官方成员子分数。保留两个官方成员集合，是为了在补充观察里对齐来源工具的两种既有版本，方便后续与文献对照。</p>
+            <div class="construct-grid supplementary-constructs">
+              <article class="construct-card">
+                <div class="construct-head"><h4>感知能动性（PA5）</h4><span class="source-tag">PA 2024</span></div>
+                <p class="construct-desc">PA 2024 感知能动性指标的五题官方成员子分数。</p>
+                <p class="construct-scale">原量尺：1—5</p>
+              </article>
+              <article class="construct-card">
+                <div class="construct-head"><h4>感知能动性（PA8）</h4><span class="source-tag">PA 2024</span></div>
+                <p class="construct-desc">PA 2024 感知能动性指标的八题官方成员子分数。</p>
+                <p class="construct-scale">原量尺：1—5</p>
+              </article>
+            </div>
+            <p class="reading">四个主要维度中，IN、GO、IC 使用 1—7 量尺，MSI 使用 1—5 语义差异量尺。页面在同一维度内部比较条件变化，不把不同维度的分数直接放在一起比较。跨量尺的合并总分会掩盖维度差异，因此不采用。</p>
+            <div class="entry-links">
+              <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md">研究B的研究与测量来源</a>
+              <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/STUDY_B_CARD.md">研究B说明</a>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
 
-        <h3 class="group-label">正式模型</h3>
-        <p class="reading">每个构念在自身原量尺上单独拟合一个混合效应模型，形式如下：</p>
-        <pre class="model-formula">construct_score
+    <!-- 04 研究具体比较什么 -->
+    <section id="comparison" class="study-section soft">
+      <span id="s5" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s6" class="anchor-alias" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="section-index">04</span>
+          <div>
+            <h2>研究具体比较什么</h2>
+            <p class="lead">六个比较分别对应一个自然语言问题。</p>
+          </div>
+        </div>
+
+        <p class="reading">研究把六种材料两两对照，得到六个比较。每个比较都在追问一个具体的问题：加入某一类线索之后，评判模型的评价会怎样变化。</p>
+
+        <ol class="comparison-list">
+          <li><strong>展示备选方案与只给出决定相比会怎样。</strong>看评判模型对“存在可选项”这条线索是否敏感。</li>
+          <li><strong>给出明确理由与只给出决定相比会怎样。</strong>看明确理由相对直接决定带来的整体差异。</li>
+          <li><strong>加入反馈会怎样。</strong>在已经给出理由的材料上再加入一段外部反馈，观察评分变化。</li>
+          <li><strong>反馈后维持决定会怎样。</strong>这一比较同时包含反馈和维持决定两部分信息。</li>
+          <li><strong>反馈后改变决定会怎样。</strong>这一比较同时包含反馈和改变决定两部分信息。</li>
+          <li><strong>在共同反馈下，维持与改变之间有什么差异。</strong>这是唯一把反馈后的行动单独隔离出来的比较。</li>
+        </ol>
+
+        <div class="contrast-grid" id="contrastCards"></div>
+
+        <details class="tech-details" id="analysisPlanDetails">
+          <summary>技术分析计划（正式模型、报告字段与稳定性检查）</summary>
+          <div class="details-body">
+            <h3 class="group-label">分析单位</h3>
+            <p class="reading">一条分析记录对应一个评判模型、一条材料和一个构念分数的组合。同一条材料会被两个评判模型分别评分，两条记录在结构上配对，material_id 用于识别这种配对关系。</p>
+
+            <h3 class="group-label">正式模型</h3>
+            <p class="reading">每个构念在自身原量尺上单独拟合一个混合效应模型，形式如下：</p>
+            <pre class="model-formula">construct_score
 ~
 C(condition_id)
 *
@@ -361,23 +289,27 @@ C(scenario_id)
 
 random intercept:
 material_id</pre>
-        <ul class="field-list">
-          <li><strong>condition</strong>：六个实验条件，是主要关注的因子。</li>
-          <li><strong>judge model</strong>：评判模型配置，作为共同主要因子进入。</li>
-          <li><strong>condition × judge model</strong>：条件效应是否随模型改变，用于结果对评判模型选择的敏感性。</li>
-          <li><strong>direction</strong>：控制方向 A/B 的决定内容差异。</li>
-          <li><strong>scenario</strong>：控制八个场景之间的平均差异。</li>
-          <li><strong>material_id 随机截距</strong>：处理同一材料被两个模型评分带来的相关性。</li>
-        </ul>
-        <p class="reading">场景按照分析计划作为固定区组进入模型，用于控制八类任务语境之间的平均差异。</p>
+            <ul class="field-list">
+              <li><strong>condition</strong>：六个实验条件，是主要关注的因子。</li>
+              <li><strong>judge model</strong>：评判模型配置，作为共同主要因子进入。</li>
+              <li><strong>condition × judge model</strong>：条件效应是否随模型改变，用于结果对评判模型选择的敏感性。</li>
+              <li><strong>direction</strong>：控制方向 A/B 的决定内容差异。</li>
+              <li><strong>scenario</strong>：控制八个场景之间的平均差异。</li>
+              <li><strong>material_id 随机截距</strong>：处理同一材料被两个模型评分带来的相关性。</li>
+            </ul>
+            <p class="reading">场景按照分析计划作为固定区组进入模型，用于控制八类任务语境之间的平均差异。</p>
 
-        <h3 class="group-label">预设对比 P1—P6</h3>
-        <div class="contrast-grid" id="contrastCards"></div>
-        <p class="reading">P4 与 P5 都以 C2 为参考条件，因此它们各自同时包含反馈与后续行为两部分信息：P4 是“反馈加维持”，P5 是“反馈加改变”，读取时要记得这一层组合。P6 在共同的反馈结构下直接比较维持与改变，是六个对比中唯一把后续行为单独隔离出来的比较。P2 以 C0 为参考，读作明确理由相对直接决定的整体差异。</p>
+            <h3 class="group-label">预设对比 P1—P6</h3>
+            <ul class="field-list">
+              <li><strong>P1（C1−C0）</strong>：展示备选方案相对只给出决定。</li>
+              <li><strong>P2（C2−C0）</strong>：给出明确理由相对只给出决定的整体差异。</li>
+              <li><strong>P3（C3−C2）</strong>：在理由之上加入反馈。</li>
+              <li><strong>P4（C4−C2）</strong>：反馈后维持决定，含反馈与维持两部分信息。</li>
+              <li><strong>P5（C5−C2）</strong>：反馈后改变决定，含反馈与改变两部分信息。</li>
+              <li><strong>P6（C5−C4）</strong>：在共同反馈下比较改变与维持。</li>
+            </ul>
 
-        <details class="tech-details" id="analysisModelDetails">
-          <summary>查看报告字段说明</summary>
-          <div class="details-body">
+            <h3 class="group-label">报告字段</h3>
             <ul class="field-list">
               <li><strong>estimate（估计值）</strong>：模型给出的条件差异点估计，落在该构念原量尺上。</li>
               <li><strong>standard error（标准误）</strong>：估计值的抽样波动幅度，越小表示估计越精确。</li>
@@ -387,41 +319,98 @@ material_id</pre>
               <li><strong>Holm-adjusted p value（Holm 校正 p 值）</strong>：在同一构念的六个对比内做多重比较校正后的 p 值。</li>
               <li><strong>raw descriptive difference（直接均值差）</strong>：不经模型调整、直接由条件均值相减得到的差异，与模型调整结果并列呈现。</li>
             </ul>
-            <p class="small muted">正式推断按构念原量尺分别完成。</p>
+
+            <h3 class="group-label">稳定性检查</h3>
+            <div class="stability-grid">
+              <article class="stability-card"><h3>场景敏感性</h3><p>比较八个场景之间的均值范围，判断结果是否过度依赖某个任务语境。</p></article>
+              <article class="stability-card"><h3>评判模型敏感性</h3><p>比较两个评判模型配置的评分模式，看条件效应是否随模型改变。</p></article>
+              <article class="stability-card"><h3>决策方向检查</h3><p>比较方向 A 与方向 B，确认结果不由具体选项内容驱动。</p></article>
+            </div>
+            <p class="reading">混合模型拟合还会记录优化器序列和收敛信息。当某个构念在多个优化器下才收敛时，收敛与 Hessian 警告会写入拟合摘要，并随分析报告保存；若某次拟合没有记录任何警告文本，该字段显示为“无记录”。所有稳定性检查都在各构念原量尺上进行。</p>
           </div>
         </details>
-
-        <h3 class="group-label">稳定性检查</h3>
-        <div class="stability-grid">
-          <article class="stability-card"><h3>场景敏感性</h3><p>比较八个场景之间的均值范围，判断结果是否过度依赖某个任务语境。</p></article>
-          <article class="stability-card"><h3>评判模型敏感性</h3><p>比较两个评判模型配置的评分模式，看条件效应是否随模型改变。</p></article>
-          <article class="stability-card"><h3>决策方向检查</h3><p>比较方向 A 与方向 B，确认结果不由具体选项内容驱动。</p></article>
-        </div>
-        <p class="reading">混合模型拟合还会记录优化器序列和收敛信息。当某个构念在多个优化器下才收敛时，收敛与 Hessian 警告会写入拟合摘要，并随分析报告保存；若某次拟合没有记录任何警告文本，该字段显示为“无记录”。所有稳定性检查都在各构念原量尺上进行。</p>
       </div>
     </section>
 
-    <!-- 06 流程演示 -->
+    <!-- 05 研究已经完成到哪里 -->
+    <section id="progress" class="study-section">
+      <span id="s7" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s8" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s9" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s10" class="anchor-alias" aria-hidden="true"></span>
+      <span id="s11" class="anchor-alias" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="section-index">05</span>
+          <div>
+            <h2>研究已经完成到哪里</h2>
+            <p class="lead">从研究问题到分析界面的整条链路已经建立，下一步是双模型正式评分。</p>
+          </div>
+        </div>
+
+        <ol class="progress-chain" aria-label="研究进度">
+          <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>研究问题</li>
+          <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>材料</li>
+          <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>题项与评分规则</li>
+          <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>分析计划</li>
+          <li class="done"><span class="progress-mark" aria-hidden="true">✓</span>分析界面</li>
+          <li class="next"><span class="progress-mark" aria-hidden="true">→</span>双模型正式评分：下一步</li>
+          <li class="next"><span class="progress-mark" aria-hidden="true">→</span>正式结果：评分完成后更新</li>
+        </ol>
+
+        <p class="reading">到目前为止，研究B已经把从问题到展示的整条链路搭好：研究问题与三层线索、四个主要评价维度与两个补充指标的定义、来源与原量尺、六个条件、八个场景、两个方向、九十六条材料、评分规则、双评判模型配置、逐构念的混合效应分析模型、六个预设对比，以及一套可复现的静态页面。分析界面示例展示正式结果将如何组织。正式双模型评分完成后，同一页面将更新条件结果和稳定性分析。</p>
+
+        <p class="reading">读者现在可以逐条检查材料，看每一个条件如何落到具体文本；核对六个指标的定义和各自原量尺；对照六个比较的参考条件与比较条件；查看每个数据字段的含义；并在本地组装后复现整张页面。这些核查基于已经固定的材料、量尺、评分规则和分析资产。</p>
+
+        <div class="timeline-grid">
+          <div class="timeline-col done">
+            <h3>正式评分产出的数据与统计</h3>
+            <ul class="timeline-list">
+              <li>原始响应 JSONL</li>
+              <li>题项分 CSV</li>
+              <li>构念分 CSV</li>
+              <li>描述统计 CSV</li>
+              <li>混合模型摘要</li>
+              <li>P1—P6 对比表</li>
+            </ul>
+          </div>
+          <div class="timeline-col next">
+            <h3>正式评分产出的分析与展示</h3>
+            <ul class="timeline-list">
+              <li>场景分析</li>
+              <li>评判模型敏感性分析</li>
+              <li>五张更新图</li>
+              <li>版本化研究报告</li>
+              <li>页面数据快照</li>
+            </ul>
+          </div>
+        </div>
+
+        <ul class="status-notes" id="statusNotes"></ul>
+      </div>
+    </section>
+
+    <!-- 06 分析界面示例 -->
     <section id="demo" class="study-section soft">
+      <span id="s12" class="anchor-alias" aria-hidden="true"></span>
       <span id="s13" class="anchor-alias" aria-hidden="true"></span>
       <div class="wrap">
         <div class="section-heading">
           <span class="section-index">06</span>
           <div>
-            <h2>流程演示</h2>
-            <p class="lead">本节展示评分、分析和图表输出的页面结构。当前数值来自流程演示数据，真实双模型运行完成后将在相同位置更新。</p>
+            <h2>分析界面示例</h2>
+            <p class="lead">展示正式结果页面将如何组织。</p>
           </div>
         </div>
+
+        <div class="instruction-box demo-lead">以下数值用于展示结果页面的阅读方式。正式双模型评分完成后，该区域将更新研究结果。</div>
 
         <div id="demoError" class="error-panel" hidden></div>
 
         <div id="demoContent">
-          <p class="reading">如何阅读本节：先选择构念查看 C0—C5 的条件均值结构；再看直接均值差；接着看模型调整后差异；最后看场景和评判模型敏感性。</p>
-
           <div class="demo-metric-grid" id="demoMetrics"></div>
 
-          <h3 class="group-label">单构念结果结构 <span class="demo-mark">流程演示</span></h3>
-          <p class="reading">横轴是 C0—C5 六个条件，纵轴是当前构念的原量尺；下方表格聚合了两个评判模型、八个场景和两个方向。切换到其他构念时，纵轴量尺会随该构念一起变化。</p>
+          <h3 class="group-label">选择一个评价维度，看它在六个条件下的变化</h3>
           <div class="controls">
             <label>选择构念
               <select id="resConstructSelect"></select>
@@ -429,13 +418,14 @@ material_id</pre>
           </div>
           <p id="constructExplain" class="instruction-box"></p>
           <div class="profile-chart-wrap">
-            <svg id="conditionProfileChart" role="img" aria-label="单构念在六个条件下的流程演示平均得分折线图" preserveAspectRatio="xMidYMid meet"></svg>
+            <svg id="conditionProfileChart" role="img" aria-label="单构念在六个条件下的示例平均得分折线图" preserveAspectRatio="xMidYMid meet"></svg>
             <p class="chart-scale-note" id="chartScaleNote"></p>
           </div>
+          <p class="reading">横轴是 C0—C5 六个条件，纵轴是当前维度的原量尺。切换维度时，纵轴量尺会随该维度一起变化；下方表格聚合了两个评判模型、八个场景和两个方向。</p>
           <div class="table-scroll"><table id="condResultTable"></table></div>
 
           <details class="tech-details" id="demoStatsDetails">
-            <summary>查看演示统计表</summary>
+            <summary>查看完整统计表（条件均值、预设对比与拟合信息）</summary>
             <div class="details-body">
               <p class="reading">直接均值差从条件均值直接计算，适合查看描述性差异。模型调整后差异来自预设混合效应模型，在控制场景和方向后估计条件差异。</p>
               <div class="controls contrast-controls">
@@ -457,112 +447,113 @@ material_id</pre>
             </div>
           </details>
 
-          <details class="tech-details" id="pipelineFigures">
-            <summary>查看流程演示图表</summary>
+          <details class="tech-details" id="coverageDetails">
+            <summary>查看8个场景与6个条件的覆盖矩阵</summary>
             <div class="details-body">
+              <p class="reading">覆盖检查确认设计没有缺格：每个条件、每个场景、每个方向都出现预期数量的材料。材料数是九十六，响应数是它的两倍，因为每条材料由两个评判模型各评一次。</p>
+              <div class="core-metric-grid">
+                <div class="core-metric"><strong>6</strong><span>条件</span></div>
+                <div class="core-metric"><strong>8</strong><span>场景</span></div>
+                <div class="core-metric"><strong>2</strong><span>方向</span></div>
+                <div class="core-metric"><strong id="materialCount">96</strong><span>材料</span></div>
+              </div>
+              <p class="small muted">每个格子包含2条材料，分别对应方向A与方向B。</p>
+              <div class="table-scroll coverage-scroll" id="coverageMatrix"><p class="placeholder-note">覆盖矩阵将在示例数据载入后显示。</p></div>
+              <aside class="balance-panel" id="balancePanel"></aside>
+            </div>
+          </details>
+
+          <details class="tech-details" id="pipelineFigures">
+            <summary>查看示例图表与场景敏感性</summary>
+            <div class="details-body">
+              <p class="reading">下表给出每个构念在八个场景上的均值范围；范围越大，说明结果越依赖具体任务语境。热力图把各构念按理论量尺转换为 0—1 的量尺内位置用于同图展示，正式推断仍保留原量尺。</p>
+              <div class="table-scroll"><table id="scenHetTable"></table></div>
               <div class="figure-grid">
                 <figure class="figure">
-                  <span class="demo-mark">流程演示</span>
                   <img src="assets/figures/fig1_condition_construct_means.png" data-fig="fig1_condition_construct_means.png" loading="lazy" decoding="async" alt="每个构念在六个条件下按原量尺显示的平均得分" />
-                  <figcaption>回答各构念在 C0—C5 之间如何移动。横轴是六个条件，纵轴是各构念自身的原量尺；每个面板对应一个构念，同一构念内比较高低，跨构念查看时以各自原量尺为准。</figcaption>
+                  <figcaption>各构念在 C0—C5 之间如何移动。横轴是六个条件，纵轴是各构念自身的原量尺；每个面板对应一个构念，同一构念内比较高低。</figcaption>
                 </figure>
                 <figure class="figure">
-                  <span class="demo-mark">流程演示</span>
                   <img src="assets/figures/fig2_model_adjusted_contrasts.png" data-fig="fig2_model_adjusted_contrasts.png" loading="lazy" decoding="async" alt="每个构念的模型调整后预设对比及区间" />
-                  <figcaption>回答模型调整后各对比的方向与不确定性。横轴是该构念原量尺上的差值，点为估计值，横线为 95% 置信区间；同一构念内读方向与幅度，跨构念查看时分别参照各自量尺。</figcaption>
+                  <figcaption>模型调整后各对比的方向与不确定性。横轴是该构念原量尺上的差值，点为估计值，横线为 95% 置信区间。</figcaption>
                 </figure>
                 <figure class="figure">
-                  <span class="demo-mark">流程演示</span>
                   <img src="assets/figures/fig5_contrast_forest.png" data-fig="fig5_contrast_forest.png" loading="lazy" decoding="async" alt="每个构念的直接均值差森林图" />
-                  <figcaption>回答不经模型调整时各对比的描述性差异。横轴是原量尺上的直接均值差，按构念分面；读法与上图一致，各构念的差值在自己的原量尺内读取。</figcaption>
+                  <figcaption>不经模型调整时各对比的描述性差异。横轴是原量尺上的直接均值差，按构念分面。</figcaption>
                 </figure>
                 <figure class="figure">
-                  <span class="demo-mark">流程演示</span>
-                  <img src="assets/figures/fig3_model_profiles.png" data-fig="fig3_model_profiles.png" loading="lazy" decoding="async" alt="两个评判模型配置在各构念上的流程演示均值" />
-                  <figcaption>回答两个评判模型配置在各构念上的均值位置。每个面板一个构念，两点分别是两个模型；用于敏感性观察，同构念内读位置差，跨构念保留各自量尺。</figcaption>
+                  <img src="assets/figures/fig3_model_profiles.png" data-fig="fig3_model_profiles.png" loading="lazy" decoding="async" alt="两个评判模型配置在各构念上的示例均值" />
+                  <figcaption>两个评判模型配置在各构念上的均值位置。每个面板一个构念，两点分别是两个模型，用于敏感性观察。</figcaption>
+                </figure>
+                <figure class="figure">
+                  <img src="assets/figures/fig4_scenario_construct_heatmap.png" data-fig="fig4_scenario_construct_heatmap.png" loading="lazy" decoding="async" alt="八个场景与六个构念的量尺内位置热力图" />
+                  <figcaption>各构念依据理论量尺转换为 0—1 的量尺内位置，用于热力图展示；该转换仅用于呈现，不进入正式统计推断。</figcaption>
                 </figure>
               </div>
             </div>
           </details>
-
-          <h3 class="group-label">场景敏感性演示 <span class="demo-mark">流程演示</span></h3>
-          <p class="reading">下表给出每个构念在八个场景上的均值范围；范围越大，说明结果越依赖具体任务语境。热力图把各构念按理论量尺转换为 0—1 的量尺内位置用于同图展示，正式推断仍保留原量尺。场景差异用于识别结果是否过度依赖某一类任务。</p>
-          <div class="table-scroll"><table id="scenHetTable"></table></div>
-          <figure class="figure">
-            <span class="demo-mark">流程演示</span>
-            <img src="assets/figures/fig4_scenario_construct_heatmap.png" data-fig="fig4_scenario_construct_heatmap.png" loading="lazy" decoding="async" alt="八个场景与六个构念的量尺内位置热力图" />
-            <figcaption>各构念依据理论量尺转换为 0—1 的量尺内位置，用于热力图展示；该转换仅用于呈现，不进入正式统计推断。</figcaption>
-          </figure>
         </div>
       </div>
     </section>
 
-    <!-- 07 研究状态、复现与下一步 -->
-    <section id="status" class="study-section">
-      <span id="s12" class="anchor-alias" aria-hidden="true"></span>
+    <!-- 07 方法、数据和复现 -->
+    <section id="methods" class="study-section">
       <span id="s14" class="anchor-alias" aria-hidden="true"></span>
       <div class="wrap">
         <div class="section-heading">
           <span class="section-index">07</span>
           <div>
-            <h2>研究状态、复现与下一步</h2>
-            <p class="lead">已经建立的研究资产、页面现在能核查什么、正式运行的完成标准与交付物，以及进入数据和代码的入口。</p>
+            <h2>方法、数据和复现</h2>
+            <p class="lead">材料如何生成，评判模型如何读取，以及从哪里进入数据与代码。</p>
           </div>
         </div>
 
-        <h3 class="group-label">当前已经建立的研究资产</h3>
-        <p class="reading">到目前为止，研究B已经把从问题到展示的整条链路搭好：研究问题与三类线索、四个主要构念与两个补充指标的定义、来源与原量尺、六个条件、八个场景、两个方向、九十六条材料、评分规则、双评判模型配置、逐构念的混合效应分析模型、六个预设对比 P1—P6、一套流程演示数据，以及可复现的静态页面与入口。</p>
-
-        <h3 class="group-label">当前页面可以核查什么</h3>
-        <p class="reading">读者现在可以逐条检查材料，看每一个 D/U 条件如何落到具体文本；核对六个构念的定义和各自原量尺；检查 P1—P6 的比较条件与参考条件是否与分析计划一致；查看每个数据字段的含义；验证分析与绘图脚本；并在本地组装后复现整张流程演示页面。这些核查基于已经冻结的材料、量尺、评分规则和分析资产，可在正式运行前完成。</p>
-
-        <h3 class="group-label">正式运行完成标准</h3>
-        <p class="reading">正式运行达到以下九点才算完成：</p>
-        <ol class="timeline-list ordered-standards">
-          <li>两个评判模型完成全部九十六条材料的评分；</li>
-          <li>每条响应通过结构与数值范围检查；</li>
-          <li>题项分与构念分完整生成；</li>
-          <li>两个模型的结果分别保存；</li>
-          <li>六个构念的混合模型拟合完成；</li>
-          <li>P1—P6 对比生成；</li>
-          <li>场景与评判模型敏感性结果生成；</li>
-          <li>运行清单、模型版本与时间信息保存；</li>
-          <li>页面从流程演示切换到正式结果版本。</li>
+        <ol class="pipeline-flow" aria-label="材料生成与评分流程">
+          <li><strong>8</strong><span>场景</span></li>
+          <li class="op" aria-hidden="true">×</li>
+          <li><strong>6</strong><span>条件</span></li>
+          <li class="op" aria-hidden="true">×</li>
+          <li><strong>2</strong><span>方向</span></li>
+          <li class="op" aria-hidden="true">=</li>
+          <li class="result"><strong>96</strong><span>条材料</span></li>
         </ol>
 
-        <h3 class="group-label">正式运行后的交付物</h3>
-        <div class="timeline-grid">
-          <div class="timeline-col done">
-            <h3>数据与统计</h3>
-            <ul class="timeline-list">
-              <li>原始响应 JSONL</li>
-              <li>题项分 CSV</li>
-              <li>构念分 CSV</li>
-              <li>描述统计 CSV</li>
-              <li>混合模型摘要</li>
-              <li>P1—P6 对比表</li>
-            </ul>
-          </div>
-          <div class="timeline-col next">
-            <h3>分析与展示</h3>
-            <ul class="timeline-list">
-              <li>场景分析</li>
-              <li>模型敏感性分析</li>
-              <li>五张更新图</li>
-              <li>版本化研究报告</li>
-              <li>页面数据快照</li>
-            </ul>
-          </div>
+        <p class="reading">一条材料从一个基础场景开始，先确定两个候选决定，再选定方向 A 或方向 B 作为最终选择。随后按 C0—C5 的模板加入决定信息，并在 C3—C5 加入固定的外部反馈与第二次决定。材料末尾声明后续量表中的“the machine”指上文这个 AI 系统。同一场景的核心任务在各条件下保持一致，变化的只是呈现出来的决策过程；反馈文本在重复运行中保持固定。</p>
+
+        <p class="reading">两个评判模型读取同一套九十六条材料，各自独立产生题项响应，模型ID记录在每条响应中，模型间差异进入敏感性分析。评分沿固定链路进行：评判模型按题项模板输出结构化响应，系统检查题项是否齐全、数值是否落在合法范围，通过检查后按构念聚合成构念分。一个构念分要求相关题项全部有效，缺任一题时该构念分记为缺失。</p>
+
+        <div class="judge-summary" id="judgeSummary">
+          <article class="judge-block">
+            <h4>评判模型一</h4>
+            <dl class="judge-fields">
+              <div><dt>提供方</dt><dd>deepseek</dd></div>
+              <div><dt>角色</dt><dd>共同主要评判模型</dd></div>
+              <div><dt>任务</dt><dd>独立评分同一套96条材料</dd></div>
+            </dl>
+          </article>
+          <article class="judge-block">
+            <h4>评判模型二</h4>
+            <dl class="judge-fields">
+              <div><dt>提供方</dt><dd>openai</dd></div>
+              <div><dt>角色</dt><dd>共同主要评判模型</dd></div>
+              <div><dt>任务</dt><dd>独立评分同一套96条材料</dd></div>
+            </dl>
+          </article>
         </div>
 
-        <h3 class="group-label">现有证据范围</h3>
-        <p class="reading">页面现在能验证材料、评分、分析和展示流程是否按协议衔接。效应方向、模型差异和理论解释会在正式运行结果完成后报告。研究B采用机器主体专用题项；跨主体比较进入后续独立测量路线。</p>
-        <ul class="status-notes" id="statusNotes"></ul>
+        <details class="tech-details" id="modelIdDetails">
+          <summary>评判模型精确配置</summary>
+          <div class="details-body">
+            <p class="reading">正式运行使用两个共同主要评判模型，其精确模型标识与结果版本会随运行清单一并保存，以便复核。两个模型之间的评分差异用于考察结论是否依赖某一个模型的读取方式。</p>
+          </div>
+        </details>
 
-        <h3 class="group-label">下一步入口</h3>
+        <p class="reading">现有证据范围集中在材料、评分、分析和展示流程是否按协议衔接。效应方向、模型差异和理论解释会在正式评分完成后报告。研究B采用机器主体专用题项，跨主体比较进入后续独立测量路线。</p>
+
+        <h3 class="group-label">进入数据与代码</h3>
         <div class="entry-grid" id="entryGrid"></div>
 
-        <p class="reading closing">研究B目前已经完成从研究问题、材料和评分规则到分析与展示的完整框架。下一阶段将运行两个评判模型，并将正式结果写入同一套可追溯的数据和页面结构。</p>
+        <p class="reading closing">研究B已经完成从研究问题、材料和评分规则到分析与展示的完整框架。下一阶段运行两个评判模型，并将正式结果写入同一套可追溯的数据和页面结构。</p>
       </div>
     </section>
   </main>
@@ -575,7 +566,7 @@ material_id</pre>
 
   <footer class="site">
     <div class="wrap">
-      研究B · 机器主体决策过程归因评测 · 流程演示数据
+      研究B · 机器主体决策过程归因
     </div>
   </footer>
 

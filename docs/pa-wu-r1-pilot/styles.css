@@ -18,6 +18,12 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+/* Guard against stray horizontal overflow (e.g. wide tables inside collapsed
+   technical panels). overflow-x: clip does not create a scroll container and so
+   keeps the sticky table of contents working. */
+body { overflow-x: clip; }
+#app { overflow-x: clip; }
+header.site { overflow-x: clip; }
 body {
   margin: 0;
   background: var(--bg);
@@ -154,6 +160,29 @@ nav.toc a:hover, nav.toc a:focus { color: var(--accent); background: var(--accen
 .flow-judge { display: flex; flex-direction: column; justify-content: center; background: var(--accent-soft); border-color: #cbdcef; }
 .flow-judge p { margin: 0; color: var(--text); }
 .flow-arrow { align-self: center; color: var(--accent); font-size: 1.6rem; font-weight: 800; }
+
+/* ---------- material example tree (#example) ---------- */
+.example-tree, .example-tree ul { list-style: none; margin: 24px 0; padding: 0; }
+.example-tree .tree-branches { margin-top: 12px; margin-left: 18px; padding-left: 20px; border-left: 2px solid var(--border); display: grid; gap: 12px; }
+.example-tree li { min-width: 0; }
+.example-tree .tree-root > .tree-label { font-size: 17px; }
+.tree-label { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--text); }
+.tree-desc { display: block; margin: 4px 0 0; color: var(--muted); font-size: 14px; max-width: var(--reading-max); }
+.cond-tag { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 1px 7px; }
+
+/* ---------- comparison list (#comparison) ---------- */
+.comparison-list { margin: 20px 0; padding-left: 22px; max-width: var(--reading-max); display: grid; gap: 12px; }
+.comparison-list li { color: var(--muted); }
+.comparison-list li strong { color: var(--text); }
+
+/* ---------- progress chain (#progress) ---------- */
+.progress-chain { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 22px; padding: 0; }
+.progress-chain li { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); padding: 8px 14px; font-size: 14px; }
+.progress-chain li.done { border-color: #b7cbe4; background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.progress-chain li.next { border-style: dashed; color: var(--muted); }
+.progress-chain .progress-mark { font-weight: 800; }
+.demo-lead { max-width: var(--reading-max); }
+
 
 /* ---------- constructs (#constructs) ---------- */
 .construct-grid { display: grid; gap: 14px; }
@@ -414,7 +443,7 @@ button:hover, button:focus, select:focus { border-color: var(--accent); outline:
 .toggle-group button { border: 0; border-radius: 0; }
 .toggle-group button.active { color: #fff; background: var(--accent); }
 
-.table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
+.table-scroll { overflow-x: auto; max-width: 100%; border: 1px solid var(--border); border-radius: 12px; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff; }
 th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
 th { color: #3f5168; background: #f4f7fb; font-weight: 700; }

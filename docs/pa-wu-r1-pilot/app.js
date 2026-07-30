@@ -1,4 +1,4 @@
-// 研究B（机器主体决策过程归因评测）中文展示页。读取 data/showcase_data.json（流程演示数据）。
+// 研究B（机器主体决策过程归因）中文展示页。读取 data/showcase_data.json（分析界面示例数据）。
 "use strict";
 
 const CONDS = ["C0", "C1", "C2", "C3", "C4", "C5"];
@@ -112,12 +112,12 @@ const CONTRAST_META = {
   P6: "改变决定与维持决定的差异（C5−C4）",
 };
 
-// 研究状态说明（集中在 #status 章节）。
+// 研究进度说明（集中在 #status 章节）。
 const STATUS_NOTES = [
-  "六个构念保留各自原量尺并分别报告。",
-  "流程演示数据用于检查材料、评分、分析和页面输出。",
-  "正式双模型运行将沿用已经固定的材料和分析计划。",
-  "跨主体研究将使用独立的人类题项和可比性检验。",
+  "六个指标保留各自原量尺并分别报告。",
+  "分析界面示例数据用于展示结果页面将如何组织。",
+  "正式双模型评分将沿用已经固定的材料和分析计划。",
+  "跨主体测量将使用独立的人类题项和可比性检验。",
 ];
 
 let DATA = null;
@@ -182,7 +182,7 @@ function renderDynamic() {
 }
 
 async function load() {
-  setLoadStatus("正在加载流程演示数据……", "loading");
+  setLoadStatus("正在加载分析界面示例数据……", "loading");
   let response;
   try {
     response = await fetch("data/showcase_data.json", { cache: "no-store" });
@@ -194,8 +194,8 @@ async function load() {
   renderDynamic();
   clearDemoError();
   enableBrowserControls(true);
-  document.getElementById("snapshotStatus").textContent = "流程演示已完成";
-  setLoadStatus("流程演示数据已载入，可浏览材料、统计表与图表输出。", "success");
+  document.getElementById("snapshotStatus").textContent = "分析界面示例已就绪";
+  setLoadStatus("分析界面示例数据已载入，可浏览材料、统计表与图表输出。", "success");
 }
 
 function enableBrowserControls(enabled) {
@@ -397,7 +397,7 @@ function renderDemoMetrics() {
   const contrastCount = DATA.model_adjusted_results.contrasts.length;
   const figureCount = DATA.figure_paths.length;
   [
-    ["流程演示响应数", String(q.n_responses)],
+    ["示例响应数", String(q.n_responses)],
     ["题项有效率", `${fmt(q.item_valid_rate * 100, 0)}%`],
     ["构念得分率", `${fmt(q.construct_scored_rate * 100, 0)}%`],
     ["预设对比数", String(contrastCount)],
@@ -433,10 +433,10 @@ function renderConstructView() {
       CONDITION_META[condition].title,
       fmt(values[condition]),
       scaleText,
-      "流程演示",
+      "示例",
     ]);
     replaceTable("condResultTable",
-      tableFrom(["条件ID", "条件名称", "流程演示均值", "原量尺", "数据状态"], rows, [2]));
+      tableFrom(["条件ID", "条件名称", "示例均值", "原量尺", "数据状态"], rows, [2]));
   };
 
   select.addEventListener("change", update);
@@ -463,7 +463,7 @@ function renderConditionProfile(key) {
 
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   svg.setAttribute("aria-label",
-    `${meta.name}（${key}）在C0至C5六个条件下的流程演示平均得分，原量尺 ${minScale}—${maxScale}`);
+    `${meta.name}（${key}）在C0至C5六个条件下的示例平均得分，原量尺 ${minScale}—${maxScale}`);
   while (svg.firstChild) svg.removeChild(svg.firstChild);
 
   const mk = (tag, attrs = {}, text = null) => {
@@ -535,7 +535,7 @@ function renderAppendixConditionTable() {
     });
   });
   replaceTable("appxCondTable",
-    tableFrom(["构念", "实验条件", "流程演示均值", "原量尺"], rows, [2]));
+    tableFrom(["构念", "实验条件", "示例均值", "原量尺"], rows, [2]));
 }
 
 // #demo appendix: contrast tables with raw / adjusted mode toggle.
@@ -563,7 +563,7 @@ function renderContrasts() {
         ]);
       replaceTable("contrastTable", tableFrom(["编号", "比较含义", "调整后差异", "标准误", "Holm校正p值", "95%置信区间"], rows, [2, 3, 4]));
     } else {
-      help.textContent = "直接均值差：直接比较两个条件在流程演示数据中的平均得分，作为控制场景与方向之前的参照。";
+      help.textContent = "直接均值差：直接比较两个条件在示例数据中的平均得分，作为控制场景与方向之前的参照。";
       const rows = DATA.raw_planned_contrasts
         .filter((row) => row.construct === key)
         .map((row) => [
@@ -662,8 +662,8 @@ function renderEntries() {
   const blob = REPO_BASE + "blob/main/";
   const links = [
     ["浏览完整材料", "#materials"],
-    ["研究B说明", blob + "docs/CURRENT_STUDY_CARD.md"],
-    ["测量来源", blob + "docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md"],
+    ["研究B说明", blob + "docs/STUDY_B_CARD.md"],
+    ["测量来源", blob + "docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md"],
     ["研究协议", blob + REPO_PATH + "/study_protocol.yaml"],
     ["分析计划", blob + REPO_PATH + "/analysis_plan.md"],
     ["评分规则", blob + REPO_PATH + "/scoring_spec.yaml"],
@@ -727,7 +727,7 @@ function showLoadError(error) {
   // 1. Hero status stays plain-language; the technical error is not shown here.
   const status = document.getElementById("loadStatus");
   status.className = "load-status error";
-  status.textContent = "流程演示数据暂时未载入，研究设计和分析计划仍可浏览。";
+  status.textContent = "分析界面示例数据暂时未载入，研究设计和分析计划仍可浏览。";
 
   // 2. Snapshot status reflects the pending data.
   const snapshot = document.getElementById("snapshotStatus");
@@ -742,7 +742,7 @@ function showLoadError(error) {
   if (panel) {
     panel.hidden = false;
     panel.innerHTML = "";
-    panel.appendChild(el("strong", {}, "流程演示数据未能载入"));
+    panel.appendChild(el("strong", {}, "分析界面示例数据未能载入"));
     panel.appendChild(el("p", {}, "数据文件：data/showcase_data.json"));
     const details = el("details", {},
       el("summary", {}, "查看技术错误"),

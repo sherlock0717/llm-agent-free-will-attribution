@@ -45,11 +45,20 @@ def test_public_sources_exist():
 
 def test_root_page_is_project_overview(html: str):
     assert "<title>LLM行动者归因评测</title>" in html
-    assert re.search(r"<h1>\s*LLM行动者归因评测\s*</h1>", html)
+    assert re.search(r"<h1>模型会怎样评价一个作出决定的主体？</h1>", html)
     for section_id in ROOT_SECTIONS:
         assert f'id="{section_id}"' in html
     for removed in ["research-a-detail", "historical-data", "mock-validation", "real-provider"]:
         assert f'id="{removed}"' not in html
+
+
+def test_root_page_leads_with_a_concrete_question(html: str):
+    hero = html.split('id="overview"', 1)[1].split("</section>", 1)[0]
+    assert "模型会怎样评价一个作出决定的主体" in hero
+    program = html.split('id="program"', 1)[1].split("</section>", 1)[0]
+    assert "路线" in program or "配送" in program
+    studies = html.split('id="studies"', 1)[1].split("</section>", 1)[0]
+    assert "先观察" in studies and "拆" in studies
 
 
 def test_root_page_links_to_independent_studies(html: str):
@@ -133,10 +142,17 @@ def test_root_json_is_valid_utf8_without_bom():
 
 
 def test_public_names_and_routes_are_consistent():
-    assert "身份与决策过程归因基线" in (STUDY_A / "index.html").read_text(encoding="utf-8")
-    assert "机器主体决策过程归因评测" in (STUDY_B / "index.html").read_text(encoding="utf-8")
+    assert "身份与决策过程" in (STUDY_A / "index.html").read_text(encoding="utf-8")
+    assert "机器主体决策过程归因" in (STUDY_B / "index.html").read_text(encoding="utf-8")
     assert "identity-process-attribution-baseline" in INDEX.read_text(encoding="utf-8")
     assert "machine-decision-process-attribution" in INDEX.read_text(encoding="utf-8")
+
+
+def test_public_pages_have_no_development_labels():
+    for page in PUBLIC_PAGES:
+        content = page.read_text(encoding="utf-8")
+        for label in ["V2", "旧版", "新版", "当前版", "legacy", "流程演示", "PA—Wu", "PA-Wu"]:
+            assert label not in content, (page.name, label)
 
 
 def test_no_old_public_repo_slug_in_pages():

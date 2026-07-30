@@ -1,8 +1,8 @@
-# 研究A分析V2：场景区组与模型生成重复
+# 研究A场景一致性分析：场景区组与模型生成重复
 
 ## 1. 分析目标
 
-研究A V2以场景为主要组织层级，描述单一DeepSeek配置在六类过程条件与两种身份标签下的归因反应。分析重点包括：
+场景一致性分析以场景为主要组织层级，描述单一DeepSeek配置在六类过程条件与两种身份标签下的归因反应。分析重点包括：
 
 - 各条件与身份组合的场景级均值；
 - 预先指定条件比较在不同场景和身份中的方向；
@@ -10,7 +10,7 @@
 - 留一场景后的平均差异范围；
 - 既有模型生成重复在同一分析单元内的离散程度。
 
-历史分析产物继续保存在`outputs/`。V2脚本将新结果写入独立目录，不覆盖历史CSV、图表与报告。
+历史分析产物继续保存在`outputs/`。场景一致性脚本将新结果写入独立目录，不覆盖历史CSV、图表与报告。
 
 ## 2. 数据来源
 
@@ -18,7 +18,7 @@
 
 公开名称：**DeepSeek API模型模拟问卷响应**
 
-数据角色：研究A探索性基线
+数据角色：研究A场景一致性分析
 
 每条记录包含：
 
@@ -31,7 +31,7 @@
 
 ## 3. 核心分析单元
 
-V2核心单元为：
+核心单元为：
 
 ```text
 场景 × 身份标签 × 过程条件
@@ -57,7 +57,7 @@ V2核心单元为：
 5. `reasons`
 6. `reflection_feedback`
 
-`direct_choice_long`与`reasons_concise`承担长度—理由结构诊断功能。V2不把六个条件视为等距连续等级。
+`direct_choice_long`与`reasons_concise`承担长度—理由结构诊断功能。分析不把六个条件视为等距连续等级。
 
 ## 5. 预先指定比较
 
@@ -87,7 +87,7 @@ V2核心单元为：
 
 ## 7. 构念
 
-V2支持研究A数据中已有的构念列，包括：
+场景一致性分析支持研究A数据中已有的构念列，包括：
 
 - factual_manipulation_check
 - subjective_process_completeness
@@ -118,20 +118,20 @@ V2支持研究A数据中已有的构念列，包括：
 默认输出：
 
 ```text
-artifacts/research_a_v2/
+artifacts/research_a_scenario/
 ├── unit_summary.csv
 ├── condition_summary.csv
 ├── contrast_unit_differences.csv
 ├── contrast_summary.csv
-├── research_a_v2_summary.json
-└── research_a_v2_report.md
+├── research_a_scenario_summary.json
+└── research_a_scenario_report.md
 ```
 
 `artifacts/`用于新分析产物和本地复核。正式公开后，可由单独发布步骤复制经过核查的摘要数据到研究A页面数据目录。
 
 ## 10. 页面更新规则
 
-研究A页面在V2摘要文件发布前继续展示既有聚合结果，并明确V2分析结构。V2摘要发布后，页面新增：
+研究A页面在场景摘要文件发布前继续展示既有聚合结果，并明确场景一致性分析结构。场景摘要发布后，页面新增：
 
 - 场景方向一致数；
 - 场景差异范围；

@@ -1,6 +1,6 @@
 {
   "analysis_unit": "scenario_id × identity_label × process_condition",
-  "analysis_version": "research_a_v2_scenario_block",
+  "analysis_version": "research_a_scenario_block",
   "condition_count": 6,
   "contrasts": [
     {
