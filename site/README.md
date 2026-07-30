@@ -55,8 +55,8 @@ python scripts/assemble_pages.py --output _site
 
 - 研究A：DeepSeek API模型模拟问卷响应；
 - 研究A mock：确定性工程验证数据；
-- 研究B demo：流程演示数据；
-- 研究B正式运行：双评判模型运行数据。
+- 研究B示例：分析界面示例数据；
+- 研究B正式评分：双评判模型运行数据。
 
 完整定义见：
 
@@ -69,8 +69,8 @@ python scripts/assemble_pages.py --output _site
 - [研究A说明](../docs/STUDY_CARD.md)
 - [研究A研究与测量来源](../docs/research_and_measurement_sources.md)
 - [研究A题项来源映射](../docs/scale_source_mapping.md)
-- [研究B说明](../docs/CURRENT_STUDY_CARD.md)
-- [研究B研究与测量来源](../docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md)
+- [研究B说明](../docs/STUDY_B_CARD.md)
+- [研究B研究与测量来源](../docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md)
 
 ## 部署
 

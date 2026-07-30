@@ -36,8 +36,8 @@ REDIRECT_HTML = """<!DOCTYPE html>
   <title>研究B页面已迁移</title>
 </head>
 <body>
-  <p>研究B页面已迁移至“机器主体决策过程归因评测”。</p>
-  <p><a href="../machine-decision-process-attribution/">前往机器主体决策过程归因评测</a></p>
+  <p>研究B页面已迁移至“机器主体决策过程归因”。</p>
+  <p><a href="../machine-decision-process-attribution/">前往机器主体决策过程归因</a></p>
 </body>
 </html>
 """
@@ -123,11 +123,11 @@ def _verify(output: Path) -> None:
         raise AssembleError("legacy Research B route does not target the canonical route")
 
     study_a_html = (output / STUDY_A_ROUTE / "index.html").read_text(encoding="utf-8")
-    if "身份与决策过程归因基线" not in study_a_html:
+    if "身份与决策过程" not in study_a_html:
         raise AssembleError("Research A page title missing from assembled output")
 
     study_b_html = (output / STUDY_B_ROUTE / "index.html").read_text(encoding="utf-8")
-    if "机器主体决策过程归因评测" not in study_b_html:
+    if "机器主体决策过程归因" not in study_b_html:
         raise AssembleError("Research B page title missing from assembled output")
 
 

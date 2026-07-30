@@ -78,19 +78,27 @@
         <p class="reading">下表保留各评价维度的原评分范围。横向比较同一维度，可以看到从直接选择到理由与反思条件时，模型评分如何移动。</p>
         <div id="conditionTable" class="table-scroll"><p class="loading">正在载入条件均值……</p></div>
 
-        <h3 id="v2-heading">这些差异在不同场景中是否一致</h3>
-        <p class="reading" id="v2Intro">正在载入场景分析……</p>
-        <div id="v2Controls" class="v2-controls" hidden>
-          <label for="v2ConstructSelect">选择评价维度</label>
-          <select id="v2ConstructSelect"></select>
+        <h3 id="scenario-heading">这些差异在不同场景中是否一致</h3>
+        <p class="reading" id="scenarioIntro">正在载入场景一致性分析……</p>
+        <div id="scenarioControls" class="scenario-controls" hidden>
+          <label for="scenarioConstructSelect">选择评价维度</label>
+          <select id="scenarioConstructSelect"></select>
         </div>
-        <div id="v2Result" class="v2-result"><p class="loading">正在载入场景分析……</p></div>
+        <div id="scenarioResult" class="scenario-result"><p class="loading">正在载入场景一致性分析……</p></div>
+        <dl class="scenario-legend">
+          <div><dt>比较内容</dt><dd>这一行对应哪一个过程条件比较。</dd></div>
+          <div><dt>平均变化</dt><dd>该比较在所有场景×身份单元上的平均差异，保留评价维度原量尺。</dd></div>
+          <div><dt>呈现相同方向的单元</dt><dd>差异为正与为负的单元各有多少个。</dd></div>
+          <div><dt>场景间一致程度</dt><dd>取正负两侧较多的一方占非零单元的比例，越接近1说明方向越一致。</dd></div>
+          <div><dt>八个场景中的变化范围</dt><dd>八个场景各自平均差异的最小值到最大值。</dd></div>
+          <div><dt>去掉任意一个场景后的范围</dt><dd>每次移除一个场景后重新求平均，观察结果是否依赖单个场景。</dd></div>
+        </dl>
 
         <h3>AI与人类标签对应的评分差异</h3>
         <p class="reading">这里比较材料只改变行动者身份标签时，各评价维度出现的整体差异。条形长度表示差异幅度，具体均值和统计量保留在同一行。</p>
         <div id="identityEffects" class="effect-list"><p class="loading">正在载入身份标签结果……</p></div>
 
-        <details class="legacy-details">
+        <details class="supplementary-details">
           <summary>查看补充统计与图表</summary>
           <div class="details-body">
             <h3>事先确定的条件比较</h3>

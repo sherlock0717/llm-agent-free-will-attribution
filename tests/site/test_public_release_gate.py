@@ -41,9 +41,26 @@ def test_research_a_public_page_has_complete_structure():
         "repro",
     ]:
         assert f'id="{section_id}"' in html
-    assert "身份与决策过程归因基线" in html
-    assert "DeepSeek API模型模拟问卷响应" in html
+    assert "身份与决策过程" in html
+    assert "DeepSeek" in html
     assert "python -m http.server 8000 --directory _site" in html
+
+
+def test_research_a_main_findings_lead_before_design():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    assert html.index('id="results"') < html.index('id="design"')
+
+
+def test_research_a_scenario_consistency_uses_natural_language_heading():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    assert "这些差异在不同场景中是否一致" in html
+    assert "V2" not in html
+
+
+def test_research_a_technical_statistics_collapsed():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    details = re.search(r'<details class="supplementary-details">', html)
+    assert details, "supplementary statistics details missing"
 
 
 def test_research_a_public_copy_uses_positive_status_language():
@@ -58,6 +75,7 @@ def test_research_a_dynamic_groups_are_independent():
     assert "loadStoryGroup" in app
     assert "loadMeasurementGroup" in app
     assert "loadAnalysisGroup" in app
+    assert "loadScenarioGroup" in app
     assert "errorPanel" in app
     assert "Promise.all([" not in app
 
@@ -106,24 +124,25 @@ def test_research_a_page_uses_existing_root_data_contract():
         "showcase_story.json",
         "measurement_summary.json",
         "analysis_results.json",
-        "research_a_v2_summary.json",
+        "research_a_scenario_summary.json",
     }
     for name in names:
         payload = json.loads((ROOT / "site" / "data" / name).read_text(encoding="utf-8"))
         assert isinstance(payload, dict)
 
 
-V2_JSON = ROOT / "site" / "data" / "research_a_v2_summary.json"
+SCENARIO_JSON = ROOT / "site" / "data" / "research_a_scenario_summary.json"
 
 
-def test_research_a_v2_public_json_is_strict_and_complete():
-    check_public_json.validate_file(V2_JSON)
-    payload = json.loads(V2_JSON.read_text(encoding="utf-8"))
+def test_research_a_scenario_public_json_is_strict_and_complete():
+    check_public_json.validate_file(SCENARIO_JSON)
+    payload = json.loads(SCENARIO_JSON.read_text(encoding="utf-8"))
     assert payload["record_count"] == 360
     assert payload["unit_count"] == 96
     assert payload["scenario_count"] == 8
     assert payload["identity_count"] == 2
     assert payload["condition_count"] == 6
+    assert payload["analysis_version"] == "research_a_scenario_block"
     assert len(payload["public_constructs"]) == 5
     assert len(payload["contrasts"]) == 4
     assert len(payload["public_contrast_summary"]) == 20
@@ -136,23 +155,30 @@ def test_research_a_v2_public_json_is_strict_and_complete():
             assert field in row, field
 
 
-def test_research_a_page_has_v2_results_section():
+def test_research_a_page_has_scenario_results_section():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
-    assert "场景级V2结果" in html
-    for slot in ['id="v2Result"', 'id="v2ConstructSelect"', 'id="v2Intro"']:
+    assert "V2" not in html
+    for slot in ['id="scenarioResult"', 'id="scenarioConstructSelect"', 'id="scenarioIntro"']:
         assert slot in html, slot
 
 
-def test_research_a_v2_group_is_independent_and_recoverable():
+def test_research_a_scenario_group_is_independent_and_recoverable():
     app = (STUDY_A / "app.js").read_text(encoding="utf-8")
-    # v2 is a fourth independent group with its own retry path.
-    assert re.search(r"GROUP_STATE\s*=\s*\{[^}]*\bv2\b", app)
-    assert "loadV2Group" in app
-    assert 'runGroup("v2", loadV2Group)' in app
-    # v2 rendering shows direction consistency and both scenario ranges.
+    # scenario is a fourth independent group with its own retry path.
+    assert re.search(r"GROUP_STATE\s*=\s*\{[^}]*\bscenario\b", app)
+    assert "loadScenarioGroup" in app
+    assert 'runGroup("scenario", loadScenarioGroup)' in app
+    # scenario rendering shows direction consistency and both scenario ranges.
     assert "direction_consistency" in app
     assert "scenario_mean_min" in app
     assert "leave_one_scenario_mean_min" in app
+
+
+def test_research_a_findings_are_not_ordered_by_largest_difference():
+    app = (STUDY_A / "app.js").read_text(encoding="utf-8")
+    # the old behaviour picked the strongest contrast to build the lead finding.
+    assert "renderTakeawaysFromV2" not in app
+    assert "renderTakeawaysFromScenario" in app
 
 
 def test_study_card_uses_positive_extension_language():

@@ -2,7 +2,7 @@
 
 const DATA_ROOT = "../data/";
 const STATUS = document.getElementById("pageStatus");
-const GROUP_STATE = { story: "loading", measurement: "loading", analysis: "loading", v2: "loading" };
+const GROUP_STATE = { story: "loading", measurement: "loading", analysis: "loading", scenario: "loading" };
 const CONSTRUCT_LABELS_ZH = {
   subjective_process_completeness: "主观过程完整性",
   agency: "能动性",
@@ -11,11 +11,11 @@ const CONSTRUCT_LABELS_ZH = {
   responsibility_total: "责任总分",
 };
 const PUBLIC_TAKEAWAYS = [
-  "在该DeepSeek配置中，能动性评分从直接选择到理由与反思反馈条件总体抬升。",
-  "AI与人类身份标签对应了自由意志、体验与责任相关评分的系统差异。",
-  "加入感知智能和文本长度后，能动性的过程条件差异保持清晰，自由意志的直接过程差异接近零。",
-  "能动性与自由意志归因在这批响应中呈现较强关联，研究A V2进一步以场景级差异检查这一模式。",
-  "研究A结果描述该模型配置在本材料集与问卷模拟Prompt中的归因反应。",
+  "理由与反思描述对应更高的能动性评价：从直接选择到给出理由、再到加入反思反馈，能动性评分总体抬升。",
+  "AI与人类身份标签对应了自由意志、体验与责任相关评分上的系统差异。",
+  "能动性与自由意志归因关系紧密：两者在这批响应中一起变化，同时各自保留清晰的过程条件模式。",
+  "这些差异在八类场景中方向大体一致，去掉任意一个场景后的整体结果保持稳定。",
+  "研究A结果描述该DeepSeek配置在本材料集与问卷模拟Prompt中的归因反应。",
 ];
 
 function escapeHtml(value) {
@@ -125,23 +125,27 @@ function renderTakeaways() {
   document.getElementById("takeaways").innerHTML = `<ol>${PUBLIC_TAKEAWAYS.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>`;
 }
 
-// The public takeaways stay consistent with the V2 summary: the closing line is
-// rebuilt from the strongest scenario-level contrast rather than hardcoded.
-function renderTakeawaysFromV2(summary) {
+// The four main findings stay fixed and are ordered by the research questions,
+// not by whichever contrast happens to have the largest absolute difference.
+// The scenario summary only fills in the numeric range of the consistency
+// finding (item four), so a large value never re-orders the findings.
+function renderTakeawaysFromScenario(summary) {
   const rows = (summary.public_contrast_summary || []).filter((row) => row.scope === "all_identities");
   if (!rows.length) { renderTakeaways(); return; }
-  const strongest = rows.reduce((best, row) =>
-    Math.abs(Number(row.mean_difference)) > Math.abs(Number(best.mean_difference)) ? row : best);
-  const label = CONSTRUCT_LABELS_ZH[strongest.construct] || strongest.construct;
-  const items = PUBLIC_TAKEAWAYS.slice(0, PUBLIC_TAKEAWAYS.length - 1);
-  items.push(
-    `场景级V2把${summary.record_count}条记录汇总为${summary.unit_count}个场景×身份×过程条件单元；` +
-    `其中${label}在对比${strongest.contrast_id}上的平均差异为${formatNumber(strongest.mean_difference)}，` +
-    `方向一致率${formatNumber(strongest.direction_consistency, 2)}。`);
+  const consistency = rows.map((row) => Number(row.direction_consistency)).filter(Number.isFinite);
+  const minConsistency = consistency.length ? Math.min(...consistency) : null;
+  const items = PUBLIC_TAKEAWAYS.slice();
+  items[3] =
+    `这些差异在八类场景中方向大体一致：${summary.record_count}条响应汇总为` +
+    `${summary.unit_count}个场景×身份×过程条件单元，` +
+    (minConsistency != null
+      ? `预设对比的方向一致率最低为${formatNumber(minConsistency, 2)}，`
+      : "") +
+    "去掉任意一个场景后的整体结果保持稳定。";
   document.getElementById("takeaways").innerHTML = `<ol>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>`;
 }
 
-function v2ContrastRow(row) {
+function scenarioContrastRow(row) {
   return `<tr>
     <th>${escapeHtml(row.contrast_id)} · ${escapeHtml(row.contrast_label)}</th>
     <td>${formatNumber(row.mean_difference)}</td>
@@ -152,38 +156,38 @@ function v2ContrastRow(row) {
   </tr>`;
 }
 
-function renderV2Construct(summary, construct) {
+function renderScenarioConstruct(summary, construct) {
   const rows = (summary.public_contrast_summary || [])
     .filter((row) => row.scope === "all_identities" && row.construct === construct);
-  const target = document.getElementById("v2Result");
-  target.innerHTML = `<div class="table-scroll"><table class="v2-table">
+  const target = document.getElementById("scenarioResult");
+  target.innerHTML = `<div class="table-scroll"><table class="scenario-table">
     <thead><tr>
-      <th>预设对比</th><th>平均差异</th><th>正向 / 负向单元</th>
-      <th>方向一致率</th><th>场景均值范围</th><th>留一场景范围</th>
+      <th>比较内容</th><th>平均变化</th><th>呈现相同方向的单元</th>
+      <th>场景间一致程度</th><th>八个场景中的变化范围</th><th>去掉任意一个场景后的范围</th>
     </tr></thead>
-    <tbody>${rows.map(v2ContrastRow).join("")}</tbody>
+    <tbody>${rows.map(scenarioContrastRow).join("")}</tbody>
   </table></div>`;
 }
 
-function renderV2(summary) {
-  const intro = document.getElementById("v2Intro");
+function renderScenarioAnalysis(summary) {
+  const intro = document.getElementById("scenarioIntro");
   if (intro) {
     intro.textContent =
-      `${summary.record_count}条API模型模拟问卷响应按场景×身份×过程条件汇总为` +
-      `${summary.unit_count}个分析单元（${summary.scenario_count}场景 × ${summary.identity_count}身份 × ` +
-      `${summary.condition_count}过程条件）。下表按构念读取${(summary.contrasts || []).length}个预设对比在场景—身份单元上的差异，` +
-      `保留原量尺，不使用显著性颜色或p值。`;
+      `${summary.record_count}条模型响应按场景、身份和过程条件汇总为` +
+      `${summary.unit_count}个分析单元（${summary.scenario_count}个场景、${summary.identity_count}种身份、` +
+      `${summary.condition_count}种过程条件）。下表按评价维度读取每个比较在这些单元上的平均变化、方向一致程度，` +
+      "以及去掉任意一个场景后结果的变化范围。数值保留各维度原量尺。";
   }
-  const controls = document.getElementById("v2Controls");
-  const select = document.getElementById("v2ConstructSelect");
+  const controls = document.getElementById("scenarioControls");
+  const select = document.getElementById("scenarioConstructSelect");
   const constructs = summary.public_constructs || [];
   select.innerHTML = constructs
     .map((key) => `<option value="${escapeHtml(key)}">${escapeHtml(CONSTRUCT_LABELS_ZH[key] || key)}</option>`)
     .join("");
-  select.onchange = () => renderV2Construct(summary, select.value);
+  select.onchange = () => renderScenarioConstruct(summary, select.value);
   if (controls) controls.hidden = false;
-  if (constructs.length) renderV2Construct(summary, constructs[0]);
-  renderTakeawaysFromV2(summary);
+  if (constructs.length) renderScenarioConstruct(summary, constructs[0]);
+  renderTakeawaysFromScenario(summary);
 }
 
 
@@ -216,7 +220,7 @@ function renderContrasts(results) {
     </table></div></article>`).join("");
 }
 
-function prepareLegacyInferenceDetails() {
+function prepareSupplementaryInferenceDetails() {
   const identity = document.getElementById("identityEffects");
   const contrasts = document.getElementById("contrastTables");
   if (!identity || !contrasts || identity.closest("details")) return;
@@ -226,11 +230,11 @@ function prepareLegacyInferenceDetails() {
   const secondNote = contrasts.previousElementSibling;
   if (![firstHeading, firstNote, secondHeading, secondNote].every(Boolean)) return;
   const details = document.createElement("details");
-  details.className = "legacy-details inferential-details";
+  details.className = "supplementary-details inferential-details";
   const summary = document.createElement("summary");
-  summary.textContent = "查看既有推断性分析";
+  summary.textContent = "查看补充推断性分析";
   const body = document.createElement("div");
-  body.className = "legacy-analysis-body";
+  body.className = "supplementary-analysis-body";
   firstHeading.before(details);
   details.append(summary, body);
   body.append(firstHeading, firstNote, identity, secondHeading, secondNote, contrasts);
@@ -270,22 +274,22 @@ async function loadAnalysisGroup() {
   }
 }
 
-async function loadV2Group() {
+async function loadScenarioGroup() {
   try {
-    renderV2(await fetchJson("research_a_v2_summary.json"));
+    renderScenarioAnalysis(await fetchJson("research_a_scenario_summary.json"));
   } catch (error) {
-    const retry = () => runGroup("v2", loadV2Group);
-    errorPanel("v2Result", "场景级V2结果", error, retry);
+    const retry = () => runGroup("scenario", loadScenarioGroup);
+    errorPanel("scenarioResult", "场景一致性结果", error, retry);
     throw error;
   }
 }
 
-prepareLegacyInferenceDetails();
+prepareSupplementaryInferenceDetails();
 renderTakeaways();
 updateStatus();
 Promise.allSettled([
   runGroup("story", loadStoryGroup),
   runGroup("measurement", loadMeasurementGroup),
   runGroup("analysis", loadAnalysisGroup),
-  runGroup("v2", loadV2Group),
+  runGroup("scenario", loadScenarioGroup),
 ]);

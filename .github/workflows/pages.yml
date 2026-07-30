@@ -51,11 +51,11 @@ jobs:
           uv run --frozen python scripts/build_site_data.py --check
           uv run --frozen python scripts/build_showcase_data.py --check
 
-      - name: Build Research A V2 analysis and public JSON
+      - name: Build Research A scenario analysis and public JSON
         run: >-
-          uv run --frozen python scripts/build_research_a_v2.py
-          --output "${{ runner.temp }}/research-a-v2"
-          --public-json site/data/research_a_v2_summary.json
+          uv run --frozen python scripts/build_research_a_scenario_results.py
+          --output "${{ runner.temp }}/research-a-scenario"
+          --public-json site/data/research_a_scenario_summary.json
 
       - name: Validate strict public JSON
         run: uv run --frozen python scripts/check_public_json.py
@@ -69,9 +69,10 @@ jobs:
           scripts/assemble_pages.py
           scripts/public_json.py
           scripts/check_public_json.py
+          scripts/build_research_a_scenario_results.py
           scripts/build_research_a_v2.py
           tests/site/test_public_release_gate.py
-          tests/site/test_research_a_v2.py
+          tests/site/test_research_a_scenario.py
           tests/site/test_static_site.py
 
       - name: Assemble Pages artifact

@@ -90,7 +90,7 @@ h1 { margin: 0 0 8px; max-width: 760px; font-size: clamp(2.5rem, 5vw, 4.2rem); l
 .study-facts dd { margin: 2px 0 0; font-weight: 750; overflow-wrap: anywhere; }
 .study-route { color: var(--muted); font-size: .9rem; }
 
-.table-scroll { overflow-x: auto; margin-top: 22px; }
+.table-scroll { overflow-x: auto; max-width: 100%; margin-top: 22px; }
 table { width: 100%; min-width: 760px; border-collapse: collapse; background: #fff; }
 th, td { padding: 11px 13px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
 thead th { background: var(--text); color: #fff; }
@@ -141,7 +141,7 @@ tbody th { background: var(--soft); }
 
 @media (max-width: 420px) {
   body { font-size: 16px; }
-  h1 { font-size: 2.2rem; }
+  h1 { font-size: 2.2rem; word-break: normal; overflow-wrap: anywhere; }
   .hero { padding-top: 48px; }
   .fact-grid, .study-facts { grid-template-columns: 1fr; }
 }

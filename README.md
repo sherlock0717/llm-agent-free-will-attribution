@@ -1,18 +1,16 @@
 # LLM行动者归因评测
 
-本项目记录语言模型在不同身份、决策过程和反馈行为材料下形成的归因反应，重点分析能动性、心理状态、选择自主性、影响能力与责任判断的变化。
+本项目研究一个问题：同一个决定被写成不同的身份和决策过程时，语言模型会不会改变对行动者的评价。研究A观察身份标签和过程描述是否对应不同的模型评价；研究B固定机器主体，把备选方案、理由、反馈和反馈后的行动拆成具体条件，分析哪些线索推动评价变化。
 
 ## 项目概览
 
-项目由两项研究和一套共享方法组成。研究A建立身份与决策过程归因基线，研究B进一步拆分机器主体的决策信息、反馈与第二次决定。两项研究分别使用自己的材料、题项和分析结果，共同构成项目证据链。完整计划见 [`docs/RESEARCH_PROGRAM.md`](docs/RESEARCH_PROGRAM.md)。
+项目由两项研究组成。研究A用已有模型响应观察现象，研究B把决策过程拆得更细，分别考察每一类线索。两项研究分别使用自己的材料、题项和分析结果。完整计划见 [`docs/RESEARCH_PROGRAM.md`](docs/RESEARCH_PROGRAM.md)。
 
-## 研究计划
+## 研究A：身份与决策过程归因
 
-### 研究A：身份与决策过程归因基线
+研究A让DeepSeek模型阅读八类决策场景。材料一方面改变行动者的身份标签，另一方面改变决策过程的写法，从只给最终选择逐步扩展到理由、反馈和后续修正。360条模型响应用于观察模型对能动性、体验性、自由意志相关归因与责任的评分变化。
 
-研究A采用六类决策过程与AI/人类身份标签的交叉设计，使用360条DeepSeek API模型模拟问卷响应，观察模型对能动性、体验性、自由意志相关归因与责任的评分变化。
-
-研究A已经形成材料、34个情境化题项、构念得分、条件比较、场景材料、公开分析产物和复现链。扩展路线包括跨模型运行、Prompt盲化、场景级区组分析和测量结构复核。
+研究A已经形成材料、34个情境化题项、构念得分、条件比较、场景一致性分析和复现链。扩展路线包括跨模型运行、Prompt盲化和测量结构复核。
 
 - 独立展示页：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/identity-process-attribution-baseline/
 - 研究说明：[`docs/STUDY_CARD.md`](docs/STUDY_CARD.md)
@@ -20,36 +18,21 @@
 - 题项来源映射：[`docs/scale_source_mapping.md`](docs/scale_source_mapping.md)
 - 设计蓝图：[`docs/research_design_blueprint.md`](docs/research_design_blueprint.md)
 
-### 研究B：机器主体决策过程归因评测
+## 研究B：机器主体决策过程归因
 
-研究B聚焦机器主体，考察决定信息、反馈与第二次决定如何影响IN、GO、MSI、IC以及感知能动性的两个重叠评分版本PA5和PA8。设计包含6个D/U组合、8个场景和2个方向，共96条材料；两个评判模型对同一材料集独立评分。
+研究B固定机器主体，考察备选方案、明确理由、外部反馈以及反馈后的维持或改变分别如何影响模型的评价。四个主要评价维度是知觉独立性（IN）、目标导向性（GO）、心理状态推断（MSI）和影响能力（IC），另有两个感知能动性补充指标（PA5、PA8）。设计包含六个条件、八个场景和两个方向，共96条材料；两个评判模型对同一材料集独立评分。
 
-研究B已经完成材料、评分、分析和展示管线。页面展示流程演示数据；下一阶段执行双评判模型运行，并沿用同一分析框架更新结果。
+研究B已经建立材料、评分规则、分析计划和分析界面示例。下一步执行双评判模型的正式评分，并在同一框架下更新条件结果与稳定性分析。
 
 - 独立展示页：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/machine-decision-process-attribution/
-- 研究说明：[`docs/CURRENT_STUDY_CARD.md`](docs/CURRENT_STUDY_CARD.md)
-- 研究与测量来源：[`docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md`](docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md)
+- 研究说明：[`docs/STUDY_B_CARD.md`](docs/STUDY_B_CARD.md)
+- 研究与测量来源：[`docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md`](docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md)
 
-## 为什么形成两项研究
+## 两项研究如何衔接
 
-研究A提出身份与决策过程如何影响归因的广义问题，并识别题项来源、构念交叉、文本长度和主体可比性等测量议题。研究B据此固定机器主体，将决定信息、反馈和后续行为拆分为六个可核查组合。两项研究分别报告结果，共享材料—评分—分析—展示的方法链。
+研究A提出身份与决策过程如何影响归因的问题，并识别题项来源、构念交叉、文本长度和主体可比性等测量议题。研究B据此固定机器主体，把决定信息、反馈和后续行为拆分为六个可核查条件。两项研究分别报告结果，使用同一套材料—评分—分析方法。
 
-## 证据组成
-
-| 维度 | 研究A | 研究B |
-|---|---|---|
-| 研究功能 | 身份与过程归因基线 | 机器主体测量深化 |
-| 设计 | 6类过程 × 2种身份 | 6个D/U组合 × 8场景 × 2方向 |
-| 数据资产 | DeepSeek API模型模拟问卷响应 | 流程演示数据与双模型运行协议 |
-| 结果用途 | 描述该模型配置在研究A材料中的归因模式 | 展示机器主体材料、评分、分析和图表链 |
-| 测量路线 | 题项结构、构念区分、跨Prompt和跨模型复核 | 原量尺构念、重叠评分版本、跨主体可比性研究 |
-| 扩展路线 | 场景级分析、Prompt盲化与跨模型运行 | 双评判模型运行与正式结果更新 |
-
-研究A和研究B分别保存材料、题项、数据与分析结果。项目总览将两项研究放在同一研究计划中，并提供各自独立页面。
-
-## 共享方法与复现
-
-“归因评测方法与基础设施”统一记录材料、题项来源、评分、模型调用、质量检查、分析和页面输出。研究A与研究B分别调用这些工具，并保存各自的数据契约和分析结果。
+未来工作先完成研究B的双模型正式评分，再建立与机器主体平行的人类主体测量，分析两类主体的评价结构如何对应。
 
 本地预览全部页面：
 
@@ -85,12 +68,13 @@ python scripts/assemble_pages.py --output _site
 ```text
 src/freewill_attribution/   任务运行、模型接口、解析、计分与运行记录
 configs/                    研究A任务、Prompt、模型和指标配置
-tasks/                      研究B协议、材料、评分、分析与流程演示资产
+tasks/                      研究B协议、材料、评分、分析与示例资产
 outputs/                    研究A已有分析产物（保持只读）
 scripts/                    站点数据、报告、严格JSON与Pages组装脚本
 site/                       项目总览页面与共享公开数据
 docs/identity-process-attribution-baseline/  研究A独立页面
 docs/pa-wu-r1-pilot/        研究B独立页面源目录
+docs/study_b/               研究B文档入口
 docs/                       研究计划、研究说明、来源与复现文档
 tests/                      单元、集成和站点测试
 ```
@@ -101,9 +85,9 @@ tests/                      单元、集成和站点测试
 2. [公开页面表达规范](docs/PUBLIC_PRESENTATION_GUIDE.md)
 3. [统一数据来源字典](docs/data_provenance.yaml)
 4. [研究A说明](docs/STUDY_CARD.md)
-5. [研究B说明](docs/CURRENT_STUDY_CARD.md)
+5. [研究B说明](docs/STUDY_B_CARD.md)
 6. [研究A研究与测量来源](docs/research_and_measurement_sources.md)
-7. [研究B研究与测量来源](docs/CURRENT_RESEARCH_AND_MEASUREMENT_SOURCES.md)
+7. [研究B研究与测量来源](docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md)
 8. [研究A设计蓝图](docs/research_design_blueprint.md)
 
 ## 权利与使用
