@@ -169,6 +169,57 @@ function renderScenarioConstruct(summary, construct) {
   </table></div>`;
 }
 
+// Finding 3 first-layer chart: scenario consistency.
+// The construct/contrast pair is fixed (agency × contrast A4, high-structure
+// process vs long-text direct choice), chosen ahead of time to match the primary
+// process construct. It is NOT selected by largest absolute difference, smallest
+// p-value or largest effect size. The chart only counts how the 16 scenario×identity
+// units move (same / opposite / no direction) and shows the raw-scale ranges; the
+// full per-construct table stays in the collapsed technical block.
+const SCENARIO_FINDING_CONSTRUCT = "agency";
+const SCENARIO_FINDING_CONTRAST = "A4";
+
+function renderScenarioFindingChart(summary) {
+  const target = document.getElementById("scenarioFindingChart");
+  if (!target) return;
+  const row = (summary.public_contrast_summary || []).find(
+    (item) => item.scope === "all_identities"
+      && item.construct === SCENARIO_FINDING_CONSTRUCT
+      && item.contrast_id === SCENARIO_FINDING_CONTRAST);
+  if (!row) return;
+  const same = Number(row.positive_count) || 0;
+  const opposite = Number(row.negative_count) || 0;
+  const zero = Number(row.zero_count) || 0;
+  const total = same + opposite + zero;
+  const seg = (label, count, cls) => {
+    if (total <= 0 || count <= 0) return "";
+    const pct = (count / total) * 100;
+    return `<span class="stack-seg ${cls}" style="width:${pct.toFixed(1)}%"><span class="stack-count">${count}</span></span>`;
+  };
+  const scenarioRange = `[${formatNumber(row.scenario_mean_min, 2)}, ${formatNumber(row.scenario_mean_max, 2)}]`;
+  const looRange = `[${formatNumber(row.leave_one_scenario_mean_min, 2)}, ${formatNumber(row.leave_one_scenario_mean_max, 2)}]`;
+  target.setAttribute(
+    "aria-label",
+    `共${total}个场景与身份组合：变化方向相同${same}个、方向相反${opposite}个、没有变化${zero}个；`
+    + `八个场景中的变化范围${scenarioRange}，依次排除一个场景后的变化范围${looRange}。`);
+  target.innerHTML = `
+    <div class="stack-bar">
+      ${seg("相同方向", same, "same")}
+      ${seg("相反方向", opposite, "opp")}
+      ${seg("没有变化", zero, "zero")}
+    </div>
+    <ul class="stack-legend">
+      <li><span class="dot same"></span>相同方向 ${same}</li>
+      <li><span class="dot opp"></span>相反方向 ${opposite}</li>
+      <li><span class="dot zero"></span>没有变化 ${zero}</li>
+      <li class="stack-total">共 ${total} 个场景与身份组合</li>
+    </ul>
+    <dl class="stack-range">
+      <div><dt>八个场景中的变化范围</dt><dd>${scenarioRange}</dd></div>
+      <div><dt>依次排除一个场景后的变化范围</dt><dd>${looRange}</dd></div>
+    </dl>`;
+}
+
 function renderScenarioAnalysis(summary) {
   const intro = document.getElementById("scenarioIntro");
   if (intro) {
@@ -178,6 +229,7 @@ function renderScenarioAnalysis(summary) {
       `${summary.condition_count}种过程条件）。下表按评价维度读取每个比较在这些单元上的平均变化、方向一致程度，` +
       "以及去掉任意一个场景后结果的变化范围。数值保留各维度原量尺。";
   }
+  renderScenarioFindingChart(summary);
   const controls = document.getElementById("scenarioControls");
   const select = document.getElementById("scenarioConstructSelect");
   const constructs = summary.public_constructs || [];
@@ -202,6 +254,37 @@ function renderConditionTable(results) {
   target.innerHTML = `<table><thead><tr><th>过程条件</th>${series.map((row) => `<th>${escapeHtml(row.label)}</th>`).join("")}</tr></thead><tbody>${conditions.map((condition) => `<tr><th>${escapeHtml(labels[condition] || condition)}</th>${series.map((row) => `<td>${formatNumber(values[row.construct]?.[condition])}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
 }
 
+// Finding 1 first-layer chart: process-condition means.
+// The evaluation dimension is fixed to "agency" (能动性), chosen ahead of time
+// because it is the pre-registered primary construct for the process manipulation
+// (stability.points[0] in analysis_results.json describes agency as the most
+// direction-stable primary result). It is NOT selected by largest absolute
+// difference. All six conditions C0–C5 are shown on the construct's own 1–7 scale.
+const PROCESS_FINDING_CONSTRUCT = "agency";
+
+function renderProcessFindingChart(results) {
+  const svg = document.getElementById("processFindingChart");
+  if (!svg) return;
+  const profile = results.condition_profile || {};
+  const series = (profile.series || []).find((row) => row.construct === PROCESS_FINDING_CONSTRUCT);
+  if (!series || !series.points || !series.points.length) return;
+  const points = series.points;
+  const W = 640, H = 260, padL = 52, padR = 24, padT = 28, padB = 56;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  // Fixed raw scale 1–7 (constructs use a 1–7 range per condition_profile.scale_note).
+  const yMin = 1, yMax = 7;
+  const x = (i) => padL + (points.length === 1 ? plotW / 2 : (plotW * i) / (points.length - 1));
+  const y = (v) => padT + plotH - ((v - yMin) / (yMax - yMin)) * plotH;
+  const gridVals = [1, 2, 3, 4, 5, 6, 7];
+  const gridLines = gridVals.map((v) => `<line x1="${padL}" y1="${y(v).toFixed(1)}" x2="${(W - padR)}" y2="${y(v).toFixed(1)}" class="chart-grid" /><text x="${padL - 8}" y="${(y(v) + 4).toFixed(1)}" class="chart-axis-label" text-anchor="end">${v}</text>`).join("");
+  const path = points.map((p, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(p.value).toFixed(1)}`).join(" ");
+  const dots = points.map((p, i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(p.value).toFixed(1)}" r="4" class="chart-dot" /><text x="${x(i).toFixed(1)}" y="${(y(p.value) - 10).toFixed(1)}" class="chart-value" text-anchor="middle">${formatNumber(p.value, 2)}</text>`).join("");
+  const xLabels = points.map((p, i) => `<text x="${x(i).toFixed(1)}" y="${(H - padB + 20).toFixed(1)}" class="chart-cat" text-anchor="middle">C${i}</text>`).join("");
+  const summary = points.map((p, i) => `C${i} ${escapeHtml(p.label)} ${formatNumber(p.value, 2)}`).join("，");
+  svg.setAttribute("aria-label", `${escapeHtml(series.label)}在六种过程条件下的平均评分，原始量尺1至7：${summary}`);
+  svg.innerHTML = `${gridLines}<path d="${path}" class="chart-line" fill="none" />${dots}${xLabels}`;
+}
+
 function renderIdentityEffects(results) {
   const target = document.getElementById("identityEffects");
   target.innerHTML = (results.identity_effect?.effects || []).map((row) => {
@@ -209,6 +292,31 @@ function renderIdentityEffects(results) {
     const means = Object.entries(row.means_by_identity || {}).map(([label, value]) => `${escapeHtml(label)} ${formatNumber(value)}`).join(" · ");
     return `<article class="effect-row"><div class="effect-label"><strong>${escapeHtml(row.label)}</strong><span>${means}</span></div><div class="effect-track" aria-label="partial eta squared ${formatNumber(eta)}"><span style="width:${eta * 100}%"></span></div><div class="effect-stat">η²p=${formatNumber(eta)} · F=${formatNumber(row.F, 2)} · p ${formatP(row.p)}</div></article>`;
   }).join("");
+}
+
+// Finding 2 first-layer chart: identity-label comparison.
+// The evaluation dimension is fixed to "free_will_attribution" (自由意志归因),
+// chosen ahead of time because it is the pre-registered primary mind/responsibility
+// construct for the identity manipulation (it is the identity contrast highlighted
+// in stability.points and planned_contrasts). It is NOT selected by largest effect.
+// Only this single construct is shown at the first layer; the full identity table
+// stays in the collapsed block.
+const IDENTITY_FINDING_CONSTRUCT = "free_will_attribution";
+
+function renderIdentityFindingChart(results) {
+  const target = document.getElementById("identityFindingChart");
+  if (!target) return;
+  const effect = (results.identity_effect?.effects || []).find((row) => row.construct === IDENTITY_FINDING_CONSTRUCT);
+  if (!effect || !effect.means_by_identity) return;
+  const entries = Object.entries(effect.means_by_identity);
+  const yMax = 7; // raw 1–7 scale
+  const rows = entries.map(([label, value]) => {
+    const pct = Math.max(0, Math.min(100, (Number(value) / yMax) * 100));
+    return `<div class="bar-row"><span class="bar-name">${escapeHtml(label)}</span><span class="bar-track"><span class="bar-fill" style="width:${pct.toFixed(1)}%"></span></span><span class="bar-value">${formatNumber(value, 2)}</span></div>`;
+  }).join("");
+  const summary = entries.map(([label, value]) => `${escapeHtml(label)} ${formatNumber(value, 2)}`).join("，");
+  target.setAttribute("aria-label", `${escapeHtml(effect.label)}在AI标签与人类标签下的平均评分，原始量尺1至7：${summary}`);
+  target.innerHTML = `<div class="bar-scale">量尺 1–7</div>${rows}`;
 }
 
 function renderContrasts(results) {
@@ -245,7 +353,9 @@ async function loadAnalysisGroup() {
   try {
     const results = await fetchJson("analysis_results.json");
     renderConditionTable(results);
+    renderProcessFindingChart(results);
     renderIdentityEffects(results);
+    renderIdentityFindingChart(results);
     renderContrasts(results);
   } catch (error) {
     const retry = () => runGroup("analysis", loadAnalysisGroup);

@@ -72,6 +72,67 @@ def test_research_a_first_layer_has_one_figure_per_finding():
     assert "<img" not in outside_details
 
 
+def test_research_a_hero_has_exactly_two_actions():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    hero = html.split('class="hero"', 1)[1].split("</header>", 1)[0]
+    actions = hero.split('class="actions"', 1)[1].split("</div>", 1)[0]
+    links = re.findall(r"<a\b", actions)
+    assert len(links) == 2, actions
+    assert 'href="#results"' in actions
+    assert 'href="#materials"' in actions
+    # the return-to-overview button is no longer inside the hero actions.
+    assert 'href="../"' not in actions
+
+
+def test_research_a_return_to_overview_still_reachable():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    nav = html.split('class="toc"', 1)[1].split("</nav>", 1)[0]
+    assert 'href="../"' in nav
+    assert "返回项目总览" in nav
+
+
+def test_research_a_three_first_layer_chart_containers():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    for chart_id in ["processFindingChart", "identityFindingChart", "scenarioFindingChart"]:
+        assert f'id="{chart_id}"' in html, chart_id
+
+
+def test_research_a_first_layer_charts_are_outside_details():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    results = html.split('id="results"', 1)[1].split('id="analysis"', 1)[0]
+    outside_details = re.sub(r"<details.*?</details>", "", results, flags=re.S)
+    for chart_id in ["processFindingChart", "identityFindingChart", "scenarioFindingChart"]:
+        assert f'id="{chart_id}"' in outside_details, chart_id
+
+
+def test_research_a_finding_charts_have_role_and_aria_label():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    for chart_id in ["processFindingChart", "identityFindingChart", "scenarioFindingChart"]:
+        tag = re.search(rf'<[^>]*id="{chart_id}"[^>]*>', html)
+        assert tag, chart_id
+        assert 'role="img"' in tag.group(0), chart_id
+        assert "aria-label" in tag.group(0), chart_id
+
+
+def test_research_a_finding_charts_use_native_rendering_only():
+    for name in ("index.html", "app.js", "styles.css"):
+        text = (STUDY_A / name).read_text(encoding="utf-8").lower()
+        for lib in ["echarts", "chart.js", "chartjs", "d3.", "highcharts", "plotly"]:
+            assert lib not in text, (name, lib)
+
+
+def test_research_a_finding_charts_use_fixed_construct_choice():
+    app = (STUDY_A / "app.js").read_text(encoding="utf-8")
+    # the three first-layer charts pin a pre-registered construct/contrast and
+    # never scan for the largest difference / smallest p / largest effect.
+    assert 'PROCESS_FINDING_CONSTRUCT = "agency"' in app
+    assert 'IDENTITY_FINDING_CONSTRUCT = "free_will_attribution"' in app
+    assert 'SCENARIO_FINDING_CONSTRUCT = "agency"' in app
+    assert 'SCENARIO_FINDING_CONTRAST = "A4"' in app
+    for token in ["Math.max(...", "largestDiff", "maxAbs", "sort(", "argmax"]:
+        assert token not in app.split("function renderProcessFindingChart", 1)[1], token
+
+
 def test_research_a_no_internal_field_names_or_reading_guidance():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
     for token in ["direction_consistency", "leave_one_scenario", "all_identities",

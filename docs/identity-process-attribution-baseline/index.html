@@ -18,7 +18,6 @@
       <div class="actions">
         <a class="btn primary" href="#results">查看主要结果</a>
         <a class="btn" href="#materials">查看材料例子</a>
-        <a class="btn" href="../">返回项目总览</a>
       </div>
       <p class="hero-metrics">360条评价记录 · 8个场景 · 6种过程条件 · 2种身份标签</p>
       <div id="pageStatus" class="status" role="status" aria-live="polite">正在载入公开研究数据……</div>
@@ -27,6 +26,7 @@
 
   <nav class="toc" aria-label="研究A页面导航">
     <div class="wrap">
+      <a class="toc-home" href="../">返回项目总览</a>
       <a href="#materials">材料例子</a>
       <a href="#results">主要结果</a>
       <a href="#analysis">从材料到结果</a>
@@ -65,9 +65,13 @@
         <article class="finding-block">
           <h3>过程描述与部分能动性评价共同变化</h3>
           <div class="finding-body">
+            <p class="finding-conclusion">过程信息增加后，部分能动性评价随条件发生变化。</p>
             <p>六种过程条件下，部分与行动控制、目标导向和选择自主性有关的评分呈现差异。图中显示各条件的平均评分，数值来自相同的材料和评价流程。</p>
+            <div class="finding-figure">
+              <svg id="processFindingChart" class="mini-chart" role="img" aria-label="正在载入过程条件图" viewBox="0 0 640 260" preserveAspectRatio="xMidYMid meet"></svg>
+            </div>
+            <p class="figure-note">横轴为六种过程条件，纵轴保持该评价维度的原始评分范围。数值表示各条件的平均评分。</p>
             <div id="conditionTable" class="table-scroll"><p class="loading">正在载入条件均值……</p></div>
-            <p class="figure-note">横轴为六种过程条件，纵轴保持该评价维度原始量尺。数值表示各条件的平均评分。</p>
             <details class="technical-details">
               <summary>查看完整数据</summary>
               <div class="details-body">
@@ -83,7 +87,12 @@
         <article class="finding-block">
           <h3>身份标签对应部分心智和责任评价差异</h3>
           <div class="finding-body">
+            <p class="finding-conclusion">相同行为采用不同身份标签时，部分心智和责任评价存在差异。</p>
             <p>相同行为被描述为AI或人类时，部分心智、体验与责任评价出现差异。该比较只改变身份标签，决策内容和任务结果保持一致。</p>
+            <div class="finding-figure">
+              <div id="identityFindingChart" class="mini-chart bar-chart" role="img" aria-label="正在载入身份标签比较图"></div>
+            </div>
+            <p class="figure-note">两条对应AI标签与人类标签下的平均评分，纵轴保持该评价维度的原始评分范围。</p>
             <div id="identityEffects" class="effect-list"><p class="loading">正在载入身份标签结果……</p></div>
             <details class="technical-details">
               <summary>查看完整数据</summary>
@@ -97,7 +106,12 @@
         <article class="finding-block">
           <h3>不同场景中存在共同方向和幅度差异</h3>
           <div class="finding-body">
+            <p class="finding-conclusion">同一个方向的评价变化在多数场景与身份组合中重复出现，也保留了随任务场景的幅度差异。</p>
             <p>八个场景中的变化方向并不完全相同。场景一致性分析显示哪些比较在多数场景中保持相同方向，也保留任务语境带来的变化范围。</p>
+            <div class="finding-figure">
+              <div id="scenarioFindingChart" class="mini-chart" role="img" aria-label="正在载入场景一致性图"></div>
+            </div>
+            <p class="figure-note">左侧统计16个场景与身份组合中变化方向相同、相反和没有变化的数量；右侧列出在八个场景中的变化范围，以及依次排除一个场景后的变化范围。</p>
             <p class="reading" id="scenarioIntro">正在载入场景一致性分析……</p>
             <div id="scenarioControls" class="scenario-controls" hidden>
               <label for="scenarioConstructSelect">选择评价维度</label>

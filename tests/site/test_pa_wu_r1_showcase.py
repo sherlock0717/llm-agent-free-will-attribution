@@ -424,6 +424,27 @@ def test_full_analysis_interface_collapsed_by_default():
         assert fig in body, fig
 
 
+def test_full_analysis_interface_contains_tables_and_five_figures():
+    # inside the collapsed analysis interface: a complete condition-mean table,
+    # the P1–P6 planned-contrast table, and all five pipeline figures.
+    body = HTML.split('id="demoStatsDetails"', 1)[1].split("</details>", 1)[0]
+    assert 'id="appxCondTable"' in body
+    assert "条件均值完整表" in body
+    assert 'id="contrastTable"' in body
+    assert "预设对比表" in body
+    for fig in FIGURES:
+        assert fig in body, fig
+
+
+def test_five_figures_are_lazy_loaded_not_asserted_as_loaded():
+    # static tests only confirm the lazy-load markup exists; they never claim the
+    # images are actually decoded. Runtime naturalWidth is verified by the browser
+    # acceptance report, not here.
+    body = HTML.split('id="demoStatsDetails"', 1)[1].split("</details>", 1)[0]
+    lazy = re.findall(r'<img[^>]*loading="lazy"[^>]*>', body)
+    assert len(lazy) >= len(FIGURES)
+
+
 def test_condition_profile_chart_present_native_svg():
     assert 'id="conditionProfileChart"' in HTML
     assert "<svg" in HTML
