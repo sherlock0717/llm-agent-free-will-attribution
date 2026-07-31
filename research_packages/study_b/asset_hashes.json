@@ -4,55 +4,55 @@
   "files": {
     "docs/pa-wu-r1-pilot/data/showcase_data.json": {
       "normalized_sha256": "69c6010091c8d3c8a2244e80cea9f10fd84613bec6cf906143fc53fab3768f46",
-      "sha256": "25fa914c0238a427ec2a14fdfdf0f40676f1b17522f6d1026714986bd2153004"
+      "sha256": "69c6010091c8d3c8a2244e80cea9f10fd84613bec6cf906143fc53fab3768f46"
     },
     "scripts/build_showcase_data.py": {
       "normalized_sha256": "b9a37a337d11b4df0795ee8bee867d3d3ffb9ba65db642f9c6f2c7e37d93ea51",
-      "sha256": "84ca65140b27e88f7dd123b981b6c3f93423eae19295a66c10d69449f252ecb0"
+      "sha256": "b9a37a337d11b4df0795ee8bee867d3d3ffb9ba65db642f9c6f2c7e37d93ea51"
     },
     "scripts/build_study_b_protocol_package.py": {
       "normalized_sha256": "1812064e26d1caccefb441a669fbcbb14cf74037591f4939ebd9d3a0961f6dfc",
-      "sha256": "3905c1d93b7a09c9082d6b0acaff06a81aa0f6f6c23e9b476f969c26c97832ee"
+      "sha256": "1812064e26d1caccefb441a669fbcbb14cf74037591f4939ebd9d3a0961f6dfc"
     },
     "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/analysis_plan.md": {
       "normalized_sha256": "bf7fa7d981ff970f7dacc077b2ea8e0be0b7c8d294598584100a1a4b8182e8c5",
-      "sha256": "3a65ee6708adea639b1972304df38a28ab631536eb974988da7ce2783aee803e"
+      "sha256": "bf7fa7d981ff970f7dacc077b2ea8e0be0b7c8d294598584100a1a4b8182e8c5"
     },
     "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/condition_matrix.csv": {
       "normalized_sha256": "8d6750f0f94b427f66de98fe18852b5de4424d10201392304aeb0851c6496437",
-      "sha256": "eb7995fdc477409adf25624885945fd87c3d755e342e3c3da64fba27ec43b3e1"
+      "sha256": "8d6750f0f94b427f66de98fe18852b5de4424d10201392304aeb0851c6496437"
     },
     "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/result_schema.json": {
       "normalized_sha256": "47d08fc2f879871e8d436bf03f5fc60f79d2adf9851c01084d6cb6356a50b643",
-      "sha256": "a98000773d95035a77ad050bdbcc1d2409f30f6b76e26a11c9f6f958bc12e361"
+      "sha256": "47d08fc2f879871e8d436bf03f5fc60f79d2adf9851c01084d6cb6356a50b643"
     },
     "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/scoring_spec.yaml": {
       "normalized_sha256": "003d141be48518c4b82d59579bfefe453e2e1ecbc5938583c2ce1aae24c812c6",
-      "sha256": "e302f93064b04a28ef4029c08a7a1a95df25ae57c11a3bdd95535704ad10f0ef"
+      "sha256": "003d141be48518c4b82d59579bfefe453e2e1ecbc5938583c2ce1aae24c812c6"
     },
     "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/stimuli.jsonl": {
       "normalized_sha256": "ce2c89a13d508a6c9a5ae35529b94f3eb8ebf39bd6bb330d43ad91d18ba061a7",
-      "sha256": "9bda2249d5c1b4b0944b716d314f9b49536ae88c479a9c2e96c5b9c4dc529e9a"
+      "sha256": "ce2c89a13d508a6c9a5ae35529b94f3eb8ebf39bd6bb330d43ad91d18ba061a7"
     },
     "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/stimulus_book.md": {
       "normalized_sha256": "d282799a84092255052e4122fc785cac0e8f589138dcff47285d818254046e5f",
-      "sha256": "74354dc52652c94b06643146cbdf6e1956bbcad04b63da22cb1b50dd72fc2c95"
+      "sha256": "d282799a84092255052e4122fc785cac0e8f589138dcff47285d818254046e5f"
     },
     "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/study_protocol.yaml": {
       "normalized_sha256": "fcbb529e191fae6f28e5df2c0e03f62cd861224d1077d3ce634ae7a5d41004c0",
-      "sha256": "ec5cce26413d318150b39b98c91b0aab9622be52b18b18fefdb3fb144ed26fe6"
+      "sha256": "fcbb529e191fae6f28e5df2c0e03f62cd861224d1077d3ce634ae7a5d41004c0"
     },
     "tasks/attribution_behavior/measurement_candidates/pa_wu_p0/forms.yaml": {
       "normalized_sha256": "8e80615b6b7af5f3a1cb84de87195f849463cb5d6431449e869eafc409f9c67a",
-      "sha256": "f0b37468c6cfe03e1441ae12a92f7dab3887acd183c9821ce169cb61beb428d6"
+      "sha256": "8e80615b6b7af5f3a1cb84de87195f849463cb5d6431449e869eafc409f9c67a"
     },
     "tasks/attribution_behavior/measurement_candidates/pa_wu_p0/items_pa_2024.yaml": {
       "normalized_sha256": "d0b93a47d16e5204c7bd98e96856eaa24c2a433c94324a91218bb4953cbde162",
-      "sha256": "6a2015ad0b07940b87bfecb0d2fa72271f6adbe79f2c69f828884a0a4b1c1a32"
+      "sha256": "d0b93a47d16e5204c7bd98e96856eaa24c2a433c94324a91218bb4953cbde162"
     },
     "tasks/attribution_behavior/measurement_candidates/pa_wu_p0/items_wu_shen_2026.yaml": {
       "normalized_sha256": "30a3cc5a0f57fc9c4acfac820466ba33726d6fd18bec823419cff9fccabfed79",
-      "sha256": "7a155ba0cf51c3e4bd93ad70e0b77ab17fa8d77de4dff95e79bfc3cfd5811bf8"
+      "sha256": "30a3cc5a0f57fc9c4acfac820466ba33726d6fd18bec823419cff9fccabfed79"
     }
   },
   "hash_algorithm": "sha256",
