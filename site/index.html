@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LLM行动者归因评测</title>
-  <meta name="description" content="同一个决定采用不同的身份和过程描述时，语言模型给出的评价会怎样变化。" />
+  <meta name="description" content="身份标签和决策过程写法如何改变语言模型对能动性、心智与责任的评价，以及这些变化对评测设计意味着什么。" />
   <link rel="canonical" href="https://sherlock0717.github.io/llm-attribution-behavior-evaluation/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="LLM行动者归因评测" />
-  <meta property="og:description" content="同一个决定采用不同的身份和过程描述时，语言模型给出的评价会怎样变化。" />
+  <meta property="og:description" content="身份标签和决策过程写法会改变模型对同一决定的评价。项目进一步说明这些变化对Benchmark、数据生产和AI产品评测的意义。" />
   <meta property="og:url" content="https://sherlock0717.github.io/llm-attribution-behavior-evaluation/" />
   <link rel="stylesheet" href="assets/css/site.css" />
 </head>
@@ -20,11 +20,11 @@
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-list" aria-label="展开导航"><span></span></button>
       <nav class="site-nav" aria-label="主导航">
         <ul id="site-nav-list">
-          <li><a href="#overview">项目问题</a></li>
-          <li><a href="#program">一个例子</a></li>
+          <li><a href="#findings">主要发现</a></li>
+          <li><a href="#implications">实践意义</a></li>
+          <li><a href="#evidence">证据边界</a></li>
           <li><a href="#studies">两项研究</a></li>
-          <li><a href="#evidence">研究A观察到的变化</a></li>
-          <li><a href="#methods">材料到结果</a></li>
+          <li><a href="#methods">数据与复现</a></li>
         </ul>
       </nav>
     </div>
@@ -34,125 +34,166 @@
     <section id="overview" class="hero">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">身份、理由、反馈与后续行动</p>
-          <h1>同一个决定，为什么写法一变，模型评价也会变？</h1>
-          <p class="subtitle">我们改变材料中的身份、理由、反馈与后续行动，观察语言模型如何调整对能动性、心智与责任的评分。</p>
-          <p class="hero-intro">材料中的行动者可能被描述为AI，也可能被描述为人类；决定可能只呈现结果，也可能包含备选方案、明确理由或反馈后的行动。项目比较这些写法对应的模型评价变化，并进一步分析其中起作用的语言线索。</p>
+          <p class="eyebrow">身份标签、理由、反馈与后续行动</p>
+          <h1>同一个决定，只因身份和过程写法不同，模型就会给出不同评价</h1>
+          <p class="subtitle">研究A基于360条模型响应观察到：决策过程写法会对应部分能动性评价变化，AI与人类标签会对应部分心智和责任评价差异，不同任务场景还会改变差异幅度。</p>
+          <p class="hero-intro">这意味着，对AI行动者的评价不能只看最终选择，也不能把一次提示下的评分当作稳定能力。评测需要拆开身份标签、理由、反馈和后续行动，并报告结果在不同场景中的变化。</p>
           <div class="actions">
-            <a class="btn primary" href="identity-process-attribution-baseline/">查看研究A结果</a>
-            <a class="btn" href="machine-decision-process-attribution/">查看研究B设计</a>
+            <a class="btn primary" href="#findings">查看主要发现</a>
+            <a class="btn" href="#implications">查看实践意义</a>
           </div>
         </div>
-        <aside class="research-bridge" aria-label="两项研究的关系">
+        <aside class="research-bridge" aria-label="证据与设计的关系">
           <div class="bridge-node bridge-a">
-            <span>研究A</span>
-            <strong>身份和过程写法是否对应不同评价</strong>
+            <span>已有证据</span>
+            <strong>研究A：360条响应与场景一致性分析</strong>
           </div>
           <span class="bridge-arrow" aria-hidden="true">↓</span>
           <div class="bridge-node bridge-b">
-            <span>研究B</span>
-            <strong>哪些具体信息推动了评价变化</strong>
+            <span>进一步拆解</span>
+            <strong>研究B：六种材料条件与离线分析方法</strong>
           </div>
         </aside>
         <div id="loadStatus" class="load-status" role="status" aria-live="polite">正在载入项目数据……</div>
       </div>
     </section>
 
-    <section id="program" class="section soft">
+    <section id="findings" class="section soft">
       <div class="wrap">
         <p class="section-index">01</p>
-        <h2>一个决定可以有几种写法</h2>
-        <p class="reading">同一个系统选择配送路线A，材料可以只陈述决定，也可以补充比较过程、明确理由、外部反馈以及反馈后的行动。模型读取不同版本后，分别完成相同的评价题目。</p>
-        <ol class="story-flow" aria-label="材料写法示例">
-          <li><span class="flow-step">1</span><p>系统选择路线A</p></li>
-          <li><span class="flow-step">2</span><p>材料补充备选方案或理由</p></li>
-          <li><span class="flow-step">3</span><p>材料加入反馈与后续行动</p></li>
-          <li><span class="flow-step">4</span><p>模型评价能动性、心智与责任</p></li>
-        </ol>
+        <h2>主要发现</h2>
+        <p class="reading">研究A改变行动者身份标签和决策过程写法，比较模型对能动性、心智、自由意志相关归因与责任的评分。当前证据支持以下三点。</p>
+        <div class="finding-list">
+          <article class="finding-block">
+            <h3>过程信息会进入模型的能动性判断</h3>
+            <p>材料只呈现最终决定，或进一步加入比较、理由、反馈和后续行动时，部分行动控制、目标导向和选择自主性评分随之变化。模型评价的对象不仅是“做了什么”，也包括“决定是怎样形成的”。</p>
+          </article>
+          <article class="finding-block">
+            <h3>身份标签会改变对同一行为的解释</h3>
+            <p>行为、任务和结果保持一致，仅把行动者写成AI或人类，部分心智、体验和责任评分仍会出现差异。身份标签本身可能成为模型归因时使用的线索。</p>
+          </article>
+          <article class="finding-block">
+            <h3>结论方向可以重复，幅度仍受场景影响</h3>
+            <p>八个任务场景中存在共同变化方向，也有明显的任务差异。只报告总体均值会掩盖某些场景对结果的推动或抵消作用。</p>
+          </article>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="identity-process-attribution-baseline/">查看研究A结果与图表</a>
+        </div>
       </div>
     </section>
 
-    <section id="studies" class="section">
+    <section id="implications" class="section">
       <div class="wrap">
         <p class="section-index">02</p>
-        <h2>从观察变化，到拆开具体线索</h2>
-        <p class="reading">研究A比较身份标签和六种决策过程写法。研究B固定机器主体，再分别改变备选方案、理由、反馈以及反馈后的行动。</p>
+        <h2>这些结果对实际评测意味着什么</h2>
         <div class="study-grid">
           <article class="study-card study-a">
-            <h3 id="studyATitle">身份与决策过程归因</h3>
-            <p class="study-question">同样的行为被描述为AI或人类，并采用不同的决策过程写法时，模型评价怎样变化？</p>
+            <h3>Benchmark与Rubric设计</h3>
+            <p class="study-question">把最终行为、决策过程和身份标签分开控制。</p>
             <ul class="study-facts-list">
-              <li>360条模型响应</li>
-              <li>8个场景</li>
-              <li>6种过程条件</li>
-              <li>已有结果与场景一致性分析</li>
+              <li>同一能力点至少使用多个场景和多种表述</li>
+              <li>将备选、理由、反馈和修正分别设置为可核查变量</li>
+              <li>同时报告总体结果与场景范围</li>
+              <li>避免把身份标签造成的归因差异误当成能力差异</li>
             </ul>
-            <div class="actions">
-              <a class="btn primary" href="identity-process-attribution-baseline/">查看研究A结果</a>
-            </div>
           </article>
 
           <article class="study-card study-b">
-            <h3 id="studyBTitle">机器主体决策过程归因</h3>
-            <p class="study-question">备选方案、明确理由、外部反馈以及反馈后的行动分别对应怎样的评价变化？</p>
+            <h3>训练数据与质检</h3>
+            <p class="study-question">检查答案是否提供了真正的决策证据，而非只增加解释性文字。</p>
             <ul class="study-facts-list">
-              <li>96条材料</li>
-              <li>8个场景</li>
-              <li>6种材料条件</li>
-              <li>完整材料、评价规则与离线分析方法</li>
+              <li>区分“列出备选”“给出理由”“回应反馈”“实际改动”</li>
+              <li>不要把更长的文本直接视为更强的推理</li>
+              <li>质检规则需要覆盖行动前理由与反馈后行为</li>
+              <li>同类样本保持信息量和措辞强度可比</li>
             </ul>
-            <div class="actions">
-              <a class="btn primary" href="machine-decision-process-attribution/">查看研究B设计</a>
-            </div>
+          </article>
+
+          <article class="study-card study-a">
+            <h3>Agent与AI产品评估</h3>
+            <p class="study-question">评价“是否会做决定”时，同时观察过程和后续行动。</p>
+            <ul class="study-facts-list">
+              <li>记录模型是否比较方案并说明目标</li>
+              <li>区分接受反馈、机械复述和真正调整行动</li>
+              <li>在不同任务风险和责任场景中重复测试</li>
+              <li>将归因评分与真实任务成功率分别报告</li>
+            </ul>
           </article>
         </div>
+        <p class="reading">以上是基于研究A结果与研究B设计形成的评测建议。它们用于改进测试结构和结果解释，不代表语言模型已经具有人类式心智或自由意志。</p>
       </div>
     </section>
 
     <section id="evidence" class="section soft">
       <div class="wrap">
         <p class="section-index">03</p>
-        <h2>研究A观察到的变化</h2>
-        <div class="finding-list">
-          <article class="finding-block">
-            <h3>决策过程写法与部分能动性评价共同变化</h3>
-            <p>材料加入理由、比较或反思信息后，部分与行动控制和目标导向有关的评分发生变化。具体幅度在不同评价维度和场景中有所区别。</p>
+        <h2>证据支持什么，也不支持什么</h2>
+        <div class="study-grid">
+          <article class="study-card study-a">
+            <h3>研究A提供已有结果</h3>
+            <ul class="study-facts-list">
+              <li>360条DeepSeek模型问卷响应</li>
+              <li>8个场景、6种过程条件、2种身份标签</li>
+              <li>条件比较、身份比较和场景一致性分析</li>
+              <li>结果描述该模型配置在这些材料与提示下的评价模式</li>
+            </ul>
           </article>
-          <article class="finding-block">
-            <h3>AI与人类标签对应部分心智和责任评价差异</h3>
-            <p>材料中的行为保持一致，只改变行动者身份标签时，部分心智、体验和责任评分出现差异。</p>
-          </article>
-          <article class="finding-block">
-            <h3>多个场景呈现共同方向，同时保留任务差异</h3>
-            <p>八个任务场景并未产生完全相同的变化幅度。场景一致性分析用于观察共同方向以及任务语境带来的差别。</p>
+          <article class="study-card study-b">
+            <h3>研究B提供研究设计</h3>
+            <ul class="study-facts-list">
+              <li>96条机器主体材料</li>
+              <li>备选、理由、反馈、维持和改变六种条件</li>
+              <li>四个主要评价维度与六项预设比较</li>
+              <li>固定数据仅用于校验分析流程和页面结构</li>
+            </ul>
           </article>
         </div>
-        <p class="reading">研究B已经形成六种材料条件、评价维度、比较方法和离线分析流程。相关页面用于展示材料结构以及分析结果的组织方式。</p>
+        <p class="reading">当前结果不能证明跨模型泛化，也不能证明模型拥有被评分的心理属性。项目测量的是语言模型如何根据文本线索形成评价，而不是行动者本身是否真实具有这些属性。</p>
       </div>
     </section>
 
-    <section id="methods" class="section">
+    <section id="studies" class="section">
       <div class="wrap">
         <p class="section-index">04</p>
-        <h2>材料怎样转化为分析结果</h2>
-        <ol class="analysis-pipeline" aria-label="从材料到结果">
-          <li><span class="flow-step">1</span><p>改变材料中的信息</p></li>
-          <li><span class="flow-step">2</span><p>完成统一评价</p></li>
-          <li><span class="flow-step">3</span><p>按场景和条件汇总</p></li>
-          <li><span class="flow-step">4</span><p>比较条件差异</p></li>
-          <li><span class="flow-step">5</span><p>检查场景与评价来源差异</p></li>
+        <h2>两项研究怎样衔接</h2>
+        <p class="reading">研究A先观察身份和过程写法是否对应不同评价；研究B再固定机器主体，把过程信息拆成可单独比较的材料条件。</p>
+        <ol class="story-flow" aria-label="两项研究的关系">
+          <li><span class="flow-step">1</span><p>改变身份与过程写法</p></li>
+          <li><span class="flow-step">2</span><p>观察评价变化与场景差异</p></li>
+          <li><span class="flow-step">3</span><p>拆开备选、理由、反馈和行动</p></li>
+          <li><span class="flow-step">4</span><p>形成可复核的评测设计</p></li>
         </ol>
         <div class="entry-grid">
-          <a href="identity-process-attribution-baseline/"><strong>研究A结果</strong><span>材料例子、主要结果与场景一致性</span></a>
-          <a href="machine-decision-process-attribution/"><strong>研究B设计</strong><span>六种材料条件、评价维度与分析方法</span></a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation"><strong>方法与复现</strong><span>数据、脚本与运行命令</span></a>
+          <a href="identity-process-attribution-baseline/"><strong>研究A：已有结果</strong><span>材料、主要发现、图表与场景一致性</span></a>
+          <a href="machine-decision-process-attribution/"><strong>研究B：研究设计</strong><span>六种条件、评价维度与离线分析方法</span></a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md"><strong>结果与实践启示</strong><span>适用于评测、数据生产和Agent产品的结论边界</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="methods" class="section soft">
+      <div class="wrap">
+        <p class="section-index">05</p>
+        <h2>数据、方法与复现</h2>
+        <ol class="analysis-pipeline" aria-label="从材料到结果">
+          <li><span class="flow-step">1</span><p>控制材料中的身份与过程信息</p></li>
+          <li><span class="flow-step">2</span><p>使用统一题项记录评价</p></li>
+          <li><span class="flow-step">3</span><p>按条件、身份和场景汇总</p></li>
+          <li><span class="flow-step">4</span><p>报告差异、范围和稳定性</p></li>
+          <li><span class="flow-step">5</span><p>保留材料、数据和分析脚本</p></li>
+        </ol>
+        <div class="entry-grid">
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation"><strong>GitHub仓库</strong><span>材料、数据、脚本与运行命令</span></a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESEARCH_PROGRAM.md"><strong>研究计划</strong><span>研究问题、证据状态与后续工作</span></a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/data_provenance.yaml"><strong>数据来源</strong><span>正式结果、固定示例与协议资产的区分</span></a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap"><strong>LLM行动者归因评测</strong><p>研究身份、理由、反馈和后续行动如何改变语言模型对决策主体的评价。</p></div>
+    <div class="wrap"><strong>LLM行动者归因评测</strong><p>研究语言模型如何根据身份和决策过程线索评价一个行动者，并将结果转化为可执行的评测设计建议。</p></div>
   </footer>
   <script src="assets/js/site.js" defer></script>
 </body>
