@@ -1,0 +1,38 @@
+[
+  {
+    "construct": "IN",
+    "scenario_count": 8,
+    "scenario_mean_max": 4.6354,
+    "scenario_mean_min": 4.2812
+  },
+  {
+    "construct": "GO",
+    "scenario_count": 8,
+    "scenario_mean_max": 4.5208,
+    "scenario_mean_min": 4.1562
+  },
+  {
+    "construct": "MSI",
+    "scenario_count": 8,
+    "scenario_mean_max": 3.5139,
+    "scenario_mean_min": 3.3264
+  },
+  {
+    "construct": "IC",
+    "scenario_count": 8,
+    "scenario_mean_max": 4.725,
+    "scenario_mean_min": 4.0583
+  },
+  {
+    "construct": "PA5",
+    "scenario_count": 8,
+    "scenario_mean_max": 3.5333,
+    "scenario_mean_min": 3.175
+  },
+  {
+    "construct": "PA8",
+    "scenario_count": 8,
+    "scenario_mean_max": 3.526,
+    "scenario_mean_min": 3.2656
+  }
+]

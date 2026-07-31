@@ -56,7 +56,7 @@ python scripts/assemble_pages.py --output _site
 - 研究A：DeepSeek API模型模拟问卷响应；
 - 研究A mock：确定性工程验证数据；
 - 研究B示例：分析界面示例数据；
-- 研究B正式评分：双评判模型运行数据。
+- 研究B离线导入：外部离线评分文件（通过验证后进入分析流程）。
 
 完整定义见：
 

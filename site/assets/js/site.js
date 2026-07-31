@@ -1,30 +1,5 @@
 "use strict";
 
-function text(id, value) {
-  const node = document.getElementById(id);
-  if (node && value != null) node.textContent = String(value);
-}
-
-function selectFacts(facts, keys) {
-  const byKey = new Map((facts || []).map((fact) => [fact.key, fact]));
-  return keys.map((key) => byKey.get(key)).filter(Boolean);
-}
-
-function renderFacts(id, facts) {
-  const host = document.getElementById(id);
-  if (!host || !Array.isArray(facts)) return;
-  host.textContent = "";
-  facts.forEach((fact) => {
-    const row = document.createElement("div");
-    const dt = document.createElement("dt");
-    const dd = document.createElement("dd");
-    dt.textContent = fact.label;
-    dd.textContent = String(fact.value);
-    row.append(dt, dd);
-    host.appendChild(row);
-  });
-}
-
 function setStatus(message, kind) {
   const node = document.getElementById("loadStatus");
   if (!node) return;
@@ -37,32 +12,8 @@ function renderStory(story) {
   const studyA = program?.studies?.study_a;
   const studyB = program?.studies?.study_b;
   if (!program || !studyA || !studyB) throw new Error("研究计划数据缺少研究A或研究B");
-
-  renderFacts("programFacts", program.core_facts);
-  renderFacts(
-    "studyAFacts",
-    selectFacts(studyA.core_facts, [
-      "process_identity_design",
-      "scenario_count",
-      "model_output_count",
-      "model_configuration",
-    ]),
-  );
-  renderFacts(
-    "studyBFacts",
-    selectFacts(studyB.core_facts, [
-      "condition_count",
-      "scenario_count",
-      "material_count",
-      "data_status",
-    ]),
-  );
-  text("studyATitle", studyA.title_zh);
-  text("studyBTitle", studyB.title_zh);
-  text("studyAStatus", studyA.evidence_status_zh);
-  text("studyBStatus", studyB.evidence_status_zh);
-  text("studyADesign", studyA.design_summary_zh);
-  text("studyBDesign", studyB.design_summary_zh);
+  // The overview text, study relationship and section order stay static in the
+  // page. The data file only confirms that both studies resolve.
 }
 
 async function loadOverview() {

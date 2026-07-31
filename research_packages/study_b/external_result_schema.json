@@ -1,0 +1,90 @@
+{
+  "schema_id": "study_b.external_result_schema.v1",
+  "description": "Minimal validation schema for an externally produced, offline Study B scoring file. One record is one judge slot scoring one material. This schema validates offline files only; it defines no network operation, no API field, no token count and no cost.",
+  "record_type": "external_offline_score",
+  "source_commit": "9cb4aae1e3010f90b2a9c34ae87111b5e373de59",
+  "network_operations": "none",
+  "required_fields": [
+    "material_id",
+    "judge_slot",
+    "judge_model_id",
+    "item_responses",
+    "source_record_id",
+    "source_file_hash"
+  ],
+  "field_rules": {
+    "material_id": {
+      "type": "string",
+      "must_exist_in": "research_packages/study_b/material_matrix.csv"
+    },
+    "judge_slot": {
+      "type": "string",
+      "allowed": ["judge_1", "judge_2"]
+    },
+    "judge_model_id": {
+      "type": "string",
+      "allowed": ["deepseek-v4-pro", "gpt-5.6-terra"],
+      "note": "Protocol metadata only; validation never triggers a model call."
+    },
+    "item_responses": {
+      "type": "object",
+      "description": "Maps every required item_id to a finite numeric score inside its native scale.",
+      "must_cover_all_required_items": true,
+      "reject_unknown_items": true,
+      "reject_missing_items": true,
+      "reject_nan": true,
+      "reject_infinity": true
+    },
+    "source_record_id": {
+      "type": "string"
+    },
+    "source_file_hash": {
+      "type": "string",
+      "format": "sha256_hex"
+    }
+  },
+  "uniqueness": {
+    "primary_key": ["material_id", "judge_slot"],
+    "reject_duplicate_keys": true
+  },
+  "design_constraints": {
+    "reject_missing_condition": true,
+    "reject_missing_scenario": true,
+    "reject_missing_direction": true,
+    "note": "material_id encodes condition, scenario, direction and identity; the validator resolves them from material_matrix.csv."
+  },
+  "item_scale_ranges": {
+    "wu_in1a": {"min": 1, "max": 7, "construct": "IN"},
+    "wu_in2a": {"min": 1, "max": 7, "construct": "IN"},
+    "wu_in3b": {"min": 1, "max": 7, "construct": "IN"},
+    "wu_in4a": {"min": 1, "max": 7, "construct": "IN"},
+    "wu_go1a": {"min": 1, "max": 7, "construct": "GO"},
+    "wu_go2a": {"min": 1, "max": 7, "construct": "GO"},
+    "wu_go3b": {"min": 1, "max": 7, "construct": "GO"},
+    "wu_go4a": {"min": 1, "max": 7, "construct": "GO"},
+    "wu_ms1": {"min": 1, "max": 5, "construct": "MSI"},
+    "wu_ms2": {"min": 1, "max": 5, "construct": "MSI"},
+    "wu_ms3": {"min": 1, "max": 5, "construct": "MSI"},
+    "wu_ms4": {"min": 1, "max": 5, "construct": "MSI"},
+    "wu_ms5": {"min": 1, "max": 5, "construct": "MSI"},
+    "wu_ms6": {"min": 1, "max": 5, "construct": "MSI"},
+    "wu_ic1": {"min": 1, "max": 7, "construct": "IC"},
+    "wu_ic3": {"min": 1, "max": 7, "construct": "IC"},
+    "wu_ic4": {"min": 1, "max": 7, "construct": "IC"},
+    "wu_ic7": {"min": 1, "max": 7, "construct": "IC"},
+    "wu_ic8": {"min": 1, "max": 7, "construct": "IC"},
+    "pa_has_goals": {"min": 1, "max": 5, "construct": "PA8"},
+    "pa_can_create_new_goals": {"min": 1, "max": 5, "construct": "PA5/PA8"},
+    "pa_can_communicate": {"min": 1, "max": 5, "construct": "PA5/PA8"},
+    "pa_wanted_to_perform": {"min": 1, "max": 5, "construct": "PA8"},
+    "pa_can_change_behavior": {"min": 1, "max": 5, "construct": "PA5/PA8"},
+    "pa_can_adapt": {"min": 1, "max": 5, "construct": "PA5/PA8"},
+    "pa_actor_scenario": {"min": 1, "max": 5, "construct": "PA5/PA8"},
+    "pa_dinner_scenario": {"min": 1, "max": 5, "construct": "PA8"}
+  },
+  "notes": [
+    "Item ids, constructs and native scales are taken verbatim from scoring_spec.yaml and the P0 item files; they are not rewritten here.",
+    "The four primary constructs are IN, GO, MSI, IC. PA5 and PA8 are supplementary overlapping scoring versions of the perceived-agency source tool.",
+    "A record must supply all 27 required items so that every construct (including both PA versions) can be computed without imputation."
+  ]
+}

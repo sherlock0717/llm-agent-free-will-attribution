@@ -1,0 +1,159 @@
+{
+  "asset_hashes_id": "study_b.asset_hashes.v1",
+  "file_count": 13,
+  "files": {
+    "docs/pa-wu-r1-pilot/data/showcase_data.json": {
+      "normalized_sha256": "69c6010091c8d3c8a2244e80cea9f10fd84613bec6cf906143fc53fab3768f46",
+      "sha256": "69c6010091c8d3c8a2244e80cea9f10fd84613bec6cf906143fc53fab3768f46"
+    },
+    "scripts/build_showcase_data.py": {
+      "normalized_sha256": "b9a37a337d11b4df0795ee8bee867d3d3ffb9ba65db642f9c6f2c7e37d93ea51",
+      "sha256": "b9a37a337d11b4df0795ee8bee867d3d3ffb9ba65db642f9c6f2c7e37d93ea51"
+    },
+    "scripts/build_study_b_protocol_package.py": {
+      "normalized_sha256": "1812064e26d1caccefb441a669fbcbb14cf74037591f4939ebd9d3a0961f6dfc",
+      "sha256": "1812064e26d1caccefb441a669fbcbb14cf74037591f4939ebd9d3a0961f6dfc"
+    },
+    "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/analysis_plan.md": {
+      "normalized_sha256": "bf7fa7d981ff970f7dacc077b2ea8e0be0b7c8d294598584100a1a4b8182e8c5",
+      "sha256": "bf7fa7d981ff970f7dacc077b2ea8e0be0b7c8d294598584100a1a4b8182e8c5"
+    },
+    "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/condition_matrix.csv": {
+      "normalized_sha256": "8d6750f0f94b427f66de98fe18852b5de4424d10201392304aeb0851c6496437",
+      "sha256": "8d6750f0f94b427f66de98fe18852b5de4424d10201392304aeb0851c6496437"
+    },
+    "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/result_schema.json": {
+      "normalized_sha256": "47d08fc2f879871e8d436bf03f5fc60f79d2adf9851c01084d6cb6356a50b643",
+      "sha256": "47d08fc2f879871e8d436bf03f5fc60f79d2adf9851c01084d6cb6356a50b643"
+    },
+    "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/scoring_spec.yaml": {
+      "normalized_sha256": "003d141be48518c4b82d59579bfefe453e2e1ecbc5938583c2ce1aae24c812c6",
+      "sha256": "003d141be48518c4b82d59579bfefe453e2e1ecbc5938583c2ce1aae24c812c6"
+    },
+    "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/stimuli.jsonl": {
+      "normalized_sha256": "ce2c89a13d508a6c9a5ae35529b94f3eb8ebf39bd6bb330d43ad91d18ba061a7",
+      "sha256": "ce2c89a13d508a6c9a5ae35529b94f3eb8ebf39bd6bb330d43ad91d18ba061a7"
+    },
+    "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/stimulus_book.md": {
+      "normalized_sha256": "d282799a84092255052e4122fc785cac0e8f589138dcff47285d818254046e5f",
+      "sha256": "d282799a84092255052e4122fc785cac0e8f589138dcff47285d818254046e5f"
+    },
+    "tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/study_protocol.yaml": {
+      "normalized_sha256": "fcbb529e191fae6f28e5df2c0e03f62cd861224d1077d3ce634ae7a5d41004c0",
+      "sha256": "fcbb529e191fae6f28e5df2c0e03f62cd861224d1077d3ce634ae7a5d41004c0"
+    },
+    "tasks/attribution_behavior/measurement_candidates/pa_wu_p0/forms.yaml": {
+      "normalized_sha256": "8e80615b6b7af5f3a1cb84de87195f849463cb5d6431449e869eafc409f9c67a",
+      "sha256": "8e80615b6b7af5f3a1cb84de87195f849463cb5d6431449e869eafc409f9c67a"
+    },
+    "tasks/attribution_behavior/measurement_candidates/pa_wu_p0/items_pa_2024.yaml": {
+      "normalized_sha256": "d0b93a47d16e5204c7bd98e96856eaa24c2a433c94324a91218bb4953cbde162",
+      "sha256": "d0b93a47d16e5204c7bd98e96856eaa24c2a433c94324a91218bb4953cbde162"
+    },
+    "tasks/attribution_behavior/measurement_candidates/pa_wu_p0/items_wu_shen_2026.yaml": {
+      "normalized_sha256": "30a3cc5a0f57fc9c4acfac820466ba33726d6fd18bec823419cff9fccabfed79",
+      "sha256": "30a3cc5a0f57fc9c4acfac820466ba33726d6fd18bec823419cff9fccabfed79"
+    }
+  },
+  "hash_algorithm": "sha256",
+  "material_content_sha256": {
+    "C0__s1_scheduling__A__machine": "20a4edeb4c3147d7e4a831e2d5b0b9a39fd575ce38a7ffcdaf0a167ee20545c7",
+    "C0__s1_scheduling__B__machine": "00cd537a07617537196523f19d89064d4584af62f7732768cfa361bf3b8fafdc",
+    "C0__s2_customer_issue__A__machine": "084ff948c79f1da8792b41c990ff80f958d86ff7c9a86c4edb7f92f00f5f57e2",
+    "C0__s2_customer_issue__B__machine": "66d8df96ca4085494403d0fb6afac3fa7482bab277e6d96ae9259fda8b4322ff",
+    "C0__s3_study_plan__A__machine": "1a2be93f070766952b188f05aee2996a521a72962f571ebd2363abc225a4de33",
+    "C0__s3_study_plan__B__machine": "7ee190530bfdec78adb8fe5623366c7bd6c3334e3be31230b0aa329adf4cb860",
+    "C0__s4_routing__A__machine": "023f6d5c98d6b67022ebf7af2f26efe73b8af7a32ada0d0973925b491a86f4c4",
+    "C0__s4_routing__B__machine": "7a30363e740b5f6ae7c2527c4baf672d8062b5742cfd9c835986f8b5438a22f8",
+    "C0__s5_task_allocation__A__machine": "7255d2d693f1ce1350b6cf8c143a3a8263954571de6efaa2fbf5479bfb901402",
+    "C0__s5_task_allocation__B__machine": "f1be646d5a3da3b67fca0c0b7e66845cf26b196f7385dbb48f69d31a41c20a7f",
+    "C0__s6_content_recommendation__A__machine": "b098e4892779522f42a061d30f55fb277d1c8ddd8b989e0d0213c7b72fc1632e",
+    "C0__s6_content_recommendation__B__machine": "c37ff1f9e621fd7cbfcbd9aecb0181fe99ed36ab9cd677c8c9ca1425f701ff71",
+    "C0__s7_game_strategy__A__machine": "00c612a12cd11136cf86459ffaa0dfe926b1420fa2d4a65af4ab22f65525648f",
+    "C0__s7_game_strategy__B__machine": "80f7d0b9498e70e97d435b6bf6592ee0f99e00593680625253078ebc936aa406",
+    "C0__s8_energy_plan__A__machine": "ec081457fe5f3b27962c7090184d22d07ae51d12afcd87dc1b79759d71da33af",
+    "C0__s8_energy_plan__B__machine": "3117fb9e2db04ad72e4be2c0d0c9cb522561ea8be91d980a990b7c1976007361",
+    "C1__s1_scheduling__A__machine": "e392581dfbd3133c2458885fde7bef9471692c3a4af027b7e66b7ad1f12f97dd",
+    "C1__s1_scheduling__B__machine": "350b895a12013100458ac3426ee152681ffe44d448702a6dc9fb324b54c2681e",
+    "C1__s2_customer_issue__A__machine": "77e547e9e29c9cb56b552c256b48bcbc7a0bb9b15b79d882bb398700ea47891f",
+    "C1__s2_customer_issue__B__machine": "bfd3df3c74b66ffe9c399ae4ecdeb83a613c5cd6517b4905054c27a31b6407a7",
+    "C1__s3_study_plan__A__machine": "4f1a9a4a5fd041b0fc7250d055aae6203b5ec9453ca0d1c7d40f91df11daf216",
+    "C1__s3_study_plan__B__machine": "d32fb30a6836abfcf6929e7223970a4d576e3f16911f9af0edad6dbb90dff7fe",
+    "C1__s4_routing__A__machine": "a3bbf55ad7f348bb3b3d6cb7a9562a2767efd4607bdd97cbf01fb9b708d20e53",
+    "C1__s4_routing__B__machine": "f4e4d82fb4498f8ec8ef46588b3ce176cda8391273611b43e7390e5c39ffb44b",
+    "C1__s5_task_allocation__A__machine": "d05e78336c29abfadd66522e5b9edae3febf21fff5e9408e235bc3c24466dfaf",
+    "C1__s5_task_allocation__B__machine": "ab895e21c7c738661e77ace56cc705ca4bc8969a2206dcd39d3b992160df248c",
+    "C1__s6_content_recommendation__A__machine": "602d4452d4a71b888cf54fd3fa6b6e239a85b45c04336b540f78bda6b835433e",
+    "C1__s6_content_recommendation__B__machine": "c4ee43d59f2620cadf875fd5c27994c335d800deee56127653c39a8631ecfbe1",
+    "C1__s7_game_strategy__A__machine": "880b92f5c8c69e2c7e00e53b005757270c6bf944bfddac649dbc6e9df0c922c6",
+    "C1__s7_game_strategy__B__machine": "1133f311fa9f38c88f35598ca0f950e091927692e204f35ed1144c970fd458de",
+    "C1__s8_energy_plan__A__machine": "b02aa91d79d1af7bcd39b4c8a9a01967f448560875c728796408766b4e9ede80",
+    "C1__s8_energy_plan__B__machine": "fbfa28cac6f35279cec22fe960a794336049561a997c95ed91e606875386d051",
+    "C2__s1_scheduling__A__machine": "18d748203239261f43573ddc6f57931e7caa2ca66948d9bfb9ddb3a072a85247",
+    "C2__s1_scheduling__B__machine": "2a1a855411229b9859bca2dcc4939541153912f3d9bc6148249589b1748f7422",
+    "C2__s2_customer_issue__A__machine": "48bd517cffdc9f7a674a15509384d070c70bb01f8cd7387786eb9b9e3ebd690c",
+    "C2__s2_customer_issue__B__machine": "1bf2764add9d19da4ae1a4cd8a5465dc9cb12e3a950a06385c8fcdf8f3b7a493",
+    "C2__s3_study_plan__A__machine": "cd4a13928ffac946caeef86ddf8dc6644fbdbd733b6727bb8922bec831b32a5b",
+    "C2__s3_study_plan__B__machine": "7ce56cf15fd3178f1dd2c8816fd3be033327fde2af9057774836388c18ef4111",
+    "C2__s4_routing__A__machine": "19aa2268d8443530ca0c2cdd6002c252af77127599b7aee34f95b681597feab6",
+    "C2__s4_routing__B__machine": "d81c0f7f7014fe2402ef28e52dfcd85131a1f761d12e2fc5f273ae6f072be9df",
+    "C2__s5_task_allocation__A__machine": "1b4820be8ed12c602c7c6239e356433a82bbf27e969ee00dcfe26e03c15c9fce",
+    "C2__s5_task_allocation__B__machine": "46af7a211b2a64c412c9721db24a8bdba347461119ace1b5d811db48471524c0",
+    "C2__s6_content_recommendation__A__machine": "c19b36404c99a7bf9cf638e5bf4a2acbfc57c4ab4a6c504d106dc688988fefa9",
+    "C2__s6_content_recommendation__B__machine": "97850cb61f6ea6dd2fbd81c75b4054204bb2879079b7d25777f75cc6e44c7e59",
+    "C2__s7_game_strategy__A__machine": "535547267e51a6049a483abac8a791c92185f3f4cd75a2039d667c45d35d7bb4",
+    "C2__s7_game_strategy__B__machine": "2b30505ca33962a541949e68e4178879a56b8a8f61dc51c912baedf3afdf2d2f",
+    "C2__s8_energy_plan__A__machine": "99975b4f23505b07f8d1cd18ce2ecf35aa281dd03ee54cb06c3b6b4563bc2608",
+    "C2__s8_energy_plan__B__machine": "fae87e065ae28ebb2331865b0333052984215be7094080f37e29ec69a4755e03",
+    "C3__s1_scheduling__A__machine": "a347de79a0575d1cd4e17faf2bd9448e54134e1ab40eadb797a4e0380cc37913",
+    "C3__s1_scheduling__B__machine": "e8679e8c97a610a699b68984690c4c0351707f09029465cf7e35650097ba3178",
+    "C3__s2_customer_issue__A__machine": "14fbcca427fdf9aa213995a2fa2520e5702276e98c7ecaa0c03b03102325587c",
+    "C3__s2_customer_issue__B__machine": "b986b1578951aa7f86b0bda3c5048670ef928b324d9522b2351ab87520da1d4a",
+    "C3__s3_study_plan__A__machine": "8562612a5afc33b14d12049313a844f4c5b2f0b0a8970475bdd1e41b64eaf8f8",
+    "C3__s3_study_plan__B__machine": "a0711363d89cdaa05258ca1c63ec31e80c2370f02e3be56d79b03356889228f3",
+    "C3__s4_routing__A__machine": "162e63bb47b1d7b9315f01252f3be67c0deceb5209b9384682f1682e8999cc32",
+    "C3__s4_routing__B__machine": "da3479e69b3d784c93944966e254894d3fa2f7d3b79604b4d596f011bb783964",
+    "C3__s5_task_allocation__A__machine": "87d2ee105db5ad3d9b555fed8eac4ef35025fc3d3c7287bf67c2d1a5e7bcc2c9",
+    "C3__s5_task_allocation__B__machine": "f0cb8911b971edbff29a55d73a7543ebf0ddfcea3ed6c8c16849231d1bdd0e49",
+    "C3__s6_content_recommendation__A__machine": "ca652a7dde58c9510a15e8fc5dc81b2fd1bb414b2093285284ec04b36337737e",
+    "C3__s6_content_recommendation__B__machine": "275a1e7f0b1e6817066c8cb6095e399695d5afa721574ada33a010786534f511",
+    "C3__s7_game_strategy__A__machine": "9e08e86248afb98248d71c4984e0b462ed34bd88b797f57664cbab93eabde75c",
+    "C3__s7_game_strategy__B__machine": "8e6f09eb30bd3ce16c69267c0d1380561766563d7635c28e08f1a35690b8359e",
+    "C3__s8_energy_plan__A__machine": "e5aec454d355a28a0de20c2a858c8ff0b1604b853fcb5c20ef4e536f01d98c7a",
+    "C3__s8_energy_plan__B__machine": "976639e35b0589f538cf9cc61621187fe7ea4e222b8e81e8a1e7260d3f3896bf",
+    "C4__s1_scheduling__A__machine": "c82fb0d5fa1f0bc4762266236f5cd77d4aba2dca778db94240ca6cf790e61560",
+    "C4__s1_scheduling__B__machine": "11b5d59fc338371ae0ee2827e3ca4fcbcf5485383d568fdc263b915564a1ba95",
+    "C4__s2_customer_issue__A__machine": "7e77d2cfbf79906ef34348254bfcf57fe4d96853865f663b5e233f5fb4e28036",
+    "C4__s2_customer_issue__B__machine": "5e2e313160d7de56dd3df2d5022a58218d95e0b4234296540493aa25923fc920",
+    "C4__s3_study_plan__A__machine": "ef64265c47d1563034f4f64617ceaf7c3fbf905cfe1f4c167a9b335b28d440d4",
+    "C4__s3_study_plan__B__machine": "5fabdffcc98b91c73e8235906d02f5a29b0856d004887790d9e758f8865d9b4f",
+    "C4__s4_routing__A__machine": "a2eff0ebeae82b607acebf2eb8090108a9152f23c96a3d5a68570b1fc8cc49b5",
+    "C4__s4_routing__B__machine": "b2e6e9c96a50f0f745945f5ed8abbb28d036598dd78468d11472cc6d8c2cc442",
+    "C4__s5_task_allocation__A__machine": "1e0ad79173c92224909b3d46f418e8f0ed2026e487a7a7396c2686abe52d1ef3",
+    "C4__s5_task_allocation__B__machine": "e4770ff30e788d0c4c4602db523c1654a5614cd565812b95d81603127cfa3878",
+    "C4__s6_content_recommendation__A__machine": "522ca5a4865f923a7a4170d1022006a1a9c2fdc059530b7acf32458f4312da5c",
+    "C4__s6_content_recommendation__B__machine": "25fe48ef162f6d1663dcd6b75e5b3abb1c0dfc5e99b6b1972a74c6787255fd3c",
+    "C4__s7_game_strategy__A__machine": "ad3bbcbe9a7ae8ada8a4ceb2bc385c5ad9e8f88313130c5d8e6d78a08f6cedec",
+    "C4__s7_game_strategy__B__machine": "44763b70d36365cd46e3b398e517205520d0fb0eb0bf0064f4746ea153efe2e6",
+    "C4__s8_energy_plan__A__machine": "935d14a0a33777a2db717bc1c8bd5f2d5c162b78ad09bb10eeee1bdd6304fb1e",
+    "C4__s8_energy_plan__B__machine": "0fbdfc11ff617386ba36d5cbbe458823158c1fd1d628ffecc03f7e84d1e52961",
+    "C5__s1_scheduling__A__machine": "7dd91fb2b2780b180282970de8f498050691a43433bf4b2ffab7a72b24539fff",
+    "C5__s1_scheduling__B__machine": "bdf9fbd6bee7a4d86bcc897aac91d9090c11901b5ebc69bbafae0bb52f6d0af1",
+    "C5__s2_customer_issue__A__machine": "c3c727b733d05d5c7d0375f5797cfd8996bf725a93ec79cc975c90a972030cd3",
+    "C5__s2_customer_issue__B__machine": "69c820c2b6fc6f5d6fa828758a8f722be8663dbcbf31d06b349043f15ef387e4",
+    "C5__s3_study_plan__A__machine": "c9f6fcae50d627f3e4e7f5a4abe3b4fdc2ff41ee9a50cc65776a3367e383096c",
+    "C5__s3_study_plan__B__machine": "cdf1121e14b8efc307e691a596c36d16182574150030b228019d118606261fff",
+    "C5__s4_routing__A__machine": "37db718d2b8ea430a7e586a556c79d0de4a4ef41c9dbbb83af95c9e66a0ddfa0",
+    "C5__s4_routing__B__machine": "242d6e3c22d2b60cdb578a8fc7650de422f5250422b13aa7e90252adef96fa32",
+    "C5__s5_task_allocation__A__machine": "d8c2aa13839115d624f0568b679a84d4119da6e26ab0dbe527bcb1c7b9c1d0ac",
+    "C5__s5_task_allocation__B__machine": "da2e857a08c7b7b93659c30a7ed283b81b2a952addca7a91ea3e9180469fd78c",
+    "C5__s6_content_recommendation__A__machine": "c2c8ce92a4f5d2f613c933bfe9c260e9bab33ceb84378c884c1cf09b08edec4f",
+    "C5__s6_content_recommendation__B__machine": "0561110a3a2c45752c53993590065b721f7e6f25b5fec7b350bdd72575123c50",
+    "C5__s7_game_strategy__A__machine": "3030a951cf70544d70acda7d164e7973c3f7bbcfe6b78b604fe38bad002e522c",
+    "C5__s7_game_strategy__B__machine": "7eebc1cef029f4862591510428a3a998a681fab35fced278044139424fcd315a",
+    "C5__s8_energy_plan__A__machine": "970c4f8bf7ad8947b03a8bd214f036f758b480ec4e5d6167c538e8b9ff60bee2",
+    "C5__s8_energy_plan__B__machine": "f82e9bf46367f0a14c6e5d3bb326f29868d49ed9b1d4f0502ad2d130a692332f"
+  },
+  "material_count": 96,
+  "source_commit": "9cb4aae1e3010f90b2a9c34ae87111b5e373de59"
+}

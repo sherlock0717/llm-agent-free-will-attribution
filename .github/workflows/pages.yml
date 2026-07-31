@@ -60,6 +60,9 @@ jobs:
       - name: Validate strict public JSON
         run: uv run --frozen python scripts/check_public_json.py
 
+      - name: Check Study B offline research package
+        run: uv run --frozen python scripts/build_study_b_protocol_package.py --check
+
       - name: Run public site tests
         run: uv run --frozen pytest -q tests/site
 
@@ -71,9 +74,16 @@ jobs:
           scripts/check_public_json.py
           scripts/build_research_a_scenario_results.py
           scripts/build_research_a_v2.py
+          scripts/build_study_b_protocol_package.py
+          scripts/validate_study_b_external_results.py
+          scripts/import_study_b_external_results.py
+          scripts/build_study_b_offline_demo.py
           tests/site/test_public_release_gate.py
           tests/site/test_research_a_scenario.py
           tests/site/test_static_site.py
+          tests/site/test_study_b_offline_scope.py
+          tests/test_study_b_protocol_package.py
+          tests/test_study_b_external_import.py
 
       - name: Assemble Pages artifact
         run: python scripts/assemble_pages.py --output _site

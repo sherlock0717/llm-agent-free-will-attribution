@@ -1,0 +1,38 @@
+[
+  {
+    "construct": "IN",
+    "difference": 0.8385,
+    "judge_1_mean": 4.0625,
+    "judge_2_mean": 4.901
+  },
+  {
+    "construct": "GO",
+    "difference": 0.8698,
+    "judge_1_mean": 3.862,
+    "judge_2_mean": 4.7318
+  },
+  {
+    "construct": "MSI",
+    "difference": 0.8334,
+    "judge_1_mean": 3.0208,
+    "judge_2_mean": 3.8542
+  },
+  {
+    "construct": "IC",
+    "difference": 0.873,
+    "judge_1_mean": 3.9458,
+    "judge_2_mean": 4.8188
+  },
+  {
+    "construct": "PA5",
+    "difference": 0.7812,
+    "judge_1_mean": 2.9917,
+    "judge_2_mean": 3.7729
+  },
+  {
+    "construct": "PA8",
+    "difference": 0.7878,
+    "judge_1_mean": 3.0104,
+    "judge_2_mean": 3.7982
+  }
+]

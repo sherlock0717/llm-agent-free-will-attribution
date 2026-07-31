@@ -3,203 +3,196 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="研究A：身份标签和决策过程描述如何改变语言模型对行动者的评价。" />
+  <meta name="description" content="研究A：身份标签和决策过程写法如何改变语言模型对行动者的评价。" />
   <title>研究A｜身份与决策过程归因</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <a class="skip-link" href="#main">跳到正文</a>
   <header class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <p class="eyebrow">研究A · LLM行动者归因评测</p>
-        <h1>身份与决策过程怎样改变模型评价</h1>
-        <p class="subtitle">同一个决定被描述为AI或人类作出，并配上不同程度的理由和反思时，模型会怎样评价这个行动者？</p>
-        <p class="lead">研究A让DeepSeek模型阅读八类决策场景。材料一方面改变行动者的身份标签，另一方面改变决策过程的写法，从只给最终选择逐步扩展到理由、反馈和后续修正。模型随后完成34个量表题项。</p>
-        <p class="lead">页面先呈现主要发现，再解释材料、评价维度和分析方法。技术统计、数据文件与复现入口放在后半部分。</p>
-        <div class="actions">
-          <a class="btn primary" href="#results">先看主要发现</a>
-          <a class="btn" href="#question">看一个材料例子</a>
-          <a class="btn" href="#design">查看研究设计</a>
-          <a class="btn" href="../">返回项目总览</a>
-        </div>
+    <div class="wrap">
+      <p class="eyebrow">研究A · LLM行动者归因评测</p>
+      <h1>同样的行为，写成AI还是人类、有没有理由，会改变模型评价吗？</h1>
+      <p class="subtitle">研究A比较身份标签与六种决策过程写法，观察模型对能动性、心智与责任的评分变化。</p>
+      <p class="lead">八个任务场景分别采用六种过程条件，并将行动者描述为AI或人类。DeepSeek模型阅读材料后完成统一量表，共形成360条评价记录。</p>
+      <div class="actions">
+        <a class="btn primary" href="#results">查看主要结果</a>
+        <a class="btn" href="#materials">查看材料例子</a>
       </div>
-      <aside class="snapshot" aria-label="研究快照">
-        <h2>研究快照</h2>
-        <dl id="heroFacts" class="fact-grid">
-          <div><dt>过程描述</dt><dd>6种</dd></div>
-          <div><dt>身份标签</dt><dd>2种</dd></div>
-          <div><dt>场景</dt><dd>8个</dd></div>
-          <div><dt>模型响应</dt><dd>360条</dd></div>
-          <div><dt>题项</dt><dd>34个</dd></div>
-          <div><dt>评分方式</dt><dd>模型阅读材料后完成量表</dd></div>
-        </dl>
-      </aside>
+      <p class="hero-metrics">360条评价记录 · 8个场景 · 6种过程条件 · 2种身份标签</p>
       <div id="pageStatus" class="status" role="status" aria-live="polite">正在载入公开研究数据……</div>
     </div>
   </header>
 
   <nav class="toc" aria-label="研究A页面导航">
     <div class="wrap">
-      <a href="#question">研究问题</a>
-      <a href="#results">主要发现</a>
-      <a href="#design">设计</a>
-      <a href="#materials">材料</a>
-      <a href="#measurement">评价维度</a>
-      <a href="#data">数据</a>
-      <a href="#analysis">分析</a>
-      <a href="#repro">复现</a>
+      <a class="toc-home" href="../">返回项目总览</a>
+      <a href="#materials">材料例子</a>
+      <a href="#results">主要结果</a>
+      <a href="#analysis">从材料到结果</a>
+      <a href="#repro">数据与复现</a>
     </div>
   </nav>
 
   <main id="main">
-    <section id="question" class="section">
+    <section id="materials" class="section">
       <div class="wrap">
         <p class="section-index">01</p>
-        <h2>研究问题：同一个决定，为什么会得到不同评价？</h2>
-        <p class="reading">设想一个行动者需要在两个方案中作出选择。材料可以只写“它选择了方案A”，也可以继续写它比较了两个方案、说明理由，或在收到反馈后重新考虑。最终选择相近，读者看到的思考过程却有很大差别。</p>
-        <div class="question-grid">
-          <article><h3>只写结果</h3><p>行动者直接作出选择，材料没有展示备选方案和理由。</p></article>
-          <article><h3>写出理由</h3><p>行动者比较后果与限制，再说明为什么选择其中一个方案。</p></article>
-          <article><h3>加入反思</h3><p>行动者收到反馈，重新检查原判断，并说明维持或调整的过程。</p></article>
+        <h2>材料改变了哪些信息</h2>
+        <p class="reading">以同一个任务场景为基础，材料分别呈现直接决定、比较过程、明确理由，以及反馈后的后续行动。身份标签在AI和人类之间切换，其他核心任务信息保持一致。</p>
+        <div class="material-versions">
+          <article><h3>直接决定</h3><p>只呈现最终选择。</p></article>
+          <article><h3>比较过程</h3><p>呈现候选方案之间的比较。</p></article>
+          <article><h3>明确理由</h3><p>补充与任务目标相关的理由。</p></article>
+          <article><h3>反馈后的行动</h3><p>呈现反馈以及后续维持或改变。</p></article>
         </div>
-        <p class="reading">研究同时改变材料中的身份标签：同一类过程有时被标记为AI决策者，有时被标记为人类决策者。我们据此观察模型究竟会怎样评价行动者的能动性、自由意志、体验、感知智能和责任。</p>
+        <details class="technical-details">
+          <summary>查看完整材料</summary>
+          <div class="details-body">
+            <p class="reading">八个场景各自包含情境、两个候选行动和固定选择，六种过程写法沿用同一场景骨架。身份标签只改变行动者相关句子。</p>
+            <div id="scenarioCards" class="scenario-grid"><p class="loading">正在载入场景……</p></div>
+          </div>
+        </details>
       </div>
     </section>
 
     <section id="results" class="section soft">
       <div class="wrap">
         <p class="section-index">02</p>
-        <h2>主要发现</h2>
-        <p class="reading">这批响应显示，模型的评价会随决策过程和身份标签变化。理由与反思描述通常对应更高的能动性评价；AI与人类标签在部分心智和责任评价上形成系统差异；能动性与自由意志归因关系紧密，同时仍保留各自的变化模式。</p>
+        <h2>主要结果</h2>
         <div id="takeaways" class="takeaways"><p class="loading">正在载入结果摘要……</p></div>
 
-        <h3>六种过程描述下的评价位置</h3>
-        <p class="reading">下表保留各评价维度的原评分范围。横向比较同一维度，可以看到从直接选择到理由与反思条件时，模型评分如何移动。</p>
-        <div id="conditionTable" class="table-scroll"><p class="loading">正在载入条件均值……</p></div>
-
-        <h3 id="scenario-heading">这些差异在不同场景中是否一致</h3>
-        <p class="reading" id="scenarioIntro">正在载入场景一致性分析……</p>
-        <div id="scenarioControls" class="scenario-controls" hidden>
-          <label for="scenarioConstructSelect">选择评价维度</label>
-          <select id="scenarioConstructSelect"></select>
-        </div>
-        <div id="scenarioResult" class="scenario-result"><p class="loading">正在载入场景一致性分析……</p></div>
-        <dl class="scenario-legend">
-          <div><dt>比较内容</dt><dd>这一行对应哪一个过程条件比较。</dd></div>
-          <div><dt>平均变化</dt><dd>该比较在所有场景×身份单元上的平均差异，保留评价维度原量尺。</dd></div>
-          <div><dt>呈现相同方向的单元</dt><dd>差异为正与为负的单元各有多少个。</dd></div>
-          <div><dt>场景间一致程度</dt><dd>取正负两侧较多的一方占非零单元的比例，越接近1说明方向越一致。</dd></div>
-          <div><dt>八个场景中的变化范围</dt><dd>八个场景各自平均差异的最小值到最大值。</dd></div>
-          <div><dt>去掉任意一个场景后的范围</dt><dd>每次移除一个场景后重新求平均，观察结果是否依赖单个场景。</dd></div>
-        </dl>
-
-        <h3>AI与人类标签对应的评分差异</h3>
-        <p class="reading">这里比较材料只改变行动者身份标签时，各评价维度出现的整体差异。条形长度表示差异幅度，具体均值和统计量保留在同一行。</p>
-        <div id="identityEffects" class="effect-list"><p class="loading">正在载入身份标签结果……</p></div>
-
-        <details class="supplementary-details">
-          <summary>查看补充统计与图表</summary>
-          <div class="details-body">
-            <h3>事先确定的条件比较</h3>
-            <p class="reading">这些比较分别对应“加入备选方案”“加入理由”和“加入反思反馈”等研究问题。表格保留均值差、t和p，供需要核查统计细节的读者使用。</p>
-            <div id="contrastTables" class="contrast-groups"><p class="loading">正在载入条件比较……</p></div>
-            <div class="figure-grid">
-              <figure><img src="../assets/figures/mean_agency.png" alt="六种过程描述下的能动性均值图" /><figcaption>能动性随过程描述变化</figcaption></figure>
-              <figure><img src="../assets/figures/mean_free_will_attribution.png" alt="六种过程描述下的自由意志归因均值图" /><figcaption>自由意志归因随过程描述变化</figcaption></figure>
-              <figure><img src="../assets/figures/mean_subjective_process_completeness.png" alt="六种过程描述下的主观过程完整性均值图" /><figcaption>主观过程完整性随过程描述变化</figcaption></figure>
+        <article class="finding-block">
+          <h3>过程描述与部分能动性评价共同变化</h3>
+          <div class="finding-body">
+            <p class="finding-conclusion">过程信息增加后，部分能动性评价随条件发生变化。</p>
+            <p>六种过程条件下，部分与行动控制、目标导向和选择自主性有关的评分呈现差异。图中显示各条件的平均评分，数值来自相同的材料和评价流程。</p>
+            <div class="finding-figure">
+              <svg id="processFindingChart" class="mini-chart" role="img" aria-label="正在载入过程条件图" viewBox="0 0 640 260" preserveAspectRatio="xMidYMid meet"></svg>
             </div>
+            <p class="figure-note">横轴为六种过程条件，纵轴保持该评价维度的原始评分范围。数值表示各条件的平均评分。</p>
+            <div id="conditionTable" class="table-scroll"><p class="loading">正在载入条件均值……</p></div>
+            <details class="technical-details">
+              <summary>查看完整数据</summary>
+              <div class="details-body">
+                <div class="figure-grid">
+                  <figure><img src="../assets/figures/mean_agency.png" alt="六种过程描述下的能动性均值图" /><figcaption>能动性随过程描述变化</figcaption></figure>
+                  <figure><img src="../assets/figures/mean_subjective_process_completeness.png" alt="六种过程描述下的主观过程完整性均值图" /><figcaption>主观过程完整性随过程描述变化</figcaption></figure>
+                </div>
+              </div>
+            </details>
           </div>
-        </details>
-      </div>
-    </section>
+        </article>
 
-    <section id="design" class="section">
-      <div class="wrap">
-        <p class="section-index">03</p>
-        <h2>研究怎样改变身份与决策过程</h2>
-        <p class="reading">研究把六种过程描述与AI、人类两种身份标签组合。两种较短或较长的直接选择材料帮助区分文本长度与理由结构，其余条件依次加入备选方案、理由权衡和反思反馈。</p>
-        <div id="processCards" class="card-grid" aria-live="polite">
-          <article><h3>直接选择</h3><p>只给出情境和最终选择。</p></article>
-          <article><h3>长文本直接选择</h3><p>补充背景信息，仍不展示候选比较和理由。</p></article>
-          <article><h3>列出可选方案</h3><p>明确呈现两个候选行动，再给出最终选择。</p></article>
-          <article><h3>简洁理由权衡</h3><p>用较短文字说明最基本的比较依据。</p></article>
-          <article><h3>完整理由权衡</h3><p>从后果、限制和可调整性等方面比较方案。</p></article>
-          <article><h3>反思与反馈修正</h3><p>在理由之后加入反馈、重新检查和后续修正。</p></article>
-        </div>
-        <div class="design-equation" aria-label="实验设计">6种过程描述 × 2种身份标签 × 每格30条响应 = 360条模型响应</div>
-      </div>
-    </section>
+        <article class="finding-block">
+          <h3>身份标签对应部分心智和责任评价差异</h3>
+          <div class="finding-body">
+            <p class="finding-conclusion">相同行为采用不同身份标签时，部分心智和责任评价存在差异。</p>
+            <p>相同行为被描述为AI或人类时，部分心智、体验与责任评价出现差异。该比较只改变身份标签，决策内容和任务结果保持一致。</p>
+            <div class="finding-figure">
+              <div id="identityFindingChart" class="mini-chart bar-chart" role="img" aria-label="正在载入身份标签比较图"></div>
+            </div>
+            <p class="figure-note">两条对应AI标签与人类标签下的平均评分，纵轴保持该评价维度的原始评分范围。</p>
+            <div id="identityEffects" class="effect-list"><p class="loading">正在载入身份标签结果……</p></div>
+            <details class="technical-details">
+              <summary>查看完整数据</summary>
+              <div class="details-body">
+                <figure><img src="../assets/figures/mean_free_will_attribution.png" alt="六种过程描述下的自由意志归因均值图" /><figcaption>自由意志归因随过程描述变化</figcaption></figure>
+              </div>
+            </details>
+          </div>
+        </article>
 
-    <section id="materials" class="section soft">
-      <div class="wrap">
-        <p class="section-index">04</p>
-        <h2>八类决策场景</h2>
-        <p class="reading">场景覆盖道德冲突、自我控制、人际关系、风险决策、责任困境与服从自主。每个场景都有情境、两个候选行动和固定选择，六种过程写法沿用同一场景骨架。</p>
-        <div id="scenarioCards" class="scenario-grid"><p class="loading">正在载入场景……</p></div>
-      </div>
-    </section>
-
-    <section id="measurement" class="section">
-      <div class="wrap">
-        <p class="section-index">05</p>
-        <h2>模型评价了哪些方面</h2>
-        <p class="reading">34个题项把模型评价分成几组：行动者的决策过程看起来是否完整，它是否显得有主见和有能力，是否被赋予自由选择、体验和智能，以及它应承担怎样的责任。题项根据既有理论和量表构念改写到具体决策材料中。</p>
-        <p class="reading">内部一致性系数用于描述同一评价维度中的题项在这批响应里是否协同变化。它与题项来源、评分范围和场景变化一起阅读。</p>
-        <div id="constructCards" class="construct-grid"><p class="loading">正在载入评价维度……</p></div>
-        <div class="entry-links">
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/research_and_measurement_sources.md">测量来源</a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/scale_source_mapping.md">逐题来源映射</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="data" class="section soft">
-      <div class="wrap">
-        <p class="section-index">06</p>
-        <h2>数据从哪里来</h2>
-        <div class="data-callout">
-          <h3>DeepSeek模型阅读材料并完成量表</h3>
-          <p>每条响应对应一种身份标签、一种过程描述、一个场景和一个persona。模型按固定格式完成34个题项，并给出简短理由。研究结果描述这套模型配置在这些材料和问卷提示下形成的评价模式。</p>
-        </div>
-        <div class="data-grid">
-          <article><h3>材料信息</h3><p>身份标签、过程描述、场景、领域、选择方向和文本长度。</p></article>
-          <article><h3>模型响应</h3><p>34个题项评分、操纵检验、简短理由和解析状态。</p></article>
-          <article><h3>分析结果</h3><p>评价维度均值、责任总分、条件比较和场景汇总。</p></article>
-          <article><h3>来源记录</h3><p>模型来源声明、公开输出文件和数据哈希。</p></article>
-        </div>
+        <article class="finding-block">
+          <h3>不同场景中存在共同方向和幅度差异</h3>
+          <div class="finding-body">
+            <p class="finding-conclusion">同一个方向的评价变化在多数场景与身份组合中重复出现，也保留了随任务场景的幅度差异。</p>
+            <p>八个场景中的变化方向并不完全相同。场景一致性分析显示哪些比较在多数场景中保持相同方向，也保留任务语境带来的变化范围。</p>
+            <div class="finding-figure">
+              <div id="scenarioFindingChart" class="mini-chart" role="img" aria-label="正在载入场景一致性图"></div>
+            </div>
+            <p class="figure-note">左侧统计16个场景与身份组合中变化方向相同、相反和没有变化的数量；右侧列出在八个场景中的变化范围，以及依次排除一个场景后的变化范围。</p>
+            <p class="reading" id="scenarioIntro">正在载入场景一致性分析……</p>
+            <div id="scenarioControls" class="scenario-controls" hidden>
+              <label for="scenarioConstructSelect">选择评价维度</label>
+              <select id="scenarioConstructSelect"></select>
+            </div>
+            <div id="scenarioResult" class="scenario-result"><p class="loading">正在载入场景一致性分析……</p></div>
+            <details class="technical-details">
+              <summary>查看完整数据</summary>
+              <div class="details-body">
+                <dl class="scenario-legend">
+                  <div><dt>比较内容</dt><dd>这一行对应哪一个过程条件比较。</dd></div>
+                  <div><dt>平均变化</dt><dd>该比较在所有场景与身份组合上的平均差异，保留评价维度原量尺。</dd></div>
+                  <div><dt>呈现相同方向的单元</dt><dd>16个场景与身份组合中，变化方向相同的组合数量。</dd></div>
+                  <div><dt>场景间一致程度</dt><dd>取正负两侧较多的一方占非零单元的比例，越接近1说明方向越一致。</dd></div>
+                  <div><dt>八个场景中的变化范围</dt><dd>不同任务场景中的平均变化最小值与最大值。</dd></div>
+                  <div><dt>去掉任意一个场景后的范围</dt><dd>依次排除一个场景后，整体平均变化落入的区间。</dd></div>
+                </dl>
+              </div>
+            </details>
+          </div>
+        </article>
       </div>
     </section>
 
     <section id="analysis" class="section">
       <div class="wrap">
-        <p class="section-index">07</p>
-        <h2>结果怎样分析</h2>
-        <p class="reading">分析先比较六种过程描述与两种身份标签下的评价均值，再读取事先确定的条件差异。场景分析把同一比较放到八类任务中，观察有多少场景呈现相同方向，以及去掉任意一个场景后整体结果是否明显改变。</p>
-        <div class="analysis-grid">
-          <article><h3>条件差异</h3><p>比较直接选择、备选方案、理由和反思反馈对应的评分变化。</p></article>
-          <article><h3>场景一致性</h3><p>观察结果在八类决策任务中是否保持相近方向。</p></article>
-          <article><h3>评价维度关系</h3><p>分析能动性、感知智能、自由意志与责任评分之间的关联。</p></article>
-        </div>
-        <p class="reading note">补充统计保留OLS、计划对比、Bootstrap、效应量和p值，主要页面集中解释条件模式与场景一致性。</p>
+        <p class="section-index">03</p>
+        <h2>从材料到结果</h2>
+        <p class="reading">研究把六种过程描述与AI、人类两种身份标签组合，每格采集30条模型响应，合计360条。模型阅读材料后完成统一量表，评分按场景、身份与过程条件汇总，再比较身份和条件差异，并检查不同场景中的一致程度。</p>
+        <ol class="analysis-pipeline" aria-label="研究流程">
+          <li><span class="flow-step">1</span><p>模型阅读材料</p></li>
+          <li><span class="flow-step">2</span><p>完成统一量表</p></li>
+          <li><span class="flow-step">3</span><p>按场景、身份与过程条件汇总</p></li>
+          <li><span class="flow-step">4</span><p>比较身份和条件差异</p></li>
+          <li><span class="flow-step">5</span><p>检查不同场景中的一致程度</p></li>
+        </ol>
       </div>
     </section>
 
     <section id="repro" class="section soft">
       <div class="wrap">
-        <p class="section-index">08</p>
-        <h2>数据、代码与复现</h2>
-        <p class="reading">仓库保存刺激定义、题项、分析代码、聚合输出和数据来源声明。新的模型运行会在独立目录中保存配置、提示、原始响应、规范化响应、评分结果和运行清单。</p>
-        <div class="code-block"><code>uv sync --frozen
+        <p class="section-index">04</p>
+        <h2>数据、统计与复现</h2>
+        <details class="technical-details">
+          <summary>查看完整统计表</summary>
+          <div class="details-body">
+            <h3>六种过程描述下的评价位置</h3>
+            <p class="reading">下表保留各评价维度的原评分范围，比较同一维度在不同过程条件下的平均评分。</p>
+            <h3>事先确定的条件比较</h3>
+            <p class="reading">这些比较分别对应“加入备选方案”“加入理由”和“加入反思反馈”等研究问题，保留均值差、t和p。</p>
+            <div id="contrastTables" class="contrast-groups"><p class="loading">正在载入条件比较……</p></div>
+          </div>
+        </details>
+        <details class="technical-details">
+          <summary>查看分析方法</summary>
+          <div class="details-body">
+            <p class="reading">34个题项把模型评价分成几组：决策过程是否完整、行动者是否显得有主见和有能力、是否被赋予自由选择、体验和智能，以及应承担怎样的责任。题项根据既有理论和量表构念改写到具体材料中。</p>
+            <p class="reading">补充统计保留内部一致性、OLS、计划对比、p值、效应量、Bootstrap和场景区组方法。</p>
+            <div id="constructCards" class="construct-grid"><p class="loading">正在载入评价维度……</p></div>
+            <div class="entry-links">
+              <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/research_and_measurement_sources.md">测量来源</a>
+              <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/scale_source_mapping.md">逐题来源映射</a>
+            </div>
+          </div>
+        </details>
+        <details class="technical-details">
+          <summary>查看数据与代码</summary>
+          <div class="details-body">
+            <p class="reading">仓库保存刺激定义、题项、分析代码、聚合输出和数据来源声明。DeepSeek模型阅读材料并完成量表，结果描述这套模型配置在这些材料和问卷提示下形成的评价模式。</p>
+            <div class="code-block"><code>uv sync --frozen
 python -m freewill_attribution.cli run --mock --n-per-cell 2 --out &lt;临时目录&gt;
 python scripts/assemble_pages.py --output _site
 python -m http.server 8000 --directory _site</code></div>
-        <div class="entry-links grid">
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/research_design_blueprint.md">研究设计</a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/outputs/final_simulated_pilot_report.md">结果报告</a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/audit/v1_provenance_statement.md">数据来源声明</a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation">GitHub仓库</a>
-        </div>
+            <div class="entry-links grid">
+              <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/research_design_blueprint.md">研究设计</a>
+              <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/outputs/final_simulated_pilot_report.md">结果报告</a>
+              <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/audit/v1_provenance_statement.md">数据来源声明</a>
+              <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation">GitHub仓库</a>
+            </div>
+          </div>
+        </details>
       </div>
     </section>
   </main>
@@ -207,7 +200,7 @@ python -m http.server 8000 --directory _site</code></div>
   <footer>
     <div class="wrap">
       <strong>LLM行动者归因评测 · 研究A</strong>
-      <p>观察身份标签和决策过程描述如何改变语言模型对行动者的评价。</p>
+      <p>观察身份标签和决策过程写法如何改变语言模型对行动者的评价。</p>
     </div>
   </footer>
   <script src="app.js" defer></script>

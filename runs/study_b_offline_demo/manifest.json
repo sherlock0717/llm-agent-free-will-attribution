@@ -1,0 +1,27 @@
+{
+  "chain": [
+    "deterministic_inputs",
+    "schema_validation",
+    "normalized_records",
+    "item_range_check",
+    "construct_scores",
+    "planned_contrasts",
+    "scenario_sensitivity",
+    "judge_slot_sensitivity",
+    "summary_example"
+  ],
+  "data_role": "analysis_interface_example",
+  "generation_method": "deterministic_fixture",
+  "manifest_id": "study_b.offline_demo.v1",
+  "material_count": 96,
+  "network_operations": "none",
+  "not_labels": [
+    "synthetic_model_response",
+    "simulated_real_model",
+    "proxy_model_score",
+    "estimated_model_output",
+    "formal_result"
+  ],
+  "record_count": 192,
+  "source_commit": "9cb4aae1e3010f90b2a9c34ae87111b5e373de59"
+}

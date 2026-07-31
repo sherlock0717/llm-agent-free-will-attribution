@@ -42,12 +42,7 @@ header.site {
   color: #fff;
   padding: 60px 0 44px;
 }
-/* Single column by default; the two-column hero only engages at >=1100px so the
-   title is never squeezed by the snapshot card on mid-size screens. */
-.hero { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; }
-@media (min-width: 1100px) {
-  .hero { grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr); gap: 32px; }
-}
+.hero { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: start; }
 .hero-lead { min-width: 0; }
 .eyebrow { margin: 0 0 10px; color: #c7d7ef; font-weight: 700; letter-spacing: 0.06em; }
 header.site h1 {
@@ -74,22 +69,9 @@ header.site .sub { margin: 14px 0 0; max-width: 780px; color: #e6efff; font-size
 .btn:hover, .btn:focus { background: rgba(255, 255, 255, 0.16); }
 .btn-primary { background: #fff; color: var(--accent); border-color: #fff; }
 .btn-primary:hover, .btn-primary:focus { background: #eef4fc; }
-.hero-snapshot {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: var(--radius);
-  padding: 20px 22px;
-}
-.snapshot-title { margin: 0 0 14px; font-size: 16px; color: #eef4fc; }
-.snapshot-grid { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.snapshot-grid > div { min-width: 0; }
-.snapshot-grid dt { color: #bccbe2; font-size: 13px; }
-.snapshot-grid dd { margin: 2px 0 1px; font-size: 24px; font-weight: 800; color: #fff; }
-.snapshot-grid small { display: block; color: #b3c4dd; font-size: 11px; line-height: 1.4; }
-.snapshot-status { grid-column: 1 / -1; border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 10px; }
-.snapshot-status dd { font-size: 16px; }
+.hero-metrics { margin: 20px 0 0; padding: 12px 16px; border: 1px solid rgba(255,255,255,.25); border-radius: 10px; background: rgba(255,255,255,.08); color: #eaf1fb; font-weight: 700; font-size: 15px; }
 
-.load-status { grid-column: 1 / -1; padding: 12px 16px; border-radius: 12px; font-size: 14px; }
+.load-status { padding: 12px 16px; border-radius: 12px; font-size: 14px; }
 .load-status.loading { background: rgba(255, 255, 255, 0.12); }
 .load-status.success { background: rgba(49, 95, 159, 0.32); }
 .load-status.error { background: rgba(180, 35, 24, 0.24); }
@@ -171,9 +153,17 @@ nav.toc a:hover, nav.toc a:focus { color: var(--accent); background: var(--accen
 .cond-tag { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 1px 7px; }
 
 /* ---------- comparison list (#comparison) ---------- */
-.comparison-list { margin: 20px 0; padding-left: 22px; max-width: var(--reading-max); display: grid; gap: 12px; }
-.comparison-list li { color: var(--muted); }
-.comparison-list li strong { color: var(--text); }
+.comparison-list { margin: 20px 0; padding: 0; list-style: none; max-width: var(--content-max); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; }
+.comparison-list li { display: flex; gap: 10px; align-items: flex-start; padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+.p-tag { flex: none; padding: 2px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 800; font-size: 13px; }
+
+.dimension-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.analysis-pipeline { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin: 22px 0; padding: 0; list-style: none; }
+.analysis-pipeline li { min-width: 0; display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); }
+.analysis-pipeline p { margin: 0; font-weight: 650; }
+.flow-step { display: inline-flex; width: 26px; height: 26px; align-items: center; justify-content: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: 13px; font-weight: 800; }
+
 
 /* ---------- progress chain (#progress) ---------- */
 .progress-chain { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 22px; padding: 0; }
@@ -512,16 +502,24 @@ footer.site .wrap { padding-top: 22px; padding-bottom: 22px; }
   .entry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+@media (max-width: 900px) {
+  .analysis-pipeline { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 768px) {
   .hero { grid-template-columns: 1fr; }
   .study-section { padding: 44px 0; }
   .du-grid, .condition-grid, .question-grid, .stability-grid, .contrast-grid,
   .core-metric-grid, .judge-summary, .primary-constructs, .supplementary-constructs,
-  .timeline-grid { grid-template-columns: 1fr; }
+  .dimension-grid, .timeline-grid { grid-template-columns: 1fr; }
   .demo-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .figure-grid { grid-template-columns: 1fr; }
   table { min-width: 640px; }
   .coverage-matrix { min-width: 700px; }
+}
+
+@media (max-width: 640px) {
+  .comparison-list { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 390px) {

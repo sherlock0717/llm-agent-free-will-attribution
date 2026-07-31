@@ -115,8 +115,8 @@ const CONTRAST_META = {
 // 研究进度说明（集中在 #status 章节）。
 const STATUS_NOTES = [
   "六个指标保留各自原量尺并分别报告。",
-  "分析界面示例数据用于展示结果页面将如何组织。",
-  "正式双模型评分将沿用已经固定的材料和分析计划。",
+  "分析界面示例数据用于说明结果页面的组织方式。",
+  "外部离线评分文件通过验证后，可以进入同一分析流程。",
   "跨主体测量将使用独立的人类题项和可比性检验。",
 ];
 
@@ -163,7 +163,6 @@ function setLoadStatus(message, kind = "loading") {
 // DATA and degrade gracefully when it is missing.
 function renderStatic() {
   renderConditions();
-  renderContrastCards();
   renderStatus();
   renderEntries();
   setupImageFallbacks();
@@ -194,7 +193,6 @@ async function load() {
   renderDynamic();
   clearDemoError();
   enableBrowserControls(true);
-  document.getElementById("snapshotStatus").textContent = "分析界面示例已就绪";
   setLoadStatus("分析界面示例数据已载入，可浏览材料、统计表与图表输出。", "success");
 }
 
@@ -368,24 +366,6 @@ function scaleBounds(key) {
   const min = Number.isFinite(parts[0]) ? parts[0] : 1;
   const max = Number.isFinite(parts[1]) ? parts[1] : 7;
   return [min, max];
-}
-
-// #analysis: six reader-facing contrast cards (comparison + reading; no statistics).
-function renderContrastCards() {
-  const host = document.getElementById("contrastCards");
-  if (!host) return;
-  host.innerHTML = "";
-  CONTRAST_CARDS.forEach((card) => {
-    host.appendChild(el("article", { class: "contrast-card" },
-      el("div", { class: "contrast-head" },
-        el("span", { class: "cond-pill" }, card.id),
-        el("span", { class: "diff-tag" }, card.diff)
-      ),
-      el("h4", {}, card.name),
-      el("p", { class: "contrast-comparison" }, el("strong", {}, "比较："), card.comparison),
-      el("p", { class: "contrast-reading" }, el("strong", {}, "读法："), card.reading)
-    ));
-  });
 }
 
 // #demo metrics: pipeline demonstration counters read from showcase_data.
