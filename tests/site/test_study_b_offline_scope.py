@@ -31,32 +31,33 @@ def test_study_b_page_makes_no_formal_api_run_promise():
 
 
 def test_study_b_page_states_offline_scope():
-    assert "研究B当前范围覆盖材料、测量、分析计划、确定性示例与离线结果导入。" in HTML
-    assert "外部提供的离线评分文件通过验证后，可以进入同一分析流程。" in HTML
-    assert "仓库的可执行范围止于本地验证、结果导入和离线分析。" in HTML
+    # the offline scope is stated once, in the analysis interface note.
+    assert "界面中的数值用于校验分析流程、统计表和图表结构。" in HTML
+    assert "外部提供的离线评价记录通过验证后" in HTML
 
 
-def test_study_b_progress_chain_is_all_done():
-    progress = HTML.split('id="progress"', 1)[1].split("</section>", 1)[0]
-    assert 'class="next"' not in progress
-    for step in ["确定性分析界面示例", "离线结果导入契约", "可复现离线分析流程"]:
-        assert step in progress, step
-
-
-def test_study_b_example_marked_as_analysis_interface_example():
+def test_study_b_demo_pipeline_uses_offline_records():
     demo = HTML.split('id="demo"', 1)[1].split("</section>", 1)[0]
-    assert "分析界面示例" in demo
-    assert "以下数值用于展示结果页面的阅读方式" in demo
+    assert "形成两组独立评价记录" in demo
+    assert "检查场景与评价来源差异" in demo
 
 
-def test_study_b_model_ids_are_protocol_metadata():
-    assert "仅作协议元数据" in HTML
+def test_study_b_example_marked_as_analysis_interface():
+    demo = HTML.split('id="demo"', 1)[1].split("</section>", 1)[0]
+    assert "条件变化与预设比较" in demo
+    assert "界面中的数值用于校验分析流程" in demo
+
+
+def test_study_b_no_internal_slot_wording():
+    for token in ["槽位", "评判槽位", "双评判槽位", "judge_slot", "评分槽"]:
+        assert token not in HTML, token
+        assert token not in JS, token
 
 
 def test_root_page_states_offline_scope_for_study_b():
     assert "下一步执行两个评判模型的正式评分" not in ROOT_HTML
     assert "双模型正式评分" not in ROOT_HTML
-    assert "离线结果导入" in ROOT_HTML
+    assert "离线分析方法" in ROOT_HTML
 
 
 def test_study_b_status_notes_reference_offline_import():

@@ -98,7 +98,7 @@ def test_deployed_figures_match_generated_outputs():
         assert deployed == generated, fig
 
 
-# --- 2. seven-section architecture (new reading order) ----------------------
+# --- 2. section architecture (new reading order) ----------------------------
 
 def test_lang_is_zh_cn():
     assert '<html lang="zh-CN">' in HTML
@@ -109,15 +109,18 @@ def test_title_is_chinese():
     assert re.search(r"[\u4e00-\u9fff]", title), title
 
 
-def test_page_has_seven_sections_numbered_01_to_07():
+def test_page_has_at_most_six_main_sections():
     indices = re.findall(r'<span class="section-index">(\d+)</span>', HTML)
-    assert indices == [f"{i:02d}" for i in range(1, 8)], indices
+    assert indices == [f"{i:02d}" for i in range(1, 6)], indices
 
 
 def test_semantic_section_ids_present():
-    for sid in ["overview", "example", "measurement", "comparison",
-                "progress", "demo", "methods"]:
+    for sid in ["example", "measurement", "comparison", "demo", "methods"]:
         assert f'id="{sid}"' in HTML, sid
+    # the standalone overview and progress sections were folded into the hero
+    # and the analysis section.
+    assert '<section id="overview"' not in HTML
+    assert '<section id="progress"' not in HTML
 
 
 def test_legacy_anchor_aliases_s1_to_s14_present():
@@ -125,15 +128,22 @@ def test_legacy_anchor_aliases_s1_to_s14_present():
         assert re.search(rf'id="s{i}"[^>]*class="anchor-alias"', HTML), f"s{i}"
 
 
-def test_nav_has_seven_entries_matching_sections():
+def test_nav_matches_sections():
     nav = HTML.split('nav class="toc"', 1)[1].split("</nav>", 1)[0]
     hrefs = re.findall(r'<a href="#([^"]+)">([^<]+)</a>', nav)
     assert [h for h, _ in hrefs] == [
-        "overview", "example", "measurement", "comparison",
-        "progress", "demo", "methods",
+        "example", "measurement", "comparison", "demo", "methods",
     ], hrefs
     for _, label in hrefs:
         assert re.search(r"[\u4e00-\u9fff]", label), label
+
+
+def test_hero_has_inline_metrics_not_snapshot():
+    hero = HTML.split('class="hero-lead"', 1)[1].split("</header>", 1)[0]
+    assert "hero-metrics" in hero
+    assert "hero-snapshot" not in HTML
+    buttons = re.findall(r'<a class="btn', hero)
+    assert len(buttons) <= 2, buttons
 
 
 def test_five_figures_have_direct_src():
@@ -159,13 +169,9 @@ def test_material_example_tree_present():
 
 def test_four_main_dimensions_in_first_layer():
     measurement = HTML.split('id="measurement"', 1)[1].split("</section>", 1)[0]
-    for phrase in [
-        "是否能够相对独立地形成决定",
-        "行动是否围绕目标组织",
-        "是否被赋予思考、意图和意识",
-        "是否能够影响决定与结果",
-    ]:
+    for phrase in ["独立形成决定", "围绕目标行动", "思考与意图", "影响决定与结果"]:
         assert phrase in measurement, phrase
+    assert "dimension-grid" in measurement
 
 
 def test_pa5_pa8_collapsed_by_default():
@@ -180,8 +186,11 @@ def test_pa5_pa8_collapsed_by_default():
 
 def test_comparison_uses_natural_language_questions():
     comparison = HTML.split('id="comparison"', 1)[1].split("</section>", 1)[0]
-    assert "展示备选方案与只给出决定相比会怎样" in comparison
-    assert "在共同反馈下，维持与改变之间有什么差异" in comparison
+    assert "comparison-list" in comparison
+    assert "展示备选方案与只给出决定相比，评价怎样变化？" in comparison
+    assert "在相同反馈下，维持决定与改变决定之间有什么差异？" in comparison
+    for tag in ["P1", "P2", "P3", "P4", "P5", "P6"]:
+        assert f'class="p-tag">{tag}<' in comparison, tag
 
 
 def test_formal_model_formula_collapsed():
@@ -194,27 +203,24 @@ def test_formal_model_formula_collapsed():
     assert "random intercept" not in before_details
 
 
-def test_progress_chain_present():
-    progress = HTML.split('id="progress"', 1)[1].split("</section>", 1)[0]
-    assert "progress-chain" in progress
-    for step in ["研究问题", "材料", "题项与评分规则", "分析计划",
-                 "确定性分析界面示例", "离线结果导入契约", "可复现离线分析流程"]:
-        assert step in progress, step
+def test_progress_section_folded_into_analysis():
+    # the standalone progress chain section was removed; the analysis section
+    # carries the material-to-result pipeline instead.
+    assert '<section id="progress"' not in HTML
+    demo = HTML.split('id="demo"', 1)[1].split("</section>", 1)[0]
+    assert "analysis-pipeline" in demo
+    assert "形成两组独立评价记录" in demo
 
 
 def test_analysis_interface_example_naming():
     demo = HTML.split('id="demo"', 1)[1].split("</section>", 1)[0]
-    assert "分析界面示例" in demo
-    assert "以下数值用于展示结果页面的阅读方式" in demo
+    assert "条件变化与预设比较" in demo
+    assert "界面中的数值用于校验分析流程、统计表和图表结构" in demo
 
 
-def test_precise_model_ids_not_in_first_layer():
-    methods = HTML.split('id="methods"', 1)[1].split("</section>", 1)[0]
-    details = re.search(r'<details class="tech-details" id="modelIdDetails"[^>]*>', HTML)
-    assert details, "model id details missing"
-    before_details = methods.split('id="modelIdDetails"', 1)[0]
-    assert "deepseek-v4-pro" not in before_details
-    assert "gpt-5.6-terra" not in before_details
+def test_precise_model_ids_not_in_public_page():
+    assert "deepseek-v4-pro" not in HTML
+    assert "gpt-5.6-terra" not in HTML
 
 
 def test_public_name_is_study_b():
@@ -235,8 +241,9 @@ def test_no_current_entry_links_in_html_or_js():
 
 
 def test_return_to_overview_link_present():
-    assert 'href="../"' in HTML
-    assert "返回项目总览" in HTML
+    # the return-to-overview entry is rendered into the methods entry grid.
+    assert 'href: "../"' in JS
+    assert "返回项目总览" in JS
 
 
 def test_every_image_has_chinese_alt():
@@ -407,10 +414,14 @@ def test_demo_statistics_table_collapsed_by_default():
     assert "open" not in stats.group(0)
 
 
-def test_pipeline_figures_collapsed_by_default():
-    figs = re.search(r'<details class="tech-details" id="pipelineFigures"[^>]*>', HTML)
-    assert figs, "pipeline figures details missing"
-    assert "open" not in figs.group(0)
+def test_full_analysis_interface_collapsed_by_default():
+    stats = re.search(r'<details class="tech-details" id="demoStatsDetails"[^>]*>', HTML)
+    assert stats, "full analysis interface details missing"
+    assert "open" not in stats.group(0)
+    # the five pipeline figures live inside this collapsed block.
+    body = HTML.split('id="demoStatsDetails"', 1)[1]
+    for fig in FIGURES:
+        assert fig in body, fig
 
 
 def test_condition_profile_chart_present_native_svg():
@@ -504,8 +515,7 @@ def test_docs_and_outputs_json_identical():
 def test_static_research_design_baked_into_html():
     # core research design must be readable without the demo JSON: it is present
     # as static markup, not only injected by DATA-dependent JS.
-    for token in ["是否能够相对独立地形成决定", "行动是否围绕目标组织",
-                  "是否被赋予思考、意图和意识", "是否能够影响决定与结果",
+    for token in ["独立形成决定", "围绕目标行动", "思考与意图", "影响决定与结果",
                   "construct_score", "阶段一：决定信息", "阶段二：反馈后行为"]:
         assert token in HTML, token
 

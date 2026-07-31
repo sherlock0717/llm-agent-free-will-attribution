@@ -220,26 +220,6 @@ function renderContrasts(results) {
     </table></div></article>`).join("");
 }
 
-function prepareSupplementaryInferenceDetails() {
-  const identity = document.getElementById("identityEffects");
-  const contrasts = document.getElementById("contrastTables");
-  if (!identity || !contrasts || identity.closest("details")) return;
-  const firstHeading = identity.previousElementSibling?.previousElementSibling;
-  const firstNote = identity.previousElementSibling;
-  const secondHeading = contrasts.previousElementSibling?.previousElementSibling;
-  const secondNote = contrasts.previousElementSibling;
-  if (![firstHeading, firstNote, secondHeading, secondNote].every(Boolean)) return;
-  const details = document.createElement("details");
-  details.className = "supplementary-details inferential-details";
-  const summary = document.createElement("summary");
-  summary.textContent = "查看补充推断性分析";
-  const body = document.createElement("div");
-  body.className = "supplementary-analysis-body";
-  firstHeading.before(details);
-  details.append(summary, body);
-  body.append(firstHeading, firstNote, identity, secondHeading, secondNote, contrasts);
-}
-
 async function loadStoryGroup() {
   try {
     renderScenarios(await fetchJson("showcase_story.json"));
@@ -284,7 +264,6 @@ async function loadScenarioGroup() {
   }
 }
 
-prepareSupplementaryInferenceDetails();
 renderTakeaways();
 updateStatus();
 Promise.allSettled([

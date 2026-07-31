@@ -27,7 +27,7 @@ ROOT_JSON = [
     "evidence_matrix.json",
     "reproducibility_summary.json",
 ]
-ROOT_SECTIONS = ["overview", "program", "studies", "evidence", "methods", "future", "entries"]
+ROOT_SECTIONS = ["overview", "program", "studies", "evidence", "methods"]
 PUBLIC_PAGES = [INDEX, STUDY_A / "index.html", STUDY_B / "index.html"]
 
 
@@ -45,27 +45,62 @@ def test_public_sources_exist():
 
 def test_root_page_is_project_overview(html: str):
     assert "<title>LLM行动者归因评测</title>" in html
-    assert re.search(r"<h1>模型会怎样评价一个作出决定的主体？</h1>", html)
+    assert re.search(r"<h1>同一个决定，为什么写法一变，模型评价也会变？</h1>", html)
     for section_id in ROOT_SECTIONS:
         assert f'id="{section_id}"' in html
-    for removed in ["research-a-detail", "historical-data", "mock-validation", "real-provider"]:
+    for removed in ["research-a-detail", "historical-data", "mock-validation", "real-provider", "future", "entries"]:
         assert f'id="{removed}"' not in html
+
+
+def test_root_page_has_at_most_five_main_sections(html: str):
+    sections = re.findall(r'<section id="([^"]+)"', html)
+    assert len(sections) <= 5, sections
+    assert sections == ROOT_SECTIONS
+
+
+def test_root_hero_has_at_most_two_buttons(html: str):
+    hero = html.split('id="overview"', 1)[1].split("</section>", 1)[0]
+    buttons = re.findall(r'<a class="btn', hero)
+    assert len(buttons) <= 2, buttons
+
+
+def test_root_hero_has_no_number_snapshot(html: str):
+    hero = html.split('id="overview"', 1)[1].split("</section>", 1)[0]
+    assert "项目现在包含什么" not in hero
+    assert "fact-grid" not in hero
+    assert "research-bridge" in hero
 
 
 def test_root_page_leads_with_a_concrete_question(html: str):
     hero = html.split('id="overview"', 1)[1].split("</section>", 1)[0]
-    assert "模型会怎样评价一个作出决定的主体" in hero
+    assert "同一个决定，为什么写法一变" in hero
     program = html.split('id="program"', 1)[1].split("</section>", 1)[0]
     assert "路线" in program or "配送" in program
+    assert "story-flow" in program
     studies = html.split('id="studies"', 1)[1].split("</section>", 1)[0]
-    assert "先观察" in studies and "拆" in studies
+    assert "研究A比较" in studies and "拆" in studies
+
+
+def test_root_evidence_uses_finding_blocks_not_table(html: str):
+    evidence = html.split('id="evidence"', 1)[1].split("</section>", 1)[0]
+    assert "finding-block" in evidence
+    assert "<table" not in evidence
+
+
+def test_root_page_has_no_internal_reading_guidance(html: str):
+    for phrase in [
+        "先看懂问题", "再看例子", "阅读顺序", "如何使用本页", "建议从这里开始",
+        "第一次访问", "信息架构", "叙事主线", "渐进式披露", "本节帮助", "本页按照",
+        "读者应该先看", "首次访问者", "第一层", "第二层", "第三层",
+    ]:
+        assert phrase not in html, phrase
 
 
 def test_root_page_links_to_independent_studies(html: str):
     assert 'href="identity-process-attribution-baseline/"' in html
     assert 'href="machine-decision-process-attribution/"' in html
-    assert "进入研究A页面" in html
-    assert "进入研究B页面" in html
+    assert "查看研究A结果" in html
+    assert "查看研究B设计" in html
 
 
 def test_root_navigation_matches_overview_sections(html: str):
@@ -77,12 +112,6 @@ def test_root_navigation_matches_overview_sections(html: str):
 def test_root_page_uses_positive_public_status_language(html: str):
     for phrase in ["仍待", "尚未", "不能", "无法", "不支持", "不代表", "待验证", "仍在完善"]:
         assert phrase not in html, phrase
-
-
-def test_root_preview_command_uses_assembled_site(html: str):
-    assert "python scripts/assemble_pages.py --output _site" in html
-    assert "python -m http.server 8000 --directory _site" in html
-    assert "--directory site" not in html
 
 
 def test_root_page_has_no_research_a_result_statistics_hardcoded(html: str):
@@ -152,6 +181,13 @@ def test_public_pages_have_no_development_labels():
     for page in PUBLIC_PAGES:
         content = page.read_text(encoding="utf-8")
         for label in ["V2", "旧版", "新版", "当前版", "legacy", "流程演示", "PA—Wu", "PA-Wu"]:
+            assert label not in content, (page.name, label)
+
+
+def test_public_pages_have_no_internal_slot_wording():
+    for page in PUBLIC_PAGES:
+        content = page.read_text(encoding="utf-8")
+        for label in ["槽位", "评判槽位", "双评判槽位", "judge_slot", "judge slot", "评分槽"]:
             assert label not in content, (page.name, label)
 
 

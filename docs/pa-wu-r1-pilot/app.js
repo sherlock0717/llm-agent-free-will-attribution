@@ -163,7 +163,6 @@ function setLoadStatus(message, kind = "loading") {
 // DATA and degrade gracefully when it is missing.
 function renderStatic() {
   renderConditions();
-  renderContrastCards();
   renderStatus();
   renderEntries();
   setupImageFallbacks();
@@ -194,7 +193,6 @@ async function load() {
   renderDynamic();
   clearDemoError();
   enableBrowserControls(true);
-  document.getElementById("snapshotStatus").textContent = "分析界面示例已就绪";
   setLoadStatus("分析界面示例数据已载入，可浏览材料、统计表与图表输出。", "success");
 }
 
@@ -368,24 +366,6 @@ function scaleBounds(key) {
   const min = Number.isFinite(parts[0]) ? parts[0] : 1;
   const max = Number.isFinite(parts[1]) ? parts[1] : 7;
   return [min, max];
-}
-
-// #analysis: six reader-facing contrast cards (comparison + reading; no statistics).
-function renderContrastCards() {
-  const host = document.getElementById("contrastCards");
-  if (!host) return;
-  host.innerHTML = "";
-  CONTRAST_CARDS.forEach((card) => {
-    host.appendChild(el("article", { class: "contrast-card" },
-      el("div", { class: "contrast-head" },
-        el("span", { class: "cond-pill" }, card.id),
-        el("span", { class: "diff-tag" }, card.diff)
-      ),
-      el("h4", {}, card.name),
-      el("p", { class: "contrast-comparison" }, el("strong", {}, "比较："), card.comparison),
-      el("p", { class: "contrast-reading" }, el("strong", {}, "读法："), card.reading)
-    ));
-  });
 }
 
 // #demo metrics: pipeline demonstration counters read from showcase_data.

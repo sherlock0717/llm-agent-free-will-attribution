@@ -30,37 +30,64 @@ public_json = _load(ROOT / "scripts" / "public_json.py", "public_json_release_ga
 
 def test_research_a_public_page_has_complete_structure():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
-    for section_id in [
-        "question",
-        "design",
-        "materials",
-        "measurement",
-        "data",
-        "analysis",
-        "results",
-        "repro",
-    ]:
+    for section_id in ["materials", "results", "analysis", "repro"]:
         assert f'id="{section_id}"' in html
     assert "身份与决策过程" in html
     assert "DeepSeek" in html
     assert "python -m http.server 8000 --directory _site" in html
 
 
-def test_research_a_main_findings_lead_before_design():
+def test_research_a_has_at_most_five_main_sections():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
-    assert html.index('id="results"') < html.index('id="design"')
+    sections = re.findall(r'<section id="([^"]+)"', html)
+    assert len(sections) <= 5, sections
 
 
-def test_research_a_scenario_consistency_uses_natural_language_heading():
+def test_research_a_materials_example_leads_before_results():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
-    assert "这些差异在不同场景中是否一致" in html
-    assert "V2" not in html
+    assert html.index('id="materials"') < html.index('id="results"')
+
+
+def test_research_a_results_lead_before_analysis_and_repro():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    assert html.index('id="results"') < html.index('id="analysis"')
+    assert html.index('id="results"') < html.index('id="repro"')
+
+
+def test_research_a_three_fixed_findings_in_question_order():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    results = html.split('id="results"', 1)[1].split('id="analysis"', 1)[0]
+    blocks = re.findall(r'<article class="finding-block">.*?<h3>(.*?)</h3>', results, re.S)
+    assert len(blocks) == 3, blocks
+    assert "过程" in blocks[0]
+    assert "身份" in blocks[1]
+    assert "场景" in blocks[2]
+
+
+def test_research_a_first_layer_has_one_figure_per_finding():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    results = html.split('id="results"', 1)[1].split('id="analysis"', 1)[0]
+    # every result figure sits inside a collapsed "查看完整数据" details block.
+    outside_details = re.sub(r"<details.*?</details>", "", results, flags=re.S)
+    assert "<img" not in outside_details
+
+
+def test_research_a_no_internal_field_names_or_reading_guidance():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    for token in ["direction_consistency", "leave_one_scenario", "all_identities",
+                  "raw字段", "V2", "阅读顺序", "如何使用本页", "建议从这里开始",
+                  "本节帮助", "第一层", "第二层"]:
+        assert token not in html, token
 
 
 def test_research_a_technical_statistics_collapsed():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
-    details = re.search(r'<details class="supplementary-details">', html)
-    assert details, "supplementary statistics details missing"
+    assert '<details class="technical-details">' in html
+    # the complete statistics table lives inside a collapsed technical block.
+    repro = html.split('id="repro"', 1)[1]
+    assert "查看完整统计表" in repro
+    assert "查看分析方法" in repro
+    assert "查看数据与代码" in repro
 
 
 def test_research_a_public_copy_uses_positive_status_language():
