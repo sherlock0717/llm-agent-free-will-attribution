@@ -1,7 +1,19 @@
-*.sh text eol=lf
+* text=auto
 
-# The Study B offline research package and demo chain are generated with LF and
-# verified byte-for-byte by --check; pin them to LF so the check is stable on
-# every platform.
+# Keep repository text assets stable across Windows and Unix checkouts.
+*.py text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.csv text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+
+# Generated Study B assets are verified byte-for-byte by --check.
 research_packages/study_b/** text eol=lf
 runs/study_b_offline_demo/** text eol=lf
