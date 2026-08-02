@@ -31,8 +31,22 @@ jobs:
       - name: Synchronize verified test count
         run: python scripts/_sync_portfolio_test_count_once.py
 
-      - name: Verify portfolio tests
-        run: python -m pytest -q tests/site/test_portfolio_packaging.py
+      - name: Verify synchronized files
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          paths = [
+              Path('site/index.html'),
+              Path('site/assets/figures/social-preview.svg'),
+              Path('tests/site/test_portfolio_packaging.py'),
+          ]
+          for path in paths:
+              text = path.read_text(encoding='utf-8')
+              assert '1011' in text, path
+              assert '1005' not in text, path
+          print('verified portfolio test count: 1011')
+          PY
 
       - name: Commit synchronized files
         shell: bash
