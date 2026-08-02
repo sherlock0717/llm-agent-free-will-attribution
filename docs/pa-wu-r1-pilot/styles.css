@@ -214,6 +214,15 @@ nav.toc a:hover, nav.toc a:focus { color: var(--accent); background: var(--accen
   font-size: 13px;
 }
 .condition-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+
+/* material integrity audit */
+.audit-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 14px 0; }
+.audit-card { min-width: 0; padding: 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); display: flex; flex-direction: column; gap: 4px; }
+.audit-card strong { font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+.audit-label { font-weight: 700; font-size: .82rem; }
+.audit-sub { color: var(--muted); font-size: .8rem; }
+.audit-card.audit-issues { grid-column: 1 / -1; }
+.audit-implications { max-width: 72ch; padding-left: 22px; display: grid; gap: 6px; margin: 12px 0 0; }
 .condition-card { min-width: 0; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); padding: 16px; }
 .condition-head { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
 .cond-pill {
@@ -513,6 +522,7 @@ footer.site .wrap { padding-top: 22px; padding-bottom: 22px; }
   .core-metric-grid, .judge-summary, .primary-constructs, .supplementary-constructs,
   .dimension-grid, .timeline-grid { grid-template-columns: 1fr; }
   .demo-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .audit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .figure-grid { grid-template-columns: 1fr; }
   table { min-width: 640px; }
   .coverage-matrix { min-width: 700px; }
@@ -529,6 +539,7 @@ footer.site .wrap { padding-top: 22px; padding-bottom: 22px; }
   .study-section h2 { font-size: 22px; }
   .snapshot-grid { grid-template-columns: 1fr; }
   .demo-metric-grid, .entry-grid { grid-template-columns: 1fr; }
+  .audit-grid { grid-template-columns: 1fr; }
   .controls, .browser-controls, .contrast-controls { display: grid; grid-template-columns: 1fr; }
   .controls label { width: 100%; }
   select, .toggle-group { width: 100%; min-width: 0; }

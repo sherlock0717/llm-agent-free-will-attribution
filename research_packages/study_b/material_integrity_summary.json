@@ -1,0 +1,84 @@
+{
+  "complete_grid": true,
+  "condition_delta_summary": [
+    {
+      "expected_added_information": "add_alternatives",
+      "from_condition": "C0",
+      "mean_added_chars": 126.62,
+      "mean_removed_chars": 0.0,
+      "needs_manual_review": false,
+      "to_condition": "C1"
+    },
+    {
+      "expected_added_information": "add_reason",
+      "from_condition": "C0",
+      "mean_added_chars": 67.38,
+      "mean_removed_chars": 0.0,
+      "needs_manual_review": false,
+      "to_condition": "C2"
+    },
+    {
+      "expected_added_information": "add_feedback",
+      "from_condition": "C2",
+      "mean_added_chars": 109.0,
+      "mean_removed_chars": 0.0,
+      "needs_manual_review": false,
+      "to_condition": "C3"
+    },
+    {
+      "expected_added_information": "add_feedback_and_maintain",
+      "from_condition": "C2",
+      "mean_added_chars": 243.19,
+      "mean_removed_chars": 0.0,
+      "needs_manual_review": false,
+      "to_condition": "C4"
+    },
+    {
+      "expected_added_information": "add_feedback_and_change",
+      "from_condition": "C2",
+      "mean_added_chars": 258.19,
+      "mean_removed_chars": 0.0,
+      "needs_manual_review": false,
+      "to_condition": "C5"
+    },
+    {
+      "expected_added_information": "maintain_vs_change",
+      "from_condition": "C4",
+      "mean_added_chars": 15.0,
+      "mean_removed_chars": 0.0,
+      "needs_manual_review": false,
+      "to_condition": "C5"
+    }
+  ],
+  "data_role": "study_b_material_integrity_audit",
+  "deterministic_structure_check": {
+    "actual_count": 96,
+    "complete_grid": true,
+    "direction_threshold_flags": 0,
+    "duplicate_id_count": 0,
+    "expected_count": 96,
+    "field_consistency": true,
+    "structural_fail_count": 0,
+    "structural_pass_count": 96
+  },
+  "direction_symmetry_summary": {
+    "char_abs_threshold": 30,
+    "char_pct_threshold": 0.15,
+    "review_flag_count": 0,
+    "sentence_threshold": 1
+  },
+  "duplicate_summary": {
+    "exact_duplicate_count": 0,
+    "high_similarity_pair_count": 0,
+    "similarity_threshold": 0.97
+  },
+  "expected_count": 96,
+  "issue_type_counts": {},
+  "material_count": 96,
+  "note": "审计只标记问题，不修改材料正文。结构检查是确定性的；语义复核独立进行。相似度仅用于提示人工复核。",
+  "semantic_review": {
+    "assessed_material_count": 0,
+    "note": "语义对称性、理由强度和反馈强度属于独立人工复核范围，本轮未纳入。阈值提示数量不等于语义复核项数量。",
+    "status": "not_assessed"
+  }
+}
