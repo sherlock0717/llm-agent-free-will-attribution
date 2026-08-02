@@ -43,7 +43,7 @@ replace(
 replace(
     "tests/site/test_public_release_gate.py",
     '    assert "研究A扩展路线" in text',
-    '    assert "过程监督" in text',
+    '    assert "当前稳健性报告" in text',
 )
 
 replace(
