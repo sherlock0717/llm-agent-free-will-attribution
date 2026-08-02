@@ -14,6 +14,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SCORES = ROOT / "outputs" / "scale_scores.csv"
 PUBLIC_JSON = ROOT / "site" / "data" / "research_a_robustness_summary.json"
 SITE_JS = ROOT / "site" / "assets" / "js" / "site.js"
+FLOAT_ABS_TOLERANCE = 1e-12
+FLOAT_REL_TOLERANCE = 1e-12
 
 
 def _load_module():
@@ -36,6 +38,38 @@ def payload():
     data = mod.load_scores(SCORES)
     units = mod.build_units(data)
     return mod.build_payload(data, units), data, units
+
+
+def _assert_same_structure_and_numbers(actual, expected, path: str = "$"):
+    """Compare JSON-like values exactly except for negligible float tails.
+
+    Linear algebra libraries can differ at roughly 1e-14 across operating
+    systems. Keys, list lengths, strings, booleans and integers remain exact;
+    only finite floating-point values receive a tightly bounded tolerance.
+    """
+    if isinstance(expected, dict):
+        assert isinstance(actual, dict), path
+        assert actual.keys() == expected.keys(), path
+        for key in expected:
+            _assert_same_structure_and_numbers(actual[key], expected[key], f"{path}.{key}")
+        return
+    if isinstance(expected, list):
+        assert isinstance(actual, list), path
+        assert len(actual) == len(expected), path
+        for index, (actual_item, expected_item) in enumerate(zip(actual, expected, strict=True)):
+            _assert_same_structure_and_numbers(actual_item, expected_item, f"{path}[{index}]")
+        return
+    if isinstance(expected, float) or isinstance(actual, float):
+        assert isinstance(actual, (int, float)) and not isinstance(actual, bool), path
+        assert isinstance(expected, (int, float)) and not isinstance(expected, bool), path
+        assert math.isfinite(float(actual)) and math.isfinite(float(expected)), path
+        assert float(actual) == pytest.approx(
+            float(expected),
+            rel=FLOAT_REL_TOLERANCE,
+            abs=FLOAT_ABS_TOLERANCE,
+        ), path
+        return
+    assert actual == expected, path
 
 
 def test_source_module_never_imports_model_sdk():
@@ -217,8 +251,14 @@ def test_homepage_numbers_come_from_correct_fields():
     assert "absolute_shrink_ratio" not in js
 
 
+def test_numeric_comparison_tolerates_only_platform_tail_noise():
+    _assert_same_structure_and_numbers({"value": 1.0 + 5e-14}, {"value": 1.0})
+    with pytest.raises(AssertionError):
+        _assert_same_structure_and_numbers({"value": 1.0 + 1e-8}, {"value": 1.0})
+
+
 def test_committed_public_json_matches_current_analysis(payload):
     p, _data, _units = payload
     assert PUBLIC_JSON.is_file()
-    committed = PUBLIC_JSON.read_text(encoding="utf-8")
-    assert committed == mod.public_dumps(p)
+    committed = json.loads(PUBLIC_JSON.read_text(encoding="utf-8"))
+    _assert_same_structure_and_numbers(p, committed)
