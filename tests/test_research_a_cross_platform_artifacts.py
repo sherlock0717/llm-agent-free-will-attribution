@@ -47,5 +47,12 @@ def test_text_normalization_accepts_tail_noise_but_not_real_change():
     assert checker.canonicalize_float_tokens(left) != checker.canonicalize_float_tokens(changed)
 
 
+def test_text_normalization_handles_floats_adjacent_to_chinese():
+    left = "A4估计由1.2630208333333348变为3.2668521360961873。"
+    right = "A4估计由1.2630208333333335变为3.266852136096199。"
+    assert checker.canonicalize_float_tokens(left) == checker.canonicalize_float_tokens(right)
+    assert "A4" in checker.canonicalize_float_tokens(left)
+
+
 def test_current_committed_outputs_are_cross_platform_equivalent():
     assert checker.check_outputs(checker.analysis.DEFAULT_SCORES) == []
