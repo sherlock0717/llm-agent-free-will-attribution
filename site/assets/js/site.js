@@ -55,5 +55,71 @@ function setupNavigation() {
   });
 }
 
+// The three findings each show at most one key number, filled from the
+// existing-data robustness summary. This loads separately and fails silently,
+// so the single primary data dependency (showcase_story.json) is unchanged and
+// the static finding text always remains readable.
+async function loadFindingMetrics() {
+  let summary;
+  try {
+    const response = await fetch("data/research_a_robustness_summary.json", { cache: "no-store" });
+    if (!response.ok) return;
+    summary = await response.json();
+  } catch (error) {
+    return;
+  }
+  const findings = summary.public_findings || {};
+  const proc = findings.process_information;
+  const ident = findings.identity_label;
+  const scen = findings.scenario_dependence;
+
+  if (proc) {
+    setFindingBody(
+      "process",
+      `与只提供较长背景和最终选择相比，加入反思、反馈和后续行动时，能动性评分平均高出${fmt(proc.full_effect)}分。`
+      + `${proc.direction_majority_count}/${proc.total_unit_count}个场景×身份配对单元呈现相同方向。`);
+    setFindingMetric(
+      "process",
+      `${proc.direction_majority_count}/${proc.total_unit_count}个场景×身份配对单元方向一致`);
+  }
+  if (ident) {
+    setFindingBody(
+      "identity",
+      `在任务场景和过程写法保持相同时，人类标签下的自由意志归因平均比AI标签高${fmt(ident.overall_identity_difference)}分。`
+      + `${ident.direction_majority_count}/${ident.total_unit_count}个场景×过程条件身份配对单元呈现相同方向。`
+      + "该差异只描述自由意志归因这一维度，不概括所有心智和责任维度。");
+    setFindingMetric(
+      "identity",
+      `${ident.direction_majority_count}/${ident.total_unit_count}个场景×过程条件身份配对方向一致`);
+  }
+  if (scen && Array.isArray(scen.process_effect_range)) {
+    const [lo, hi] = scen.process_effect_range;
+    if (lo != null && hi != null) {
+      setFindingMetric(
+        "scenario",
+        `过程效应在八个场景中的平均差异范围为${fmt(lo)}至${fmt(hi)}`);
+    }
+  }
+}
+
+function setFindingBody(id, text) {
+  const node = document.querySelector(`[data-finding-body="${id}"]`);
+  if (node) node.textContent = text;
+}
+
+function fmt(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return "—";
+  return n.toFixed(2);
+}
+
+function setFindingMetric(id, text) {
+  const node = document.querySelector(`[data-finding-metric="${id}"]`);
+  if (!node) return;
+  node.textContent = text;
+  node.hidden = false;
+}
+
 setupNavigation();
 loadOverview();
+loadFindingMetrics();

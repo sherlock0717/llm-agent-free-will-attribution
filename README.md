@@ -16,6 +16,8 @@
 2. **身份标签会改变对同一行为的解释。** 行为和结果保持一致，仅把行动者写成AI或人类，部分心智、体验和责任评分仍会出现差异。
 3. **总体方向不能替代场景分析。** 多个场景中可以出现共同变化方向，但差异幅度会随任务语境改变；总体均值可能掩盖某些场景的推动或抵消作用。
 
+方向一致数是场景×条件配对单元的描述性统计，用于观察结果是否在不同材料组合中重复出现，不等同于独立样本数量或统计显著性检验。加入字符数和句子数后，A4估计方向没有改变；由于文本长度与过程条件共同变化，无法据此分离文本长度和过程信息各自的独立作用。
+
 这些结果描述的是该模型配置在本项目材料和问卷提示下形成的评价模式，不证明跨模型泛化，也不证明行动者真实具有被评分的心理属性。
 
 ## 对实际评测的意义
@@ -126,8 +128,9 @@ python -m http.server 8000 --directory _site
 
 1. [结果与实践启示](docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md)
 2. [总体研究计划](docs/RESEARCH_PROGRAM.md)
-3. [统一数据来源字典](docs/data_provenance.yaml)
-4. [研究A说明](docs/STUDY_CARD.md)
+3. [评测设计检查清单](docs/EVALUATION_DESIGN_CHECKLIST.md)
+4. [统一数据来源字典](docs/data_provenance.yaml)
+5. [研究A说明](docs/STUDY_CARD.md)
 5. [研究B说明](docs/STUDY_B_CARD.md)
 6. [公开页面表达规范](docs/PUBLIC_PRESENTATION_GUIDE.md)
 

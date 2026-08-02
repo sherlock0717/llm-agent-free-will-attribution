@@ -27,7 +27,12 @@ ROOT_JSON = [
     "evidence_matrix.json",
     "reproducibility_summary.json",
 ]
-ROOT_SECTIONS = ["overview", "program", "studies", "evidence", "methods"]
+ROOT_SECTIONS = ["overview", "findings", "implications", "evidence", "studies", "methods"]
+ROOT_H1 = "在研究A中，仅改变身份和过程写法，也会改变模型评价"
+RESULTS_FIRST_DOCS = [
+    ROOT / "docs" / "RESULTS_AND_PRACTICAL_IMPLICATIONS.md",
+    ROOT / "docs" / "RESULTS_FIRST_ROADMAP.md",
+]
 PUBLIC_PAGES = [INDEX, STUDY_A / "index.html", STUDY_B / "index.html"]
 
 
@@ -45,17 +50,17 @@ def test_public_sources_exist():
 
 def test_root_page_is_project_overview(html: str):
     assert "<title>LLM行动者归因评测</title>" in html
-    assert re.search(r"<h1>同一个决定，为什么写法一变，模型评价也会变？</h1>", html)
+    assert ROOT_H1 in html
     for section_id in ROOT_SECTIONS:
         assert f'id="{section_id}"' in html
     for removed in ["research-a-detail", "historical-data", "mock-validation", "real-provider", "future", "entries"]:
         assert f'id="{removed}"' not in html
 
 
-def test_root_page_has_at_most_five_main_sections(html: str):
+def test_root_page_has_exactly_six_ordered_sections(html: str):
     sections = re.findall(r'<section id="([^"]+)"', html)
-    assert len(sections) <= 5, sections
-    assert sections == ROOT_SECTIONS
+    assert sections == ROOT_SECTIONS, sections
+    assert len(sections) == len(set(sections)), "duplicate section id"
 
 
 def test_root_hero_has_at_most_two_buttons(html: str):
@@ -71,27 +76,41 @@ def test_root_hero_has_no_number_snapshot(html: str):
     assert "research-bridge" in hero
 
 
-def test_root_page_leads_with_a_concrete_question(html: str):
-    hero = html.split('id="overview"', 1)[1].split("</section>", 1)[0]
-    assert "同一个决定，为什么写法一变" in hero
-    program = html.split('id="program"', 1)[1].split("</section>", 1)[0]
-    assert "路线" in program or "配送" in program
-    assert "story-flow" in program
-    studies = html.split('id="studies"', 1)[1].split("</section>", 1)[0]
-    assert "研究A比较" in studies and "拆" in studies
+def test_root_results_first_order(html: str):
+    # findings lead, then implications, then evidence boundary.
+    assert html.index('id="findings"') < html.index('id="implications"')
+    assert html.index('id="implications"') < html.index('id="evidence"')
 
 
-def test_root_evidence_uses_finding_blocks_not_table(html: str):
+def test_root_findings_has_three_finding_blocks(html: str):
+    findings = html.split('id="findings"', 1)[1].split("</section>", 1)[0]
+    blocks = re.findall(r'<article class="finding-block">', findings)
+    assert len(blocks) == 3, blocks
+
+
+def test_root_implications_cover_practical_uses(html: str):
+    implications = html.split('id="implications"', 1)[1].split("</section>", 1)[0]
+    assert "Benchmark与Rubric" in implications
+    assert "训练数据与质检" in implications
+    assert "Agent与AI产品评估" in implications
+
+
+def test_root_distinguishes_study_a_results_from_study_b_design(html: str):
     evidence = html.split('id="evidence"', 1)[1].split("</section>", 1)[0]
-    assert "finding-block" in evidence
+    assert "研究A提供已有结果" in evidence
+    assert "研究B提供研究设计" in evidence
+
+
+def test_root_evidence_uses_finding_cards_not_table(html: str):
+    evidence = html.split('id="evidence"', 1)[1].split("</section>", 1)[0]
     assert "<table" not in evidence
 
 
 def test_root_page_has_no_internal_reading_guidance(html: str):
     for phrase in [
-        "先看懂问题", "再看例子", "阅读顺序", "如何使用本页", "建议从这里开始",
-        "第一次访问", "信息架构", "叙事主线", "渐进式披露", "本节帮助", "本页按照",
-        "读者应该先看", "首次访问者", "第一层", "第二层", "第三层",
+        "先看懂问题", "阅读顺序", "如何使用本页", "信息架构",
+        "当前范围覆盖", "已形成完整链路", "槽位", "judge_slot",
+        "流程演示", "正式模型评分即将开始",
     ]:
         assert phrase not in html, phrase
 
@@ -99,19 +118,19 @@ def test_root_page_has_no_internal_reading_guidance(html: str):
 def test_root_page_links_to_independent_studies(html: str):
     assert 'href="identity-process-attribution-baseline/"' in html
     assert 'href="machine-decision-process-attribution/"' in html
-    assert "查看研究A结果" in html
-    assert "查看研究B设计" in html
 
 
 def test_root_navigation_matches_overview_sections(html: str):
     nav = html.split('id="site-nav-list"', 1)[1].split("</nav>", 1)[0]
     hrefs = re.findall(r'href="#([^"]+)"', nav)
-    assert hrefs == ROOT_SECTIONS
+    # overview is the hero (brand anchor); the in-page nav lists the five
+    # content sections in order.
+    assert hrefs == ROOT_SECTIONS[1:], hrefs
 
 
-def test_root_page_uses_positive_public_status_language(html: str):
-    for phrase in ["仍待", "尚未", "不能", "无法", "不支持", "不代表", "待验证", "仍在完善"]:
-        assert phrase not in html, phrase
+def test_results_first_docs_exist():
+    for path in RESULTS_FIRST_DOCS:
+        assert path.is_file(), path
 
 
 def test_root_page_has_no_research_a_result_statistics_hardcoded(html: str):
@@ -201,3 +220,123 @@ def test_public_pages_have_no_inline_handlers():
     for page in PUBLIC_PAGES:
         content = page.read_text(encoding="utf-8")
         assert re.search(r"\son[a-z]+\s*=", content) is None, page
+
+
+def test_root_findings_numbers_come_from_robustness_json():
+    script = JS.read_text(encoding="utf-8")
+    assert "loadFindingMetrics" in script
+    assert "research_a_robustness_summary.json" in script
+    assert "data-finding-metric" in script
+    # the single primary data dependency stays showcase_story.json.
+    assert 'fetch("data/showcase_story.json"' in script
+    assert "Promise.all" not in script
+
+
+def test_root_findings_use_correct_public_findings_sources():
+    script = JS.read_text(encoding="utf-8")
+    # process finding pulls from process_information; identity from identity_label.
+    assert "public_findings" in script
+    assert "process_information" in script
+    assert "identity_label" in script
+    assert "full_effect" in script
+    assert "overall_identity_difference" in script
+    # scenario number uses the process effect range, not the length percentage.
+    assert "process_effect_range" in script
+    assert "absolute_shrink_ratio" not in script
+
+
+def test_root_identity_finding_is_human_minus_ai_not_a4():
+    html = INDEX.read_text(encoding="utf-8")
+    script = JS.read_text(encoding="utf-8")
+    findings = html.split('id="findings"', 1)[1].split("</section>", 1)[0]
+    # identity finding body / metric text
+    assert "人类标签" in findings and "自由意志归因" in findings
+    # identity uses human-AI, 48-unit denominator, never the A4 process contrast.
+    assert "过程条件身份配对" in script
+    assert "A4" not in script.split("identity_label", 1)[1].split("scenario_dependence", 1)[0]
+    # 48 denominator comes from JSON total_unit_count, not hardcoded independent samples.
+    assert "独立实验" not in html and "独立样本" not in html
+
+
+def test_root_identity_finding_does_not_generalize_to_responsibility():
+    html = INDEX.read_text(encoding="utf-8")
+    script = JS.read_text(encoding="utf-8")
+    # identity copy must scope to free-will attribution, not all mind/responsibility.
+    assert "不概括所有心智和责任维度" in html or "不概括所有心智和责任维度" in script
+
+
+def test_root_process_finding_uses_16_denominator_via_json():
+    script = JS.read_text(encoding="utf-8")
+    # process metric uses process_information total_unit_count (16), not hardcoded.
+    proc_block = script.split("proc.full_effect", 1)
+    assert len(proc_block) == 2
+    assert "1.263" not in script
+    assert "16/16" not in script
+
+
+def test_length_section_avoids_misleading_wording():
+    for path in [INDEX, STUDY_A / "index.html", STUDY_A / "app.js",
+                 ROOT / "docs" / "research_a_robustness_report.md",
+                 ROOT / "docs" / "RESULTS_AND_PRACTICAL_IMPLICATIONS.md",
+                 ROOT / "README.md", ROOT / "docs" / "RESEARCH_PROGRAM.md"]:
+        text = path.read_text(encoding="utf-8")
+        for banned in ["控制长度后效果更强", "排除文本长度影响", "排除长度影响",
+                       "调整后更稳健", "中度共线性", "长度不是混杂因素",
+                       "已排除长度混杂"]:
+            assert banned not in text, (path.name, banned)
+
+
+def test_direction_count_described_as_descriptive_statistic():
+    text = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    assert "描述性统计" in text
+    assert "不等同于独立样本数量或统计显著性" in text
+
+
+def test_root_has_evaluation_checklist_entry():
+    html = INDEX.read_text(encoding="utf-8")
+    assert "EVALUATION_DESIGN_CHECKLIST.md" in html
+    assert (ROOT / "docs" / "EVALUATION_DESIGN_CHECKLIST.md").is_file()
+
+
+def test_study_a_has_robustness_section():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    assert 'id="robustness"' in html
+    assert "这些变化有多稳定" in html
+    assert 'id="evidenceStatusTable"' in html
+    # navigation lists 稳健性与限制
+    assert "稳健性与限制" in html
+
+
+def test_study_a_robustness_conclusions_come_from_json():
+    app = (STUDY_A / "app.js").read_text(encoding="utf-8")
+    assert "research_a_robustness_summary.json" in app
+    assert "loadRobustnessGroup" in app
+    assert "renderRobustnessModules" in app
+    summary = ROOT / "site" / "data" / "research_a_robustness_summary.json"
+    payload = json.loads(summary.read_text(encoding="utf-8"))
+    assert payload["data_role"] == "research_a_existing_data_robustness"
+
+
+def test_study_b_has_material_audit_section():
+    html = (STUDY_B / "index.html").read_text(encoding="utf-8")
+    assert 'id="materialAudit"' in html
+    assert "材料设计经过了哪些检查" in html
+    assert "对Benchmark材料生产的意义" in html
+    # fixed analysis interface stays collapsed by default.
+    stats = re.search(r'<details class="tech-details" id="demoStatsDetails"[^>]*>', html)
+    assert stats and "open" not in stats.group(0)
+
+
+def test_study_b_has_no_formal_primary_result_section():
+    html = (STUDY_B / "index.html").read_text(encoding="utf-8")
+    # Study B presents design + material audit, not a formal results section.
+    assert '<section id="results"' not in html
+    for phrase in ["主要正式结果", "正式模型评分即将开始", "正式结果已产出"]:
+        assert phrase not in html, phrase
+
+
+def test_static_site_no_reading_flow_or_slot_wording_anywhere():
+    for page in PUBLIC_PAGES:
+        content = page.read_text(encoding="utf-8")
+        for phrase in ["先看", "阅读顺序", "如何使用本页", "槽位"]:
+            assert phrase not in content, (page.name, phrase)

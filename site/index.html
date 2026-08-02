@@ -35,9 +35,9 @@
       <div class="wrap hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">身份标签、理由、反馈与后续行动</p>
-          <h1>同一个决定，只因身份和过程写法不同，模型就会给出不同评价</h1>
-          <p class="subtitle">研究A基于360条模型响应观察到：决策过程写法会对应部分能动性评价变化，AI与人类标签会对应部分心智和责任评价差异，不同任务场景还会改变差异幅度。</p>
-          <p class="hero-intro">这意味着，对AI行动者的评价不能只看最终选择，也不能把一次提示下的评分当作稳定能力。评测需要拆开身份标签、理由、反馈和后续行动，并报告结果在不同场景中的变化。</p>
+          <h1>在研究A中，仅改变身份和过程写法，也会改变模型评价</h1>
+          <p class="subtitle">360条DeepSeek模型响应显示，较完整的过程信息对应更高的部分能动性评分，人类与AI标签对应不同的自由意志归因；这些方向在多个场景中一致，但变化幅度随任务而异。</p>
+          <p class="hero-intro">当前结果来自研究A；研究B提供材料与分析设计，本页不把研究B的固定数据写成研究结果。对AI行动者的评价不能只看最终选择，评测需要拆开身份标签、理由、反馈和后续行动，并报告结果在不同场景中的变化。</p>
           <div class="actions">
             <a class="btn primary" href="#findings">查看主要发现</a>
             <a class="btn" href="#implications">查看实践意义</a>
@@ -65,16 +65,19 @@
         <p class="reading">研究A改变行动者身份标签和决策过程写法，比较模型对能动性、心智、自由意志相关归因与责任的评分。当前证据支持以下三点。</p>
         <div class="finding-list">
           <article class="finding-block">
-            <h3>过程信息会进入模型的能动性判断</h3>
-            <p>材料只呈现最终决定，或进一步加入比较、理由、反馈和后续行动时，部分行动控制、目标导向和选择自主性评分随之变化。模型评价的对象不仅是“做了什么”，也包括“决定是怎样形成的”。</p>
+            <h3 data-finding-title="process">反思与反馈写法对应更高的能动性评分</h3>
+            <p data-finding-body="process">与只提供较长背景和最终选择相比，加入反思、反馈和后续行动时，部分能动性评分更高。</p>
+            <p class="finding-metric" data-finding-metric="process" hidden></p>
           </article>
           <article class="finding-block">
-            <h3>身份标签会改变对同一行为的解释</h3>
-            <p>行为、任务和结果保持一致，仅把行动者写成AI或人类，部分心智、体验和责任评分仍会出现差异。身份标签本身可能成为模型归因时使用的线索。</p>
+            <h3 data-finding-title="identity">人类标签对应更高的自由意志归因</h3>
+            <p data-finding-body="identity">在任务场景和过程写法保持相同时，人类标签下的自由意志归因高于AI标签。该差异只描述自由意志归因这一维度，不概括所有心智和责任维度。</p>
+            <p class="finding-metric" data-finding-metric="identity" hidden></p>
           </article>
           <article class="finding-block">
-            <h3>结论方向可以重复，幅度仍受场景影响</h3>
-            <p>八个任务场景中存在共同变化方向，也有明显的任务差异。只报告总体均值会掩盖某些场景对结果的推动或抵消作用。</p>
+            <h3 data-finding-title="scenario">变化方向一致，幅度仍随任务场景变化</h3>
+            <p data-finding-body="scenario">过程效应和身份效应在留一场景分析中均保持同号，但不同任务中的变化幅度并不相同。总体均值需要与场景范围和影响值一同解释。</p>
+            <p class="finding-metric" data-finding-metric="scenario" hidden></p>
           </article>
         </div>
         <div class="actions">
@@ -186,7 +189,7 @@
         <div class="entry-grid">
           <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation"><strong>GitHub仓库</strong><span>材料、数据、脚本与运行命令</span></a>
           <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESEARCH_PROGRAM.md"><strong>研究计划</strong><span>研究问题、证据状态与后续工作</span></a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/data_provenance.yaml"><strong>数据来源</strong><span>正式结果、固定示例与协议资产的区分</span></a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/EVALUATION_DESIGN_CHECKLIST.md"><strong>评测设计检查清单</strong><span>Benchmark、数据质检与Agent评估的可执行检查项</span></a>
         </div>
       </div>
     </section>
