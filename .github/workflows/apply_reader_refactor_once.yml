@@ -46,6 +46,9 @@ jobs:
       - name: Apply deterministic refactor
         run: python scripts/_apply_reader_refactor_once.py
 
+      - name: Synchronize structural tests
+        run: python scripts/_sync_reader_tests_once.py
+
       - name: Sync locked environment
         run: uv sync --frozen
 
@@ -82,7 +85,12 @@ jobs:
           git add docs/pa-wu-r1-pilot/index.html
           git add docs/pa-wu-r1-pilot/app.js
           git add tests/site/test_reader_experience_and_consistency.py
+          git add tests/site/test_final_showcase_status.py
+          git add tests/site/test_pa_wu_r1_showcase.py
+          git add tests/site/test_public_release_gate.py
+          git add tests/site/test_study_b_offline_scope.py
           git add -u -- scripts/_apply_reader_refactor_once.py
+          git add -u -- scripts/_sync_reader_tests_once.py
           git add -u -- .github/workflows/apply_reader_refactor_once.yml
           git add -u -- .tmp_reader_refactor
           git status --short
