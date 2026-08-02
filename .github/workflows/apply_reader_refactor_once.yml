@@ -4,6 +4,13 @@ name: Apply final reader refactor once
   push:
     branches:
       - refactor/final-reader-experience
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 permissions:
   contents: write
@@ -14,6 +21,7 @@ concurrency:
 
 jobs:
   apply:
+    if: github.head_ref == 'refactor/final-reader-experience' || github.ref_name == 'refactor/final-reader-experience'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
