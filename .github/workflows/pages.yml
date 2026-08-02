@@ -63,6 +63,12 @@ jobs:
       - name: Check Study B offline research package
         run: uv run --frozen python scripts/build_study_b_protocol_package.py --check
 
+      - name: Check Research A robustness artefacts
+        run: uv run --frozen python scripts/analyze_research_a_robustness.py --check
+
+      - name: Check Study B material structural audit
+        run: uv run --frozen python scripts/audit_study_b_materials.py --check
+
       - name: Run public site tests
         run: uv run --frozen pytest -q tests/site
 
@@ -93,6 +99,9 @@ jobs:
           uv run --frozen python scripts/check_public_json.py
           _site/data
           _site/machine-decision-process-attribution/data
+
+      - name: Verify tracked files did not drift during assembly
+        run: git diff --exit-code
 
       - name: Upload validated Pages artifact
         uses: actions/upload-pages-artifact@v3

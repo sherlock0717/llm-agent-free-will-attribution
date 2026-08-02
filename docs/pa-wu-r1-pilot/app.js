@@ -383,7 +383,7 @@ function renderStim(material, scenarioId = null) {
     ),
     el("details", { class: "source-details" },
       el("summary", {}, "展开查看英文原始材料"),
-      el("p", { class: "source-note" }, "以下保留评判模型实际接收的英文原文；上方中文内容用于说明材料结构。"),
+      el("p", { class: "source-note" }, "以下保留协议中定义的英文材料原文；上方中文内容用于说明材料结构。"),
       el("div", { class: "source-text" }, sourceText),
       el("div", { class: "bridge" }, "题项指称说明：后续量表中的“the machine”均指上述AI系统。")
     ),

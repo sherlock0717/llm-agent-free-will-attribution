@@ -19,8 +19,8 @@ hero:
       kind: "historical"
     - text_zh: "Phase 1 本地工程基础完成"
       kind: "completed"
-    - text_zh: "发布验证待完成"
-      kind: "pending_verification"
+    - text_zh: "公开展示与离线复现版本完成"
+      kind: "completed"
   # These metric slots are filled at runtime from site_summary.json / historical_results.json.
   metric_slots:
     - key: "historical_record_count"
@@ -34,7 +34,7 @@ hero:
     - key: "local_engineering_status"
       label_zh: "本地工程基础"
     - key: "release_verification_status"
-      label_zh: "发布验证"
+      label_zh: "公开展示版本"
 
 navigation:
   - id: "hero"
@@ -320,10 +320,10 @@ roadmap:
   phases:
     - id: "phase-1"
       name: "Engineering Foundation And Historical Baseline"
-      status: "current"
+      status: "completed"
       local_status: "completed"
-      release_status: "pending_verification"
-      summary_zh: "本地工程基础完成；发布验证待完成。"
+      release_status: "completed"
+      summary_zh: "本地工程基础完成；公开展示与离线复现版本完成。"
       depends_on: []
       evidence_ref:
         - "docs/audit/repository_rebaseline_assessment.md"
@@ -388,19 +388,18 @@ roadmap:
       depends_on: ["site-003"]
     - id: "site-005"
       name: "Public Showcase Content And Visual Redesign"
-      status: "current"
+      status: "completed"
       summary_zh: "内容去模板化、信息层级与视觉结构重构、原生数据可视化。"
       depends_on: ["site-003", "site-004"]
     - id: "rel-001"
       name: "Push, CI And Pages Release"
-      status: "planned"
-      release_status: "pending_verification"
-      summary_zh: "统一发布验证：完整回归、远程 CI、Pages 部署、在线链接校验（需 push 授权）。"
+      status: "completed"
+      release_status: "completed"
+      summary_zh: "统一发布验证：完整回归、远程 CI、Pages 部署、在线链接校验。"
       depends_on: ["site-004", "phase-1"]
 
 status_legend:
   historical: "历史基线数据"
-  completed: "已完成（本地）"
+  completed: "已完成"
   current: "进行中"
   planned: "规划中"
-  pending_verification: "已配置，远程验证待完成"

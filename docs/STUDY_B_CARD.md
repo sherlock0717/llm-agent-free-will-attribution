@@ -28,6 +28,8 @@ PA5和PA8作为感知能动性的补充指标。自由意志在MSI中保留为�
 
 ## 当前证据状态
 
+材料、评价规则、离线协议和确定性结构审计完成；语义对称性、理由强度和反馈强度未纳入当前版本。
+
 研究B当前提供：
 
 - 九十六条材料；
@@ -35,7 +37,12 @@ PA5和PA8作为感知能动性的补充指标。自由意志在MSI中保留为�
 - 六项预设比较P1—P6；
 - 外部离线评价记录格式；
 - 数据验证、导入和离线分析流程；
-- 用于校验统计表、图表和页面组件的固定数据。
+- 用于校验统计表、图表和页面组件的固定数据；
+- 96条材料的确定性结构审计结果。
+
+确定性结构审计结果：完整网格96/96，重复ID为0，结构错误为0，字段一致，方向长度与句子数量阈值提示为0，完全重复正文为0，高相似材料对为0。`semantic_review.status` 保持 `not_assessed`，已复核材料数为0。
+
+96条材料全部通过确定性结构检查。语义对称性、理由强度和反馈强度未纳入当前版本。
 
 固定数据不构成正式模型结果。研究B页面用于展示材料结构、评价维度和分析方法，不设置主要研究发现。
 
@@ -46,14 +53,15 @@ PA5和PA8作为感知能动性的补充指标。自由意志在MSI中保留为�
 - 把“会推理”拆成列出备选、说明标准和给出理由；
 - 把“能接受反馈”拆成识别反馈、判断相关性和调整行动；
 - 将反馈后的维持与改变分别评价；
-- 控制条件间的文本长度、措辞强度和结果严重程度；
+- 每项预设比较对应明确的信息增量；
 - 区分对行动者的心理归因与真实任务表现。
 
-下一项工作是对九十六条材料进行操纵完整性、方向对称性、重复与条件泄漏审计，不调用模型评分。
+材料审计与语义复核分开处理：确定性结构检查覆盖网格完整性、字段一致性、重复和阈值提示；语义对称性、理由强度和反馈强度属于独立工作，未纳入当前版本。
 
 ## 相关文档
 
 - 结果与实践启示：[`docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md`](RESULTS_AND_PRACTICAL_IMPLICATIONS.md)
 - 结果导向路线图：[`docs/RESULTS_FIRST_ROADMAP.md`](RESULTS_FIRST_ROADMAP.md)
 - 研究与测量来源：[`docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md`](STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md)
+- 材料结构审计复核：[`docs/reviews/study_b_material_integrity_review.md`](reviews/study_b_material_integrity_review.md)
 - 离线研究包：[`research_packages/study_b/`](../research_packages/study_b/README.md)

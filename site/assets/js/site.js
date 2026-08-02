@@ -76,8 +76,9 @@ async function loadFindingMetrics() {
   if (proc) {
     setFindingBody(
       "process",
-      `与只提供较长背景和最终选择相比，加入反思、反馈和后续行动时，能动性评分平均高出${fmt(proc.full_effect)}分。`
-      + `${proc.direction_majority_count}/${proc.total_unit_count}个场景×身份配对单元呈现相同方向。`);
+      `包含理由、反思、反馈与后续行动的高结构过程写法，与只包含较长背景和最终选择的写法相比，能动性评分平均高出${fmt(proc.full_effect)}分。`
+      + `${proc.direction_majority_count}/${proc.total_unit_count}个场景×身份配对单元呈现相同方向。`
+      + "该比较对应两种成套写法的整体差异，不是反馈这一单项线索的独立效应。");
     setFindingMetric(
       "process",
       `${proc.direction_majority_count}/${proc.total_unit_count}个场景×身份配对单元方向一致`);
