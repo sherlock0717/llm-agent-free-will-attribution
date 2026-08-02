@@ -1,0 +1,85 @@
+name: Apply portfolio packaging once
+
+"on":
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.head_ref == 'showcase/final-portfolio-packaging'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out packaging branch
+        uses: actions/checkout@v4
+        with:
+          ref: showcase/final-portfolio-packaging
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990
+        with:
+          version: "0.11.28"
+          enable-cache: true
+
+      - name: Apply deterministic packaging changes
+        run: python scripts/_apply_portfolio_packaging_once.py
+
+      - name: Sync locked environment
+        run: uv sync --frozen
+
+      - name: Run site tests
+        run: uv run --frozen pytest -q tests/site
+
+      - name: Run full test suite
+        run: uv run --frozen pytest -q
+
+      - name: Run Ruff
+        run: uv run --frozen ruff check src scripts tests
+
+      - name: Assemble Pages outside the repository
+        run: uv run --frozen python scripts/assemble_pages.py --output "$RUNNER_TEMP/portfolio-site"
+
+      - name: Verify protected research assets
+        run: |
+          git diff --exit-code -- outputs
+          git diff --exit-code -- tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/stimuli.jsonl
+
+      - name: Check diff
+        run: git diff --check
+
+      - name: Commit final packaging files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git add docs/PORTFOLIO_CASE_STUDY.md
+          git add docs/PUBLIC_PRESENTATION_GUIDE.md
+          git add docs/identity-process-attribution-baseline/index.html
+          git add docs/pa-wu-r1-pilot/index.html
+          git add scripts/assemble_pages.py
+          git add site/index.html
+          git add site/assets/css/site.css
+          git add site/assets/figures/social-preview.svg
+          git add site/assets/figures/project-architecture.svg
+          git add site/assets/figures/value-map.svg
+          git add tests/site/test_portfolio_packaging.py
+          git add -u -- scripts/_apply_portfolio_packaging_once.py
+          git add -u -- .github/workflows/apply_portfolio_packaging_once.yml
+          git add -u -- .tmp_portfolio_packaging
+          git status --short
+          git commit -m "showcase: package the project as a portfolio case study"
+          git push origin HEAD:showcase/final-portfolio-packaging
