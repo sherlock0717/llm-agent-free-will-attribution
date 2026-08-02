@@ -28,8 +28,11 @@ import analyze_research_a_robustness as analysis
 
 FLOAT_REL_TOL = 1e-12
 FLOAT_ABS_TOL = 1e-12
+# Block numbers embedded in ASCII identifiers such as A4, while allowing
+# decimal values next to Chinese prose, for example “由1.263变为3.267”.
 FLOAT_TOKEN = re.compile(
-    r"(?<![\w.])[-+]?(?:(?:\d+\.\d*|\.\d+)(?:[eE][-+]?\d+)?|\d+[eE][-+]?\d+)(?![\w.])"
+    r"(?<![A-Za-z0-9_.])[-+]?(?:(?:\d+\.\d*|\.\d+)(?:[eE][-+]?\d+)?|"
+    r"\d+[eE][-+]?\d+)(?![A-Za-z0-9_.])"
 )
 
 
@@ -84,7 +87,7 @@ def assert_equivalent(actual: Any, expected: Any, path: str = "$") -> None:
 
 
 def canonicalize_float_tokens(text: str) -> str:
-    """Normalize only standalone decimal/scientific tokens in text artifacts."""
+    """Normalize decimal/scientific tokens without changing identifiers."""
 
     def replace(match: re.Match[str]) -> str:
         value = float(match.group(0))
