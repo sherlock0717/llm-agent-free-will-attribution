@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LLM行动者归因评测</title>
-  <meta name="description" content="身份标签和决策过程写法如何改变语言模型对能动性、心智与责任的评价，以及这些变化对评测设计意味着什么。" />
+  <meta name="description" content="身份标签和决策过程写法如何改变语言模型对行动者的评价，以及这些变化如何关联任务表现、Agent行为、用户信任与责任判断。" />
   <link rel="canonical" href="https://sherlock0717.github.io/llm-attribution-behavior-evaluation/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="LLM行动者归因评测" />
-  <meta property="og:description" content="身份标签和决策过程写法会改变模型对同一决定的评价。项目进一步说明这些变化对Benchmark、数据生产和AI产品评测的意义。" />
+  <meta property="og:description" content="身份标签和决策过程写法会改变模型对同一决定的评价。项目进一步区分任务结果、过程证据、主体归因与产品中的用户判断。" />
   <meta property="og:url" content="https://sherlock0717.github.io/llm-attribution-behavior-evaluation/" />
   <link rel="stylesheet" href="assets/css/site.css" />
 </head>
@@ -21,7 +21,7 @@
       <nav class="site-nav" aria-label="主导航">
         <ul id="site-nav-list">
           <li><a href="#findings">主要发现</a></li>
-          <li><a href="#implications">实践意义</a></li>
+          <li><a href="#implications">现实问题</a></li>
           <li><a href="#evidence">证据边界</a></li>
           <li><a href="#studies">两项研究</a></li>
           <li><a href="#methods">数据与复现</a></li>
@@ -37,10 +37,10 @@
           <p class="eyebrow">身份标签、理由、反馈与后续行动</p>
           <h1>在研究A中，仅改变身份和过程写法，也会改变模型评价</h1>
           <p class="subtitle">360条DeepSeek模型响应显示，包含理由、反思、反馈与后续行动的高结构过程写法对应更高的能动性评分，人类与AI标签对应不同的自由意志归因；这些方向在多个场景中一致，但变化幅度随任务而异。</p>
-          <p class="hero-intro">当前结果来自研究A；研究B提供材料与分析设计，本页不把研究B的固定数据写成研究结果。对AI行动者的评价不能只看最终选择，评测需要拆开身份标签、理由、反馈和后续行动，并报告结果在不同场景中的变化。</p>
+          <p class="hero-intro">当前结果来自研究A；研究B提供材料与分析设计，本页不把研究B的固定数据写成研究结果。项目关注的核心不是为某类产品预设结论，而是区分系统实际完成了什么、展示了怎样的过程，以及评价者如何理解这个行动者。</p>
           <div class="actions">
             <a class="btn primary" href="#findings">查看主要发现</a>
-            <a class="btn" href="#implications">查看实践意义</a>
+            <a class="btn" href="#implications">查看延伸问题</a>
           </div>
         </div>
         <aside class="research-bridge" aria-label="证据与设计的关系">
@@ -89,42 +89,54 @@
     <section id="implications" class="section">
       <div class="wrap">
         <p class="section-index">02</p>
-        <h2>这些结果对实际评测意味着什么</h2>
+        <h2>这些结果提示了哪些现实问题</h2>
+        <p class="reading">研究并不直接给出一套产品或评测方案。它提示，同一个决定可能因主体标签和过程呈现获得不同评价，因此现实系统中需要把行为表现、过程证据和用户归因分开观察。</p>
         <div class="study-grid">
           <article class="study-card study-a">
-            <h3>Benchmark与Rubric设计</h3>
-            <p class="study-question">把最终行为、决策过程和身份标签分开控制。</p>
+            <h3>评测：区分结果、过程证据与主体归因</h3>
+            <p class="study-question">先明确正在测量任务表现、可观察过程，还是评价者对行动者的理解。</p>
             <ul class="study-facts-list">
-              <li>同一能力点至少使用多个场景和多种表述</li>
-              <li>将备选、理由、反馈和修正分别设置为可核查变量</li>
-              <li>同时报告总体结果与场景范围</li>
-              <li>避免把身份标签造成的归因差异误当成能力差异</li>
+              <li>将任务成功、约束满足和副作用作为结果层指标</li>
+              <li>将备选、理由、反馈处理和行动更新作为过程证据</li>
+              <li>将能动性、意图和责任判断作为独立的归因结果</li>
+              <li>解释文本是可检查输出，不等同于忠实内部推理</li>
             </ul>
           </article>
 
           <article class="study-card study-b">
-            <h3>训练数据与质检</h3>
-            <p class="study-question">检查答案是否提供了真正的决策证据，而非只增加解释性文字。</p>
+            <h3>Agent：观察反馈后的计划与执行</h3>
+            <p class="study-question">判断系统是否真正把反馈转化为后续行为，而非只生成更像反思的说明。</p>
             <ul class="study-facts-list">
-              <li>区分“列出备选”“给出理由”“回应反馈”“实际改动”</li>
-              <li>不要把更长的文本直接视为更强的推理</li>
-              <li>质检规则需要覆盖行动前理由与反馈后行为</li>
-              <li>同类样本保持信息量和措辞强度可比</li>
+              <li>区分接收、复述、更新计划和改变执行</li>
+              <li>记录恢复时间、重复操作、副作用和回退能力</li>
+              <li>分别检查维持原计划与修改原计划的依据</li>
+              <li>将任务成功率与轨迹质量、约束满足分开报告</li>
             </ul>
           </article>
 
           <article class="study-card study-a">
-            <h3>Agent与AI产品评估</h3>
-            <p class="study-question">评价“是否会做决定”时，同时观察过程和后续行动。</p>
+            <h3>产品交互：测试信任、授权与责任判断</h3>
+            <p class="study-question">身份名称、头像、第一人称表达和解释方式都可能改变用户如何理解系统。</p>
             <ul class="study-facts-list">
-              <li>记录模型是否比较方案并说明目标</li>
-              <li>区分接受反馈、机械复述和真正调整行动</li>
-              <li>在不同任务风险和责任场景中重复测试</li>
-              <li>将归因评分与真实任务成功率分别报告</li>
+              <li>观察信任是否与系统真实能力和不确定性匹配</li>
+              <li>测试用户何时接受、覆盖、中止或回退系统建议</li>
+              <li>记录成功与失败后功劳、过错和责任如何分配</li>
+              <li>在客服、Copilot、决策支持和自动化流程中分别验证</li>
+            </ul>
+          </article>
+
+          <article class="study-card study-b">
+            <h3>部署治理：明确人机角色与责任边界</h3>
+            <p class="study-question">建议、执行、审批和风险提示是不同角色，需要匹配具体使用情境。</p>
+            <ul class="study-facts-list">
+              <li>明确谁作出最终决定、谁可以中止和回退</li>
+              <li>检查人工复核是否具有信息、时间和实际权限</li>
+              <li>按风险、责任和协作关系设置不同测试阈值</li>
+              <li>共同记录技术性能、用户理解和组织责任</li>
             </ul>
           </article>
         </div>
-        <p class="reading">以上是基于研究A结果与研究B设计形成的评测建议。它们用于改进测试结构和结果解释，不代表语言模型已经具有人类式心智或自由意志。</p>
+        <p class="reading">这些问题来自研究结果与当前人机系统的共同现实，但不是对某种设计方案的直接推荐。拟人化、解释和自动化程度的影响可能因用户、文化、任务和风险而改变，需要在具体使用情境中验证。</p>
       </div>
     </section>
 
@@ -168,12 +180,12 @@
           <li><span class="flow-step">1</span><p>改变身份与过程写法</p></li>
           <li><span class="flow-step">2</span><p>观察评价变化与场景差异</p></li>
           <li><span class="flow-step">3</span><p>拆开备选、理由、反馈和行动</p></li>
-          <li><span class="flow-step">4</span><p>形成可复核的评测设计</p></li>
+          <li><span class="flow-step">4</span><p>形成可复核的研究设计</p></li>
         </ol>
         <div class="entry-grid">
           <a href="identity-process-attribution-baseline/"><strong>研究A：已有结果</strong><span>材料、主要发现、图表与场景一致性</span></a>
           <a href="machine-decision-process-attribution/"><strong>研究B：研究设计</strong><span>六种条件、评价维度与离线分析方法</span></a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md"><strong>结果与实践启示</strong><span>适用于评测、数据生产和Agent产品的结论边界</span></a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md"><strong>结果、应用边界与延伸问题</strong><span>研究结果与评测、Agent、产品交互和责任边界的联系</span></a>
         </div>
       </div>
     </section>
@@ -192,14 +204,14 @@
         <div class="entry-grid">
           <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation"><strong>GitHub仓库</strong><span>材料、数据、脚本与运行命令</span></a>
           <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESEARCH_PROGRAM.md"><strong>研究计划</strong><span>研究问题、证据状态与后续工作</span></a>
-          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/EVALUATION_DESIGN_CHECKLIST.md"><strong>评测设计检查清单</strong><span>Benchmark、数据质检与Agent评估的可执行检查项</span></a>
+          <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/EVALUATION_DESIGN_CHECKLIST.md"><strong>评测设计检查清单</strong><span>把研究结果转化为具体测量与复核问题</span></a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap"><strong>LLM行动者归因评测</strong><p>研究语言模型如何根据身份和决策过程线索评价一个行动者，并将结果转化为可执行的评测设计建议。</p></div>
+    <div class="wrap"><strong>LLM行动者归因评测</strong><p>研究语言模型如何根据身份和决策过程线索评价一个行动者，并区分任务表现、过程证据与主体归因。</p></div>
   </footer>
   <script src="assets/js/site.js" defer></script>
 </body>
