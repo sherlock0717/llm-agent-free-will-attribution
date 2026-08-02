@@ -26,32 +26,42 @@
 
 这些结果描述的是该模型配置在本项目材料和问卷提示下形成的评价模式，不证明跨模型泛化，也不证明行动者真实具有被评分的心理属性。
 
-## 对实际评测的意义
+## 这些结果提示了哪些现实问题
 
-### Benchmark与Rubric
+这项研究不直接给出一套产品方案，也不把某种过程写法当作真实推理的证明。它更重要的提示是：评价者会同时受到系统做了什么、系统怎样呈现过程，以及行动者被怎样命名的影响。现实使用中，至少需要把以下四类问题分开观察。
 
-- 将最终行为、决策过程和身份标签分开控制；
-- 把“列出备选”“给出理由”“回应反馈”“实际改变行动”设置为不同能力点；
-- 同一能力点使用多个场景和多种等价表述；
-- 同时报告总体结果、场景范围和方向一致程度；
-- 避免把身份标签造成的归因差异误解为能力差异。
+### 评价系统表现：结果、过程证据与主体归因
 
-### 训练数据与质检
+- 最终答案是否正确、任务是否完成，是结果层指标；
+- 是否比较备选、说明约束、处理反馈并更新行动，是可观察的过程证据；
+- “有主见”“有意图”“应负责”等判断，是评价者对行动者形成的主体归因；
+- 三类指标需要分别报告，并在多个场景和等价表述中复核；
+- 模型给出的解释可以作为可检查输出，但不能直接当作其内部推理的忠实记录。
 
-- 不把更长的回答直接视为更强推理；
-- 检查理由是否与目标和选择对应；
-- 区分接受反馈、复述反馈和据此调整行动；
-- 保持不同条件的措辞强度、信息量和结果严重程度可比；
-- 在清洗和标注中记录过程信息类型，而不只记录最终答案是否正确。
+### 观察Agent在反馈后的计划与执行
 
-### Agent与AI产品
+- 记录Agent是否发现备选方案、保留目标和关键约束；
+- 区分接收反馈、复述反馈、更新计划和真正改变后续执行；
+- 除任务成功率外，观察恢复时间、重复操作、副作用、回退能力和可逆性；
+- 对“维持原计划”和“修改原计划”分别检查其依据及执行结果；
+- 避免仅凭一段看起来反思充分的说明判断Agent具有稳定的适应能力。
 
-- 将“会做决定”拆成方案比较、目标说明、反馈处理和后续执行；
-- 把归因评分与任务成功率、约束满足率分别报告；
-- 在不同风险、责任和协作场景中重复测试；
-- 避免依据一次提示下的自我解释判断模型是否具有稳定的能动性或心智属性。
+### 理解产品界面如何塑造用户判断
 
-完整说明见[`docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md`](docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md)。
+- “AI助手”“代理”“同事”等身份标签，以及头像、第一人称表达和解释详细程度，都可能改变用户对智能、能动性与责任的判断；
+- 产品测试除满意度外，还应观察信任是否与真实能力匹配、用户是否愿意授权、何时选择覆盖系统建议，以及失败后如何分配责任；
+- 这些问题适用于客服、办公Copilot、决策支持、内容工具和工作流自动化等不同产品形态；
+- 拟人化和解释性设计不天然更好或更差，其影响需要结合用户、文化和任务风险单独验证。
+
+### 在具体使用情境中明确角色与责任
+
+- 区分系统是在提供建议、生成方案、代替执行，还是只负责提示风险；
+- 明确谁作出最终决定、谁可以中止或回退、失败时由谁复核；
+- 在不同风险、责任和协作关系下重复测试，而不是用单一平均分代表所有部署场景；
+- 对高影响用途同时记录系统行为、人工介入、授权边界和不确定性提示；
+- 将技术性能、用户理解和组织责任放在同一使用情境中评估。
+
+完整说明及相关研究脉络见[`docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md`](docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md)。
 
 ## 研究A：身份与决策过程归因
 
@@ -118,7 +128,7 @@ uv sync --frozen
 uv run python scripts/build_site_data.py --check
 uv run python scripts/build_showcase_data.py --check
 uv run python scripts/build_study_b_protocol_package.py --check
-uv run python scripts/analyze_research_a_robustness.py --check
+uv run python scripts/check_research_a_robustness_outputs.py
 uv run python scripts/audit_study_b_materials.py --check
 uv run python scripts/check_public_json.py
 uv run pytest -q
@@ -134,7 +144,7 @@ python -m http.server 8000 --directory _site
 
 ## 文档入口
 
-1. [结果与实践启示](docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md)
+1. [结果、应用边界与延伸问题](docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md)
 2. [总体研究计划](docs/RESEARCH_PROGRAM.md)
 3. [评测设计检查清单](docs/EVALUATION_DESIGN_CHECKLIST.md)
 4. [统一数据来源字典](docs/data_provenance.yaml)
