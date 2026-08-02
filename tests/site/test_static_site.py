@@ -88,11 +88,17 @@ def test_root_findings_has_three_finding_blocks(html: str):
     assert len(blocks) == 3, blocks
 
 
-def test_root_implications_cover_practical_uses(html: str):
+def test_root_implications_cover_broader_real_world_questions(html: str):
     implications = html.split('id="implications"', 1)[1].split("</section>", 1)[0]
-    assert "Benchmark与Rubric" in implications
-    assert "训练数据与质检" in implications
-    assert "Agent与AI产品评估" in implications
+    for phrase in [
+        "结果、过程证据与主体归因",
+        "反馈后的计划与执行",
+        "信任、授权与责任判断",
+        "人机角色与责任边界",
+    ]:
+        assert phrase in implications
+    assert "训练数据与质检" not in implications
+    assert "这些结果对实际评测意味着什么" not in implications
 
 
 def test_root_distinguishes_study_a_results_from_study_b_design(html: str):
