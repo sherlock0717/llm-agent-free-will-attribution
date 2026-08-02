@@ -35,7 +35,7 @@
         <div class="hero-copy">
           <p class="eyebrow">身份、理由、反馈与行动</p>
           <h1>语言模型如何理解一个行动者的决定</h1>
-          <p class="subtitle">当身份标签和决策过程的写法发生变化，模型对同一个决定的能动性、自由意志、心智与责任判断也会变化。</p>
+          <p class="subtitle">这里的“行动者归因”，指模型读完一段行为描述后，对行动者是否自主、有意图、能影响结果和应承担责任所作的判断。</p>
           <p class="hero-intro">项目通过两项研究追踪这种变化：研究A分析身份与过程写法的整体差异，研究B进一步拆开备选、理由、反馈与后续行动。</p>
           <div class="actions">
             <a class="btn primary" href="identity-process-attribution-baseline/">进入研究A</a>
@@ -62,7 +62,7 @@
       <div class="wrap">
         <p class="section-index">01</p>
         <h2>主要发现</h2>
-        <p class="reading">研究A覆盖8个任务场景、6种过程写法和AI／人类两种身份标签。三个最清楚的结果是：</p>
+        <p class="reading">研究A包含360次DeepSeek模型问卷评分输出，覆盖8个任务场景、6种过程写法和AI／人类两种身份标签。主要差异均位于1—7分量尺；16和48表示材料组合的配对数量。</p>
         <div class="finding-list">
           <article class="finding-block">
             <h3 data-finding-title="process">高结构过程写法对应更高的能动性评分</h3>
@@ -122,39 +122,53 @@
     <section id="implications" class="section soft">
       <div class="wrap">
         <p class="section-index">03</p>
-        <h2>从这些发现继续追问</h2>
-        <p class="reading">研究把三个容易混在一起的对象分开：系统完成的任务、系统展示的过程，以及观察者对行动者形成的理解。</p>
+        <h2>实践意义与前沿价值</h2>
+        <p class="reading">这个项目的重要性不在于给模型贴上“有”或“没有”心智的标签，而在于揭示：任务表现、可见过程和对行动者的理解会相互影响。当前的过程监督、Agent轨迹评测、人机信任研究和AI风险管理都在处理这一问题的不同部分。</p>
         <div class="study-grid">
           <article class="study-card study-a">
             <h3>测量的究竟是哪一层</h3>
-            <p class="study-question">任务结果、过程证据与主体归因可以同时记录，也需要分别解释。</p>
+            <p class="study-question">最终答案、过程证据和主体归因需要分别记录。</p>
             <ul class="study-facts-list">
-              <li>任务成功与约束满足描述完成质量</li>
-              <li>备选、理由和反馈处理描述可观察过程</li>
-              <li>能动性、意图和责任描述观察者的归因</li>
+              <li>过程监督把评价扩展到中间步骤</li>
+              <li>推理忠实性研究提醒解释文本不等于内部过程</li>
+              <li>理由需要与工具调用、轨迹和最终状态交叉验证</li>
             </ul>
+            <p><a href="https://openai.com/index/improving-mathematical-reasoning-with-process-supervision/">过程监督</a> · <a href="https://www.anthropic.com/research/reasoning-models-dont-say-think">推理忠实性</a></p>
           </article>
           <article class="study-card study-b">
             <h3>Agent是否真正改变了后续行为</h3>
-            <p class="study-question">接收反馈、修改计划和改变执行是三个不同阶段。</p>
+            <p class="study-question">接收反馈、更新计划和改变执行是三个不同阶段。</p>
             <ul class="study-facts-list">
-              <li>记录反馈后的计划、工具选择与执行变化</li>
-              <li>观察恢复、重复操作、副作用与回退</li>
-              <li>将轨迹质量与最终成功率一起分析</li>
+              <li>检查工具选择、参数与调用顺序</li>
+              <li>记录恢复、重复操作、副作用与回退</li>
+              <li>比较解释、计划与真实执行是否一致</li>
             </ul>
+            <p><a href="https://arxiv.org/abs/2504.08942">AgentRewardBench</a> · <a href="https://arxiv.org/abs/2510.04550">TRAJECT-Bench</a> · <a href="https://arxiv.org/abs/2607.06624">AgentLens</a></p>
           </article>
           <article class="study-card study-a">
             <h3>产品如何影响用户判断</h3>
-            <p class="study-question">身份名称、解释方式与自动化范围会进入用户的信任和责任判断。</p>
+            <p class="study-question">身份名称、解释方式与自动化范围会影响信任、授权和责任分配。</p>
             <ul class="study-facts-list">
-              <li>测试用户何时接受、覆盖、中止或回退建议</li>
-              <li>观察信任是否与实际能力和不确定性匹配</li>
-              <li>明确建议、执行、审批与人工复核的角色</li>
+              <li>测试接受、复核、覆盖、中止与回退行为</li>
+              <li>观察信任是否与准确率和不确定性匹配</li>
+              <li>避免人类化表达只提高主观可信度</li>
             </ul>
+            <p><a href="https://doi.org/10.1016/j.chbr.2022.100229">身份与责任判断</a> · <a href="https://doi.org/10.1038/s41598-024-69771-z">AI过度信任实验</a></p>
+          </article>
+          <article class="study-card study-b">
+            <h3>部署为什么必须回到具体场景</h3>
+            <p class="study-question">同一能力在不同风险、权限和后果下需要不同的评价与门禁。</p>
+            <ul class="study-facts-list">
+              <li>明确建议、执行、审批和人工复核的角色</li>
+              <li>记录覆盖权、中止权、回退路径和责任链</li>
+              <li>将模型指标连接到真实工作流程和事故处理</li>
+            </ul>
+            <p><a href="https://doi.org/10.6028/NIST.AI.100-1">NIST AI RMF</a> · <a href="https://doi.org/10.6028/NIST.AI.600-1">生成式AI配置</a></p>
           </article>
         </div>
         <div class="actions">
-          <a class="btn" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md">查看结果与延伸问题</a>
+          <a class="btn primary" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md">查看完整实践与前沿讨论</a>
+          <a class="btn" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/EVALUATION_DESIGN_CHECKLIST.md">查看评测与产品检查清单</a>
         </div>
       </div>
     </section>

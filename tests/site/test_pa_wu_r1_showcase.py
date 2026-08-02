@@ -129,7 +129,7 @@ def test_material_audit_section_follows_condition_tree():
     assert HTML.index('id="materialAudit"') < HTML.index('id="measurement"')
     audit = HTML.split('id="materialAudit"', 1)[1].split("</section>", 1)[0]
     assert "材料设计经过了哪些检查" in audit
-    assert "对Benchmark材料生产的意义" in audit
+    assert "这些检查解决什么问题" in audit
     assert "materialAuditSummary" in audit
 
 
@@ -183,7 +183,7 @@ def test_five_figures_have_direct_src():
 
 def test_hero_leads_from_research_a():
     hero = HTML.split('class="hero-lead"', 1)[1].split("</header>", 1)[0]
-    assert "研究A" in hero
+    assert "固定机器主体" in hero
     assert "备选方案" in hero and "反馈" in hero
 
 
@@ -239,7 +239,7 @@ def test_progress_section_folded_into_analysis():
     assert '<section id="progress"' not in HTML
     demo = HTML.split('id="demo"', 1)[1].split("</section>", 1)[0]
     assert "analysis-pipeline" in demo
-    assert "形成两组独立评价记录" in demo
+    assert "分析流程示例" in demo
 
 
 def test_analysis_interface_example_naming():

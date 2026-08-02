@@ -84,7 +84,7 @@ def test_research_program_keeps_final_release_state():
 
 def test_readme_starts_from_question_and_both_studies():
     readme = _read(README)
-    assert "当同一个决定由不同主体作出" in readme
+    assert "行动者归因" in readme
     assert "研究A：身份与决策过程" in readme
     assert "研究B：机器主体决策过程" in readme
     assert "证据支持什么，也不支持什么" not in readme

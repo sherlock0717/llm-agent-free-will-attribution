@@ -115,9 +115,9 @@ const CONTRAST_META = {
 // 研究进度说明（集中在 #status 章节）。
 const STATUS_NOTES = [
   "六个指标保留各自原量尺并分别报告。",
-  "分析界面示例数据用于说明结果页面的组织方式。",
-  "外部离线评分文件通过验证后，可以进入同一分析流程。",
-  "跨主体测量将使用独立的人类题项和可比性检验。",
+  "分析界面使用固定示例数据说明结果结构。",
+  "外部离线评分文件通过验证后，可进入同一分析流程。",
+  "材料结构审计与人工语义复核分别记录。",
 ];
 
 let DATA = null;
@@ -155,6 +155,7 @@ function setLoadStatus(message, kind = "loading") {
   const status = document.getElementById("loadStatus");
   status.className = `load-status ${kind}`;
   status.textContent = message;
+  status.hidden = kind === "success";
 }
 
 // Static research design does not depend on the demo JSON, so it renders first

@@ -14,7 +14,8 @@
       <p class="eyebrow">研究A · LLM行动者归因评测</p>
       <h1>同样的行为，写成AI还是人类、有没有理由，会改变模型评价吗？</h1>
       <p class="subtitle">研究A比较身份标签与六种决策过程写法，观察模型对能动性、心智与责任的评分变化。</p>
-      <p class="lead">八个任务场景分别采用六种过程条件，并将行动者描述为AI或人类。DeepSeek模型阅读材料后完成统一量表，共形成360条评价记录。</p>
+      <p class="lead">六种过程条件与AI／人类两种身份形成12个实验组合，每个组合包含30次DeepSeek模型问卷评分，共360条记录。记录分布到八个场景后，形成96个场景×身份×条件分析单元。</p>
+      <p class="reader-note">这里评价的是模型如何理解材料中的行动者：它是否显得自主、有意图、能影响结果，或者应承担责任。</p>
       <div class="actions">
         <a class="btn primary" href="#results">查看主要结果</a>
         <a class="btn" href="#materials">查看材料例子</a>
@@ -42,10 +43,12 @@
         <h2>材料改变了哪些信息</h2>
         <p class="reading">以同一个任务场景为基础，材料分别呈现直接决定、比较过程、明确理由，以及反馈后的后续行动。身份标签在AI和人类之间切换，其他核心任务信息保持一致。</p>
         <div class="material-versions">
-          <article><h3>直接决定</h3><p>只呈现最终选择。</p></article>
-          <article><h3>比较过程</h3><p>呈现候选方案之间的比较。</p></article>
-          <article><h3>明确理由</h3><p>补充与任务目标相关的理由。</p></article>
-          <article><h3>反馈后的行动</h3><p>呈现反馈以及后续维持或改变。</p></article>
+          <article><h3>直接选择</h3><p>只呈现情境和最终选择。</p></article>
+          <article><h3>长文本直接选择</h3><p>扩写背景，但不加入备选或理由。</p></article>
+          <article><h3>列出可选方案</h3><p>呈现两个候选方案和最终选择。</p></article>
+          <article><h3>简洁理由权衡</h3><p>用较短文字比较代价与后果。</p></article>
+          <article><h3>完整理由权衡</h3><p>从多项标准比较两个方案。</p></article>
+          <article><h3>反思与反馈修正</h3><p>加入反思、反馈和后续调整。</p></article>
         </div>
         <details class="technical-details">
           <summary>查看完整材料</summary>
@@ -86,10 +89,10 @@
         </article>
 
         <article class="finding-block">
-          <h3>身份标签对应部分心智和责任评价差异</h3>
+          <h3>人类标签对应更高的自由意志归因</h3>
           <div class="finding-body">
-            <p class="finding-conclusion">相同行为采用不同身份标签时，部分心智和责任评价存在差异。</p>
-            <p>相同行为被描述为AI或人类时，部分心智、体验与责任评价出现差异。该比较只改变身份标签，决策内容和任务结果保持一致。</p>
+            <p class="finding-conclusion">在1—7分量尺上，任务场景和过程写法相同时，人类标签下的自由意志归因更高。</p>
+            <p>首层结果聚焦自由意志归因；其他心智与责任维度保留在完整身份比较中。身份标签改变，决策内容和任务结果保持一致。</p>
             <div class="finding-figure">
               <div id="identityFindingChart" class="mini-chart bar-chart" role="img" aria-label="正在载入身份标签比较图"></div>
             </div>
@@ -168,7 +171,7 @@
         </div>
         <div class="table-scroll">
           <table id="evidenceStatusTable" class="evidence-status">
-            <thead><tr><th>主要发现</th><th>当前支持程度</th><th>支持证据</th><th>主要限制</th></tr></thead>
+            <thead><tr><th>主要发现</th><th>观察到的模式</th><th>支持证据</th><th>主要限制</th></tr></thead>
             <tbody><tr><td colspan="4" class="loading">正在载入证据状态……</td></tr></tbody>
           </table>
         </div>
@@ -187,12 +190,14 @@
     <section id="implications" class="section soft">
       <div class="wrap">
         <p class="section-index">04</p>
-        <h2>对评测设计的意义</h2>
-        <ul class="implication-list">
-          <li>同一能力点需要多个场景。</li>
-          <li>过程信息与最终结果需要分别记录。</li>
-          <li>解释长度不能直接替代推理质量。</li>
-        </ul>
+        <h2>这些结果为什么重要</h2>
+        <div class="material-versions">
+          <article><h3>过程评价</h3><p>过程监督把评价扩展到中间步骤；本研究提醒，过程文本也会改变对行动者的印象，因此步骤正确性与主体归因要分开记录。</p></article>
+          <article><h3>推理忠实性</h3><p>理由和反思属于可观察输出，需要与工具调用、轨迹和最终状态交叉验证，不能只凭表达完整度判断真实过程。</p></article>
+          <article><h3>Agent轨迹</h3><p>反馈后是否更新计划、是否进入实际执行、是否产生重复操作和副作用，比“是否说自己接受反馈”更有诊断价值。</p></article>
+          <article><h3>产品判断</h3><p>身份名称与解释方式可能改变用户信任、授权、覆盖和责任分配，需要在具体产品与风险场景中验证。</p></article>
+        </div>
+        <p class="reading">完整工程指标、产品变量和前沿研究对应关系见 <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md">结果与延伸问题</a>。</p>
       </div>
     </section>
 
@@ -200,7 +205,7 @@
       <div class="wrap">
         <p class="section-index">05</p>
         <h2>分析方法</h2>
-        <p class="reading">研究把六种过程描述与AI、人类两种身份标签组合，每格采集30条模型响应，合计360条。模型阅读材料后完成统一量表，评分按场景、身份与过程条件汇总，再比较身份和条件差异，并检查不同场景中的一致程度。</p>
+        <p class="reading">六种过程条件与两种身份形成12个实验组合，每个组合包含30次模型评分，共360条。每次评分只对应一个场景；汇总后形成8×6×2=96个场景×过程×身份单元，每个单元约3—4条响应。分析先比较条件和身份差异，再检查这些差异在不同场景中的方向与幅度。</p>
         <ol class="analysis-pipeline" aria-label="研究流程">
           <li><span class="flow-step">1</span><p>模型阅读材料</p></li>
           <li><span class="flow-step">2</span><p>完成统一量表</p></li>
@@ -247,7 +252,8 @@ python scripts/assemble_pages.py --output _site
 python -m http.server 8000 --directory _site</code></div>
             <div class="entry-links grid">
               <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/research_design_blueprint.md">研究设计</a>
-              <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/outputs/final_simulated_pilot_report.md">结果报告</a>
+              <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/STUDY_CARD.md">研究A说明与当前解释</a>
+              <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/outputs/final_simulated_pilot_report.md">历史探索性报告</a>
               <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/audit/v1_provenance_statement.md">数据来源声明</a>
               <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation">GitHub仓库</a>
             </div>

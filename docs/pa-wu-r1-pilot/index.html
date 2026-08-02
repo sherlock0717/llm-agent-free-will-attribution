@@ -8,13 +8,14 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#app">跳到正文</a>
   <header class="site">
     <div class="wrap hero">
       <div class="hero-lead">
         <p class="eyebrow">研究B · LLM行动者归因评测</p>
         <h1>备选、理由、反馈与后续行动，哪些线索会改变评价？</h1>
         <p class="sub">研究B固定机器主体，逐项改变材料中的决策信息，并用统一的评价维度比较六种条件。</p>
-        <p class="hero-intro">研究A显示，身份和决策过程写法会对应不同评价。研究B继续拆分过程信息，分别考察备选方案、明确理由、外部反馈，以及反馈后的维持或改变。</p>
+        <p class="hero-intro">页面把材料中的AI系统作为行动者，固定任务和最终选项，再分别加入备选方案、明确理由、外部反馈，以及反馈后的维持或改变。</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#example">浏览六种材料</a>
           <a class="btn" href="#comparison">查看分析方法</a>
@@ -27,6 +28,7 @@
 
   <nav class="toc" aria-label="页面导航">
     <div class="wrap">
+      <a class="toc-home" href="../">返回项目总览</a>
       <a href="#example">六种材料</a>
       <a href="#materialAudit">材料检查</a>
       <a href="#measurement">评价维度</a>
@@ -145,7 +147,7 @@
           <p class="placeholder-note">材料审计结果将在数据载入后显示。</p>
         </div>
         <p class="reading" id="materialAuditNote">正在载入材料审计结果……</p>
-        <h3 class="group-label">对Benchmark材料生产的意义</h3>
+        <h3 class="group-label">这些检查解决什么问题</h3>
         <ul class="audit-implications">
           <li>每项预设比较对应明确的信息增量。</li>
           <li>方向版本未触发预设长度和句子数量阈值；措辞强度和语义对称性未纳入当前审计。</li>
@@ -248,7 +250,7 @@
             <h3 class="group-label">分析单位</h3>
             <p class="reading">一条分析记录对应一个评判模型、一条材料和一个构念分数的组合。同一条材料会被两个评判模型分别评分，两条记录在结构上配对，material_id 用于识别这种配对关系。</p>
 
-            <h3 class="group-label">正式模型</h3>
+            <h3 class="group-label">计划使用的统计模型</h3>
             <p class="reading">每个构念在自身原量尺上单独拟合一个混合效应模型，形式如下：</p>
             <pre class="model-formula">construct_score
 ~
@@ -318,68 +320,28 @@ material_id</pre>
         <div class="section-heading">
           <span class="section-index">05</span>
           <div>
-            <h2>评价记录怎样转化为比较结果</h2>
-            <p class="lead">材料经过统一评价，再按条件汇总和比较。</p>
+            <h2>分析流程示例</h2>
+            <p class="lead">下面展示离线评价记录进入统计表和图表的方式。</p>
           </div>
         </div>
 
         <ol class="analysis-pipeline" aria-label="评价记录到比较结果">
           <li><span class="flow-step">1</span><p>96条材料</p></li>
-          <li><span class="flow-step">2</span><p>形成两组独立评价记录</p></li>
+          <li><span class="flow-step">2</span><p>接收两组离线评价记录</p></li>
           <li><span class="flow-step">3</span><p>题项汇总为评价维度</p></li>
           <li><span class="flow-step">4</span><p>比较六种材料条件</p></li>
           <li><span class="flow-step">5</span><p>检查场景与评价来源差异</p></li>
         </ol>
-
-        <h3 class="group-label">浏览完整材料</h3>
-        <div class="instruction-box">场景决定任务语境，条件决定呈现哪些决策过程信息，方向A/B代表该场景中的两种备选决定。下方中文摘要说明材料结构，展开后可看到协议中定义的英文材料原文。</div>
-        <div class="controls browser-controls">
-          <label>场景
-            <select id="scenSelect" disabled></select>
-          </label>
-          <label>材料条件
-            <select id="scenCondSelect" disabled></select>
-          </label>
-          <label>决策方向
-            <select id="scenDirSelect" disabled></select>
-          </label>
-        </div>
-        <div id="scenStim"><p class="placeholder-note">材料浏览器将在示例数据载入后可用。</p></div>
-
-        <details class="tech-details" id="duDetails">
-          <summary>查看材料编码（D 决定信息 / U 反馈后行为）</summary>
-          <div class="details-body">
-            <p class="reading">材料由两个阶段组成。决定信息 D 控制展示了哪些决策过程：D0 只给出决定，D1 加入备选方案，D2 加入明确理由。反馈后行为 U 控制反馈和第二次决定：U0 无反馈，U1 加入反馈，U2 反馈后维持，U3 反馈后改变。六个条件是 D×U 空间里选取的组合。</p>
-            <div class="du-grid">
-              <div class="du-stage">
-                <h3>阶段一：决定信息 D</h3>
-                <ul class="du-list">
-                  <li><span class="du-code">D0</span> 直接呈现决定</li>
-                  <li><span class="du-code">D1</span> 呈现备选方案和决定</li>
-                  <li><span class="du-code">D2</span> 呈现决定和明确理由</li>
-                </ul>
-              </div>
-              <div class="du-stage">
-                <h3>阶段二：反馈后行为 U</h3>
-                <ul class="du-list">
-                  <li><span class="du-code">U0</span> 无反馈和第二次决定</li>
-                  <li><span class="du-code">U1</span> 加入反馈</li>
-                  <li><span class="du-code">U2</span> 反馈后维持决定</li>
-                  <li><span class="du-code">U3</span> 反馈后改变决定</li>
-                </ul>
-              </div>
-            </div>
-            <div class="condition-grid" id="conditionCards"></div>
-            <p class="reading design-note">本轮把六个组合视为一个六水平条件因子：C0=D0-U0、C1=D1-U0、C2=D2-U0、C3=D2-U1、C4=D2-U2、C5=D2-U3。完整 D×U 交互将在扩展设计中单独估计。</p>
-          </div>
-        </details>
 
         <h3 class="group-label">条件变化与预设比较</h3>
         <div class="instruction-box demo-lead">界面中的数值用于校验分析流程、统计表和图表结构。外部提供的离线评价记录通过验证后，该区域将按同一结构填入分析结果。</div>
 
         <div id="demoError" class="error-panel" hidden></div>
 
-        <div id="demoContent">
+        <details class="tech-details" id="demoOutputDetails">
+          <summary>查看示例分析输出</summary>
+          <div class="details-body">
+            <div id="demoContent">
           <div class="demo-metric-grid" id="demoMetrics"></div>
 
           <h3 class="group-label">选择一个评价维度，看它在六个条件下的变化</h3>
@@ -454,6 +416,8 @@ material_id</pre>
             </div>
           </details>
         </div>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -498,7 +462,8 @@ material_id</pre>
 
   <footer class="site">
     <div class="wrap">
-      研究B · 机器主体决策过程归因
+      <strong>研究B · 机器主体决策过程归因</strong>
+      <p><a href="../">返回项目总览</a> · <a href="../identity-process-attribution-baseline/">进入研究A</a></p>
     </div>
   </footer>
 
