@@ -205,7 +205,7 @@ def test_study_b_card_separates_structural_check_from_semantic_review():
 
 # --- 5. CI / Pages generated-artefact gates --------------------------------
 
-ROBUSTNESS_GATE = "python scripts/analyze_research_a_robustness.py --check"
+ROBUSTNESS_GATE = "python scripts/check_research_a_robustness_outputs.py"
 AUDIT_GATE = "python scripts/audit_study_b_materials.py --check"
 
 
