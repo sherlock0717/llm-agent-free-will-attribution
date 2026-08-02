@@ -8,9 +8,9 @@
       "id": "phase-1",
       "local_status": "completed",
       "name": "Engineering Foundation And Historical Baseline",
-      "release_status": "pending_verification",
-      "status": "current",
-      "summary": "本地工程基础完成；发布验证待完成。"
+      "release_status": "completed",
+      "status": "completed",
+      "summary": "本地工程基础完成；公开展示与离线复现版本完成。"
     },
     {
       "depends_on": [
@@ -135,7 +135,7 @@
       "evidence_ref": [],
       "id": "site-005",
       "name": "Public Showcase Content And Visual Redesign",
-      "status": "current",
+      "status": "completed",
       "summary": "内容去模板化、信息层级与视觉结构重构、原生数据可视化。"
     },
     {
@@ -146,9 +146,9 @@
       "evidence_ref": [],
       "id": "rel-001",
       "name": "Push, CI And Pages Release",
-      "release_status": "pending_verification",
-      "status": "planned",
-      "summary": "统一发布验证：完整回归、远程 CI、Pages 部署、在线链接校验（需 push 授权）。"
+      "release_status": "completed",
+      "status": "completed",
+      "summary": "统一发布验证：完整回归、远程 CI、Pages 部署、在线链接校验。"
     }
   ]
 }

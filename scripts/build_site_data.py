@@ -39,7 +39,10 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 
-STATUS_ENUM = {"completed", "current", "planned", "historical", "pending_verification"}
+# "pending_verification" was dropped once the public showcase + offline
+# reproduction release verification finished; reintroducing it in the manifest
+# must fail the build instead of silently resurfacing a stale status badge.
+STATUS_ENUM = {"completed", "current", "planned", "historical"}
 
 SELECTED_FIGURES = [
     ("mean-agency", "outputs/plots/mean_agency.png", "assets/figures/mean_agency.png",
@@ -201,7 +204,10 @@ def build_site_summary() -> dict:
         "project_version": version,
         "project_stage": "current",
         "local_engineering_status": "completed",
-        "release_verification_status": "pending_verification",
+        # Public showcase + offline reproduction release verification finished
+        # (Ubuntu/Windows CI, strict public JSON, Pages assembly, route checks).
+        # This says nothing about research results still marked as planned.
+        "release_verification_status": "completed",
         "source_commit": commit,
         "data_as_of_date": commit_date,
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -213,7 +219,6 @@ def build_site_summary() -> dict:
         "historical_data_type": "real_api_output",
         "mock_usage": "engineering_validation_only",
         "provenance_status": "incomplete_run_metadata",
-        "benchmark_status": "planned",
         "token_usage_total": None,
         "estimated_cost_usd": None,
         "model_version_snapshot": None,

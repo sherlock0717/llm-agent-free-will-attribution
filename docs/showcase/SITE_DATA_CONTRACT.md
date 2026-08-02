@@ -7,12 +7,13 @@
 ## 0. 状态枚举（status enum）
 
 ```text
-"completed"             # 已实现且已本地验证
+"completed"             # 已实现且已验证
 "current"               # 进行中
 "planned"               # 规划中、未实现
 "historical"            # 历史基线（v1 真实 API 数据）
-"pending_verification"  # 已配置未远程验证（如 CI）
 ```
+
+> 公开展示与离线复现版本完成后，`"pending_verification"` 从枚举中移除；manifest 中重新出现该值必须让构建失败。
 
 ## 1. site/data/site_summary.json
 
@@ -23,7 +24,7 @@
   "project_version": "...",
   "project_stage": "current",
   "local_engineering_status": "completed",
-  "release_verification_status": "pending_verification",
+  "release_verification_status": "completed",
   "source_commit": "...",
   "data_as_of_date": "...",
   "generated_at": "...",
@@ -35,7 +36,6 @@
   "historical_data_type": "real_api_output",
   "mock_usage": "engineering_validation_only",
   "provenance_status": "...",
-  "benchmark_status": "...",
   "token_usage_total": null,
   "estimated_cost_usd": null,
   "model_version_snapshot": null,
@@ -62,7 +62,7 @@
 | `project_version` | string | yes | `pyproject.toml` | `project.version` | 直接读取 | 不为空 | Hero 版本标签 | direct_fact |
 | `project_stage` | string(enum) | yes | 规划文档 | Phase 1 阶段 | 固定 `"current"`（属通用 status enum） | 不为空 | Hero 状态 | direct_fact |
 | `local_engineering_status` | string(enum) | yes | 规划 Phase 1 | — | 固定 `"completed"` | 不为空 | Hero / Reproducibility | direct_fact |
-| `release_verification_status` | string(enum) | yes | `ci.yml` + 无 push 记录 | — | 固定 `"pending_verification"`（禁止 `"passing"`/`"completed"`） | 不为空 | Hero / Reproducibility | direct_fact |
+| `release_verification_status` | string(enum) | yes | `ci.yml` / `pages.yml` + 生成物 `--check` 门禁 | — | 固定 `"completed"`：公开展示与离线复现版本完成 | 不为空 | Hero / Reproducibility | direct_fact |
 | `source_commit` | string | yes | Git | `git log -1 --format=%H -- <RESEARCH_SOURCE_PATHS>` | **研究数据与设计输入最近一次变化的 commit**（完整 SHA）。SITE-005.1：**不再用 `git rev-parse HEAD`**——否则页面 commit 后已提交的 `site_summary.json` 会立即过期、`--check` 失败。语义：不是页面构建 commit、不是当前 HEAD、不是部署 commit。 | 不为空 | 页脚（"研究数据源提交"） | direct_fact |
 | `data_as_of_date` | string(ISO date) | yes | Git | `git show -s --format=%cI <source_commit>` | 取 `source_commit` 的提交日期；**不使用每次构建的随机当前时间，也不使用 HEAD** | 不为空 | Historical Results 标注 | direct_fact |
 
@@ -76,7 +76,6 @@
 | `historical_data_type` | string | yes | provenance statement | — | 固定 `"real_api_output"` | 不为空 | Evidence | direct_fact |
 | `mock_usage` | string | yes | `.github/workflows/ci.yml` / CLI | — | 固定 `"engineering_validation_only"` | 不为空 | Evidence | direct_fact |
 | `provenance_status` | string | yes | provenance statement §5 | — | 固定 `"incomplete_run_metadata"` | 不为空 | Evidence | derived |
-| `benchmark_status` | string(enum) | yes | 规划 Phase 6 | — | 固定 `"planned"` | 不为空 | Roadmap | direct_fact |
 | `token_usage_total` | int\|null | no | 历史运行 | — | 历史缺失 → `null`（不编造） | 允许 null | 不展示或标"未记录" | null_missing |
 | `estimated_cost_usd` | number\|null | no | 历史运行 | — | 历史缺失 → `null`（不编造） | 允许 null | 不展示或标"未记录" | null_missing |
 | `model_version_snapshot` | string\|null | no | 历史运行 | — | 历史缺失 → `null`（不编造） | 允许 null | 不展示或标"未记录" | null_missing |
@@ -98,19 +97,19 @@
 | `depends_on` | array[string] | no | 依赖编号 | 空数组 | 技术详情 |
 | `evidence_ref` | array[string] | no | 佐证文件相对路径 | 空数组 | "来源"链接 |
 | `local_status` | string(enum) | no | 本地实现状态（如 Phase 1 = `"completed"`） | 允许 null | 状态徽章（本地） |
-| `release_status` | string(enum) | no | 远程/发布验证状态（如 Phase 1 = `"pending_verification"`） | 允许 null | 状态徽章（发布） |
+| `release_status` | string(enum) | no | 发布验证状态（如 Phase 1 = `"completed"`） | 允许 null | 状态徽章（发布） |
 
-约束：Phase 6 与所有 benchmark 项 `status` 只能是 `"planned"`；`remote_ci` / 发布相关项 `release_status` 只能是 `"pending_verification"`。
+约束：Phase 6 与所有 benchmark 项 `status` 只能是 `"planned"`；`"pending_verification"` 不再属于枚举，任何项不得使用。
 
-Phase 1 示例（页面显示**两个**状态标签，不将 Phase 1 简化成单一 Completed）：
+Phase 1 示例（页面显示**两个**状态标签，分别对应本地实现与发布验证）：
 
 ```json
 {
   "id": "phase-1",
   "name": "Engineering Foundation And Historical Baseline",
-  "status": "current",
+  "status": "completed",
   "local_status": "completed",
-  "release_status": "pending_verification",
+  "release_status": "completed",
   "summary": "...",
   "depends_on": [],
   "evidence_ref": ["docs/audit/repository_rebaseline_assessment.md"]

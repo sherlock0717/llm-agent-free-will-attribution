@@ -59,6 +59,12 @@ jobs:
       - name: Check Study B protocol package
         run: uv run --frozen python scripts/build_study_b_protocol_package.py --check
 
+      - name: Check Research A robustness artefacts
+        run: uv run --frozen python scripts/check_research_a_robustness_outputs.py
+
+      - name: Check Study B material structural audit
+        run: uv run --frozen python scripts/audit_study_b_materials.py --check
+
       - name: Check public JSON
         run: uv run --frozen python scripts/check_public_json.py
 

@@ -63,6 +63,12 @@ jobs:
       - name: Check Study B offline research package
         run: uv run --frozen python scripts/build_study_b_protocol_package.py --check
 
+      - name: Check Research A robustness artefacts
+        run: uv run --frozen python scripts/check_research_a_robustness_outputs.py
+
+      - name: Check Study B material structural audit
+        run: uv run --frozen python scripts/audit_study_b_materials.py --check
+
       - name: Run public site tests
         run: uv run --frozen pytest -q tests/site
 
@@ -72,6 +78,7 @@ jobs:
           scripts/assemble_pages.py
           scripts/public_json.py
           scripts/check_public_json.py
+          scripts/check_research_a_robustness_outputs.py
           scripts/build_research_a_scenario_results.py
           scripts/build_research_a_v2.py
           scripts/build_study_b_protocol_package.py
@@ -82,6 +89,7 @@ jobs:
           tests/site/test_research_a_scenario.py
           tests/site/test_static_site.py
           tests/site/test_study_b_offline_scope.py
+          tests/test_research_a_cross_platform_artifacts.py
           tests/test_study_b_protocol_package.py
           tests/test_study_b_external_import.py
 
@@ -93,6 +101,9 @@ jobs:
           uv run --frozen python scripts/check_public_json.py
           _site/data
           _site/machine-decision-process-attribution/data
+
+      - name: Verify tracked files did not drift during assembly
+        run: git diff --exit-code
 
       - name: Upload validated Pages artifact
         uses: actions/upload-pages-artifact@v3

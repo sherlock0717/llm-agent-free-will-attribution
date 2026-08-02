@@ -361,18 +361,14 @@ function renderRobustnessModules(summary) {
       proc.scenario_influence.slice(0, 5));
   }
 
-  // module 3: how does the result change after adding text length?
+  // module 3: text length and process condition vary together. The first layer
+  // keeps a single boundary statement; the adjusted coefficients stay in
+  // docs/research_a_robustness_report.md and are not surfaced here.
   const length = proc?.length_sensitivity;
   if (length) {
-    const flip = length.direction_flips ? "方向发生改变" : "方向没有改变";
     setText("#robustLength .robust-conclusion",
-      `加入字符数和句子数后，A4估计由${formatNumber(length.base_estimate, 2)}`
-      + `变为${formatNumber(length.length_adjusted_estimate, 2)}，${flip}。`
-      + "由于文本长度与过程条件共同变化，这一分析说明估计对模型设定较敏感，"
-      + "无法据此分离文本长度和过程信息各自的独立作用。");
-    const pct = length.absolute_shrink_ratio != null
-      ? `${(length.absolute_shrink_ratio * 100).toFixed(0)}%` : "—";
-    setText('[data-robust="length-number"]', pct);
+      "文本长度与过程条件共同变化，现有数据不能可靠分离两者的独立作用。");
+    setText('[data-robust="length-number"]', "共同变化");
     renderLengthVisual(document.querySelector('[data-robust-figure="length"]'),
       length.base_estimate, length.length_adjusted_estimate);
   }

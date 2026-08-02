@@ -50,8 +50,10 @@ def test_site_summary_core_fields():
     assert s["mock_usage"] == "engineering_validation_only"
     assert s["project_stage"] == "current"
     assert s["local_engineering_status"] == "completed"
-    assert s["release_verification_status"] == "pending_verification"
-    assert s["benchmark_status"] == "planned"
+    assert s["release_verification_status"] == "completed"
+    # benchmark_status was a duplicated top-level "planned" badge; the long-term
+    # benchmark direction now lives only in roadmap phase-6.
+    assert "benchmark_status" not in s
     assert s["token_usage_total"] is None
     assert s["estimated_cost_usd"] is None
     assert s["model_version_snapshot"] is None
@@ -128,7 +130,18 @@ def test_roadmap_phase_six_is_planned():
     assert phase6["status"] == "planned"
     phase1 = next(p for p in rm["phases"] if p["id"] == "phase-1")
     assert phase1["local_status"] == "completed"
-    assert phase1["release_status"] == "pending_verification"
+    assert phase1["release_status"] == "completed"
+
+
+def test_release_track_is_completed_not_pending():
+    """The public showcase + offline reproduction release is finished."""
+    rm = bsd.build_roadmap()
+    rel = next(t for t in rm["track_s"] if t["id"] == "rel-001")
+    assert rel["status"] == "completed"
+    assert rel["release_status"] == "completed"
+    statuses = [p.get("release_status") for p in rm["phases"]]
+    statuses += [t.get("release_status") for t in rm["track_s"]]
+    assert "pending_verification" not in statuses
 
 
 def test_missing_source_raises_build_error(tmp_path, monkeypatch):

@@ -36,7 +36,7 @@
         <div class="hero-copy">
           <p class="eyebrow">身份标签、理由、反馈与后续行动</p>
           <h1>在研究A中，仅改变身份和过程写法，也会改变模型评价</h1>
-          <p class="subtitle">360条DeepSeek模型响应显示，较完整的过程信息对应更高的部分能动性评分，人类与AI标签对应不同的自由意志归因；这些方向在多个场景中一致，但变化幅度随任务而异。</p>
+          <p class="subtitle">360条DeepSeek模型响应显示，包含理由、反思、反馈与后续行动的高结构过程写法对应更高的能动性评分，人类与AI标签对应不同的自由意志归因；这些方向在多个场景中一致，但变化幅度随任务而异。</p>
           <p class="hero-intro">当前结果来自研究A；研究B提供材料与分析设计，本页不把研究B的固定数据写成研究结果。对AI行动者的评价不能只看最终选择，评测需要拆开身份标签、理由、反馈和后续行动，并报告结果在不同场景中的变化。</p>
           <div class="actions">
             <a class="btn primary" href="#findings">查看主要发现</a>
@@ -65,8 +65,8 @@
         <p class="reading">研究A改变行动者身份标签和决策过程写法，比较模型对能动性、心智、自由意志相关归因与责任的评分。当前证据支持以下三点。</p>
         <div class="finding-list">
           <article class="finding-block">
-            <h3 data-finding-title="process">反思与反馈写法对应更高的能动性评分</h3>
-            <p data-finding-body="process">与只提供较长背景和最终选择相比，加入反思、反馈和后续行动时，部分能动性评分更高。</p>
+            <h3 data-finding-title="process">高结构过程写法对应更高的能动性评分</h3>
+            <p data-finding-body="process">包含理由、反思、反馈与后续行动的高结构过程写法，与只包含较长背景和最终选择的写法相比，能动性评分更高。该比较对应两种成套写法的整体差异。</p>
             <p class="finding-metric" data-finding-metric="process" hidden></p>
           </article>
           <article class="finding-block">
@@ -138,8 +138,9 @@
             <ul class="study-facts-list">
               <li>360条DeepSeek模型问卷响应</li>
               <li>8个场景、6种过程条件、2种身份标签</li>
-              <li>条件比较、身份比较和场景一致性分析</li>
+              <li>条件比较、身份比较、场景一致性分析和稳健性分析</li>
               <li>结果描述该模型配置在这些材料与提示下的评价模式</li>
+              <li>文本长度与过程条件共同变化，现有数据不能可靠分离两者的独立作用</li>
             </ul>
           </article>
           <article class="study-card study-b">
@@ -148,11 +149,13 @@
               <li>96条机器主体材料</li>
               <li>备选、理由、反馈、维持和改变六种条件</li>
               <li>四个主要评价维度与六项预设比较</li>
+              <li>96条材料全部通过确定性结构检查</li>
+              <li>语义对称性、理由强度和反馈强度未纳入本轮审计</li>
               <li>固定数据仅用于校验分析流程和页面结构</li>
             </ul>
           </article>
         </div>
-        <p class="reading">当前结果不能证明跨模型泛化，也不能证明模型拥有被评分的心理属性。项目测量的是语言模型如何根据文本线索形成评价，而不是行动者本身是否真实具有这些属性。</p>
+        <p class="reading">研究A提供已有结果，研究B提供材料与分析设计，两者分开呈现。当前结果不能证明跨模型泛化，也不能证明模型拥有被评分的心理属性。项目测量的是语言模型如何根据文本线索形成评价，而不是行动者本身是否真实具有这些属性。</p>
       </div>
     </section>
 
