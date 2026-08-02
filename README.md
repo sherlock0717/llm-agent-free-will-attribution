@@ -1,4 +1,3 @@
-
 <p align="center">
   <img src="site/assets/figures/social-preview.svg" alt="LLM行动者归因评测：从心理学构念到评测系统" width="100%" />
 </p>
@@ -20,7 +19,7 @@
 | 结构化研究材料 | 96条 |
 | 任务场景 | 8个 |
 | 过程条件 | 6种 |
-| 自动化测试 | 1005项 |
+| 自动化测试 | 1011项 |
 | CI环境 | Ubuntu与Windows |
 
 ## 研究问题
