@@ -76,9 +76,9 @@ async function loadFindingMetrics() {
   if (proc) {
     setFindingBody(
       "process",
-      `包含理由、反思、反馈与后续行动的高结构过程写法，与只包含较长背景和最终选择的写法相比，能动性评分平均高出${fmt(proc.full_effect)}分。`
+      `包含理由、反思、反馈与后续行动的成套写法，比只包含较长背景和最终选择的写法平均高出${fmt(proc.full_effect)}分。`
       + `${proc.direction_majority_count}/${proc.total_unit_count}个场景×身份配对单元呈现相同方向。`
-      + "该比较对应两种成套写法的整体差异，不是反馈这一单项线索的独立效应。");
+      + "这一比较覆盖两种完整写法。" );
     setFindingMetric(
       "process",
       `${proc.direction_majority_count}/${proc.total_unit_count}个场景×身份配对单元方向一致`);
@@ -86,9 +86,9 @@ async function loadFindingMetrics() {
   if (ident) {
     setFindingBody(
       "identity",
-      `在任务场景和过程写法保持相同时，人类标签下的自由意志归因平均比AI标签高${fmt(ident.overall_identity_difference)}分。`
+      `任务场景和过程写法相同时，人类标签下的自由意志归因平均比AI标签高${fmt(ident.overall_identity_difference)}分。`
       + `${ident.direction_majority_count}/${ident.total_unit_count}个场景×过程条件身份配对单元呈现相同方向。`
-      + "该差异只描述自由意志归因这一维度，不概括所有心智和责任维度。");
+      + "这一结果聚焦自由意志归因维度。" );
     setFindingMetric(
       "identity",
       `${ident.direction_majority_count}/${ident.total_unit_count}个场景×过程条件身份配对方向一致`);
@@ -98,7 +98,7 @@ async function loadFindingMetrics() {
     if (lo != null && hi != null) {
       setFindingMetric(
         "scenario",
-        `过程效应在八个场景中的平均差异范围为${fmt(lo)}至${fmt(hi)}`);
+        `过程差异在八个场景中的平均范围为${fmt(lo)}至${fmt(hi)}`);
     }
   }
 }

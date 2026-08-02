@@ -57,7 +57,7 @@ def test_study_b_no_internal_slot_wording():
 def test_root_page_states_offline_scope_for_study_b():
     assert "下一步执行两个评判模型的正式评分" not in ROOT_HTML
     assert "双模型正式评分" not in ROOT_HTML
-    assert "离线分析方法" in ROOT_HTML
+    assert "离线分析方案" in ROOT_HTML
 
 
 def test_study_b_status_notes_reference_offline_import():
