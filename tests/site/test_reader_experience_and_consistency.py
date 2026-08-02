@@ -90,3 +90,14 @@ def test_success_status_messages_are_hidden_by_javascript():
     assert 'node.hidden = kind === "success"' in text(ROOT / "site" / "assets" / "js" / "site.js")
     assert "STATUS.hidden = true" in text(A_JS)
     assert 'status.hidden = kind === "success"' in text(ROOT / "docs" / "pa-wu-r1-pilot" / "app.js")
+
+
+def test_readme_defines_attribution_scale_and_counting_units():
+    content = text(README)
+    for phrase in [
+        "行动者归因",
+        "1—7分量尺",
+        "360表示模型评分输出次数",
+        "16和48表示材料组合的配对数量",
+    ]:
+        assert phrase in content
