@@ -32,5 +32,5 @@
 
 ## 依据
 
-- 研究A（现有结果）：过程写法进入能动性评价、身份标签改变心智与责任评价、结论方向跨场景重复但幅度依赖场景。见 `docs/research_a_robustness_report.md`。
-- 研究B（材料设计与审计）：每个条件只改变一个目标信息单元、方向版本长度可比、材料审计先于评价分析。见 `docs/reviews/study_b_material_integrity_review.md`。
+- 研究A（现有结果）：反思与反馈写法对应更高的能动性评分；在相同场景和过程条件下，人类标签对应更高的自由意志归因；两项比较方向跨场景重复，但幅度依赖场景。见 `docs/research_a_robustness_report.md`。
+- 研究B（材料设计与审计）：96条材料形成完整结构网格，方向版本没有触发预设结构阈值；语义对称性、理由强度和反馈强度仍属于独立人工复核范围。见 `docs/reviews/study_b_material_integrity_review.md`。
