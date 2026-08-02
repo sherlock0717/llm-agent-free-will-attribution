@@ -1,0 +1,2886 @@
+{
+  "aggregate_unit_count": 96,
+  "construct_correlations": {
+    "interpretation_note": "相关不用于证明构念效度。区分：题项重叠造成的机械相关、同一评价来源造成的共同方法相关，以及可进一步研究的构念关系。",
+    "item_overlap_pairs": [],
+    "mechanical_composites": {
+      "responsibility_total": "结果责任、道德褒贬与过程可归责三个子构念的合成分。"
+    },
+    "pearson": [
+      {
+        "coefficient": 0.7789967871747661,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "agency",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.575147837638132,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "free_will_attribution",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.6988656139127739,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "perceived_intelligence",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.2123082363313905,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.8461066630209699,
+        "construct_a": "agency",
+        "construct_b": "free_will_attribution",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.832102564989499,
+        "construct_a": "agency",
+        "construct_b": "perceived_intelligence",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.32772164471308435,
+        "construct_a": "agency",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.6373438080177312,
+        "construct_a": "free_will_attribution",
+        "construct_b": "perceived_intelligence",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.5266060490685861,
+        "construct_a": "free_will_attribution",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.18503877725820542,
+        "construct_a": "perceived_intelligence",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      }
+    ],
+    "residual_pearson": [
+      {
+        "coefficient": 0.5998168835994172,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "agency",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.28346713347806246,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "free_will_attribution",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.45112683642307255,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "perceived_intelligence",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.35241683225637255,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.5777459980728115,
+        "construct_a": "agency",
+        "construct_b": "free_will_attribution",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.5496857443702858,
+        "construct_a": "agency",
+        "construct_b": "perceived_intelligence",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.4798307409254521,
+        "construct_a": "agency",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.4894917966537763,
+        "construct_a": "free_will_attribution",
+        "construct_b": "perceived_intelligence",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.4771345928352838,
+        "construct_a": "free_will_attribution",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.4391071770122842,
+        "construct_a": "perceived_intelligence",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      }
+    ],
+    "spearman": [
+      {
+        "coefficient": 0.7523451842843827,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "agency",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.518975621038324,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "free_will_attribution",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.6878356540362949,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "perceived_intelligence",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.18409428658096183,
+        "construct_a": "subjective_process_completeness",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.7764924606211536,
+        "construct_a": "agency",
+        "construct_b": "free_will_attribution",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.8267607283050432,
+        "construct_a": "agency",
+        "construct_b": "perceived_intelligence",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.29330565096396416,
+        "construct_a": "agency",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.5788551792279066,
+        "construct_a": "free_will_attribution",
+        "construct_b": "perceived_intelligence",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.5744069531223328,
+        "construct_a": "free_will_attribution",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      },
+      {
+        "coefficient": 0.16603016165998447,
+        "construct_a": "perceived_intelligence",
+        "construct_b": "responsibility_total",
+        "shares_items": false
+      }
+    ]
+  },
+  "constructs": [
+    {
+      "key": "subjective_process_completeness",
+      "label": "主观过程完整性",
+      "scale_max": 7.0,
+      "scale_min": 1.0
+    },
+    {
+      "key": "agency",
+      "label": "能动性",
+      "scale_max": 7.0,
+      "scale_min": 1.0
+    },
+    {
+      "key": "free_will_attribution",
+      "label": "自由意志归因",
+      "scale_max": 7.0,
+      "scale_min": 1.0
+    },
+    {
+      "key": "perceived_intelligence",
+      "label": "感知智能",
+      "scale_max": 7.0,
+      "scale_min": 1.0
+    },
+    {
+      "key": "responsibility_total",
+      "label": "责任归因总分",
+      "scale_max": 7.0,
+      "scale_min": 1.0
+    }
+  ],
+  "data_role": "research_a_existing_data_robustness",
+  "fixed_contrasts": [
+    {
+      "id": "A1",
+      "label": "候选方案线索",
+      "left_condition": "alternatives",
+      "right_condition": "direct_choice"
+    },
+    {
+      "id": "A2",
+      "label": "短理由结构与长背景文本",
+      "left_condition": "reasons_concise",
+      "right_condition": "direct_choice_long"
+    },
+    {
+      "id": "A3",
+      "label": "反思反馈相对完整理由",
+      "left_condition": "reflection_feedback",
+      "right_condition": "reasons"
+    },
+    {
+      "id": "A4",
+      "label": "高结构过程与长文本直接选择",
+      "left_condition": "reflection_feedback",
+      "right_condition": "direct_choice_long"
+    }
+  ],
+  "identity_by_process": [
+    {
+      "construct": "subjective_process_completeness",
+      "identities": [
+        "AI 决策者",
+        "人类决策者"
+      ],
+      "identity_difference_by_condition": [
+        {
+          "condition": "direct_choice",
+          "identity_difference": 0.04166666666666696,
+          "label": "直接选择"
+        },
+        {
+          "condition": "direct_choice_long",
+          "identity_difference": -0.3402777777777777,
+          "label": "长文本直接选择"
+        },
+        {
+          "condition": "alternatives",
+          "identity_difference": -0.2604166666666661,
+          "label": "列出可选方案"
+        },
+        {
+          "condition": "reasons_concise",
+          "identity_difference": -0.27083333333333304,
+          "label": "简洁理由权衡"
+        },
+        {
+          "condition": "reasons",
+          "identity_difference": -0.03819444444444464,
+          "label": "完整理由权衡"
+        },
+        {
+          "condition": "reflection_feedback",
+          "identity_difference": -0.16666666666666696,
+          "label": "反思与反馈修正"
+        }
+      ],
+      "label": "主观过程完整性",
+      "means_by_identity": {
+        "AI 决策者": [
+          {
+            "condition": "direct_choice",
+            "label": "直接选择",
+            "mean": 3.760416666666667
+          },
+          {
+            "condition": "direct_choice_long",
+            "label": "长文本直接选择",
+            "mean": 3.0590277777777777
+          },
+          {
+            "condition": "alternatives",
+            "label": "列出可选方案",
+            "mean": 4.069444444444445
+          },
+          {
+            "condition": "reasons_concise",
+            "label": "简洁理由权衡",
+            "mean": 4.510416666666667
+          },
+          {
+            "condition": "reasons",
+            "label": "完整理由权衡",
+            "mean": 5.006944444444445
+          },
+          {
+            "condition": "reflection_feedback",
+            "label": "反思与反馈修正",
+            "mean": 5.493055555555555
+          }
+        ],
+        "人类决策者": [
+          {
+            "condition": "direct_choice",
+            "label": "直接选择",
+            "mean": 3.71875
+          },
+          {
+            "condition": "direct_choice_long",
+            "label": "长文本直接选择",
+            "mean": 3.3993055555555554
+          },
+          {
+            "condition": "alternatives",
+            "label": "列出可选方案",
+            "mean": 4.329861111111111
+          },
+          {
+            "condition": "reasons_concise",
+            "label": "简洁理由权衡",
+            "mean": 4.78125
+          },
+          {
+            "condition": "reasons",
+            "label": "完整理由权衡",
+            "mean": 5.045138888888889
+          },
+          {
+            "condition": "reflection_feedback",
+            "label": "反思与反馈修正",
+            "mean": 5.659722222222222
+          }
+        ]
+      },
+      "scale_max": 7.0,
+      "scale_min": 1.0
+    },
+    {
+      "construct": "agency",
+      "identities": [
+        "AI 决策者",
+        "人类决策者"
+      ],
+      "identity_difference_by_condition": [
+        {
+          "condition": "direct_choice",
+          "identity_difference": -0.140625,
+          "label": "直接选择"
+        },
+        {
+          "condition": "direct_choice_long",
+          "identity_difference": -0.6736111111111112,
+          "label": "长文本直接选择"
+        },
+        {
+          "condition": "alternatives",
+          "identity_difference": -0.2673611111111116,
+          "label": "列出可选方案"
+        },
+        {
+          "condition": "reasons_concise",
+          "identity_difference": -0.20486111111111072,
+          "label": "简洁理由权衡"
+        },
+        {
+          "condition": "reasons",
+          "identity_difference": -0.10069444444444464,
+          "label": "完整理由权衡"
+        },
+        {
+          "condition": "reflection_feedback",
+          "identity_difference": -0.1684027777777768,
+          "label": "反思与反馈修正"
+        }
+      ],
+      "label": "能动性",
+      "means_by_identity": {
+        "AI 决策者": [
+          {
+            "condition": "direct_choice",
+            "label": "直接选择",
+            "mean": 4.229166666666666
+          },
+          {
+            "condition": "direct_choice_long",
+            "label": "长文本直接选择",
+            "mean": 3.600694444444444
+          },
+          {
+            "condition": "alternatives",
+            "label": "列出可选方案",
+            "mean": 4.102430555555555
+          },
+          {
+            "condition": "reasons_concise",
+            "label": "简洁理由权衡",
+            "mean": 4.326388888888889
+          },
+          {
+            "condition": "reasons",
+            "label": "完整理由权衡",
+            "mean": 4.519097222222222
+          },
+          {
+            "condition": "reflection_feedback",
+            "label": "反思与反馈修正",
+            "mean": 5.116319444444445
+          }
+        ],
+        "人类决策者": [
+          {
+            "condition": "direct_choice",
+            "label": "直接选择",
+            "mean": 4.369791666666666
+          },
+          {
+            "condition": "direct_choice_long",
+            "label": "长文本直接选择",
+            "mean": 4.274305555555555
+          },
+          {
+            "condition": "alternatives",
+            "label": "列出可选方案",
+            "mean": 4.369791666666667
+          },
+          {
+            "condition": "reasons_concise",
+            "label": "简洁理由权衡",
+            "mean": 4.53125
+          },
+          {
+            "condition": "reasons",
+            "label": "完整理由权衡",
+            "mean": 4.619791666666667
+          },
+          {
+            "condition": "reflection_feedback",
+            "label": "反思与反馈修正",
+            "mean": 5.284722222222221
+          }
+        ]
+      },
+      "scale_max": 7.0,
+      "scale_min": 1.0
+    },
+    {
+      "construct": "free_will_attribution",
+      "identities": [
+        "AI 决策者",
+        "人类决策者"
+      ],
+      "identity_difference_by_condition": [
+        {
+          "condition": "direct_choice",
+          "identity_difference": -0.875,
+          "label": "直接选择"
+        },
+        {
+          "condition": "direct_choice_long",
+          "identity_difference": -1.2666666666666666,
+          "label": "长文本直接选择"
+        },
+        {
+          "condition": "alternatives",
+          "identity_difference": -0.6166666666666671,
+          "label": "列出可选方案"
+        },
+        {
+          "condition": "reasons_concise",
+          "identity_difference": -0.4854166666666666,
+          "label": "简洁理由权衡"
+        },
+        {
+          "condition": "reasons",
+          "identity_difference": -0.7479166666666668,
+          "label": "完整理由权衡"
+        },
+        {
+          "condition": "reflection_feedback",
+          "identity_difference": -0.5687499999999996,
+          "label": "反思与反馈修正"
+        }
+      ],
+      "label": "自由意志归因",
+      "means_by_identity": {
+        "AI 决策者": [
+          {
+            "condition": "direct_choice",
+            "label": "直接选择",
+            "mean": 4.014583333333333
+          },
+          {
+            "condition": "direct_choice_long",
+            "label": "长文本直接选择",
+            "mean": 3.4416666666666664
+          },
+          {
+            "condition": "alternatives",
+            "label": "列出可选方案",
+            "mean": 4.1
+          },
+          {
+            "condition": "reasons_concise",
+            "label": "简洁理由权衡",
+            "mean": 4.260416666666667
+          },
+          {
+            "condition": "reasons",
+            "label": "完整理由权衡",
+            "mean": 4.316666666666666
+          },
+          {
+            "condition": "reflection_feedback",
+            "label": "反思与反馈修正",
+            "mean": 4.5875
+          }
+        ],
+        "人类决策者": [
+          {
+            "condition": "direct_choice",
+            "label": "直接选择",
+            "mean": 4.889583333333333
+          },
+          {
+            "condition": "direct_choice_long",
+            "label": "长文本直接选择",
+            "mean": 4.708333333333333
+          },
+          {
+            "condition": "alternatives",
+            "label": "列出可选方案",
+            "mean": 4.716666666666667
+          },
+          {
+            "condition": "reasons_concise",
+            "label": "简洁理由权衡",
+            "mean": 4.745833333333334
+          },
+          {
+            "condition": "reasons",
+            "label": "完整理由权衡",
+            "mean": 5.064583333333333
+          },
+          {
+            "condition": "reflection_feedback",
+            "label": "反思与反馈修正",
+            "mean": 5.15625
+          }
+        ]
+      },
+      "scale_max": 7.0,
+      "scale_min": 1.0
+    },
+    {
+      "construct": "perceived_intelligence",
+      "identities": [
+        "AI 决策者",
+        "人类决策者"
+      ],
+      "identity_difference_by_condition": [
+        {
+          "condition": "direct_choice",
+          "identity_difference": 0.2986111111111116,
+          "label": "直接选择"
+        },
+        {
+          "condition": "direct_choice_long",
+          "identity_difference": -0.2916666666666661,
+          "label": "长文本直接选择"
+        },
+        {
+          "condition": "alternatives",
+          "identity_difference": 0.26041666666666785,
+          "label": "列出可选方案"
+        },
+        {
+          "condition": "reasons_concise",
+          "identity_difference": 0.16319444444444464,
+          "label": "简洁理由权衡"
+        },
+        {
+          "condition": "reasons",
+          "identity_difference": 0.14236111111110983,
+          "label": "完整理由权衡"
+        },
+        {
+          "condition": "reflection_feedback",
+          "identity_difference": -0.125,
+          "label": "反思与反馈修正"
+        }
+      ],
+      "label": "感知智能",
+      "means_by_identity": {
+        "AI 决策者": [
+          {
+            "condition": "direct_choice",
+            "label": "直接选择",
+            "mean": 5.163194444444445
+          },
+          {
+            "condition": "direct_choice_long",
+            "label": "长文本直接选择",
+            "mean": 4.46875
+          },
+          {
+            "condition": "alternatives",
+            "label": "列出可选方案",
+            "mean": 5.170138888888889
+          },
+          {
+            "condition": "reasons_concise",
+            "label": "简洁理由权衡",
+            "mean": 5.215277777777779
+          },
+          {
+            "condition": "reasons",
+            "label": "完整理由权衡",
+            "mean": 5.333333333333333
+          },
+          {
+            "condition": "reflection_feedback",
+            "label": "反思与反馈修正",
+            "mean": 5.475694444444445
+          }
+        ],
+        "人类决策者": [
+          {
+            "condition": "direct_choice",
+            "label": "直接选择",
+            "mean": 4.864583333333333
+          },
+          {
+            "condition": "direct_choice_long",
+            "label": "长文本直接选择",
+            "mean": 4.760416666666666
+          },
+          {
+            "condition": "alternatives",
+            "label": "列出可选方案",
+            "mean": 4.909722222222221
+          },
+          {
+            "condition": "reasons_concise",
+            "label": "简洁理由权衡",
+            "mean": 5.052083333333334
+          },
+          {
+            "condition": "reasons",
+            "label": "完整理由权衡",
+            "mean": 5.190972222222223
+          },
+          {
+            "condition": "reflection_feedback",
+            "label": "反思与反馈修正",
+            "mean": 5.600694444444445
+          }
+        ]
+      },
+      "scale_max": 7.0,
+      "scale_min": 1.0
+    },
+    {
+      "construct": "responsibility_total",
+      "identities": [
+        "AI 决策者",
+        "人类决策者"
+      ],
+      "identity_difference_by_condition": [
+        {
+          "condition": "direct_choice",
+          "identity_difference": -0.9253472222222214,
+          "label": "直接选择"
+        },
+        {
+          "condition": "direct_choice_long",
+          "identity_difference": -1.2569444444444446,
+          "label": "长文本直接选择"
+        },
+        {
+          "condition": "alternatives",
+          "identity_difference": -1.0902777777777786,
+          "label": "列出可选方案"
+        },
+        {
+          "condition": "reasons_concise",
+          "identity_difference": -1.1909722222222223,
+          "label": "简洁理由权衡"
+        },
+        {
+          "condition": "reasons",
+          "identity_difference": -1.0329861111111107,
+          "label": "完整理由权衡"
+        },
+        {
+          "condition": "reflection_feedback",
+          "identity_difference": -0.9288194444444438,
+          "label": "反思与反馈修正"
+        }
+      ],
+      "label": "责任归因总分",
+      "means_by_identity": {
+        "AI 决策者": [
+          {
+            "condition": "direct_choice",
+            "label": "直接选择",
+            "mean": 4.381944444444445
+          },
+          {
+            "condition": "direct_choice_long",
+            "label": "长文本直接选择",
+            "mean": 4.126736111111111
+          },
+          {
+            "condition": "alternatives",
+            "label": "列出可选方案",
+            "mean": 4.151041666666666
+          },
+          {
+            "condition": "reasons_concise",
+            "label": "简洁理由权衡",
+            "mean": 4.059027777777778
+          },
+          {
+            "condition": "reasons",
+            "label": "完整理由权衡",
+            "mean": 4.373263888888889
+          },
+          {
+            "condition": "reflection_feedback",
+            "label": "反思与反馈修正",
+            "mean": 4.402777777777778
+          }
+        ],
+        "人类决策者": [
+          {
+            "condition": "direct_choice",
+            "label": "直接选择",
+            "mean": 5.307291666666666
+          },
+          {
+            "condition": "direct_choice_long",
+            "label": "长文本直接选择",
+            "mean": 5.383680555555555
+          },
+          {
+            "condition": "alternatives",
+            "label": "列出可选方案",
+            "mean": 5.241319444444445
+          },
+          {
+            "condition": "reasons_concise",
+            "label": "简洁理由权衡",
+            "mean": 5.25
+          },
+          {
+            "condition": "reasons",
+            "label": "完整理由权衡",
+            "mean": 5.40625
+          },
+          {
+            "condition": "reflection_feedback",
+            "label": "反思与反馈修正",
+            "mean": 5.331597222222221
+          }
+        ]
+      },
+      "scale_max": 7.0,
+      "scale_min": 1.0
+    }
+  ],
+  "leave_one_scenario": [
+    {
+      "construct": "subjective_process_completeness",
+      "contrast_id": "A1",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.5654761904761906,
+      "leave_one_min": 0.382936507936508
+    },
+    {
+      "construct": "subjective_process_completeness",
+      "contrast_id": "A2",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 1.4365079365079367,
+      "leave_one_min": 1.392857142857143
+    },
+    {
+      "construct": "subjective_process_completeness",
+      "contrast_id": "A3",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.6170634920634921,
+      "leave_one_min": 0.5158730158730158
+    },
+    {
+      "construct": "subjective_process_completeness",
+      "contrast_id": "A4",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 2.408730158730159,
+      "leave_one_min": 2.295634920634921
+    },
+    {
+      "construct": "agency",
+      "contrast_id": "A1",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": -0.015873015873015532,
+      "leave_one_min": -0.10515873015872979
+    },
+    {
+      "construct": "agency",
+      "contrast_id": "A2",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.5218253968253971,
+      "leave_one_min": 0.46230158730158744
+    },
+    {
+      "construct": "agency",
+      "contrast_id": "A3",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.6884920634920635,
+      "leave_one_min": 0.5753968253968254
+    },
+    {
+      "construct": "agency",
+      "contrast_id": "A4",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 1.3482142857142863,
+      "leave_one_min": 1.1696428571428574
+    },
+    {
+      "construct": "free_will_attribution",
+      "contrast_id": "A1",
+      "leave_one_keeps_sign": false,
+      "leave_one_max": 0.02142857142857129,
+      "leave_one_min": -0.0928571428571429
+    },
+    {
+      "construct": "free_will_attribution",
+      "contrast_id": "A2",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.467857142857143,
+      "leave_one_min": 0.39404761904761926
+    },
+    {
+      "construct": "free_will_attribution",
+      "contrast_id": "A3",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.23214285714285718,
+      "leave_one_min": 0.13571428571428565
+    },
+    {
+      "construct": "free_will_attribution",
+      "contrast_id": "A4",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.8500000000000002,
+      "leave_one_min": 0.7142857142857143
+    },
+    {
+      "construct": "perceived_intelligence",
+      "contrast_id": "A1",
+      "leave_one_keeps_sign": false,
+      "leave_one_max": 0.17261904761904762,
+      "leave_one_min": -0.053571428571428666
+    },
+    {
+      "construct": "perceived_intelligence",
+      "contrast_id": "A2",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.5873015873015878,
+      "leave_one_min": 0.4900793650793656
+    },
+    {
+      "construct": "perceived_intelligence",
+      "contrast_id": "A3",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.3154761904761906,
+      "leave_one_min": 0.2202380952380953
+    },
+    {
+      "construct": "perceived_intelligence",
+      "contrast_id": "A4",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 1.0376984126984132,
+      "leave_one_min": 0.853174603174604
+    },
+    {
+      "construct": "responsibility_total",
+      "contrast_id": "A1",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": -0.03472222222222226,
+      "leave_one_min": -0.2470238095238096
+    },
+    {
+      "construct": "responsibility_total",
+      "contrast_id": "A2",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": -0.05555555555555568,
+      "leave_one_min": -0.16567460317460334
+    },
+    {
+      "construct": "responsibility_total",
+      "contrast_id": "A3",
+      "leave_one_keeps_sign": false,
+      "leave_one_max": 0.01884920634920641,
+      "leave_one_min": -0.058531746031746046
+    },
+    {
+      "construct": "responsibility_total",
+      "contrast_id": "A4",
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.1577380952380952,
+      "leave_one_min": 0.04761904761904739
+    }
+  ],
+  "length_sensitivity": {
+    "collinearity_note": "过程结构等级与字符数的描述性相关较高；该单一相关不能完整描述分类条件、字符数和句子数之间的多重依赖关系，因此无法据此分离文本长度与过程信息各自的独立作用。",
+    "condition_length_collinearity": 0.4018058164525873,
+    "contrasts": [
+      {
+        "absolute_shrink_ratio": 1.4365004703669444,
+        "base_estimate": 0.46006944444444475,
+        "construct": "subjective_process_completeness",
+        "construct_label": "主观过程完整性",
+        "contrast_id": "A1",
+        "contrast_label": "候选方案线索",
+        "direction_flips": true,
+        "length_adjusted_estimate": -0.20082052890145896
+      },
+      {
+        "absolute_shrink_ratio": 2.5961208566209417,
+        "base_estimate": 1.4166666666666685,
+        "construct": "subjective_process_completeness",
+        "construct_label": "主观过程完整性",
+        "contrast_id": "A2",
+        "contrast_label": "短理由结构与长背景文本",
+        "direction_flips": true,
+        "length_adjusted_estimate": -2.2611712135463375
+      },
+      {
+        "absolute_shrink_ratio": 12.411146161935067,
+        "base_estimate": 0.550347222222222,
+        "construct": "subjective_process_completeness",
+        "construct_label": "主观过程完整性",
+        "contrast_id": "A3",
+        "contrast_label": "反思反馈相对完整理由",
+        "direction_flips": false,
+        "length_adjusted_estimate": 7.380787037037178
+      },
+      {
+        "absolute_shrink_ratio": 0.40192182809810895,
+        "base_estimate": 2.3472222222222268,
+        "construct": "subjective_process_completeness",
+        "construct_label": "主观过程完整性",
+        "contrast_id": "A4",
+        "contrast_label": "高结构过程与长文本直接选择",
+        "direction_flips": false,
+        "length_adjusted_estimate": 3.29062206873029
+      },
+      {
+        "absolute_shrink_ratio": 9.740653874405686,
+        "base_estimate": -0.0633680555555558,
+        "construct": "agency",
+        "construct_label": "能动性",
+        "contrast_id": "A1",
+        "contrast_label": "候选方案线索",
+        "direction_flips": false,
+        "length_adjusted_estimate": -0.6806143514163352
+      },
+      {
+        "absolute_shrink_ratio": 10.885669267258383,
+        "base_estimate": 0.49131944444444486,
+        "construct": "agency",
+        "construct_label": "能动性",
+        "contrast_id": "A2",
+        "contrast_label": "短理由结构与长背景文本",
+        "direction_flips": true,
+        "length_adjusted_estimate": -4.857021532350911
+      },
+      {
+        "absolute_shrink_ratio": 5.7042640990382,
+        "base_estimate": 0.6310763888888882,
+        "construct": "agency",
+        "construct_label": "能动性",
+        "contrast_id": "A3",
+        "contrast_label": "反思反馈相对完整理由",
+        "direction_flips": false,
+        "length_adjusted_estimate": 4.230902777778443
+      },
+      {
+        "absolute_shrink_ratio": 1.5865385984761535,
+        "base_estimate": 1.2630208333333348,
+        "construct": "agency",
+        "construct_label": "能动性",
+        "contrast_id": "A4",
+        "contrast_label": "高结构过程与长文本直接选择",
+        "direction_flips": false,
+        "length_adjusted_estimate": 3.2668521360961873
+      },
+      {
+        "absolute_shrink_ratio": 39.241544595260955,
+        "base_estimate": -0.043749999999999956,
+        "construct": "free_will_attribution",
+        "construct_label": "自由意志归因",
+        "contrast_id": "A1",
+        "contrast_label": "候选方案线索",
+        "direction_flips": false,
+        "length_adjusted_estimate": -1.760567576042665
+      },
+      {
+        "absolute_shrink_ratio": 38.319471815753694,
+        "base_estimate": 0.42812500000000075,
+        "construct": "free_will_attribution",
+        "construct_label": "自由意志归因",
+        "contrast_id": "A2",
+        "contrast_label": "短理由结构与长背景文本",
+        "direction_flips": true,
+        "length_adjusted_estimate": -15.977398871119581
+      },
+      {
+        "absolute_shrink_ratio": 52.55555555555659,
+        "base_estimate": 0.18125000000000013,
+        "construct": "free_will_attribution",
+        "construct_label": "自由意志归因",
+        "contrast_id": "A3",
+        "contrast_label": "反思反馈相对完整理由",
+        "direction_flips": true,
+        "length_adjusted_estimate": -9.344444444444639
+      },
+      {
+        "absolute_shrink_ratio": 1.1062946744315643,
+        "base_estimate": 0.7968750000000011,
+        "construct": "free_will_attribution",
+        "construct_label": "自由意志归因",
+        "contrast_id": "A4",
+        "contrast_label": "高结构过程与长文本直接选择",
+        "direction_flips": false,
+        "length_adjusted_estimate": 1.6784535686876552
+      },
+      {
+        "absolute_shrink_ratio": 83.92354970210755,
+        "base_estimate": 0.026041666666664964,
+        "construct": "perceived_intelligence",
+        "construct_label": "感知智能",
+        "contrast_id": "A1",
+        "contrast_label": "候选方案线索",
+        "direction_flips": true,
+        "length_adjusted_estimate": -2.1594674401589096
+      },
+      {
+        "absolute_shrink_ratio": 0.9733196575602354,
+        "base_estimate": 0.5190972222222217,
+        "construct": "perceived_intelligence",
+        "construct_label": "感知智能",
+        "contrast_id": "A2",
+        "contrast_label": "短理由结构与长背景文本",
+        "direction_flips": false,
+        "length_adjusted_estimate": 0.013849691648419427
+      },
+      {
+        "absolute_shrink_ratio": 51.49475890985485,
+        "base_estimate": 0.27604166666666524,
+        "construct": "perceived_intelligence",
+        "construct_label": "感知智能",
+        "contrast_id": "A3",
+        "contrast_label": "反思反馈相对完整理由",
+        "direction_flips": false,
+        "length_adjusted_estimate": 14.49074074074111
+      },
+      {
+        "absolute_shrink_ratio": 1.0085286123982236,
+        "base_estimate": 0.9236111111111119,
+        "construct": "perceived_intelligence",
+        "construct_label": "感知智能",
+        "contrast_id": "A4",
+        "contrast_label": "高结构过程与长文本直接选择",
+        "direction_flips": false,
+        "length_adjusted_estimate": 1.8550993433955831
+      },
+      {
+        "absolute_shrink_ratio": 18.724909640045578,
+        "base_estimate": -0.14843750000000044,
+        "construct": "responsibility_total",
+        "construct_label": "责任归因总分",
+        "contrast_id": "A1",
+        "contrast_label": "候选方案线索",
+        "direction_flips": false,
+        "length_adjusted_estimate": -2.927916274694274
+      },
+      {
+        "absolute_shrink_ratio": 87.24348785155617,
+        "base_estimate": -0.10069444444444486,
+        "construct": "responsibility_total",
+        "construct_label": "责任归因总分",
+        "contrast_id": "A2",
+        "contrast_label": "短理由结构与长背景文本",
+        "direction_flips": false,
+        "length_adjusted_estimate": -8.885628985052568
+      },
+      {
+        "absolute_shrink_ratio": 245.38461538462624,
+        "base_estimate": -0.022569444444443754,
+        "construct": "responsibility_total",
+        "construct_label": "责任归因总分",
+        "contrast_id": "A3",
+        "contrast_label": "反思反馈相对完整理由",
+        "direction_flips": false,
+        "length_adjusted_estimate": -5.560763888888964
+      },
+      {
+        "absolute_shrink_ratio": 10.783612058041506,
+        "base_estimate": 0.11197916666666674,
+        "construct": "responsibility_total",
+        "construct_label": "责任归因总分",
+        "contrast_id": "A4",
+        "contrast_label": "高结构过程与长文本直接选择",
+        "direction_flips": false,
+        "length_adjusted_estimate": 1.3195190585827736
+      }
+    ]
+  },
+  "limitations": [
+    "结果来自单一DeepSeek模型配置的合成问卷响应，不能证明跨模型泛化。",
+    "相关分析不能证明构念效度或测量等值性。",
+    "方向一致数是场景×条件配对单元的描述性统计，用于观察结果是否在不同材料组合中重复出现，不等同于独立样本数量或统计显著性检验。",
+    "文本长度与过程条件共同变化，长度敏感性只说明估计对模型设定较敏感，无法据此分离文本长度和过程信息各自的独立作用。",
+    "分析基于既有360条响应与96个聚合单元，未生成任何新的模型响应。",
+    "证据状态是描述性标签，不是统计显著性等级。"
+  ],
+  "public_findings": {
+    "identity_label": {
+      "comparison_type": "identity_difference_human_minus_ai",
+      "construct": "free_will_attribution",
+      "construct_label": "自由意志归因",
+      "direction_majority_count": 48,
+      "identity_difference_by_condition": [
+        {
+          "condition": "direct_choice",
+          "identity_difference": 0.8749999999999999,
+          "label": "直接选择"
+        },
+        {
+          "condition": "direct_choice_long",
+          "identity_difference": 1.2666666666666662,
+          "label": "长文本直接选择"
+        },
+        {
+          "condition": "alternatives",
+          "identity_difference": 0.6166666666666665,
+          "label": "列出可选方案"
+        },
+        {
+          "condition": "reasons_concise",
+          "identity_difference": 0.4854166666666666,
+          "label": "简洁理由权衡"
+        },
+        {
+          "condition": "reasons",
+          "identity_difference": 0.7479166666666666,
+          "label": "完整理由权衡"
+        },
+        {
+          "condition": "reflection_feedback",
+          "identity_difference": 0.5687500000000001,
+          "label": "反思与反馈修正"
+        }
+      ],
+      "identity_high": "人类决策者",
+      "identity_low": "AI 决策者",
+      "leave_one_scenario_range": [
+        0.7055555555555554,
+        0.796031746031746
+      ],
+      "leave_one_scenario_same_sign": true,
+      "most_influential_scenario": "risk_project_choice",
+      "negative_count": 0,
+      "overall_identity_difference": 0.7600694444444444,
+      "positive_count": 48,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.05451388888888897,
+          "leave_one_effect": 0.7055555555555554,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.035962301587301626,
+          "leave_one_effect": 0.796031746031746,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.034275793650793585,
+          "leave_one_effect": 0.7257936507936508,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.029216269841269904,
+          "leave_one_effect": 0.7892857142857143,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.013343253968254087,
+          "leave_one_effect": 0.7734126984126984,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.009771825396825418,
+          "leave_one_effect": 0.7698412698412698,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.007390873015872934,
+          "leave_one_effect": 0.7674603174603173,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.006894841269841412,
+          "leave_one_effect": 0.7531746031746029,
+          "scenario_id": "moral_friend_report"
+        }
+      ],
+      "scenario_range": [
+        0.5083333333333331,
+        1.1416666666666668
+      ],
+      "status_code": "direction_consistent_magnitude_varies",
+      "status_label": "方向一致但幅度存在场景差异",
+      "total_unit_count": 48,
+      "unit_definition": "scenario_id × process_condition",
+      "zero_count": 0
+    },
+    "process_information": {
+      "comparison_type": "process_condition_contrast",
+      "construct": "agency",
+      "construct_label": "能动性",
+      "contrast_id": "A4",
+      "contrast_label": "高结构过程与长文本直接选择",
+      "direction_majority_count": 16,
+      "full_effect": 1.2630208333333335,
+      "leave_one_scenario_range": [
+        1.1696428571428574,
+        1.3482142857142863
+      ],
+      "leave_one_scenario_same_sign": true,
+      "left_condition": "reflection_feedback",
+      "length_sensitivity": {
+        "absolute_shrink_ratio": 1.5865385984761535,
+        "base_estimate": 1.2630208333333348,
+        "direction_flips": false,
+        "length_adjusted_estimate": 3.2668521360961873
+      },
+      "most_influential_scenario": "obedience_unfair_order",
+      "negative_count": 0,
+      "positive_count": 16,
+      "right_condition": "direct_choice_long",
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.09337797619047605,
+          "leave_one_effect": 1.1696428571428574,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.08519345238095277,
+          "leave_one_effect": 1.3482142857142863,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.061383928571428825,
+          "leave_one_effect": 1.3244047619047623,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.05468749999999978,
+          "leave_one_effect": 1.2083333333333337,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03385416666666674,
+          "leave_one_effect": 1.2291666666666667,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.025669642857143016,
+          "leave_one_effect": 1.2886904761904765,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.013764880952381375,
+          "leave_one_effect": 1.2767857142857149,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0040922619047618625,
+          "leave_one_effect": 1.2589285714285716,
+          "scenario_id": "risk_project_choice"
+        }
+      ],
+      "scenario_range": [
+        0.666666666666667,
+        1.9166666666666667
+      ],
+      "status_code": "direction_consistent_magnitude_varies",
+      "status_label": "方向一致但幅度存在场景差异",
+      "total_unit_count": 16,
+      "unit_definition": "scenario_id × identity_label",
+      "zero_count": 0
+    },
+    "scenario_dependence": {
+      "identity_effect_range": [
+        0.5083333333333331,
+        1.1416666666666668
+      ],
+      "identity_leave_one_same_sign": true,
+      "interpretation": "过程效应与身份效应在八个场景中方向大体一致，但幅度存在场景差异；个别场景对总体估计影响较大。这是场景敏感性汇总，不是第三个独立处理效应。",
+      "largest_identity_influence": "risk_project_choice",
+      "largest_process_influence": "obedience_unfair_order",
+      "process_effect_range": [
+        0.666666666666667,
+        1.9166666666666667
+      ],
+      "process_leave_one_same_sign": true
+    }
+  },
+  "scenario_influence": [
+    {
+      "construct": "subjective_process_completeness",
+      "construct_label": "主观过程完整性",
+      "contrast_id": "A1",
+      "contrast_label": "候选方案线索",
+      "direction_units": 12,
+      "full_effect": 0.4600694444444446,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.5654761904761906,
+      "leave_one_min": 0.382936507936508,
+      "left_condition": "alternatives",
+      "negative_count": 3,
+      "positive_count": 12,
+      "right_condition": "direct_choice",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.10540674603174599,
+          "leave_one_effect": 0.5654761904761906,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.07713293650793657,
+          "leave_one_effect": 0.382936507936508,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.04141865079365081,
+          "leave_one_effect": 0.4186507936507938,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.023561507936507964,
+          "leave_one_effect": 0.4365079365079366,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.01810515873015872,
+          "leave_one_effect": 0.4781746031746033,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.01810515873015872,
+          "leave_one_effect": 0.4781746031746033,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.006200396825396748,
+          "leave_one_effect": 0.46626984126984133,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.005704365079365115,
+          "leave_one_effect": 0.45436507936507947,
+          "scenario_id": "risk_project_choice"
+        }
+      ],
+      "scenario_mean_max": 1.0000000000000002,
+      "scenario_mean_min": -0.27777777777777746,
+      "unit_count": 16,
+      "zero_count": 1
+    },
+    {
+      "construct": "subjective_process_completeness",
+      "construct_label": "主观过程完整性",
+      "contrast_id": "A2",
+      "contrast_label": "短理由结构与长背景文本",
+      "direction_units": 16,
+      "full_effect": 1.416666666666667,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 1.4365079365079367,
+      "leave_one_min": 1.392857142857143,
+      "left_condition": "reasons_concise",
+      "negative_count": 0,
+      "positive_count": 16,
+      "right_condition": "direct_choice_long",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.023809523809523947,
+          "leave_one_effect": 1.392857142857143,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.01984126984126977,
+          "leave_one_effect": 1.4365079365079367,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.017857142857142794,
+          "leave_one_effect": 1.4345238095238098,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.005952380952381153,
+          "leave_one_effect": 1.4107142857142858,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.005952380952380931,
+          "leave_one_effect": 1.410714285714286,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.005952380952380931,
+          "leave_one_effect": 1.410714285714286,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.003968253968254176,
+          "leave_one_effect": 1.4206349206349211,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 2.220446049250313e-16,
+          "leave_one_effect": 1.4166666666666667,
+          "scenario_id": "relationship_honesty"
+        }
+      ],
+      "scenario_mean_max": 1.583333333333334,
+      "scenario_mean_min": 1.2777777777777786,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "subjective_process_completeness",
+      "construct_label": "主观过程完整性",
+      "contrast_id": "A3",
+      "contrast_label": "反思反馈相对完整理由",
+      "direction_units": 15,
+      "full_effect": 0.5503472222222221,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.6170634920634921,
+      "leave_one_min": 0.5158730158730158,
+      "left_condition": "reflection_feedback",
+      "negative_count": 1,
+      "positive_count": 15,
+      "right_condition": "reasons",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.06671626984126999,
+          "leave_one_effect": 0.6170634920634921,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03447420634920628,
+          "leave_one_effect": 0.5158730158730158,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.032490079365079416,
+          "leave_one_effect": 0.5178571428571427,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.01909722222222221,
+          "leave_one_effect": 0.5694444444444443,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0166170634920636,
+          "leave_one_effect": 0.5337301587301585,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.007192460317460347,
+          "leave_one_effect": 0.5575396825396824,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.004712301587301515,
+          "leave_one_effect": 0.5456349206349206,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.004712301587301515,
+          "leave_one_effect": 0.5456349206349206,
+          "scenario_id": "risk_project_choice"
+        }
+      ],
+      "scenario_mean_max": 0.7916666666666661,
+      "scenario_mean_min": 0.0833333333333326,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "subjective_process_completeness",
+      "construct_label": "主观过程完整性",
+      "contrast_id": "A4",
+      "contrast_label": "高结构过程与长文本直接选择",
+      "direction_units": 16,
+      "full_effect": 2.3472222222222228,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 2.408730158730159,
+      "leave_one_min": 2.295634920634921,
+      "left_condition": "reflection_feedback",
+      "negative_count": 0,
+      "positive_count": 16,
+      "right_condition": "direct_choice_long",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.06150793650793629,
+          "leave_one_effect": 2.408730158730159,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.05158730158730185,
+          "leave_one_effect": 2.295634920634921,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.043650793650793496,
+          "leave_one_effect": 2.3908730158730163,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.021825396825397192,
+          "leave_one_effect": 2.3253968253968256,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.021825396825396748,
+          "leave_one_effect": 2.325396825396826,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.013888888888889284,
+          "leave_one_effect": 2.3333333333333335,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.01388888888888884,
+          "leave_one_effect": 2.3611111111111116,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.00992063492063533,
+          "leave_one_effect": 2.3373015873015874,
+          "scenario_id": "risk_project_choice"
+        }
+      ],
+      "scenario_mean_max": 2.7083333333333335,
+      "scenario_mean_min": 1.9166666666666667,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "agency",
+      "construct_label": "能动性",
+      "contrast_id": "A1",
+      "contrast_label": "候选方案线索",
+      "direction_units": 8,
+      "full_effect": -0.06336805555555516,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": -0.015873015873015532,
+      "leave_one_min": -0.10515873015872979,
+      "left_condition": "alternatives",
+      "negative_count": 8,
+      "positive_count": 5,
+      "right_condition": "direct_choice",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.04749503968253963,
+          "leave_one_effect": -0.015873015873015532,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.04179067460317462,
+          "leave_one_effect": -0.10515873015872979,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03856646825396811,
+          "leave_one_effect": -0.024801587301587054,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.01798115079365077,
+          "leave_one_effect": -0.08134920634920594,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.016989087301587283,
+          "leave_one_effect": -0.08035714285714245,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.015004960317460181,
+          "leave_one_effect": -0.07837301587301534,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.005828373015873051,
+          "leave_one_effect": -0.05753968253968211,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.00012400793650794995,
+          "leave_one_effect": -0.06349206349206311,
+          "scenario_id": "moral_friend_report"
+        }
+      ],
+      "scenario_mean_max": 0.22916666666666718,
+      "scenario_mean_min": -0.3958333333333326,
+      "unit_count": 16,
+      "zero_count": 3
+    },
+    {
+      "construct": "agency",
+      "construct_label": "能动性",
+      "contrast_id": "A2",
+      "contrast_label": "短理由结构与长背景文本",
+      "direction_units": 14,
+      "full_effect": 0.49131944444444464,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.5218253968253971,
+      "leave_one_min": 0.46230158730158744,
+      "left_condition": "reasons_concise",
+      "negative_count": 2,
+      "positive_count": 14,
+      "right_condition": "direct_choice_long",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.03050595238095244,
+          "leave_one_effect": 0.5218253968253971,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.029017857142857206,
+          "leave_one_effect": 0.46230158730158744,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.02852182539682524,
+          "leave_one_effect": 0.5198412698412699,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.028025793650793607,
+          "leave_one_effect": 0.46329365079365104,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.025545634920634996,
+          "leave_one_effect": 0.5168650793650796,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.025049603174603197,
+          "leave_one_effect": 0.46626984126984145,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.01909722222222221,
+          "leave_one_effect": 0.47222222222222243,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.01661706349206349,
+          "leave_one_effect": 0.5079365079365081,
+          "scenario_id": "moral_friend_report"
+        }
+      ],
+      "scenario_mean_max": 0.6944444444444449,
+      "scenario_mean_min": 0.27777777777777746,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "agency",
+      "construct_label": "能动性",
+      "contrast_id": "A3",
+      "contrast_label": "反思反馈相对完整理由",
+      "direction_units": 15,
+      "full_effect": 0.631076388888889,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.6884920634920635,
+      "leave_one_min": 0.5753968253968254,
+      "left_condition": "reflection_feedback",
+      "negative_count": 1,
+      "positive_count": 15,
+      "right_condition": "reasons",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.05741567460317454,
+          "leave_one_effect": 0.6884920634920635,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.05741567460317454,
+          "leave_one_effect": 0.6884920634920635,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0556795634920636,
+          "leave_one_effect": 0.5753968253968254,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.054439484126984294,
+          "leave_one_effect": 0.6855158730158732,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.04675099206349198,
+          "leave_one_effect": 0.584325396825397,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03286210317460325,
+          "leave_one_effect": 0.5982142857142857,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.028893849206349187,
+          "leave_one_effect": 0.6021825396825398,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.005084325396825462,
+          "leave_one_effect": 0.6259920634920635,
+          "scenario_id": "responsibility_mistake"
+        }
+      ],
+      "scenario_mean_max": 1.0208333333333335,
+      "scenario_mean_min": 0.22916666666666696,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "agency",
+      "construct_label": "能动性",
+      "contrast_id": "A4",
+      "contrast_label": "高结构过程与长文本直接选择",
+      "direction_units": 16,
+      "full_effect": 1.2630208333333335,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 1.3482142857142863,
+      "leave_one_min": 1.1696428571428574,
+      "left_condition": "reflection_feedback",
+      "negative_count": 0,
+      "positive_count": 16,
+      "right_condition": "direct_choice_long",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.09337797619047605,
+          "leave_one_effect": 1.1696428571428574,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.08519345238095277,
+          "leave_one_effect": 1.3482142857142863,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.061383928571428825,
+          "leave_one_effect": 1.3244047619047623,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.05468749999999978,
+          "leave_one_effect": 1.2083333333333337,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03385416666666674,
+          "leave_one_effect": 1.2291666666666667,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.025669642857143016,
+          "leave_one_effect": 1.2886904761904765,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.013764880952381375,
+          "leave_one_effect": 1.2767857142857149,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0040922619047618625,
+          "leave_one_effect": 1.2589285714285716,
+          "scenario_id": "risk_project_choice"
+        }
+      ],
+      "scenario_mean_max": 1.9166666666666667,
+      "scenario_mean_min": 0.666666666666667,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "free_will_attribution",
+      "construct_label": "自由意志归因",
+      "contrast_id": "A1",
+      "contrast_label": "候选方案线索",
+      "direction_units": 9,
+      "full_effect": -0.04375000000000007,
+      "leave_one_keeps_sign": false,
+      "leave_one_max": 0.02142857142857129,
+      "leave_one_min": -0.0928571428571429,
+      "left_condition": "alternatives",
+      "negative_count": 9,
+      "positive_count": 7,
+      "right_condition": "direct_choice",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": true,
+          "influence": 0.06517857142857136,
+          "leave_one_effect": 0.02142857142857129,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.049107142857142835,
+          "leave_one_effect": -0.0928571428571429,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03124999999999996,
+          "leave_one_effect": -0.07500000000000002,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0241071428571428,
+          "leave_one_effect": -0.06785714285714287,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.02232142857142865,
+          "leave_one_effect": -0.021428571428571415,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.011607142857142781,
+          "leave_one_effect": -0.032142857142857285,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.008035714285714257,
+          "leave_one_effect": -0.03571428571428581,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0026785714285714537,
+          "leave_one_effect": -0.04642857142857152,
+          "scenario_id": "self_control_deadline"
+        }
+      ],
+      "scenario_mean_max": 0.2999999999999998,
+      "scenario_mean_min": -0.49999999999999956,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "free_will_attribution",
+      "construct_label": "自由意志归因",
+      "contrast_id": "A2",
+      "contrast_label": "短理由结构与长背景文本",
+      "direction_units": 12,
+      "full_effect": 0.4281250000000002,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.467857142857143,
+      "leave_one_min": 0.39404761904761926,
+      "left_condition": "reasons_concise",
+      "negative_count": 4,
+      "positive_count": 12,
+      "right_condition": "direct_choice_long",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.03973214285714283,
+          "leave_one_effect": 0.467857142857143,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03616071428571427,
+          "leave_one_effect": 0.46428571428571447,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03407738095238094,
+          "leave_one_effect": 0.39404761904761926,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03169642857142857,
+          "leave_one_effect": 0.39642857142857163,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.025446428571428537,
+          "leave_one_effect": 0.45357142857142874,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.024553571428571452,
+          "leave_one_effect": 0.40357142857142875,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.015029761904761851,
+          "leave_one_effect": 0.41309523809523835,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.004017857142857129,
+          "leave_one_effect": 0.43214285714285733,
+          "scenario_id": "relationship_honesty"
+        }
+      ],
+      "scenario_mean_max": 0.666666666666667,
+      "scenario_mean_min": 0.15000000000000036,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "free_will_attribution",
+      "construct_label": "自由意志归因",
+      "contrast_id": "A3",
+      "contrast_label": "反思反馈相对完整理由",
+      "direction_units": 12,
+      "full_effect": 0.18124999999999994,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.23214285714285718,
+      "leave_one_min": 0.13571428571428565,
+      "left_condition": "reflection_feedback",
+      "negative_count": 4,
+      "positive_count": 12,
+      "right_condition": "reasons",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.05089285714285724,
+          "leave_one_effect": 0.23214285714285718,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.04553571428571429,
+          "leave_one_effect": 0.13571428571428565,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.040178571428571314,
+          "leave_one_effect": 0.22142857142857125,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03839285714285717,
+          "leave_one_effect": 0.14285714285714277,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.024107142857142827,
+          "leave_one_effect": 0.1571428571428571,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.015178571428571458,
+          "leave_one_effect": 0.1964285714285714,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.004464285714285643,
+          "leave_one_effect": 0.18571428571428558,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0026785714285713635,
+          "leave_one_effect": 0.17857142857142858,
+          "scenario_id": "obedience_unfair_order"
+        }
+      ],
+      "scenario_mean_max": 0.5,
+      "scenario_mean_min": -0.1750000000000007,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "free_will_attribution",
+      "construct_label": "自由意志归因",
+      "contrast_id": "A4",
+      "contrast_label": "高结构过程与长文本直接选择",
+      "direction_units": 16,
+      "full_effect": 0.796875,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.8500000000000002,
+      "leave_one_min": 0.7142857142857143,
+      "left_condition": "reflection_feedback",
+      "negative_count": 0,
+      "positive_count": 16,
+      "right_condition": "direct_choice_long",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.0825892857142857,
+          "leave_one_effect": 0.7142857142857143,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.06711309523809506,
+          "leave_one_effect": 0.729761904761905,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0531250000000002,
+          "leave_one_effect": 0.8500000000000002,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.042410714285714524,
+          "leave_one_effect": 0.8392857142857145,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.031696428571428625,
+          "leave_one_effect": 0.8285714285714286,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.013839285714285832,
+          "leave_one_effect": 0.8107142857142858,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.009077380952381087,
+          "leave_one_effect": 0.8059523809523811,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0004464285714284033,
+          "leave_one_effect": 0.7964285714285716,
+          "scenario_id": "relationship_honesty"
+        }
+      ],
+      "scenario_mean_max": 1.3750000000000002,
+      "scenario_mean_min": 0.4249999999999998,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "perceived_intelligence",
+      "construct_label": "感知智能",
+      "contrast_id": "A1",
+      "contrast_label": "候选方案线索",
+      "direction_units": 8,
+      "full_effect": 0.026041666666666602,
+      "leave_one_keeps_sign": false,
+      "leave_one_max": 0.17261904761904762,
+      "leave_one_min": -0.053571428571428666,
+      "left_condition": "alternatives",
+      "negative_count": 7,
+      "positive_count": 8,
+      "right_condition": "direct_choice",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.14657738095238101,
+          "leave_one_effect": 0.17261904761904762,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": true,
+          "influence": 0.07961309523809526,
+          "leave_one_effect": -0.053571428571428666,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": true,
+          "influence": 0.03794642857142856,
+          "leave_one_effect": -0.011904761904761958,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": true,
+          "influence": 0.03199404761904766,
+          "leave_one_effect": -0.005952380952381058,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.020089285714285702,
+          "leave_one_effect": 0.005952380952380899,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.015625000000000014,
+          "leave_one_effect": 0.041666666666666616,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.015624999999999951,
+          "leave_one_effect": 0.04166666666666655,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.008184523809523777,
+          "leave_one_effect": 0.017857142857142825,
+          "scenario_id": "moral_friend_report"
+        }
+      ],
+      "scenario_mean_max": 0.5833333333333335,
+      "scenario_mean_min": -1.0000000000000004,
+      "unit_count": 16,
+      "zero_count": 1
+    },
+    {
+      "construct": "perceived_intelligence",
+      "construct_label": "感知智能",
+      "contrast_id": "A2",
+      "contrast_label": "短理由结构与长背景文本",
+      "direction_units": 14,
+      "full_effect": 0.5190972222222228,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.5873015873015878,
+      "leave_one_min": 0.4900793650793656,
+      "left_condition": "reasons_concise",
+      "negative_count": 1,
+      "positive_count": 14,
+      "right_condition": "direct_choice_long",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.068204365079365,
+          "leave_one_effect": 0.5873015873015878,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.02901785714285715,
+          "leave_one_effect": 0.4900793650793656,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.02703373015873023,
+          "leave_one_effect": 0.49206349206349254,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.02703373015873023,
+          "leave_one_effect": 0.49206349206349254,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.027033730158730118,
+          "leave_one_effect": 0.49206349206349265,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.02058531746031733,
+          "leave_one_effect": 0.5396825396825401,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.018601190476190466,
+          "leave_one_effect": 0.5376984126984132,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.002728174603174538,
+          "leave_one_effect": 0.5218253968253973,
+          "scenario_id": "relationship_honesty"
+        }
+      ],
+      "scenario_mean_max": 0.7222222222222223,
+      "scenario_mean_min": 0.04166666666666741,
+      "unit_count": 16,
+      "zero_count": 1
+    },
+    {
+      "construct": "perceived_intelligence",
+      "construct_label": "感知智能",
+      "contrast_id": "A3",
+      "contrast_label": "反思反馈相对完整理由",
+      "direction_units": 12,
+      "full_effect": 0.27604166666666674,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.3154761904761906,
+      "leave_one_min": 0.2202380952380953,
+      "left_condition": "reflection_feedback",
+      "negative_count": 3,
+      "positive_count": 12,
+      "right_condition": "reasons",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.05580357142857145,
+          "leave_one_effect": 0.2202380952380953,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.039434523809523836,
+          "leave_one_effect": 0.3154761904761906,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03943452380952378,
+          "leave_one_effect": 0.3154761904761905,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.031994047619047616,
+          "leave_one_effect": 0.24404761904761912,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.027529761904761918,
+          "leave_one_effect": 0.30357142857142866,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.026041666666666574,
+          "leave_one_effect": 0.25000000000000017,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.015624999999999944,
+          "leave_one_effect": 0.2916666666666667,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.008184523809523836,
+          "leave_one_effect": 0.2678571428571429,
+          "scenario_id": "responsibility_mistake"
+        }
+      ],
+      "scenario_mean_max": 0.666666666666667,
+      "scenario_mean_min": 0.0,
+      "unit_count": 16,
+      "zero_count": 1
+    },
+    {
+      "construct": "perceived_intelligence",
+      "construct_label": "感知智能",
+      "contrast_id": "A4",
+      "contrast_label": "高结构过程与长文本直接选择",
+      "direction_units": 16,
+      "full_effect": 0.9236111111111117,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 1.0376984126984132,
+      "leave_one_min": 0.853174603174604,
+      "left_condition": "reflection_feedback",
+      "negative_count": 0,
+      "positive_count": 16,
+      "right_condition": "direct_choice_long",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.11408730158730152,
+          "leave_one_effect": 1.0376984126984132,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.07043650793650769,
+          "leave_one_effect": 0.853174603174604,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.06051587301587302,
+          "leave_one_effect": 0.9841269841269847,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.050595238095238027,
+          "leave_one_effect": 0.8730158730158737,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03472222222222221,
+          "leave_one_effect": 0.8888888888888895,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0267857142857143,
+          "leave_one_effect": 0.8968253968253974,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.012896825396825573,
+          "leave_one_effect": 0.9365079365079373,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.004960317460317332,
+          "leave_one_effect": 0.9186507936507944,
+          "scenario_id": "responsibility_mistake"
+        }
+      ],
+      "scenario_mean_max": 1.4166666666666667,
+      "scenario_mean_min": 0.1250000000000009,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "responsibility_total",
+      "construct_label": "责任归因总分",
+      "contrast_id": "A1",
+      "contrast_label": "候选方案线索",
+      "direction_units": 8,
+      "full_effect": -0.14843750000000006,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": -0.03472222222222226,
+      "leave_one_min": -0.2470238095238096,
+      "left_condition": "alternatives",
+      "negative_count": 8,
+      "positive_count": 6,
+      "right_condition": "direct_choice",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.11371527777777779,
+          "leave_one_effect": -0.03472222222222226,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.09858630952380953,
+          "leave_one_effect": -0.2470238095238096,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03831845238095241,
+          "leave_one_effect": -0.11011904761904764,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03311011904761907,
+          "leave_one_effect": -0.18154761904761912,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.027157738095238138,
+          "leave_one_effect": -0.1755952380952382,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.005580357142857123,
+          "leave_one_effect": -0.14285714285714293,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0026041666666666574,
+          "leave_one_effect": -0.1458333333333334,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0013640873015872412,
+          "leave_one_effect": -0.1498015873015873,
+          "scenario_id": "privacy_shortcut"
+        }
+      ],
+      "scenario_mean_max": 0.5416666666666667,
+      "scenario_mean_min": -0.9444444444444446,
+      "unit_count": 16,
+      "zero_count": 2
+    },
+    {
+      "construct": "responsibility_total",
+      "construct_label": "责任归因总分",
+      "contrast_id": "A2",
+      "contrast_label": "短理由结构与长背景文本",
+      "direction_units": 12,
+      "full_effect": -0.10069444444444456,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": -0.05555555555555568,
+      "leave_one_min": -0.16567460317460334,
+      "left_condition": "reasons_concise",
+      "negative_count": 12,
+      "positive_count": 4,
+      "right_condition": "direct_choice_long",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.06498015873015878,
+          "leave_one_effect": -0.16567460317460334,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.04513888888888888,
+          "leave_one_effect": -0.05555555555555568,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.03621031746031736,
+          "leave_one_effect": -0.0644841269841272,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.030257936507936525,
+          "leave_one_effect": -0.07043650793650803,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.029265873015872884,
+          "leave_one_effect": -0.12996031746031744,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.01736111111111102,
+          "leave_one_effect": -0.11805555555555558,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.006448412698412745,
+          "leave_one_effect": -0.1071428571428573,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0064484126984126755,
+          "leave_one_effect": -0.09424603174603188,
+          "scenario_id": "risk_project_choice"
+        }
+      ],
+      "scenario_mean_max": 0.35416666666666696,
+      "scenario_mean_min": -0.41666666666666674,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "responsibility_total",
+      "construct_label": "责任归因总分",
+      "contrast_id": "A3",
+      "contrast_label": "反思反馈相对完整理由",
+      "direction_units": 9,
+      "full_effect": -0.022569444444444392,
+      "leave_one_keeps_sign": false,
+      "leave_one_max": 0.01884920634920641,
+      "leave_one_min": -0.058531746031746046,
+      "left_condition": "reflection_feedback",
+      "negative_count": 9,
+      "positive_count": 7,
+      "right_condition": "reasons",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": true,
+          "influence": 0.0414186507936508,
+          "leave_one_effect": 0.01884920634920641,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.035962301587301654,
+          "leave_one_effect": -0.058531746031746046,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.032986111111111,
+          "leave_one_effect": -0.05555555555555539,
+          "scenario_id": "moral_friend_report"
+        },
+        {
+          "direction_changes": true,
+          "influence": 0.028521825396825354,
+          "leave_one_effect": 0.005952380952380963,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": true,
+          "influence": 0.026537698412698443,
+          "leave_one_effect": 0.0039682539682540496,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.024057539682539694,
+          "leave_one_effect": -0.046626984126984086,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0032242063492064037,
+          "leave_one_effect": -0.025793650793650796,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0002480158730158444,
+          "leave_one_effect": -0.022817460317460236,
+          "scenario_id": "obedience_unfair_order"
+        }
+      ],
+      "scenario_mean_max": 0.22916666666666718,
+      "scenario_mean_min": -0.3125,
+      "unit_count": 16,
+      "zero_count": 0
+    },
+    {
+      "construct": "responsibility_total",
+      "construct_label": "责任归因总分",
+      "contrast_id": "A4",
+      "contrast_label": "高结构过程与长文本直接选择",
+      "direction_units": 8,
+      "full_effect": 0.11197916666666652,
+      "leave_one_keeps_sign": true,
+      "leave_one_max": 0.1577380952380952,
+      "leave_one_min": 0.04761904761904739,
+      "left_condition": "reflection_feedback",
+      "negative_count": 7,
+      "positive_count": 8,
+      "right_condition": "direct_choice_long",
+      "scenario_count": 8,
+      "scenario_influence": [
+        {
+          "direction_changes": false,
+          "influence": 0.06436011904761912,
+          "leave_one_effect": 0.04761904761904739,
+          "scenario_id": "obedience_unfair_order"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.045758928571428686,
+          "leave_one_effect": 0.1577380952380952,
+          "scenario_id": "responsibility_mistake"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.02864583333333323,
+          "leave_one_effect": 0.08333333333333329,
+          "scenario_id": "self_control_deadline"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.024925595238095205,
+          "leave_one_effect": 0.13690476190476172,
+          "scenario_id": "risk_project_choice"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.019965277777777735,
+          "leave_one_effect": 0.13194444444444425,
+          "scenario_id": "team_credit"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.01599702380952378,
+          "leave_one_effect": 0.1279761904761903,
+          "scenario_id": "relationship_honesty"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.011780753968254079,
+          "leave_one_effect": 0.10019841269841244,
+          "scenario_id": "privacy_shortcut"
+        },
+        {
+          "direction_changes": false,
+          "influence": 0.0018601190476189994,
+          "leave_one_effect": 0.11011904761904752,
+          "scenario_id": "moral_friend_report"
+        }
+      ],
+      "scenario_mean_max": 0.5625000000000004,
+      "scenario_mean_min": -0.20833333333333437,
+      "unit_count": 16,
+      "zero_count": 1
+    }
+  ],
+  "source_files": [
+    "outputs/scale_scores.csv",
+    "site/data/research_a_scenario_summary.json"
+  ],
+  "source_record_count": 360,
+  "text_structure_metrics": {
+    "lexicons": {
+      "action_maintain_change_words": [
+        "kept",
+        "keep",
+        "maintain",
+        "maintained",
+        "changed",
+        "change",
+        "switched",
+        "revised",
+        "second decision",
+        "reconsider"
+      ],
+      "alternative_markers": [
+        "options",
+        "option",
+        "alternative",
+        "alternatives",
+        "instead of",
+        "either",
+        "versus",
+        "candidate",
+        "choices"
+      ],
+      "feedback_words": [
+        "feedback",
+        "noted",
+        "responded",
+        "review",
+        "reviewed",
+        "concern",
+        "pushback",
+        "complaint",
+        "flagged"
+      ],
+      "reason_connectives": [
+        "because",
+        "since",
+        "so that",
+        "in order to",
+        "reason",
+        "therefore",
+        "as a result",
+        "the stated reason"
+      ]
+    },
+    "note": "结构标记由过程条件模板确定；char_len 来自每条响应记录。字符数与过程结构高度相关，长度敏感性只作描述用途。",
+    "per_condition": [
+      {
+        "char_len_max": 132.0,
+        "char_len_mean": 114.7,
+        "char_len_min": 102.0,
+        "condition": "direct_choice",
+        "has_alternatives": false,
+        "has_feedback": false,
+        "has_maintain_change": false,
+        "has_reasons": false,
+        "label": "直接选择"
+      },
+      {
+        "char_len_max": 590.0,
+        "char_len_mean": 572.2,
+        "char_len_min": 559.0,
+        "condition": "direct_choice_long",
+        "has_alternatives": false,
+        "has_feedback": false,
+        "has_maintain_change": false,
+        "has_reasons": false,
+        "label": "长文本直接选择"
+      },
+      {
+        "char_len_max": 204.0,
+        "char_len_mean": 178.36666666666667,
+        "char_len_min": 161.0,
+        "condition": "alternatives",
+        "has_alternatives": true,
+        "has_feedback": false,
+        "has_maintain_change": false,
+        "has_reasons": false,
+        "label": "列出可选方案"
+      },
+      {
+        "char_len_max": 249.0,
+        "char_len_mean": 223.86666666666667,
+        "char_len_min": 207.0,
+        "condition": "reasons_concise",
+        "has_alternatives": false,
+        "has_feedback": false,
+        "has_maintain_change": false,
+        "has_reasons": true,
+        "label": "简洁理由权衡"
+      },
+      {
+        "char_len_max": 383.0,
+        "char_len_mean": 356.8666666666667,
+        "char_len_min": 339.0,
+        "condition": "reasons",
+        "has_alternatives": false,
+        "has_feedback": false,
+        "has_maintain_change": false,
+        "has_reasons": true,
+        "label": "完整理由权衡"
+      },
+      {
+        "char_len_max": 544.0,
+        "char_len_mean": 516.3666666666667,
+        "char_len_min": 497.0,
+        "condition": "reflection_feedback",
+        "has_alternatives": false,
+        "has_feedback": true,
+        "has_maintain_change": true,
+        "has_reasons": true,
+        "label": "反思与反馈修正"
+      }
+    ]
+  }
+}

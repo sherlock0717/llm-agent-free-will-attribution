@@ -57,6 +57,15 @@ ROOT_FIGURES = [
     "mean_free_will_attribution.png",
     "mean_subjective_process_completeness.png",
 ]
+# Research A robustness figures live under docs/assets/figures (produced by
+# analyze_research_a_robustness.py) and are copied into the assembled root
+# assets/figures so the Research A page can reference ../assets/figures/*.svg.
+DOCS_FIGURES_DIR = ROOT / "docs" / "assets" / "figures"
+ROOT_ROBUSTNESS_FIGURES = [
+    "research_a_identity_process.svg",
+    "research_a_scenario_influence.svg",
+    "research_a_length_sensitivity.svg",
+]
 STUDY_B_FIGURES = [
     "fig1_condition_construct_means.png",
     "fig2_model_adjusted_contrasts.png",
@@ -89,6 +98,14 @@ def assemble(output: Path) -> None:
     shutil.copytree(STUDY_A_SOURCE, output / STUDY_A_ROUTE)
     shutil.copytree(STUDY_B_SOURCE, output / STUDY_B_ROUTE)
 
+    # copy Research A robustness figures into the assembled root assets/figures
+    root_figures = output / "assets" / "figures"
+    root_figures.mkdir(parents=True, exist_ok=True)
+    for name in ROOT_ROBUSTNESS_FIGURES:
+        source = DOCS_FIGURES_DIR / name
+        if source.is_file():
+            shutil.copy2(source, root_figures / name)
+
     legacy_dir = output / LEGACY_B_ROUTE
     legacy_dir.mkdir(parents=True, exist_ok=True)
     (legacy_dir / "index.html").write_text(REDIRECT_HTML, encoding="utf-8")
@@ -112,6 +129,7 @@ def _verify(output: Path) -> None:
     ]
     required.extend(output / "data" / name for name in ROOT_JSON)
     required.extend(output / "assets" / "figures" / name for name in ROOT_FIGURES)
+    required.extend(output / "assets" / "figures" / name for name in ROOT_ROBUSTNESS_FIGURES)
     required.extend(output / STUDY_B_ROUTE / "assets" / "figures" / name for name in STUDY_B_FIGURES)
 
     missing = [str(path) for path in required if not path.is_file()]

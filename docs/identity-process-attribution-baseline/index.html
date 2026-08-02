@@ -29,7 +29,8 @@
       <a class="toc-home" href="../">返回项目总览</a>
       <a href="#materials">材料例子</a>
       <a href="#results">主要结果</a>
-      <a href="#analysis">从材料到结果</a>
+      <a href="#robustness">稳健性与限制</a>
+      <a href="#analysis">分析方法</a>
       <a href="#repro">数据与复现</a>
     </div>
   </nav>
@@ -136,10 +137,69 @@
       </div>
     </section>
 
-    <section id="analysis" class="section">
+    <section id="robustness" class="section">
       <div class="wrap">
         <p class="section-index">03</p>
-        <h2>从材料到结果</h2>
+        <h2>这些变化有多稳定</h2>
+        <p class="reading">不同场景中的变化方向并不完全相同。下面检查总体结果是否由少数任务推动，以及文本长度是否与条件差异共同变化。</p>
+        <p class="reading">方向一致数是场景×条件配对单元的描述性统计，用于观察结果是否在不同材料组合中重复出现，不等同于独立样本数量或统计显著性检验。</p>
+        <div class="robustness-modules">
+          <article class="robust-module" id="robustDirection">
+            <h3>多数场景是否保持同一方向</h3>
+            <p class="robust-conclusion loading">正在载入稳健性结果……</p>
+            <p class="robust-figure"><span class="robust-number" data-robust="direction-number">—</span></p>
+            <div class="robust-visual" role="img" aria-label="多数场景方向一致性" data-robust-figure="direction"></div>
+            <p class="robust-limit figure-note">方向一致数是描述性统计，不等同于独立样本数量或统计显著性。</p>
+          </article>
+          <article class="robust-module" id="robustInfluence">
+            <h3>少数场景是否主导总体结果</h3>
+            <p class="robust-conclusion loading">正在载入场景影响……</p>
+            <p class="robust-figure"><span class="robust-number" data-robust="influence-number">—</span></p>
+            <div class="robust-visual" role="img" aria-label="单个场景对总体估计的影响" data-robust-figure="influence"></div>
+            <p class="robust-limit figure-note">排名反映去掉该场景后的估计变化，不解释为因果贡献。</p>
+          </article>
+          <article class="robust-module" id="robustLength">
+            <h3>加入文本长度后结果怎样变化</h3>
+            <p class="robust-conclusion loading">正在载入长度敏感性……</p>
+            <p class="robust-figure"><span class="robust-number" data-robust="length-number">—</span></p>
+            <div class="robust-visual" role="img" aria-label="加入文本长度前后估计变化" data-robust-figure="length"></div>
+            <p class="robust-limit figure-note">文本长度与过程条件共同变化，此结果说明估计对模型设定较敏感，无法据此分离文本长度和过程信息各自的独立作用。</p>
+          </article>
+        </div>
+        <div class="table-scroll">
+          <table id="evidenceStatusTable" class="evidence-status">
+            <thead><tr><th>主要发现</th><th>当前支持程度</th><th>支持证据</th><th>主要限制</th></tr></thead>
+            <tbody><tr><td colspan="4" class="loading">正在载入证据状态……</td></tr></tbody>
+          </table>
+        </div>
+        <details class="technical-details">
+          <summary>查看完整稳健性数据</summary>
+          <div class="details-body">
+            <figure><img src="../assets/figures/research_a_identity_process.svg" alt="能动性在AI与人类身份下随六种过程条件的均值折线图" /><figcaption>身份 × 过程条件分层（能动性，原量尺1–7）</figcaption></figure>
+            <figure><img src="../assets/figures/research_a_scenario_influence.svg" alt="各场景对总体估计影响的条形图" /><figcaption>逐场景影响：去掉某场景后估计改变多少</figcaption></figure>
+            <figure><img src="../assets/figures/research_a_length_sensitivity.svg" alt="加入文本长度前后固定对比估计变化的条形图" /><figcaption>长度敏感性：加入字符数与句子数前后的估计</figcaption></figure>
+            <p class="reading">完整分层均值、逐场景影响、留一估计、长度敏感性与构念相关见 <a href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/research_a_robustness_report.md">稳健性报告</a> 与 <code>site/data/research_a_robustness_summary.json</code>。</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="implications" class="section soft">
+      <div class="wrap">
+        <p class="section-index">04</p>
+        <h2>对评测设计的意义</h2>
+        <ul class="implication-list">
+          <li>同一能力点需要多个场景。</li>
+          <li>过程信息与最终结果需要分别记录。</li>
+          <li>解释长度不能直接替代推理质量。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="analysis" class="section">
+      <div class="wrap">
+        <p class="section-index">05</p>
+        <h2>分析方法</h2>
         <p class="reading">研究把六种过程描述与AI、人类两种身份标签组合，每格采集30条模型响应，合计360条。模型阅读材料后完成统一量表，评分按场景、身份与过程条件汇总，再比较身份和条件差异，并检查不同场景中的一致程度。</p>
         <ol class="analysis-pipeline" aria-label="研究流程">
           <li><span class="flow-step">1</span><p>模型阅读材料</p></li>
@@ -153,7 +213,7 @@
 
     <section id="repro" class="section soft">
       <div class="wrap">
-        <p class="section-index">04</p>
+        <p class="section-index">06</p>
         <h2>数据、统计与复现</h2>
         <details class="technical-details">
           <summary>查看完整统计表</summary>
