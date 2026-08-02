@@ -180,6 +180,58 @@ function renderDynamic() {
   renderScenarioHet();
 }
 
+// Material-integrity audit summary is an independent static asset. It loads
+// separately from showcase_data.json so an audit-load failure never blocks the
+// analysis-interface demo, and vice versa.
+async function loadMaterialAudit() {
+  const host = document.getElementById("materialAuditSummary");
+  const note = document.getElementById("materialAuditNote");
+  try {
+    const response = await fetch("data/material_integrity_summary.json", { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const audit = await response.json();
+    renderMaterialAudit(audit, host, note);
+  } catch (error) {
+    if (note) {
+      note.textContent = "材料审计摘要暂时无法载入，可在仓库中查看 material_integrity_summary.json。";
+    }
+  }
+}
+
+function renderMaterialAudit(audit, host, note) {
+  const grid = audit.complete_grid ? "已形成完整网格" : "网格不完整";
+  const flags = Number(audit.direction_threshold_flags || 0);
+  if (host) {
+    const cards = [
+      { label: "完整网格", value: `${audit.material_count}/${audit.expected_count}`, sub: grid },
+      { label: "结构错误", value: String(audit.structural_fail_count), sub: "确定性结构问题" },
+      { label: "方向阈值提示", value: String(flags), sub: "仅提示人工复核" },
+      { label: "语义复核状态", value: audit.semantic_review_status === "not_assessed" ? "未纳入本轮" : audit.semantic_review_status, sub: "独立人工复核范围" },
+    ];
+    host.innerHTML = "";
+    cards.forEach((c) => {
+      host.appendChild(el("div", { class: "audit-card" },
+        el("strong", {}, c.value),
+        el("span", { class: "audit-label" }, c.label),
+        el("span", { class: "audit-sub" }, c.sub)));
+    });
+    if ((audit.top_issue_types || []).length) {
+      const items = audit.top_issue_types.map((t) => `${t.issue}（${t.count}）`).join("、");
+      host.appendChild(el("div", { class: "audit-card audit-issues" },
+        el("span", { class: "audit-label" }, "主要问题类型"),
+        el("span", { class: "audit-sub" }, items)));
+    }
+  }
+  if (note) {
+    let text = `${audit.material_count}条材料全部通过确定性结构检查。`
+      + "语义对称性、理由强度和反馈强度属于独立人工复核范围。";
+    if (flags > 0) {
+      text += `其中${flags}组被标记为优先复核。`;
+    }
+    note.textContent = text;
+  }
+}
+
 async function load() {
   setLoadStatus("正在加载分析界面示例数据……", "loading");
   let response;
@@ -738,3 +790,4 @@ function showLoadError(error) {
 // JSON and re-renders the dynamic slots, so listeners are bound a single time.
 renderStatic();
 load().catch(showLoadError);
+loadMaterialAudit();

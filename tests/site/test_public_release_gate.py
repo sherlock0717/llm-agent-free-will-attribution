@@ -30,17 +30,24 @@ public_json = _load(ROOT / "scripts" / "public_json.py", "public_json_release_ga
 
 def test_research_a_public_page_has_complete_structure():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
-    for section_id in ["materials", "results", "analysis", "repro"]:
+    for section_id in ["materials", "results", "robustness", "implications", "analysis", "repro"]:
         assert f'id="{section_id}"' in html
     assert "身份与决策过程" in html
     assert "DeepSeek" in html
     assert "python -m http.server 8000 --directory _site" in html
 
 
-def test_research_a_has_at_most_five_main_sections():
+def test_research_a_results_lead_before_robustness_and_analysis():
+    html = (STUDY_A / "index.html").read_text(encoding="utf-8")
+    assert html.index('id="results"') < html.index('id="robustness"')
+    assert html.index('id="robustness"') < html.index('id="analysis"')
+
+
+def test_research_a_has_at_most_seven_main_sections():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
     sections = re.findall(r'<section id="([^"]+)"', html)
-    assert len(sections) <= 5, sections
+    assert len(sections) <= 7, sections
+    assert len(sections) == len(set(sections)), sections
 
 
 def test_research_a_materials_example_leads_before_results():
@@ -56,7 +63,7 @@ def test_research_a_results_lead_before_analysis_and_repro():
 
 def test_research_a_three_fixed_findings_in_question_order():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
-    results = html.split('id="results"', 1)[1].split('id="analysis"', 1)[0]
+    results = html.split('id="results"', 1)[1].split('id="robustness"', 1)[0]
     blocks = re.findall(r'<article class="finding-block">.*?<h3>(.*?)</h3>', results, re.S)
     assert len(blocks) == 3, blocks
     assert "过程" in blocks[0]
@@ -66,7 +73,7 @@ def test_research_a_three_fixed_findings_in_question_order():
 
 def test_research_a_first_layer_has_one_figure_per_finding():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
-    results = html.split('id="results"', 1)[1].split('id="analysis"', 1)[0]
+    results = html.split('id="results"', 1)[1].split('id="robustness"', 1)[0]
     # every result figure sits inside a collapsed "查看完整数据" details block.
     outside_details = re.sub(r"<details.*?</details>", "", results, flags=re.S)
     assert "<img" not in outside_details
@@ -99,7 +106,7 @@ def test_research_a_three_first_layer_chart_containers():
 
 def test_research_a_first_layer_charts_are_outside_details():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
-    results = html.split('id="results"', 1)[1].split('id="analysis"', 1)[0]
+    results = html.split('id="results"', 1)[1].split('id="robustness"', 1)[0]
     outside_details = re.sub(r"<details.*?</details>", "", results, flags=re.S)
     for chart_id in ["processFindingChart", "identityFindingChart", "scenarioFindingChart"]:
         assert f'id="{chart_id}"' in outside_details, chart_id
@@ -129,8 +136,10 @@ def test_research_a_finding_charts_use_fixed_construct_choice():
     assert 'IDENTITY_FINDING_CONSTRUCT = "free_will_attribution"' in app
     assert 'SCENARIO_FINDING_CONSTRUCT = "agency"' in app
     assert 'SCENARIO_FINDING_CONTRAST = "A4"' in app
-    for token in ["Math.max(...", "largestDiff", "maxAbs", "sort(", "argmax"]:
-        assert token not in app.split("function renderProcessFindingChart", 1)[1], token
+    # no effect-size ranking is used to choose which construct/contrast leads.
+    # (Math.max for chart-axis scaling is allowed; argmax-style selection is not.)
+    for token in ["largestDiff", "maxAbs", "argmax", "idxmax", ".sort((a, b) => b"]:
+        assert token not in app, token
 
 
 def test_research_a_no_internal_field_names_or_reading_guidance():
@@ -151,9 +160,11 @@ def test_research_a_technical_statistics_collapsed():
     assert "查看数据与代码" in repro
 
 
-def test_research_a_public_copy_uses_positive_status_language():
+def test_research_a_public_copy_avoids_internal_process_wording():
     html = (STUDY_A / "index.html").read_text(encoding="utf-8")
-    for phrase in ["仍待", "尚未", "不能", "无法", "不支持", "不代表"]:
+    # 不能 / 不支持 / 不代表 are allowed: they carry necessary evidence-boundary
+    # meaning. Only stalled-progress and internal-process wording is forbidden.
+    for phrase in ["仍待", "尚未", "待验证", "仍在完善", "槽位", "流程演示", "阅读顺序", "如何使用本页"]:
         assert phrase not in html, phrase
 
 
@@ -213,6 +224,7 @@ def test_research_a_page_uses_existing_root_data_contract():
         "measurement_summary.json",
         "analysis_results.json",
         "research_a_scenario_summary.json",
+        "research_a_robustness_summary.json",
     }
     for name in names:
         payload = json.loads((ROOT / "site" / "data" / name).read_text(encoding="utf-8"))

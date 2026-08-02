@@ -91,6 +91,7 @@ h1 { margin: 0 0 8px; max-width: 780px; font-size: clamp(2.15rem, 4vw, 3.4rem); 
 .finding-block { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr); gap: 32px; align-items: start; padding: 22px 24px; border: 1px solid var(--border); border-left: 5px solid var(--research); border-radius: 13px; background: #fff; }
 .finding-block h3 { margin: 0; font-size: 1.15rem; }
 .finding-block p { margin: 0; color: #2d3850; }
+.finding-metric { margin-top: 8px !important; font-weight: 700; color: var(--research); font-size: .92rem; }
 
 .table-scroll { width: 100%; max-width: 100%; overflow-x: auto; margin-top: 22px; }
 table { width: 100%; min-width: 640px; border-collapse: collapse; background: #fff; }

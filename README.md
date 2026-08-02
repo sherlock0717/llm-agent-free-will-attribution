@@ -1,96 +1,139 @@
 # LLM行动者归因评测
 
-本项目研究一个问题：同一个决定被写成不同的身份和决策过程时，语言模型会不会改变对行动者的评价。研究A观察身份标签和过程描述是否对应不同的模型评价；研究B固定机器主体，把备选方案、理由、反馈和反馈后的行动拆成具体条件，分析哪些线索推动评价变化。
+同一个决定采用不同的身份和过程写法时，语言模型会怎样改变对行动者的评价？
 
-## 项目概览
+本项目控制材料中的身份标签、备选方案、理由、反馈与后续行动，观察模型对能动性、心智、自由意志相关归因、影响能力与责任的评分变化。项目由两项研究组成：研究A提供已有模型响应和场景分析；研究B把过程线索拆成六种材料条件，形成可复核的离线研究设计。
 
-项目由两项研究组成。研究A用已有模型响应观察现象，研究B把决策过程拆得更细，分别考察每一类线索。两项研究分别使用自己的材料、题项和分析结果。完整计划见 [`docs/RESEARCH_PROGRAM.md`](docs/RESEARCH_PROGRAM.md)。
+- 项目总览：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/
+- 研究A结果：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/identity-process-attribution-baseline/
+- 研究B设计：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/machine-decision-process-attribution/
+
+## 主要发现
+
+研究A基于360条DeepSeek模型问卷响应，覆盖8个场景、6种过程条件和AI／人类两种身份标签。当前结果支持三点：
+
+1. **反思与反馈写法对应更高的能动性评分。** 与只提供较长背景和最终选择相比，加入反思、反馈和后续行动时，能动性评分平均高出1.263分；16个场景×身份配对单元全部呈现相同方向。
+2. **人类标签对应更高的自由意志归因。** 在任务场景和过程写法保持相同时，人类标签下的自由意志归因平均比AI标签高0.760分；48个场景×过程条件身份配对单元全部呈现相同方向。该结果只描述自由意志归因这一维度，不概括所有心智和责任维度。
+3. **总体方向不能替代场景分析。** 过程效应和身份效应在留一场景分析中均保持同号，但差异幅度会随任务语境改变；总体均值可能掩盖某些场景的推动或抵消作用。
+
+方向一致数是场景×条件配对单元的描述性统计，用于观察结果是否在不同材料组合中重复出现，不等同于独立样本数量或统计显著性检验。加入字符数和句子数后，A4估计方向没有改变；由于文本长度与过程条件共同变化，无法据此分离文本长度和过程信息各自的独立作用。
+
+这些结果描述的是该模型配置在本项目材料和问卷提示下形成的评价模式，不证明跨模型泛化，也不证明行动者真实具有被评分的心理属性。
+
+## 对实际评测的意义
+
+### Benchmark与Rubric
+
+- 将最终行为、决策过程和身份标签分开控制；
+- 把“列出备选”“给出理由”“回应反馈”“实际改变行动”设置为不同能力点；
+- 同一能力点使用多个场景和多种等价表述；
+- 同时报告总体结果、场景范围和方向一致程度；
+- 避免把身份标签造成的归因差异误解为能力差异。
+
+### 训练数据与质检
+
+- 不把更长的回答直接视为更强推理；
+- 检查理由是否与目标和选择对应；
+- 区分接受反馈、复述反馈和据此调整行动；
+- 保持不同条件的措辞强度、信息量和结果严重程度可比；
+- 在清洗和标注中记录过程信息类型，而不只记录最终答案是否正确。
+
+### Agent与AI产品
+
+- 将“会做决定”拆成方案比较、目标说明、反馈处理和后续执行；
+- 把归因评分与任务成功率、约束满足率分别报告；
+- 在不同风险、责任和协作场景中重复测试；
+- 避免依据一次提示下的自我解释判断模型是否具有稳定的能动性或心智属性。
+
+完整说明见[`docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md`](docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md)。
 
 ## 研究A：身份与决策过程归因
 
-研究A让DeepSeek模型阅读八类决策场景。材料一方面改变行动者的身份标签，另一方面改变决策过程的写法，从只给最终选择逐步扩展到理由、反馈和后续修正。360条模型响应用于观察模型对能动性、体验性、自由意志相关归因与责任的评分变化。
+研究A交叉六种决策过程写法与AI／人类身份标签，共形成360条模型响应。公开页面展示：
 
-研究A已经形成材料、34个情境化题项、构念得分、条件比较、场景一致性分析和复现链。扩展路线包括跨模型运行、Prompt盲化和测量结构复核。
+- 六种过程条件下的主要评价变化；
+- AI与人类标签下的评分差异；
+- 八个场景中的方向一致程度和变化范围；
+- 数据、题项、分析脚本和复现入口。
 
-- 独立展示页：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/identity-process-attribution-baseline/
-- 研究说明：[`docs/STUDY_CARD.md`](docs/STUDY_CARD.md)
-- 研究与测量来源：[`docs/research_and_measurement_sources.md`](docs/research_and_measurement_sources.md)
-- 题项来源映射：[`docs/scale_source_mapping.md`](docs/scale_source_mapping.md)
-- 设计蓝图：[`docs/research_design_blueprint.md`](docs/research_design_blueprint.md)
+相关文档：
+
+- [`docs/STUDY_CARD.md`](docs/STUDY_CARD.md)
+- [`docs/research_and_measurement_sources.md`](docs/research_and_measurement_sources.md)
+- [`docs/scale_source_mapping.md`](docs/scale_source_mapping.md)
+- [`docs/research_design_blueprint.md`](docs/research_design_blueprint.md)
 
 ## 研究B：机器主体决策过程归因
 
-研究B固定机器主体，考察备选方案、明确理由、外部反馈以及反馈后的维持或改变分别如何影响模型的评价。四个主要评价维度是知觉独立性（IN）、目标导向性（GO）、心理状态推断（MSI）和影响能力（IC），另有两个感知能动性补充指标（PA5、PA8）。设计包含六个条件、八个场景和两个方向，共96条材料；两个评判模型对同一材料集独立评分。
+研究B固定机器主体，将过程信息拆为六种条件：只给出决定、展示备选方案、给出明确理由、加入外部反馈、反馈后维持决定、反馈后改变决定。设计覆盖8个场景与2个方向，共96条材料。
 
-研究B已经建立材料、评分规则、分析计划、确定性分析界面示例，以及外部离线结果导入契约与可复现分析流程。仓库的可执行范围止于本地验证、结果导入和离线分析；外部提供的离线评分文件通过验证后，可以进入同一分析流程。
+四个主要评价维度为：
 
-- 独立展示页：https://sherlock0717.github.io/llm-attribution-behavior-evaluation/machine-decision-process-attribution/
-- 研究说明：[`docs/STUDY_B_CARD.md`](docs/STUDY_B_CARD.md)
-- 研究与测量来源：[`docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md`](docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md)
-- 离线研究包：[`research_packages/study_b/`](research_packages/study_b/README.md)（协议、材料矩阵、评分模板、导入 Schema）
+- 知觉独立性（IN）
+- 目标导向性（GO）
+- 心理状态推断（MSI）
+- 影响能力（IC）
 
-## 两项研究如何衔接
+PA5和PA8作为感知能动性的补充指标。研究B当前提供材料、评价规则、P1—P6、确定性分析界面、外部离线评价记录格式和可复现分析流程；固定数据只用于校验分析流程和页面结构，不构成新的模型研究结果。
 
-研究A提出身份与决策过程如何影响归因的问题，并识别题项来源、构念交叉、文本长度和主体可比性等测量议题。研究B据此固定机器主体，把决定信息、反馈和后续行为拆分为六个可核查条件。两项研究分别报告结果，使用同一套材料—评分—分析方法。
+相关文档：
 
-未来工作在外部离线评分结果进入分析流程后，建立与机器主体平行的人类主体测量，分析两类主体的评价结构如何对应。
+- [`docs/STUDY_B_CARD.md`](docs/STUDY_B_CARD.md)
+- [`docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md`](docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md)
+- [`research_packages/study_b/`](research_packages/study_b/README.md)
 
-本地预览全部页面：
+## 证据边界
 
-```bash
-python scripts/assemble_pages.py --output _site
-python -m http.server 8000 --directory _site
+| 内容 | 当前状态 | 可以回答 | 不能据此回答 |
+|---|---|---|---|
+| 研究A | 360条既有模型响应与场景分析 | 该模型配置如何根据身份与过程写法调整评价 | 其他模型是否相同、模型是否真实拥有相关心理属性 |
+| 研究B | 96条材料、评价规则与离线分析设计 | 如何把备选、理由、反馈和后续行动拆成可核查条件 | 六种条件在正式模型评价中产生了什么结果 |
+| 固定示例 | 确定性数据与图表 | 分析流程、数据格式和页面结构是否可复核 | 正式效应、显著性或模型优劣 |
+
+## 项目结构
+
+```text
+src/freewill_attribution/   研究A任务运行、解析、计分与记录
+configs/                    研究A任务、Prompt、模型和指标配置
+tasks/                      研究B协议、材料、评价与分析资产
+outputs/                    研究A已有分析产物（保持只读）
+research_packages/study_b/  研究B离线协议与外部记录格式
+runs/study_b_offline_demo/  固定数据分析流程示例
+scripts/                    数据构建、分析、检查与Pages组装脚本
+site/                       项目总览页面
+docs/                       研究页面、研究计划、来源与复现文档
+tests/                      单元、集成和站点测试
 ```
 
-组装后可访问：
-
-- 项目总览：http://localhost:8000/
-- 研究A：http://localhost:8000/identity-process-attribution-baseline/
-- 研究B：http://localhost:8000/machine-decision-process-attribution/
-- 研究B旧路径跳转：http://localhost:8000/pa-wu-r1-pilot/
-
-生成数据与发布检查：
+## 本地预览
 
 ```bash
 uv sync --frozen
 uv run python scripts/build_site_data.py --check
 uv run python scripts/build_showcase_data.py --check
+uv run python scripts/build_study_b_protocol_package.py --check
 uv run python scripts/check_public_json.py
-uv run pytest -q tests/site
+uv run pytest -q
 python scripts/assemble_pages.py --output _site
+python -m http.server 8000 --directory _site
 ```
 
-## 扩展路线
+访问：
 
-跨主体平行测量与可比性研究将独立建设人类主体题项，记录其来源和适用范围，并检验机器与人类两套测量在比较任务中的结构关系。
-
-## 仓库结构
-
-```text
-src/freewill_attribution/   任务运行、模型接口、解析、计分与运行记录
-configs/                    研究A任务、Prompt、模型和指标配置
-tasks/                      研究B协议、材料、评分、分析与示例资产
-outputs/                    研究A已有分析产物（保持只读）
-scripts/                    站点数据、报告、严格JSON与Pages组装脚本
-site/                       项目总览页面与共享公开数据
-docs/identity-process-attribution-baseline/  研究A独立页面
-docs/pa-wu-r1-pilot/        研究B独立页面源目录
-docs/study_b/               研究B文档入口
-docs/                       研究计划、研究说明、来源与复现文档
-tests/                      单元、集成和站点测试
-```
+- 项目总览：http://localhost:8000/
+- 研究A：http://localhost:8000/identity-process-attribution-baseline/
+- 研究B：http://localhost:8000/machine-decision-process-attribution/
 
 ## 文档入口
 
-1. [项目研究计划](docs/RESEARCH_PROGRAM.md)
-2. [公开页面表达规范](docs/PUBLIC_PRESENTATION_GUIDE.md)
-3. [统一数据来源字典](docs/data_provenance.yaml)
-4. [研究A说明](docs/STUDY_CARD.md)
-5. [研究B说明](docs/STUDY_B_CARD.md)
-6. [研究A研究与测量来源](docs/research_and_measurement_sources.md)
-7. [研究B研究与测量来源](docs/STUDY_B_RESEARCH_AND_MEASUREMENT_SOURCES.md)
-8. [研究A设计蓝图](docs/research_design_blueprint.md)
+1. [结果与实践启示](docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md)
+2. [总体研究计划](docs/RESEARCH_PROGRAM.md)
+3. [评测设计检查清单](docs/EVALUATION_DESIGN_CHECKLIST.md)
+4. [统一数据来源字典](docs/data_provenance.yaml)
+5. [研究A说明](docs/STUDY_CARD.md)
+6. [研究B说明](docs/STUDY_B_CARD.md)
+7. [公开页面表达规范](docs/PUBLIC_PRESENTATION_GUIDE.md)
 
 ## 权利与使用
 
-仓库代码、材料、数据和文档由作者保留权利。项目引用请注明“LLM行动者归因评测”与仓库地址；各来源题项按照对应来源文档记录的许可状态使用。
+仓库代码、材料、数据和文档由作者保留权利。引用时请注明“LLM行动者归因评测”与仓库地址；来源题项按照对应来源文档记录的许可状态使用。

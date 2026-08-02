@@ -2,7 +2,7 @@
 
 const DATA_ROOT = "../data/";
 const STATUS = document.getElementById("pageStatus");
-const GROUP_STATE = { story: "loading", measurement: "loading", analysis: "loading", scenario: "loading" };
+const GROUP_STATE = { story: "loading", measurement: "loading", analysis: "loading", scenario: "loading", robustness: "loading" };
 const CONSTRUCT_LABELS_ZH = {
   subjective_process_completeness: "主观过程完整性",
   agency: "能动性",
@@ -328,6 +328,140 @@ function renderContrasts(results) {
     </table></div></article>`).join("");
 }
 
+// --- Robustness (existing-data diagnostics) --------------------------------
+const ROBUST_STATUS_LABELS = {
+  cross_scenario_stable: "跨场景较稳定",
+  scenario_dependent: "存在明显场景依赖",
+  limited_evidence: "证据有限",
+};
+
+function renderRobustnessModules(summary) {
+  const findings = summary.public_findings || {};
+  const proc = findings.process_information;
+
+  // module 1: does the majority of scenario×identity units keep one direction?
+  if (proc) {
+    setText("#robustDirection .robust-conclusion",
+      `在${proc.total_unit_count}个场景与身份组合中，${proc.direction_majority_count}个保持相同方向；`
+      + `依次去掉一个场景后，平均差异${proc.leave_one_scenario_same_sign ? "始终保持同号" : "出现跨零"}。`);
+    setText('[data-robust="direction-number"]', `${proc.direction_majority_count}/${proc.total_unit_count}`);
+    renderStackVisual(document.querySelector('[data-robust-figure="direction"]'),
+      proc.direction_majority_count, proc.total_unit_count - proc.direction_majority_count);
+  }
+
+  // module 2: does a small number of scenarios drive the overall result?
+  if (proc && (proc.scenario_influence || []).length) {
+    const top = proc.scenario_influence[0];
+    const after = top.leave_one_effect;
+    setText("#robustInfluence .robust-conclusion",
+      `影响最大的场景（${top.scenario_id}）被排除后，平均差异从${formatNumber(proc.full_effect, 2)}`
+      + `变为${formatNumber(after, 2)}。`);
+    setText('[data-robust="influence-number"]', formatNumber(top.influence, 3));
+    renderInfluenceVisual(document.querySelector('[data-robust-figure="influence"]'),
+      proc.scenario_influence.slice(0, 5));
+  }
+
+  // module 3: how does the result change after adding text length?
+  const length = proc?.length_sensitivity;
+  if (length) {
+    const flip = length.direction_flips ? "方向发生改变" : "方向没有改变";
+    setText("#robustLength .robust-conclusion",
+      `加入字符数和句子数后，A4估计由${formatNumber(length.base_estimate, 2)}`
+      + `变为${formatNumber(length.length_adjusted_estimate, 2)}，${flip}。`
+      + "由于文本长度与过程条件共同变化，这一分析说明估计对模型设定较敏感，"
+      + "无法据此分离文本长度和过程信息各自的独立作用。");
+    const pct = length.absolute_shrink_ratio != null
+      ? `${(length.absolute_shrink_ratio * 100).toFixed(0)}%` : "—";
+    setText('[data-robust="length-number"]', pct);
+    renderLengthVisual(document.querySelector('[data-robust-figure="length"]'),
+      length.base_estimate, length.length_adjusted_estimate);
+  }
+
+  renderEvidenceStatusTable(summary);
+}
+
+function setText(selector, text) {
+  const el = document.querySelector(selector);
+  if (el) { el.textContent = text; el.classList.remove("loading"); }
+}
+
+function renderStackVisual(target, same, other) {
+  if (!target) return;
+  const total = same + other || 1;
+  target.setAttribute("aria-label", `方向相同${same}个，其余${other}个，共${total}个组合`);
+  target.innerHTML = `<div class="stack-bar"><span class="stack-seg same" style="width:${(same / total * 100).toFixed(1)}%">${same}</span>`
+    + (other > 0 ? `<span class="stack-seg rest" style="width:${(other / total * 100).toFixed(1)}%">${other}</span>` : "")
+    + `</div>`;
+}
+
+function renderInfluenceVisual(target, rows) {
+  if (!target) return;
+  const max = Math.max(...rows.map((r) => Math.abs(r.influence || 0)), 0.0001);
+  target.setAttribute("aria-label", rows.map((r) => `${r.scenario_id} 影响 ${formatNumber(r.influence, 3)}`).join("，"));
+  target.innerHTML = rows.map((r) => `<div class="mini-bar-row"><span class="mini-bar-name">${escapeHtml(r.scenario_id)}</span>`
+    + `<span class="mini-bar-track"><span class="mini-bar-fill${r.direction_changes ? " flip" : ""}" style="width:${(Math.abs(r.influence || 0) / max * 100).toFixed(1)}%"></span></span>`
+    + `<span class="mini-bar-value">${formatNumber(r.influence, 3)}</span></div>`).join("");
+}
+
+function renderLengthVisual(target, base, adjusted) {
+  if (!target) return;
+  const max = Math.max(Math.abs(base || 0), Math.abs(adjusted || 0), 0.0001);
+  target.setAttribute("aria-label", `原估计${formatNumber(base, 2)}，加入长度后${formatNumber(adjusted, 2)}`);
+  target.innerHTML = `<div class="mini-bar-row"><span class="mini-bar-name">原估计</span>`
+    + `<span class="mini-bar-track"><span class="mini-bar-fill" style="width:${(Math.abs(base || 0) / max * 100).toFixed(1)}%"></span></span>`
+    + `<span class="mini-bar-value">${formatNumber(base, 2)}</span></div>`
+    + `<div class="mini-bar-row"><span class="mini-bar-name">加长度后</span>`
+    + `<span class="mini-bar-track"><span class="mini-bar-fill alt" style="width:${(Math.abs(adjusted || 0) / max * 100).toFixed(1)}%"></span></span>`
+    + `<span class="mini-bar-value">${formatNumber(adjusted, 2)}</span></div>`;
+}
+
+function renderEvidenceStatusTable(summary) {
+  const body = document.querySelector("#evidenceStatusTable tbody");
+  if (!body) return;
+  const f = summary.public_findings || {};
+  const proc = f.process_information;
+  const ident = f.identity_label;
+  const scen = f.scenario_dependence;
+  const rows = [];
+  if (proc) {
+    rows.push({
+      finding: "过程信息进入能动性评价",
+      status: proc.status_label,
+      support: `${proc.construct_label}｜过程对比${proc.contrast_id}｜同方向${proc.direction_majority_count}/${proc.total_unit_count}`,
+      limit: proc.leave_one_scenario_same_sign ? "总体估计随场景有幅度变化" : "留一场景后方向不稳定",
+    });
+  }
+  if (ident) {
+    rows.push({
+      finding: "身份标签改变自由意志归因",
+      status: ident.status_label,
+      support: `${ident.construct_label}｜human−AI｜同方向${ident.direction_majority_count}/${ident.total_unit_count}`,
+      limit: ident.leave_one_scenario_same_sign ? "身份差随场景有幅度变化" : "留一场景后方向不稳定",
+    });
+  }
+  if (scen) {
+    rows.push({
+      finding: "结论方向重复但幅度依赖场景",
+      status: "方向一致但幅度存在场景差异",
+      support: `过程范围${JSON.stringify(scen.process_effect_range)}｜身份范围${JSON.stringify(scen.identity_effect_range)}`,
+      limit: `影响最大场景：过程${scen.largest_process_influence}／身份${scen.largest_identity_influence}`,
+    });
+  }
+  body.innerHTML = rows.slice(0, 4).map((row) =>
+    `<tr><th>${escapeHtml(row.finding)}</th><td>${escapeHtml(row.status)}</td>`
+    + `<td>${escapeHtml(row.support)}</td><td>${escapeHtml(row.limit)}</td></tr>`).join("");
+}
+
+async function loadRobustnessGroup() {
+  try {
+    renderRobustnessModules(await fetchJson("research_a_robustness_summary.json"));
+  } catch (error) {
+    const retry = () => runGroup("robustness", loadRobustnessGroup);
+    errorPanel("robustDirection", "稳健性结果", error, retry);
+    throw error;
+  }
+}
+
 async function loadStoryGroup() {
   try {
     renderScenarios(await fetchJson("showcase_story.json"));
@@ -381,4 +515,5 @@ Promise.allSettled([
   runGroup("measurement", loadMeasurementGroup),
   runGroup("analysis", loadAnalysisGroup),
   runGroup("scenario", loadScenarioGroup),
+  runGroup("robustness", loadRobustnessGroup),
 ]);

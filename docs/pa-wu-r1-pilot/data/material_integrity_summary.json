@@ -1,0 +1,11 @@
+{
+  "complete_grid": true,
+  "data_role": "study_b_material_integrity_audit",
+  "direction_threshold_flags": 0,
+  "expected_count": 96,
+  "material_count": 96,
+  "semantic_review_status": "not_assessed",
+  "structural_fail_count": 0,
+  "structural_pass_count": 96,
+  "top_issue_types": []
+}

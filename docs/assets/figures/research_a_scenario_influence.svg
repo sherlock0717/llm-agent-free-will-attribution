@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 326" role="img" aria-label="能动性 A4 各场景对总体估计的影响" width="100%">
+<style>text{font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;}.grid{stroke:#d9e0ec;stroke-width:1;}.axis{fill:#5a667f;font-size:12px;}.val{fill:#172033;font-size:11px;font-weight:700;}.lineA{stroke:#315dc9;stroke-width:2.5;fill:none;}.lineB{stroke:#6945bd;stroke-width:2.5;fill:none;stroke-dasharray:5 4;}.dotA{fill:#315dc9;}.dotB{fill:#6945bd;}.bar{fill:#315dc9;}.barneg{fill:#8a5b00;}.cat{fill:#5a667f;font-size:11px;}</style>
+<text class="axis" x="200" y="24">去掉该场景后估计改变的绝对值（原量尺）</text>
+<text class="cat" x="192" y="56.0" text-anchor="end">obedience_unfair_order</text>
+<rect class="bar" x="200" y="40.0" width="380.0" height="22" rx="3" />
+<text class="val" x="586.0" y="56.0">0.093</text>
+<text class="cat" x="192" y="88.0" text-anchor="end">self_control_deadline</text>
+<rect class="bar" x="200" y="72.0" width="346.7" height="22" rx="3" />
+<text class="val" x="552.7" y="88.0">0.085</text>
+<text class="cat" x="192" y="120.0" text-anchor="end">responsibility_mistake</text>
+<rect class="bar" x="200" y="104.0" width="249.8" height="22" rx="3" />
+<text class="val" x="455.8" y="120.0">0.061</text>
+<text class="cat" x="192" y="152.0" text-anchor="end">relationship_honesty</text>
+<rect class="bar" x="200" y="136.0" width="222.5" height="22" rx="3" />
+<text class="val" x="428.5" y="152.0">0.055</text>
+<text class="cat" x="192" y="184.0" text-anchor="end">team_credit</text>
+<rect class="bar" x="200" y="168.0" width="137.8" height="22" rx="3" />
+<text class="val" x="343.8" y="184.0">0.034</text>
+<text class="cat" x="192" y="216.0" text-anchor="end">moral_friend_report</text>
+<rect class="bar" x="200" y="200.0" width="104.5" height="22" rx="3" />
+<text class="val" x="310.5" y="216.0">0.026</text>
+<text class="cat" x="192" y="248.0" text-anchor="end">privacy_shortcut</text>
+<rect class="bar" x="200" y="232.0" width="56.0" height="22" rx="3" />
+<text class="val" x="262.0" y="248.0">0.014</text>
+<text class="cat" x="192" y="280.0" text-anchor="end">risk_project_choice</text>
+<rect class="bar" x="200" y="264.0" width="16.7" height="22" rx="3" />
+<text class="val" x="222.7" y="280.0">0.004</text>
+</svg>

@@ -111,16 +111,46 @@ def test_title_is_chinese():
 
 def test_page_has_at_most_six_main_sections():
     indices = re.findall(r'<span class="section-index">(\d+)</span>', HTML)
-    assert indices == [f"{i:02d}" for i in range(1, 6)], indices
+    assert indices == [f"{i:02d}" for i in range(1, 7)], indices
 
 
 def test_semantic_section_ids_present():
-    for sid in ["example", "measurement", "comparison", "demo", "methods"]:
+    for sid in ["example", "materialAudit", "measurement", "comparison", "demo", "methods"]:
         assert f'id="{sid}"' in HTML, sid
     # the standalone overview and progress sections were folded into the hero
     # and the analysis section.
     assert '<section id="overview"' not in HTML
     assert '<section id="progress"' not in HTML
+
+
+def test_material_audit_section_follows_condition_tree():
+    # the material integrity audit sits right after the six-condition example.
+    assert HTML.index('id="example"') < HTML.index('id="materialAudit"')
+    assert HTML.index('id="materialAudit"') < HTML.index('id="measurement"')
+    audit = HTML.split('id="materialAudit"', 1)[1].split("</section>", 1)[0]
+    assert "材料设计经过了哪些检查" in audit
+    assert "对Benchmark材料生产的意义" in audit
+    assert "materialAuditSummary" in audit
+
+
+def test_material_audit_summary_json_is_present_and_strict():
+    path = PAGE / "data" / "material_integrity_summary.json"
+    assert path.is_file()
+    payload = _strict_load(path)
+    assert payload["material_count"] == 96
+    assert payload["expected_count"] == 96
+    assert payload["complete_grid"] is True
+    assert "structural_pass_count" in payload
+    assert "structural_fail_count" in payload
+    assert "direction_threshold_flags" in payload
+    assert payload["semantic_review_status"] == "not_assessed"
+
+
+def test_material_audit_js_loads_independently():
+    assert "loadMaterialAudit" in JS
+    assert "material_integrity_summary.json" in JS
+    # audit load must not be chained into the demo load path.
+    assert "load().catch(showLoadError)" in JS
 
 
 def test_legacy_anchor_aliases_s1_to_s14_present():
@@ -132,7 +162,7 @@ def test_nav_matches_sections():
     nav = HTML.split('nav class="toc"', 1)[1].split("</nav>", 1)[0]
     hrefs = re.findall(r'<a href="#([^"]+)">([^<]+)</a>', nav)
     assert [h for h, _ in hrefs] == [
-        "example", "measurement", "comparison", "demo", "methods",
+        "example", "materialAudit", "measurement", "comparison", "demo", "methods",
     ], hrefs
     for _, label in hrefs:
         assert re.search(r"[\u4e00-\u9fff]", label), label
