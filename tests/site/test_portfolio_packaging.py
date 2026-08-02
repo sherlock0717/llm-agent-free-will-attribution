@@ -19,7 +19,7 @@ def text(path: Path) -> str:
 
 def test_overview_leads_with_project_value_and_visible_outputs():
     page = text(HOME)
-    for phrase in ["项目工作覆盖构念定义、材料与题项、模型评分、数据契约、结构审计、跨平台CI和公开展示", "项目完成了什么", "从研究结果到真实系统", "360", "96", "1005"]:
+    for phrase in ["项目工作覆盖构念定义、材料与题项、模型评分、数据契约、结构审计、跨平台CI和公开展示", "项目完成了什么", "从研究结果到真实系统", "360", "96", "1011"]:
         assert phrase in page
     assert 'href="#build"' in page
 
