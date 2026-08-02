@@ -1,0 +1,82 @@
+name: Apply final reader refactor once
+
+"on":
+  push:
+    branches:
+      - refactor/final-reader-experience
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-final-reader-refactor
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: refactor/final-reader-experience
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990
+        with:
+          version: "0.11.28"
+          enable-cache: true
+
+      - name: Apply deterministic refactor
+        run: python scripts/_apply_reader_refactor_once.py
+
+      - name: Sync locked environment
+        run: uv sync --frozen
+
+      - name: Run public site tests
+        run: uv run --frozen pytest -q tests/site
+
+      - name: Run Ruff
+        run: uv run --frozen ruff check src scripts tests
+
+      - name: Verify protected research assets
+        run: |
+          git diff --exit-code -- outputs
+          git diff --exit-code -- tasks/attribution_behavior/evaluations/pa_wu_r1_pilot/stimuli.jsonl
+
+      - name: Check diff
+        run: git diff --check
+
+      - name: Commit final files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git add docs/RESEARCH_PROGRAM.md
+          git add docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md
+          git add docs/STUDY_CARD.md
+          git add docs/STUDY_B_CARD.md
+          git add docs/EVALUATION_DESIGN_CHECKLIST.md
+          git add docs/PUBLIC_PRESENTATION_GUIDE.md
+          git add site/index.html
+          git add site/assets/js/site.js
+          git add docs/identity-process-attribution-baseline/index.html
+          git add docs/identity-process-attribution-baseline/app.js
+          git add docs/pa-wu-r1-pilot/index.html
+          git add docs/pa-wu-r1-pilot/app.js
+          git add tests/site/test_reader_experience_and_consistency.py
+          git add -u -- scripts/_apply_reader_refactor_once.py
+          git add -u -- .github/workflows/apply_reader_refactor_once.yml
+          git add -u -- .tmp_reader_refactor
+          git status --short
+          git commit -m "refactor: finalize reader experience and research framing"
+          git push origin HEAD:refactor/final-reader-experience
