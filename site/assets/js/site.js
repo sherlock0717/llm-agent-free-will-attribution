@@ -5,6 +5,7 @@ function setStatus(message, kind) {
   if (!node) return;
   node.textContent = message;
   node.dataset.kind = kind;
+  node.hidden = kind === "success";
 }
 
 function renderStory(story) {
@@ -76,7 +77,7 @@ async function loadFindingMetrics() {
   if (proc) {
     setFindingBody(
       "process",
-      `包含理由、反思、反馈与后续行动的成套写法，比只包含较长背景和最终选择的写法平均高出${fmt(proc.full_effect)}分。`
+      `在1—7分量尺上，包含理由、反思、反馈与后续行动的成套写法，比只包含较长背景和最终选择的写法平均高出${fmt(proc.full_effect)}分。`
       + `${proc.direction_majority_count}/${proc.total_unit_count}个场景×身份配对单元呈现相同方向。`
       + "这一比较覆盖两种完整写法。" );
     setFindingMetric(
@@ -86,7 +87,7 @@ async function loadFindingMetrics() {
   if (ident) {
     setFindingBody(
       "identity",
-      `任务场景和过程写法相同时，人类标签下的自由意志归因平均比AI标签高${fmt(ident.overall_identity_difference)}分。`
+      `在1—7分量尺上，任务场景和过程写法相同时，人类标签下的自由意志归因平均比AI标签高${fmt(ident.overall_identity_difference)}分。`
       + `${ident.direction_majority_count}/${ident.total_unit_count}个场景×过程条件身份配对单元呈现相同方向。`
       + "这一结果聚焦自由意志归因维度。" );
     setFindingMetric(

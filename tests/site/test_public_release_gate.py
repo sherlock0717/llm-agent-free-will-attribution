@@ -67,7 +67,7 @@ def test_research_a_three_fixed_findings_in_question_order():
     blocks = re.findall(r'<article class="finding-block">.*?<h3>(.*?)</h3>', results, re.S)
     assert len(blocks) == 3, blocks
     assert "过程" in blocks[0]
-    assert "身份" in blocks[1]
+    assert "自由意志归因" in blocks[1]
     assert "场景" in blocks[2]
 
 
@@ -285,4 +285,4 @@ def test_study_card_uses_positive_extension_language():
     text = (ROOT / "docs" / "STUDY_CARD.md").read_text(encoding="utf-8")
     for phrase in ["无法逐请求还原", "不能逐请求复现", "已知方法问题", "后续研究需要优先处理"]:
         assert phrase not in text, phrase
-    assert "研究A扩展路线" in text
+    assert "当前稳健性报告" in text

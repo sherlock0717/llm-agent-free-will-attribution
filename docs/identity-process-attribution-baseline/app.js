@@ -11,11 +11,9 @@ const CONSTRUCT_LABELS_ZH = {
   responsibility_total: "责任总分",
 };
 const PUBLIC_TAKEAWAYS = [
-  "理由与反思描述对应更高的能动性评价：从直接选择到给出理由、再到加入反思反馈，能动性评分总体抬升。",
-  "AI与人类身份标签对应了自由意志、体验与责任相关评分上的系统差异。",
-  "能动性与自由意志归因关系紧密：两者在这批响应中一起变化，同时各自保留清晰的过程条件模式。",
-  "这些差异在八类场景中方向大体一致，去掉任意一个场景后的整体结果保持稳定。",
-  "研究A结果描述该DeepSeek配置在本材料集与问卷模拟Prompt中的归因反应。",
+  "在1—7分量尺上，包含理由、反思、反馈与后续行动的完整写法，对应更高的能动性评分。",
+  "任务场景和过程写法相同时，人类标签下的自由意志归因高于AI标签。",
+  "两项主要差异在多个场景中保持相同方向，但幅度随任务语境变化。",
 ];
 
 function escapeHtml(value) {
@@ -54,12 +52,15 @@ function updateStatus() {
   if (success === states.length) {
     STATUS.textContent = "公开研究数据已载入。";
     STATUS.dataset.kind = "success";
+    STATUS.hidden = true;
   } else if (error > 0) {
     STATUS.textContent = `已载入 ${success} 组数据；${error} 组数据提供重新加载入口。`;
     STATUS.dataset.kind = "partial";
+    STATUS.hidden = false;
   } else if (loading > 0) {
     STATUS.textContent = "正在载入公开研究数据……";
     STATUS.dataset.kind = "loading";
+    STATUS.hidden = false;
   }
 }
 
@@ -125,7 +126,7 @@ function renderTakeaways() {
   document.getElementById("takeaways").innerHTML = `<ol>${PUBLIC_TAKEAWAYS.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>`;
 }
 
-// The four main findings stay fixed and are ordered by the research questions,
+// The three main findings stay fixed and are ordered by the research questions,
 // not by whichever contrast happens to have the largest absolute difference.
 // The scenario summary only fills in the numeric range of the consistency
 // finding (item four), so a large value never re-orders the findings.
@@ -135,7 +136,7 @@ function renderTakeawaysFromScenario(summary) {
   const consistency = rows.map((row) => Number(row.direction_consistency)).filter(Number.isFinite);
   const minConsistency = consistency.length ? Math.min(...consistency) : null;
   const items = PUBLIC_TAKEAWAYS.slice();
-  items[3] =
+  items[2] =
     `这些差异在八类场景中方向大体一致：${summary.record_count}条响应汇总为` +
     `${summary.unit_count}个场景×身份×过程条件单元，` +
     (minConsistency != null
