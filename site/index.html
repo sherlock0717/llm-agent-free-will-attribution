@@ -10,6 +10,7 @@
   <meta property="og:title" content="LLM行动者归因评测" />
   <meta property="og:description" content="两项研究追踪身份、理由、反馈与后续行动如何进入语言模型对行动者的判断。" />
   <meta property="og:url" content="https://sherlock0717.github.io/llm-attribution-behavior-evaluation/" />
+  <meta property="og:image" content="https://sherlock0717.github.io/llm-attribution-behavior-evaluation/assets/figures/social-preview.svg" />
   <link rel="stylesheet" href="assets/css/site.css" />
 </head>
 <body>
@@ -22,7 +23,8 @@
         <ul id="site-nav-list">
           <li><a href="#findings">主要发现</a></li>
           <li><a href="#studies">两项研究</a></li>
-          <li><a href="#implications">延伸问题</a></li>
+          <li><a href="#build">项目工作</a></li>
+          <li><a href="#implications">实际价值</a></li>
           <li><a href="#methods">数据与复现</a></li>
         </ul>
       </nav>
@@ -37,16 +39,22 @@
           <h1>语言模型如何理解一个行动者的决定</h1>
           <p class="subtitle">这里的“行动者归因”，指模型读完一段行为描述后，对行动者是否自主、有意图、能影响结果和应承担责任所作的判断。</p>
           <p class="hero-intro">项目通过两项研究追踪这种变化：研究A分析身份与过程写法的整体差异，研究B进一步拆开备选、理由、反馈与后续行动。</p>
+          <p class="portfolio-tagline">项目工作覆盖构念定义、材料与题项、模型评分、数据契约、结构审计、跨平台CI和公开展示。</p>
           <div class="actions">
             <a class="btn primary" href="identity-process-attribution-baseline/">进入研究A</a>
             <a class="btn" href="machine-decision-process-attribution/">进入研究B</a>
+          </div>
+          <div class="portfolio-metrics" aria-label="项目规模">
+            <div class="metric-card"><strong>360</strong><span>模型评分输出</span></div>
+            <div class="metric-card"><strong>96</strong><span>结构化研究材料</span></div>
+            <div class="metric-card"><strong>1011</strong><span>自动化测试</span></div>
           </div>
         </div>
         <aside class="research-bridge" aria-label="两项研究入口">
           <a class="bridge-node bridge-a" href="identity-process-attribution-baseline/">
             <span>研究A</span>
             <strong>身份与决策过程</strong>
-            <small>360条响应、主要结果与场景分析</small>
+            <small>360次模型评分、主要结果与场景分析</small>
           </a>
           <a class="bridge-node bridge-b" href="machine-decision-process-attribution/">
             <span>研究B</span>
@@ -119,11 +127,28 @@
       </div>
     </section>
 
-    <section id="implications" class="section soft">
+
+<section id="build" class="section soft">
+  <div class="wrap">
+    <p class="section-index">03</p>
+    <h2>项目完成了什么</h2>
+    <p class="reading">项目工作从构念定义延伸到公开交付。研究设计、数据结构、分析脚本和页面使用同一套条件、场景、材料与构念标识，便于追踪每个结果来自哪里。</p>
+    <div class="work-grid">
+      <article class="work-card"><span>01</span><h3>研究设计</h3><p>定义任务结果、过程证据与主体归因；设计身份、理由、反馈和后续行动条件；映射题项、量尺与预设比较。</p></article>
+      <article class="work-card"><span>02</span><h3>数据与评测</h3><p>建立响应解析、量表计分、场景聚合、材料矩阵和外部评分Schema，区分历史响应、固定示例与未来评价记录。</p></article>
+      <article class="work-card"><span>03</span><h3>质量与复现</h3><p>加入材料结构审计、严格JSON、生成物漂移检查、历史输出保护、mock smoke和双平台CI。</p></article>
+      <article class="work-card"><span>04</span><h3>公开交付</h3><p>统一组装项目总览、研究A结果页、研究B设计页、兼容路由和复现文档，形成可直接检查的公开成果。</p></article>
+    </div>
+    <figure class="visual-panel"><img src="assets/figures/project-architecture.svg" alt="从构念定义、条件设计、材料题项、评分契约、分析到质量发布的项目工程架构" /><figcaption>同一套材料ID、条件ID、场景ID和构念字段贯穿研究、分析、测试与公开页面。</figcaption></figure>
+    <div class="actions"><a class="btn primary" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/PORTFOLIO_CASE_STUDY.md">查看项目案例摘要</a><a class="btn" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation">查看工程仓库</a></div>
+  </div>
+</section>
+
+    <section id="implications" class="section">
       <div class="wrap">
-        <p class="section-index">03</p>
-        <h2>实践意义与前沿价值</h2>
-        <p class="reading">这个项目的重要性不在于给模型贴上“有”或“没有”心智的标签，而在于揭示：任务表现、可见过程和对行动者的理解会相互影响。当前的过程监督、Agent轨迹评测、人机信任研究和AI风险管理都在处理这一问题的不同部分。</p>
+        <p class="section-index">04</p>
+        <h2>从研究结果到真实系统</h2>
+        <p class="reading">任务结果、可见过程和主体归因经常同时进入评价。过程监督关注中间步骤，Agent评测关注工具与执行轨迹，产品研究关注用户信任与授权，风险管理关注场景、权限和责任链。项目把这些问题放进同一套可观察结构中。</p>
         <div class="study-grid">
           <article class="study-card study-a">
             <h3>测量的究竟是哪一层</h3>
@@ -166,7 +191,9 @@
             <p><a href="https://doi.org/10.6028/NIST.AI.100-1">NIST AI RMF</a> · <a href="https://doi.org/10.6028/NIST.AI.600-1">生成式AI配置</a></p>
           </article>
         </div>
-        <div class="actions">
+        <figure class="visual-panel value-panel"><img src="assets/figures/value-map.svg" alt="研究线索、现实工程问题和可观察指标的价值映射" /><figcaption>每条实践联系都落到可观察指标，而不是把研究结果直接写成产品结论。</figcaption></figure>
+                <p class="reading practical-note">产品评估还可以观察用户在系统正确时是否采纳、错误时是否覆盖，以及信任能否随准确率、不确定性和执行权限变化；这构成信任校准问题。</p>
+<div class="actions">
           <a class="btn primary" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/RESULTS_AND_PRACTICAL_IMPLICATIONS.md">查看完整实践与前沿讨论</a>
           <a class="btn" href="https://github.com/sherlock0717/llm-attribution-behavior-evaluation/blob/main/docs/EVALUATION_DESIGN_CHECKLIST.md">查看评测与产品检查清单</a>
         </div>
@@ -175,7 +202,7 @@
 
     <section id="methods" class="section">
       <div class="wrap">
-        <p class="section-index">04</p>
+        <p class="section-index">05</p>
         <h2>数据、方法与复现</h2>
         <ol class="analysis-pipeline" aria-label="从材料到结果">
           <li><span class="flow-step">1</span><p>控制身份与过程信息</p></li>

@@ -115,7 +115,7 @@ tbody th { background: var(--soft); }
 }
 
 @media (max-width: 900px) {
-  .story-flow, .analysis-pipeline, .finding-block { grid-template-columns: 1fr; }
+  .story-flow, .analysis-pipeline, .finding-block, .work-grid { grid-template-columns: 1fr; }
   .finding-block { gap: 8px; }
   .entry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -129,7 +129,7 @@ tbody th { background: var(--soft); }
   .site-nav.open ul { display: flex; }
   .site-nav a { padding: 10px 2px; border-bottom: 1px solid var(--border); }
   .section { padding: 56px 0; }
-  .study-grid, .entry-grid { grid-template-columns: 1fr; }
+  .study-grid, .entry-grid, .portfolio-metrics { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 420px) {
@@ -142,3 +142,18 @@ tbody th { background: var(--soft); }
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }
 }
+
+.portfolio-tagline { margin: 18px 0 0; padding-left: 14px; border-left: 4px solid var(--engineering); color: #2d3850; font-weight: 650; }
+.portfolio-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 24px; }
+.metric-card { min-width: 0; padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; background: #fff; box-shadow: var(--shadow); }
+.metric-card strong { display: block; color: var(--accent); font-size: 1.65rem; line-height: 1.1; }
+.metric-card span { display: block; margin-top: 5px; color: var(--muted); font-size: .82rem; }
+.work-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+.work-card { min-width: 0; padding: 22px; border: 1px solid var(--border); border-radius: 14px; background: #fff; box-shadow: var(--shadow); }
+.work-card > span { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; margin-bottom: 14px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: .8rem; font-weight: 850; }
+.work-card h3 { font-size: 1.08rem; }
+.work-card p { margin-bottom: 0; color: #2d3850; font-size: .92rem; }
+.visual-panel { margin: 30px 0 0; padding: 14px; border: 1px solid var(--border); border-radius: 16px; background: #fff; box-shadow: var(--shadow); }
+.visual-panel img { display: block; width: 100%; height: auto; border-radius: 10px; }
+.visual-panel figcaption { margin: 10px 4px 2px; color: var(--muted); font-size: .84rem; }
+.value-panel { margin-top: 28px; }

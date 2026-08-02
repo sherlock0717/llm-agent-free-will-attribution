@@ -27,7 +27,7 @@ ROOT_JSON = [
     "evidence_matrix.json",
     "reproducibility_summary.json",
 ]
-ROOT_SECTIONS = ["overview", "findings", "studies", "implications", "methods"]
+ROOT_SECTIONS = ["overview", "findings", "studies", "build", "implications", "methods"]
 ROOT_H1 = "语言模型如何理解一个行动者的决定"
 RESULTS_DOC = ROOT / "docs" / "RESULTS_AND_PRACTICAL_IMPLICATIONS.md"
 PUBLIC_PAGES = [INDEX, STUDY_A / "index.html", STUDY_B / "index.html"]
@@ -67,7 +67,7 @@ def test_root_page_is_project_overview(html: str):
         assert f'id="{section_id}"' not in html
 
 
-def test_root_page_has_exactly_five_ordered_sections(html: str):
+def test_root_page_has_ordered_portfolio_sections(html: str):
     sections = re.findall(r'<section id="([^"]+)"', html)
     assert sections == ROOT_SECTIONS, sections
     assert len(sections) == len(set(sections)), "duplicate section id"
@@ -98,13 +98,14 @@ def test_root_hero_uses_plain_research_question(html: str):
 def test_root_hero_has_two_linked_research_cards(html: str):
     hero = html.split('id="overview"', 1)[1].split("</section>", 1)[0]
     assert 'aria-label="两项研究入口"' in hero
-    assert "360条响应、主要结果与场景分析" in hero
+    assert "360次模型评分、主要结果与场景分析" in hero
     assert "96条材料、评价维度与分析方案" in hero
 
 
 def test_root_section_order_is_findings_then_studies_then_questions(html: str):
     assert html.index('id="findings"') < html.index('id="studies"')
-    assert html.index('id="studies"') < html.index('id="implications"')
+    assert html.index('id="studies"') < html.index('id="build"')
+    assert html.index('id="build"') < html.index('id="implications"')
     assert html.index('id="implications"') < html.index('id="methods"')
 
 

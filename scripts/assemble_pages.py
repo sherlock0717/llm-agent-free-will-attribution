@@ -57,6 +57,11 @@ ROOT_FIGURES = [
     "mean_free_will_attribution.png",
     "mean_subjective_process_completeness.png",
 ]
+PORTFOLIO_FIGURES = [
+    "social-preview.svg",
+    "project-architecture.svg",
+    "value-map.svg",
+]
 # Research A robustness figures live under docs/assets/figures (produced by
 # analyze_research_a_robustness.py) and are copied into the assembled root
 # assets/figures so the Research A page can reference ../assets/figures/*.svg.
@@ -129,6 +134,7 @@ def _verify(output: Path) -> None:
     ]
     required.extend(output / "data" / name for name in ROOT_JSON)
     required.extend(output / "assets" / "figures" / name for name in ROOT_FIGURES)
+    required.extend(output / "assets" / "figures" / name for name in PORTFOLIO_FIGURES)
     required.extend(output / "assets" / "figures" / name for name in ROOT_ROBUSTNESS_FIGURES)
     required.extend(output / STUDY_B_ROUTE / "assets" / "figures" / name for name in STUDY_B_FIGURES)
 
